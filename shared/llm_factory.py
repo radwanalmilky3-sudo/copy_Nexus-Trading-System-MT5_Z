@@ -82,7 +82,10 @@ def make_llm(
         return ChatOpenAI(
             base_url=zai_base_url(),
             api_key=key,
-            model=global_override or model or zai_model(),
+            # Per-agent `model_local` names (config/agents.yaml) are
+            # Ollama-specific; in cloud mode the whole council deliberately
+            # runs on the single configured Z.ai model.
+            model=global_override or zai_model(),
             temperature=temperature,
             max_tokens=max_tokens,
             request_timeout=request_timeout,
