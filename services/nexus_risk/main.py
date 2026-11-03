@@ -1043,7 +1043,10 @@ async def _risk_stream_consumer() -> None:
                 correlation_id=event.correlation_id,
                 proposal_id=proposal.id,
                 decision=result["decision"],
-                original_size=proposal.conviction,
+                # original_size must be a LOT size, not conviction (0-1 float).
+                # The GenAI path requests no explicit size — central risk is
+                # the sole sizer — so the honest "requested size" here is 0.0.
+                original_size=0.0,
                 approved_size=result.get("approved_size", 0),
                 reason="; ".join(v.get("message", "") for v in result.get("violations", [])),
                 data={

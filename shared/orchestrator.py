@@ -67,7 +67,12 @@ async def should_defer(
             return True, f"Deferred to active {active_source} (priority={winner})"
         return False, ""
     except Exception:
-        return False, ""
+        # Fail closed: when the dual-brain state cannot be verified (e.g. a
+        # Redis outage or malformed payload), the caller must defer instead of
+        # trading blind. A Redis failure already blocks risk evaluation and
+        # execution elsewhere; allowing both brains to act on the same symbol
+        # here would defeat the purpose of this guard.
+        return True, "dual_brain_state_unavailable_fail_closed"
 
 
 def get_priority_source() -> str:
