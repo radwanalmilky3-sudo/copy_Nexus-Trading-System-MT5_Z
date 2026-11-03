@@ -1,0 +1,5635 @@
+{
+  "api_health": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "status": "healthy",
+      "service": "nexus-api",
+      "redis": "connected",
+      "duckdb": "connected"
+    }
+  },
+  "data_health": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "service": "nexus-data",
+      "status": "healthy",
+      "ready": true,
+      "data_mode": "REAL_MT5",
+      "synthetic_fallback": false,
+      "redis": true,
+      "duckdb": true,
+      "mt5": true,
+      "ibkr": false,
+      "ccxt": false
+    }
+  },
+  "news_health": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "service": "nexus-news",
+      "status": "healthy",
+      "redis": true,
+      "news_cache_size": 2,
+      "calendar_cache_size": 83,
+      "fundamental_runtime": true,
+      "blackout_state": "clear",
+      "timestamp": "2026-10-10T18:01:17.012659+00:00"
+    }
+  },
+  "gold_overview": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "state": "ready",
+      "symbol": "XAUUSD",
+      "direction": "neutral",
+      "direction_ar": "محايد",
+      "strength": 0.0,
+      "confidence": 57.5,
+      "confidence_validation": "unvalidated",
+      "coverage_score": 20.0,
+      "data_quality_score": 85.0,
+      "freshness_score": 100.0,
+      "conflict_score": 0.0,
+      "prediction_stage": "at_release",
+      "market_confirmation": "متاح بعد قياس تفاعل السوق",
+      "blackout": {
+        "blackout_id": null,
+        "active": false,
+        "state": "clear",
+        "reason_code": "CLEAR",
+        "reason": "No active high/medium-impact event window",
+        "reason_ar": "لا توجد نافذة حظر نشطة لحدث اقتصادي متوسط أو عالي التأثير.",
+        "policy_version": "1.0.0",
+        "checked_at": "2026-10-10T17:57:08.050201+00:00"
+      },
+      "horizons": {
+        "m5": {
+          "bullish": 0.24653846153846154,
+          "bearish": 0.24653846153846154,
+          "neutral": 0.5069230769230769
+        },
+        "m15": {
+          "bullish": 0.24653846153846154,
+          "bearish": 0.24653846153846154,
+          "neutral": 0.5069230769230769
+        },
+        "h1": {
+          "bullish": 0.24653846153846154,
+          "bearish": 0.24653846153846154,
+          "neutral": 0.5069230769230769
+        },
+        "h4": {
+          "bullish": 0.24653846153846154,
+          "bearish": 0.24653846153846154,
+          "neutral": 0.5069230769230769
+        },
+        "structural_bias": "neutral"
+      },
+      "domains": [
+        {
+          "domain": "macro",
+          "native_score": 0.0,
+          "gold_impact_score": 0.0,
+          "direction": "neutral",
+          "strength": 0.0,
+          "confidence": 0.0,
+          "coverage_score": 0.0,
+          "freshness_score": 0.0,
+          "data_quality_score": 0.0,
+          "reliability_score": 0.0,
+          "horizon_class": "event_shock",
+          "primary_drivers": [],
+          "counter_drivers": [],
+          "generated_at": "2026-10-10T18:01:06.312759Z",
+          "engine_version": "1.0.0",
+          "metadata": {
+            "state": "unavailable"
+          },
+          "domain_ar": "الاقتصاد الكلي",
+          "details": [
+            {
+              "event_id": "cal-b599cca2d7518a7981913a6f",
+              "indicator_code": "CONSUMER_CONFIDENCE",
+              "indicator_name_en": "Consumer Confidence",
+              "indicator_name_ar": "ثقة المستهلك",
+              "actual": null,
+              "forecast": 35.3,
+              "previous": 35.5,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 55.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T05:00:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T05:00:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "JPY:CONSUMER_CONFIDENCE:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-e4457d1fe52f76c79840dea4",
+              "indicator_code": "PMI",
+              "indicator_name_en": "Spanish Services PMI",
+              "indicator_name_ar": "مؤشر مديري المشتريات",
+              "actual": null,
+              "forecast": 57.1,
+              "previous": 57.8,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T07:15:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T07:15:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "EUR:PMI:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-4b230a44d36c9b16b7469a15",
+              "indicator_code": "PMI",
+              "indicator_name_en": "Italian Services PMI",
+              "indicator_name_ar": "مؤشر مديري المشتريات",
+              "actual": null,
+              "forecast": 54.6,
+              "previous": 55.2,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T07:45:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T07:45:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "EUR:PMI:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-2e48e03217140ec520616ad1",
+              "indicator_code": "PMI",
+              "indicator_name_en": "French Final Services PMI",
+              "indicator_name_ar": "مؤشر مديري المشتريات",
+              "actual": null,
+              "forecast": 51.4,
+              "previous": 51.4,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T07:50:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T07:50:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "EUR:PMI:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-0bb5c96276cf7539b35e20ad",
+              "indicator_code": "PMI",
+              "indicator_name_en": "German Final Services PMI",
+              "indicator_name_ar": "مؤشر مديري المشتريات",
+              "actual": null,
+              "forecast": 52.9,
+              "previous": 52.9,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T07:55:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T07:55:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "EUR:PMI:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-5fd9854a2229d64f0e7c6e75",
+              "indicator_code": "PMI",
+              "indicator_name_en": "Final Services PMI",
+              "indicator_name_ar": "مؤشر مديري المشتريات",
+              "actual": null,
+              "forecast": 53.0,
+              "previous": 53.0,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T08:00:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T08:00:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "EUR:PMI:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-4bb578024e8c77fc74a8a2d9",
+              "indicator_code": "PMI",
+              "indicator_name_en": "Final Services PMI",
+              "indicator_name_ar": "مؤشر مديري المشتريات",
+              "actual": null,
+              "forecast": 51.7,
+              "previous": 51.7,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T08:30:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T08:30:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "GBP:PMI:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-e87679877f022e4d81c3f56f",
+              "indicator_code": "PPI",
+              "indicator_name_en": "PPI m/m",
+              "indicator_name_ar": "مؤشر أسعار المنتجين",
+              "actual": null,
+              "forecast": 1.9,
+              "previous": 1.6,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 70.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T09:00:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T09:00:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "EUR:PPI:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-578b509d0bf678d7624292ef",
+              "indicator_code": "PMI",
+              "indicator_name_en": "Final Services PMI",
+              "indicator_name_ar": "مؤشر مديري المشتريات",
+              "actual": null,
+              "forecast": 58.7,
+              "previous": 58.7,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T13:45:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T13:45:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "USD:PMI:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-0d3a64cfb32180c09ca6acb3",
+              "indicator_code": "ISM_SERVICES",
+              "indicator_name_en": "ISM Services PMI",
+              "indicator_name_ar": "مؤشر ISM للخدمات",
+              "actual": null,
+              "forecast": 55.1,
+              "previous": 55.4,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 80.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T14:00:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T14:00:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "USD:ISM_SERVICES:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-635e6265f14c4e0ed55a15c2",
+              "indicator_code": "CONSUMER_CONFIDENCE",
+              "indicator_name_en": "Westpac Consumer Sentiment",
+              "indicator_name_ar": "ثقة المستهلك",
+              "actual": null,
+              "forecast": null,
+              "previous": -5.2,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 55.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-05T23:30:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-05T23:30:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "AUD:CONSUMER_CONFIDENCE:2026-10-05",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-b21922bbc95a52654a88f997",
+              "indicator_code": "UNEMPLOYMENT",
+              "indicator_name_en": "Unemployment Rate",
+              "indicator_name_ar": "معدل البطالة",
+              "actual": null,
+              "forecast": 3.1,
+              "previous": 3.1,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 92.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-06T07:00:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-06T07:00:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "CHF:UNEMPLOYMENT:2026-10-06",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-c0eb1dc08e7e509dc5b0ef32",
+              "indicator_code": "PMI",
+              "indicator_name_en": "Construction PMI",
+              "indicator_name_ar": "مؤشر مديري المشتريات",
+              "actual": null,
+              "forecast": 45.0,
+              "previous": 44.3,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-06T08:30:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-06T08:30:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "GBP:PMI:2026-10-06",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-3419614e67cd3af63385c997",
+              "indicator_code": "RETAIL_SALES",
+              "indicator_name_en": "Retail Sales m/m",
+              "indicator_name_ar": "مبيعات التجزئة",
+              "actual": null,
+              "forecast": 0.2,
+              "previous": -0.6,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 78.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-06T09:00:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-06T09:00:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "EUR:RETAIL_SALES:2026-10-06",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-6d2122ae677e3ebc099e6d98",
+              "indicator_code": "PMI",
+              "indicator_name_en": "Ivey PMI",
+              "indicator_name_ar": "مؤشر مديري المشتريات",
+              "actual": null,
+              "forecast": 65.2,
+              "previous": 64.3,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-06T14:00:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-06T14:00:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "CAD:PMI:2026-10-06",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-edc42fc3c1f2afff664d33c6",
+              "indicator_code": "JOBLESS_CLAIMS",
+              "indicator_name_en": "Unemployment Claims",
+              "indicator_name_ar": "طلبات إعانة البطالة",
+              "actual": null,
+              "forecast": 200000.0,
+              "previous": 197000.0,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 65.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-08T12:30:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-08T12:30:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "USD:JOBLESS_CLAIMS:2026-10-08",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-52a9dba8cfa03057425e5f4a",
+              "indicator_code": "UNEMPLOYMENT",
+              "indicator_name_en": "Unemployment Rate",
+              "indicator_name_ar": "معدل البطالة",
+              "actual": null,
+              "forecast": 6.5,
+              "previous": 6.4,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 92.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-09T12:30:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-09T12:30:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "CAD:UNEMPLOYMENT:2026-10-09",
+              "independence_group": "calendar_secondary"
+            },
+            {
+              "event_id": "cal-feddefac94b13027a1d12e08",
+              "indicator_code": "CONSUMER_CONFIDENCE",
+              "indicator_name_en": "Prelim UoM Consumer Sentiment",
+              "indicator_name_ar": "ثقة المستهلك",
+              "actual": null,
+              "forecast": 47.5,
+              "previous": 47.8,
+              "first_release_value": null,
+              "latest_value": null,
+              "surprise_absolute": null,
+              "surprise_percent": null,
+              "surprise_zscore": null,
+              "historical_importance": 55.0,
+              "gold_relevance": 60.0,
+              "rate_implication_score": null,
+              "usd_implication_score": null,
+              "yield_implication_score": null,
+              "gold_implication_score": null,
+              "release_timestamp": "2026-10-09T14:00:00+00:00",
+              "source_id": "calendar_secondary",
+              "source_name": "forexfactory",
+              "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+              "source_timestamp": "2026-10-09T14:00:00+00:00",
+              "trust_score": 65.0,
+              "quality_score": 65.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "USD:CONSUMER_CONFIDENCE:2026-10-09",
+              "independence_group": "calendar_secondary"
+            }
+          ]
+        },
+        {
+          "domain": "monetary",
+          "native_score": 0.0,
+          "gold_impact_score": 0.0,
+          "direction": "neutral",
+          "strength": 0.0,
+          "confidence": 73.5,
+          "coverage_score": 100.0,
+          "freshness_score": 100.0,
+          "data_quality_score": 85.0,
+          "reliability_score": 45.0,
+          "horizon_class": "tactical",
+          "primary_drivers": [
+            {
+              "code": "MONETARY_FED_COMMUNICATION",
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+              "label_en": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+              "native_score": 0.0,
+              "gold_impact_score": -0.0,
+              "strength": 0.0,
+              "confidence": 45.0,
+              "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+              "horizon_class": "tactical",
+              "sources": [
+                {
+                  "source_id": "fed_rss",
+                  "source_name": "Federal Reserve RSS",
+                  "source_name_ar": "الاحتياطي الفيدرالي",
+                  "source_url": null,
+                  "source_timestamp": "2026-10-09T14:00:00Z",
+                  "received_at": "2026-10-10T18:01:06.312759Z",
+                  "origin": "real",
+                  "freshness": "fresh",
+                  "trust_score": 100.0,
+                  "quality_score": 85.0,
+                  "causal_group_id": "fed-0d84bbab316fddb29a8359e7",
+                  "independence_group": "federal_reserve",
+                  "story_cluster_id": null,
+                  "is_reprint": false
+                }
+              ]
+            },
+            {
+              "code": "MONETARY_FED_COMMUNICATION",
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+              "label_en": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+              "native_score": 0.0,
+              "gold_impact_score": -0.0,
+              "strength": 0.0,
+              "confidence": 45.0,
+              "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+              "horizon_class": "tactical",
+              "sources": [
+                {
+                  "source_id": "fed_rss",
+                  "source_name": "Federal Reserve RSS",
+                  "source_name_ar": "الاحتياطي الفيدرالي",
+                  "source_url": null,
+                  "source_timestamp": "2026-10-08T20:30:00Z",
+                  "received_at": "2026-10-10T18:01:06.312759Z",
+                  "origin": "real",
+                  "freshness": "fresh",
+                  "trust_score": 100.0,
+                  "quality_score": 85.0,
+                  "causal_group_id": "fed-8fbb18afd13a46e5b4eb2632",
+                  "independence_group": "federal_reserve",
+                  "story_cluster_id": null,
+                  "is_reprint": false
+                }
+              ]
+            },
+            {
+              "code": "MONETARY_FOMC",
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Minutes of the Federal Open Market Committee, September 15-16, 2026",
+              "label_en": "Minutes of the Federal Open Market Committee, September 15-16, 2026",
+              "native_score": 0.0,
+              "gold_impact_score": -0.0,
+              "strength": 0.0,
+              "confidence": 45.0,
+              "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+              "horizon_class": "tactical",
+              "sources": [
+                {
+                  "source_id": "fed_rss",
+                  "source_name": "Federal Reserve RSS",
+                  "source_name_ar": "الاحتياطي الفيدرالي",
+                  "source_url": null,
+                  "source_timestamp": "2026-10-07T18:00:00Z",
+                  "received_at": "2026-10-10T18:01:06.312759Z",
+                  "origin": "real",
+                  "freshness": "fresh",
+                  "trust_score": 100.0,
+                  "quality_score": 85.0,
+                  "causal_group_id": "fed-08dfdbdaa9ce20cc125a1535",
+                  "independence_group": "federal_reserve",
+                  "story_cluster_id": null,
+                  "is_reprint": false
+                }
+              ]
+            },
+            {
+              "code": "MONETARY_FED_COMMUNICATION",
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+              "label_en": "Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+              "native_score": 0.0,
+              "gold_impact_score": -0.0,
+              "strength": 0.0,
+              "confidence": 45.0,
+              "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+              "horizon_class": "tactical",
+              "sources": [
+                {
+                  "source_id": "fed_rss",
+                  "source_name": "Federal Reserve RSS",
+                  "source_name_ar": "الاحتياطي الفيدرالي",
+                  "source_url": null,
+                  "source_timestamp": "2026-10-05T20:30:00Z",
+                  "received_at": "2026-10-10T18:01:06.312759Z",
+                  "origin": "real",
+                  "freshness": "fresh",
+                  "trust_score": 100.0,
+                  "quality_score": 85.0,
+                  "causal_group_id": "fed-1bc4132b3f0326c5bc0edadf",
+                  "independence_group": "federal_reserve",
+                  "story_cluster_id": null,
+                  "is_reprint": false
+                }
+              ]
+            },
+            {
+              "code": "MONETARY_FED_COMMUNICATION",
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+              "label_en": "Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+              "native_score": 0.0,
+              "gold_impact_score": -0.0,
+              "strength": 0.0,
+              "confidence": 45.0,
+              "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+              "horizon_class": "tactical",
+              "sources": [
+                {
+                  "source_id": "fed_rss",
+                  "source_name": "Federal Reserve RSS",
+                  "source_name_ar": "الاحتياطي الفيدرالي",
+                  "source_url": null,
+                  "source_timestamp": "2026-10-02T20:45:00Z",
+                  "received_at": "2026-10-10T18:01:06.313679Z",
+                  "origin": "real",
+                  "freshness": "fresh",
+                  "trust_score": 100.0,
+                  "quality_score": 85.0,
+                  "causal_group_id": "fed-5d4b355ec3292efce1cfee3e",
+                  "independence_group": "federal_reserve",
+                  "story_cluster_id": null,
+                  "is_reprint": false
+                }
+              ]
+            }
+          ],
+          "counter_drivers": [],
+          "generated_at": "2026-10-10T18:01:06.314025Z",
+          "engine_version": "1.0.0",
+          "metadata": {
+            "driver_count": 20,
+            "conflict_score": 0.0
+          },
+          "domain_ar": "السياسة النقدية والبنوك المركزية",
+          "details": [
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+              "label_en": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-10-09T14:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-0d84bbab316fddb29a8359e7",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-0d84bbab316fddb29a8359e7"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+              "label_en": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-10-08T20:30:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-8fbb18afd13a46e5b4eb2632",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-8fbb18afd13a46e5b4eb2632"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FOMC",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Minutes of the Federal Open Market Committee, September 15-16, 2026",
+              "label_en": "Minutes of the Federal Open Market Committee, September 15-16, 2026",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-10-07T18:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-08dfdbdaa9ce20cc125a1535",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-08dfdbdaa9ce20cc125a1535"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+              "label_en": "Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-10-05T20:30:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-1bc4132b3f0326c5bc0edadf",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-1bc4132b3f0326c5bc0edadf"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+              "label_en": "Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-10-02T20:45:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-5d4b355ec3292efce1cfee3e",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-5d4b355ec3292efce1cfee3e"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces it will extend, until November 4, the comment period on its proposal to modernize Regulation O",
+              "label_en": "Federal Reserve Board announces it will extend, until November 4, the comment period on its proposal to modernize Regulation O",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-10-02T20:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-8f9bf8f9d80dc8af113fb099",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-8f9bf8f9d80dc8af113fb099"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board issues enforcement action with Ontario Bancorporation, Inc.",
+              "label_en": "Federal Reserve Board issues enforcement action with Ontario Bancorporation, Inc.",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-10-02T15:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-b441ff6c63c6936c873ff365",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-b441ff6c63c6936c873ff365"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board finalizes changes to enhance the transparency and public accountability of its stress test and reduce volatility in its stress test-related capital requirements",
+              "label_en": "Federal Reserve Board finalizes changes to enhance the transparency and public accountability of its stress test and reduce volatility in its stress test-related capital requirements",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-30T13:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-2d126dcc2a0a42d34ad94001",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-2d126dcc2a0a42d34ad94001"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Agencies publish resolution plan feedback letters for 15 banking organizations",
+              "label_en": "Agencies publish resolution plan feedback letters for 15 banking organizations",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-29T20:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-94f4c2579d3ff5b5c9fa920e",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-94f4c2579d3ff5b5c9fa920e"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Peoples Bancorp Inc.",
+              "label_en": "Federal Reserve Board announces approval of application by Peoples Bancorp Inc.",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-25T20:30:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-39a285d2e0f7a36ee1081ee4",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-39a285d2e0f7a36ee1081ee4"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board requests public comment on two proposals related to establishing a regulatory framework for Board-supervised payment stablecoin issuers under the GENIUS Act",
+              "label_en": "Federal Reserve Board requests public comment on two proposals related to establishing a regulatory framework for Board-supervised payment stablecoin issuers under the GENIUS Act",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-24T18:30:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-ae574d1347db7223e6301f1e",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-ae574d1347db7223e6301f1e"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board issues enforcement action with former employee of Sandy Spring Bank",
+              "label_en": "Federal Reserve Board issues enforcement action with former employee of Sandy Spring Bank",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-24T15:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-4362fad6e26cf1b24b7ac846",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-4362fad6e26cf1b24b7ac846"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by BancFirst Corporation",
+              "label_en": "Federal Reserve Board announces approval of application by BancFirst Corporation",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-22T20:30:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-5686e3104fc13d1d52b91e41",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-5686e3104fc13d1d52b91e41"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces termination of enforcement action with SNB Bancshares and Bank of Eufaula",
+              "label_en": "Federal Reserve Board announces termination of enforcement action with SNB Bancshares and Bank of Eufaula",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-18T15:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-d16dd968793c9f3199afcb66",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-d16dd968793c9f3199afcb66"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board issues enforcement actions with former employee of Northstar Bank, former employee of American Express Travel Related Services Company, Inc., and former employee of Regions Bank",
+              "label_en": "Federal Reserve Board issues enforcement actions with former employee of Northstar Bank, former employee of American Express Travel Related Services Company, Inc., and former employee of Regions Bank",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-18T15:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-a7d6226407dcbbf91cb16d35",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-a7d6226407dcbbf91cb16d35"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FOMC",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve issues FOMC statement",
+              "label_en": "Federal Reserve issues FOMC statement",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-16T18:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-da3bcbb85f4595d6b859363d",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-da3bcbb85f4595d6b859363d"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FOMC",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board and Federal Open Market Committee release economic projections from the September 15-16 FOMC meeting",
+              "label_en": "Federal Reserve Board and Federal Open Market Committee release economic projections from the September 15-16 FOMC meeting",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-16T18:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-7400cab4847e7a3384d183c8",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-7400cab4847e7a3384d183c8"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Agencies seek comment on proposed third-party risk management guidance and issue statement on community bank engagement with core service providers",
+              "label_en": "Agencies seek comment on proposed third-party risk management guidance and issue statement on community bank engagement with core service providers",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-11T14:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-801d63c5c41391b968dca5c5",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-801d63c5c41391b968dca5c5"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Agencies reduce regulatory burden for community banks, increase eligibility for 18-month exam cycle",
+              "label_en": "Agencies reduce regulatory burden for community banks, increase eligibility for 18-month exam cycle",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-10T20:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-18a063e11b9e4f0fc797761c",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-18a063e11b9e4f0fc797761c"
+            },
+            {
+              "institution": "Federal Reserve",
+              "event_kind": "FED_COMMUNICATION",
+              "tone_score": 0.0,
+              "previous_tone_score": 0.0,
+              "policy_delta": 0.0,
+              "forward_guidance_score": 0.0,
+              "gold_implication_score": -0.0,
+              "confidence": 45.0,
+              "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces termination of enforcement actions with United Texas Bank, Quontic Bank Acquisition Corp., and Quontic Bank Holdings Corp.",
+              "label_en": "Federal Reserve Board announces termination of enforcement actions with United Texas Bank, Quontic Bank Acquisition Corp., and Quontic Bank Holdings Corp.",
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_timestamp": "2026-09-04T15:00:00+00:00",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "freshness": "fresh",
+              "origin": "real",
+              "causal_group_id": "fed-8e50e86f77c26bb3a56197aa",
+              "independence_group": "federal_reserve",
+              "event_id": "fed-8e50e86f77c26bb3a56197aa"
+            }
+          ]
+        },
+        {
+          "domain": "cross_asset",
+          "native_score": 0.0,
+          "gold_impact_score": 0.0,
+          "direction": "neutral",
+          "strength": 0.0,
+          "confidence": 0.0,
+          "coverage_score": 0.0,
+          "freshness_score": 0.0,
+          "data_quality_score": 0.0,
+          "reliability_score": 0.0,
+          "horizon_class": "tactical",
+          "primary_drivers": [],
+          "counter_drivers": [],
+          "generated_at": "2026-10-10T18:01:06.315029Z",
+          "engine_version": "1.0.0",
+          "metadata": {
+            "state": "unavailable",
+            "real_driver_count": 0,
+            "proxy_driver_count": 0
+          },
+          "domain_ar": "الأسواق المترابطة",
+          "details": []
+        },
+        {
+          "domain": "geopolitical",
+          "native_score": 0.0,
+          "gold_impact_score": 0.0,
+          "direction": "neutral",
+          "strength": 0.0,
+          "confidence": 0.0,
+          "coverage_score": 0.0,
+          "freshness_score": 0.0,
+          "data_quality_score": 0.0,
+          "reliability_score": 0.0,
+          "horizon_class": "event_shock",
+          "primary_drivers": [],
+          "counter_drivers": [],
+          "generated_at": "2026-10-10T18:01:06.315029Z",
+          "engine_version": "1.0.0",
+          "metadata": {
+            "state": "unavailable"
+          },
+          "domain_ar": "الجيوسياسة والمخاطر العالمية",
+          "details": []
+        },
+        {
+          "domain": "flows",
+          "native_score": 0.0,
+          "gold_impact_score": 0.0,
+          "direction": "neutral",
+          "strength": 0.0,
+          "confidence": 0.0,
+          "coverage_score": 0.0,
+          "freshness_score": 0.0,
+          "data_quality_score": 0.0,
+          "reliability_score": 0.0,
+          "horizon_class": "tactical",
+          "primary_drivers": [],
+          "counter_drivers": [],
+          "generated_at": "2026-10-10T18:01:06.315029Z",
+          "engine_version": "1.0.0",
+          "metadata": {
+            "state": "unavailable",
+            "structural_gold_score": 0.0,
+            "structural_coverage_score": 0.0,
+            "structural_driver_count": 0,
+            "tactical_gold_score": 0.0
+          },
+          "domain_ar": "التدفقات والتمركزات",
+          "details": []
+        }
+      ],
+      "weights": [
+        {
+          "domain": "monetary",
+          "raw_gold_score": 0.0,
+          "base_weight": 0.23,
+          "effective_weight": 0.017595000000000003,
+          "normalized_weight": 1.0,
+          "freshness_factor": 1.0,
+          "quality_factor": 0.85,
+          "relevance_factor": 0.2,
+          "reliability_factor": 0.45,
+          "regime_factor": 1.0,
+          "independence_factor": 1.0,
+          "reason_ar": "الوزن الأساسي 0.23، الحداثة 1.00، الجودة 0.85، الملاءمة 0.20، الموثوقية 0.45، معامل النظام 1.00، والاستقلال 1.00."
+        }
+      ],
+      "primary_drivers": [
+        {
+          "code": "MONETARY_FED_COMMUNICATION",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+          "label_en": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-09T14:00:00Z",
+              "received_at": "2026-10-10T18:01:06.312759Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-0d84bbab316fddb29a8359e7",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        },
+        {
+          "code": "MONETARY_FED_COMMUNICATION",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+          "label_en": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-08T20:30:00Z",
+              "received_at": "2026-10-10T18:01:06.312759Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-8fbb18afd13a46e5b4eb2632",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        },
+        {
+          "code": "MONETARY_FOMC",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Minutes of the Federal Open Market Committee, September 15-16, 2026",
+          "label_en": "Minutes of the Federal Open Market Committee, September 15-16, 2026",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-07T18:00:00Z",
+              "received_at": "2026-10-10T18:01:06.312759Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-08dfdbdaa9ce20cc125a1535",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        },
+        {
+          "code": "MONETARY_FED_COMMUNICATION",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+          "label_en": "Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-05T20:30:00Z",
+              "received_at": "2026-10-10T18:01:06.312759Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-1bc4132b3f0326c5bc0edadf",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        },
+        {
+          "code": "MONETARY_FED_COMMUNICATION",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+          "label_en": "Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-02T20:45:00Z",
+              "received_at": "2026-10-10T18:01:06.313679Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-5d4b355ec3292efce1cfee3e",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        }
+      ],
+      "counter_drivers": [],
+      "transmission_chain_ar": [
+        "المحاور الأساسية الخمسة",
+        "الدمج الديناميكي",
+        "العوائد والدولار/الملاذ الآمن",
+        "XAUUSD"
+      ],
+      "explanation": {
+        "prediction_id": "8cc0dfd250ab40e780ad9aa1ad717408",
+        "headline_ar": "التحليل الأساسي للذهب: محايد",
+        "what_happened_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+        "why_it_matters_ar": "تؤثر هذه البيانات في توقعات الفائدة والعوائد والدولار والطلب على الملاذ الآمن، وهي القنوات الرئيسة التي تنتقل عبرها الصدمة الأساسية إلى الذهب.",
+        "transmission_to_gold_ar": "المحاور الأساسية الخمسة → الدمج الديناميكي → العوائد والدولار/الملاذ الآمن → XAUUSD",
+        "gold_effect_ar": "الاتجاه الحالي للذهب محايد، بقوة 0/100 وثقة 58/100. الثقة لم تُعتمد بعد كاحتمال تاريخي معاير بالكامل.",
+        "confirmations_ar": [
+          "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0."
+        ],
+        "contradictions_ar": [],
+        "weakening_factors_ar": [
+          "تغطية البيانات أقل من المستوى المثالي."
+        ],
+        "invalidation_ar": [
+          "انعكاس اتجاه الدولار والعوائد الحقيقيّة بصورة مستقرة ضد السيناريو الحالي.",
+          "ظهور حدث جديد عالي التأثير يغيّر النظام السوقي أو سياسة الفائدة.",
+          "انخفاض جودة/حداثة البيانات المستخدمة إلى حالة متدهورة أو غير متاحة."
+        ],
+        "confidence_reason_ar": "تغطية البيانات 20/100، جودتها 85/100، حداثتها 100/100، ودرجة التعارض 0/100.",
+        "horizon_ar": "صدمة الحدث: دقائق إلى ساعات؛ التكتيكي: ساعات؛ أما الانحياز الهيكلي فيمتد لأيام أو أسابيع حسب المصدر.",
+        "actual_outcome_ar": "لم يتم تقييم النتيجة الفعلية بعد.",
+        "lesson_ar": "لم تتوفر نتيجة كافية للتعلم بعد.",
+        "simple_summary_ar": "الخلاصة: الذهب محايد. النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+        "advanced_summary_ar": "النتيجة المركبة تشير إلى أن الذهب محايد. تغطية البيانات 20/100، جودتها 85/100، حداثتها 100/100، ودرجة التعارض 0/100. أقوى عامل معاكس: لا يوجد عامل معاكس موثوق مسجل حاليًا.",
+        "explanation_version": "1.0.0"
+      },
+      "quality": {
+        "coverage": 20.0,
+        "quality": 85.0,
+        "freshness": 100.0,
+        "conflict": 0.0,
+        "reason": "official_sources",
+        "updated_at": "2026-10-10T18:01:06.412135+00:00"
+      },
+      "generated_at": "2026-10-10T18:01:06.315029Z"
+    }
+  },
+  "macro": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "state": "unavailable",
+      "domain_ar": "الاقتصاد الكلي",
+      "domain": "macro",
+      "native_score": 0.0,
+      "gold_impact_score": 0.0,
+      "direction": "neutral",
+      "strength": 0.0,
+      "confidence": 0.0,
+      "coverage_score": 0.0,
+      "freshness_score": 0.0,
+      "data_quality_score": 0.0,
+      "reliability_score": 0.0,
+      "horizon_class": "event_shock",
+      "primary_drivers": [],
+      "counter_drivers": [],
+      "generated_at": "2026-10-10T18:01:06.312759Z",
+      "engine_version": "1.0.0",
+      "metadata": {
+        "state": "unavailable"
+      },
+      "details": [
+        {
+          "event_id": "cal-b599cca2d7518a7981913a6f",
+          "indicator_code": "CONSUMER_CONFIDENCE",
+          "indicator_name_en": "Consumer Confidence",
+          "indicator_name_ar": "ثقة المستهلك",
+          "actual": null,
+          "forecast": 35.3,
+          "previous": 35.5,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 55.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T05:00:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T05:00:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "JPY:CONSUMER_CONFIDENCE:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-e4457d1fe52f76c79840dea4",
+          "indicator_code": "PMI",
+          "indicator_name_en": "Spanish Services PMI",
+          "indicator_name_ar": "مؤشر مديري المشتريات",
+          "actual": null,
+          "forecast": 57.1,
+          "previous": 57.8,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T07:15:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T07:15:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "EUR:PMI:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-4b230a44d36c9b16b7469a15",
+          "indicator_code": "PMI",
+          "indicator_name_en": "Italian Services PMI",
+          "indicator_name_ar": "مؤشر مديري المشتريات",
+          "actual": null,
+          "forecast": 54.6,
+          "previous": 55.2,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T07:45:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T07:45:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "EUR:PMI:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-2e48e03217140ec520616ad1",
+          "indicator_code": "PMI",
+          "indicator_name_en": "French Final Services PMI",
+          "indicator_name_ar": "مؤشر مديري المشتريات",
+          "actual": null,
+          "forecast": 51.4,
+          "previous": 51.4,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T07:50:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T07:50:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "EUR:PMI:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-0bb5c96276cf7539b35e20ad",
+          "indicator_code": "PMI",
+          "indicator_name_en": "German Final Services PMI",
+          "indicator_name_ar": "مؤشر مديري المشتريات",
+          "actual": null,
+          "forecast": 52.9,
+          "previous": 52.9,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T07:55:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T07:55:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "EUR:PMI:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-5fd9854a2229d64f0e7c6e75",
+          "indicator_code": "PMI",
+          "indicator_name_en": "Final Services PMI",
+          "indicator_name_ar": "مؤشر مديري المشتريات",
+          "actual": null,
+          "forecast": 53.0,
+          "previous": 53.0,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T08:00:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T08:00:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "EUR:PMI:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-4bb578024e8c77fc74a8a2d9",
+          "indicator_code": "PMI",
+          "indicator_name_en": "Final Services PMI",
+          "indicator_name_ar": "مؤشر مديري المشتريات",
+          "actual": null,
+          "forecast": 51.7,
+          "previous": 51.7,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T08:30:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T08:30:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "GBP:PMI:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-e87679877f022e4d81c3f56f",
+          "indicator_code": "PPI",
+          "indicator_name_en": "PPI m/m",
+          "indicator_name_ar": "مؤشر أسعار المنتجين",
+          "actual": null,
+          "forecast": 1.9,
+          "previous": 1.6,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 70.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T09:00:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T09:00:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "EUR:PPI:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-578b509d0bf678d7624292ef",
+          "indicator_code": "PMI",
+          "indicator_name_en": "Final Services PMI",
+          "indicator_name_ar": "مؤشر مديري المشتريات",
+          "actual": null,
+          "forecast": 58.7,
+          "previous": 58.7,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T13:45:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T13:45:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "USD:PMI:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-0d3a64cfb32180c09ca6acb3",
+          "indicator_code": "ISM_SERVICES",
+          "indicator_name_en": "ISM Services PMI",
+          "indicator_name_ar": "مؤشر ISM للخدمات",
+          "actual": null,
+          "forecast": 55.1,
+          "previous": 55.4,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 80.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T14:00:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T14:00:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "USD:ISM_SERVICES:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-635e6265f14c4e0ed55a15c2",
+          "indicator_code": "CONSUMER_CONFIDENCE",
+          "indicator_name_en": "Westpac Consumer Sentiment",
+          "indicator_name_ar": "ثقة المستهلك",
+          "actual": null,
+          "forecast": null,
+          "previous": -5.2,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 55.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-05T23:30:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-05T23:30:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "AUD:CONSUMER_CONFIDENCE:2026-10-05",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-b21922bbc95a52654a88f997",
+          "indicator_code": "UNEMPLOYMENT",
+          "indicator_name_en": "Unemployment Rate",
+          "indicator_name_ar": "معدل البطالة",
+          "actual": null,
+          "forecast": 3.1,
+          "previous": 3.1,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 92.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-06T07:00:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-06T07:00:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "CHF:UNEMPLOYMENT:2026-10-06",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-c0eb1dc08e7e509dc5b0ef32",
+          "indicator_code": "PMI",
+          "indicator_name_en": "Construction PMI",
+          "indicator_name_ar": "مؤشر مديري المشتريات",
+          "actual": null,
+          "forecast": 45.0,
+          "previous": 44.3,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-06T08:30:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-06T08:30:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "GBP:PMI:2026-10-06",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-3419614e67cd3af63385c997",
+          "indicator_code": "RETAIL_SALES",
+          "indicator_name_en": "Retail Sales m/m",
+          "indicator_name_ar": "مبيعات التجزئة",
+          "actual": null,
+          "forecast": 0.2,
+          "previous": -0.6,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 78.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-06T09:00:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-06T09:00:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "EUR:RETAIL_SALES:2026-10-06",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-6d2122ae677e3ebc099e6d98",
+          "indicator_code": "PMI",
+          "indicator_name_en": "Ivey PMI",
+          "indicator_name_ar": "مؤشر مديري المشتريات",
+          "actual": null,
+          "forecast": 65.2,
+          "previous": 64.3,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-06T14:00:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-06T14:00:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "CAD:PMI:2026-10-06",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-edc42fc3c1f2afff664d33c6",
+          "indicator_code": "JOBLESS_CLAIMS",
+          "indicator_name_en": "Unemployment Claims",
+          "indicator_name_ar": "طلبات إعانة البطالة",
+          "actual": null,
+          "forecast": 200000.0,
+          "previous": 197000.0,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 65.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-08T12:30:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-08T12:30:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "USD:JOBLESS_CLAIMS:2026-10-08",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-52a9dba8cfa03057425e5f4a",
+          "indicator_code": "UNEMPLOYMENT",
+          "indicator_name_en": "Unemployment Rate",
+          "indicator_name_ar": "معدل البطالة",
+          "actual": null,
+          "forecast": 6.5,
+          "previous": 6.4,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 92.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-09T12:30:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-09T12:30:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "CAD:UNEMPLOYMENT:2026-10-09",
+          "independence_group": "calendar_secondary"
+        },
+        {
+          "event_id": "cal-feddefac94b13027a1d12e08",
+          "indicator_code": "CONSUMER_CONFIDENCE",
+          "indicator_name_en": "Prelim UoM Consumer Sentiment",
+          "indicator_name_ar": "ثقة المستهلك",
+          "actual": null,
+          "forecast": 47.5,
+          "previous": 47.8,
+          "first_release_value": null,
+          "latest_value": null,
+          "surprise_absolute": null,
+          "surprise_percent": null,
+          "surprise_zscore": null,
+          "historical_importance": 55.0,
+          "gold_relevance": 60.0,
+          "rate_implication_score": null,
+          "usd_implication_score": null,
+          "yield_implication_score": null,
+          "gold_implication_score": null,
+          "release_timestamp": "2026-10-09T14:00:00+00:00",
+          "source_id": "calendar_secondary",
+          "source_name": "forexfactory",
+          "source_name_ar": "مزود التقويم الاقتصادي الثانوي",
+          "source_timestamp": "2026-10-09T14:00:00+00:00",
+          "trust_score": 65.0,
+          "quality_score": 65.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "USD:CONSUMER_CONFIDENCE:2026-10-09",
+          "independence_group": "calendar_secondary"
+        }
+      ]
+    }
+  },
+  "monetary": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "state": "ready",
+      "domain_ar": "السياسة النقدية والبنوك المركزية",
+      "domain": "monetary",
+      "native_score": 0.0,
+      "gold_impact_score": 0.0,
+      "direction": "neutral",
+      "strength": 0.0,
+      "confidence": 73.5,
+      "coverage_score": 100.0,
+      "freshness_score": 100.0,
+      "data_quality_score": 85.0,
+      "reliability_score": 45.0,
+      "horizon_class": "tactical",
+      "primary_drivers": [
+        {
+          "code": "MONETARY_FED_COMMUNICATION",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+          "label_en": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-09T14:00:00Z",
+              "received_at": "2026-10-10T18:01:06.312759Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-0d84bbab316fddb29a8359e7",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        },
+        {
+          "code": "MONETARY_FED_COMMUNICATION",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+          "label_en": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-08T20:30:00Z",
+              "received_at": "2026-10-10T18:01:06.312759Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-8fbb18afd13a46e5b4eb2632",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        },
+        {
+          "code": "MONETARY_FOMC",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Minutes of the Federal Open Market Committee, September 15-16, 2026",
+          "label_en": "Minutes of the Federal Open Market Committee, September 15-16, 2026",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-07T18:00:00Z",
+              "received_at": "2026-10-10T18:01:06.312759Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-08dfdbdaa9ce20cc125a1535",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        },
+        {
+          "code": "MONETARY_FED_COMMUNICATION",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+          "label_en": "Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-05T20:30:00Z",
+              "received_at": "2026-10-10T18:01:06.312759Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-1bc4132b3f0326c5bc0edadf",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        },
+        {
+          "code": "MONETARY_FED_COMMUNICATION",
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+          "label_en": "Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+          "native_score": 0.0,
+          "gold_impact_score": -0.0,
+          "strength": 0.0,
+          "confidence": 45.0,
+          "explanation_ar": "النبرة الحالية +0.0 مقابل السابقة +0.0، وتغير السياسة +0.0. النتيجة الأصلية +0.0 (الموجب = أكثر تشددًا)، وأثرها على الذهب -0.0.",
+          "horizon_class": "tactical",
+          "sources": [
+            {
+              "source_id": "fed_rss",
+              "source_name": "Federal Reserve RSS",
+              "source_name_ar": "الاحتياطي الفيدرالي",
+              "source_url": null,
+              "source_timestamp": "2026-10-02T20:45:00Z",
+              "received_at": "2026-10-10T18:01:06.313679Z",
+              "origin": "real",
+              "freshness": "fresh",
+              "trust_score": 100.0,
+              "quality_score": 85.0,
+              "causal_group_id": "fed-5d4b355ec3292efce1cfee3e",
+              "independence_group": "federal_reserve",
+              "story_cluster_id": null,
+              "is_reprint": false
+            }
+          ]
+        }
+      ],
+      "counter_drivers": [],
+      "generated_at": "2026-10-10T18:01:06.314025Z",
+      "engine_version": "1.0.0",
+      "metadata": {
+        "driver_count": 20,
+        "conflict_score": 0.0
+      },
+      "details": [
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+          "label_en": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-10-09T14:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-0d84bbab316fddb29a8359e7",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-0d84bbab316fddb29a8359e7"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+          "label_en": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-10-08T20:30:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-8fbb18afd13a46e5b4eb2632",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-8fbb18afd13a46e5b4eb2632"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FOMC",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Minutes of the Federal Open Market Committee, September 15-16, 2026",
+          "label_en": "Minutes of the Federal Open Market Committee, September 15-16, 2026",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-10-07T18:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-08dfdbdaa9ce20cc125a1535",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-08dfdbdaa9ce20cc125a1535"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+          "label_en": "Federal Reserve Board announces approval of application by Isabella Bank Corporation",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-10-05T20:30:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-1bc4132b3f0326c5bc0edadf",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-1bc4132b3f0326c5bc0edadf"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+          "label_en": "Federal Reserve Board announces approval of application by Fleur Capital Corporation",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-10-02T20:45:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-5d4b355ec3292efce1cfee3e",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-5d4b355ec3292efce1cfee3e"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces it will extend, until November 4, the comment period on its proposal to modernize Regulation O",
+          "label_en": "Federal Reserve Board announces it will extend, until November 4, the comment period on its proposal to modernize Regulation O",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-10-02T20:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-8f9bf8f9d80dc8af113fb099",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-8f9bf8f9d80dc8af113fb099"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board issues enforcement action with Ontario Bancorporation, Inc.",
+          "label_en": "Federal Reserve Board issues enforcement action with Ontario Bancorporation, Inc.",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-10-02T15:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-b441ff6c63c6936c873ff365",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-b441ff6c63c6936c873ff365"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board finalizes changes to enhance the transparency and public accountability of its stress test and reduce volatility in its stress test-related capital requirements",
+          "label_en": "Federal Reserve Board finalizes changes to enhance the transparency and public accountability of its stress test and reduce volatility in its stress test-related capital requirements",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-30T13:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-2d126dcc2a0a42d34ad94001",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-2d126dcc2a0a42d34ad94001"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Agencies publish resolution plan feedback letters for 15 banking organizations",
+          "label_en": "Agencies publish resolution plan feedback letters for 15 banking organizations",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-29T20:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-94f4c2579d3ff5b5c9fa920e",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-94f4c2579d3ff5b5c9fa920e"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by Peoples Bancorp Inc.",
+          "label_en": "Federal Reserve Board announces approval of application by Peoples Bancorp Inc.",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-25T20:30:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-39a285d2e0f7a36ee1081ee4",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-39a285d2e0f7a36ee1081ee4"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board requests public comment on two proposals related to establishing a regulatory framework for Board-supervised payment stablecoin issuers under the GENIUS Act",
+          "label_en": "Federal Reserve Board requests public comment on two proposals related to establishing a regulatory framework for Board-supervised payment stablecoin issuers under the GENIUS Act",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-24T18:30:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-ae574d1347db7223e6301f1e",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-ae574d1347db7223e6301f1e"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board issues enforcement action with former employee of Sandy Spring Bank",
+          "label_en": "Federal Reserve Board issues enforcement action with former employee of Sandy Spring Bank",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-24T15:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-4362fad6e26cf1b24b7ac846",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-4362fad6e26cf1b24b7ac846"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces approval of application by BancFirst Corporation",
+          "label_en": "Federal Reserve Board announces approval of application by BancFirst Corporation",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-22T20:30:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-5686e3104fc13d1d52b91e41",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-5686e3104fc13d1d52b91e41"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces termination of enforcement action with SNB Bancshares and Bank of Eufaula",
+          "label_en": "Federal Reserve Board announces termination of enforcement action with SNB Bancshares and Bank of Eufaula",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-18T15:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-d16dd968793c9f3199afcb66",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-d16dd968793c9f3199afcb66"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board issues enforcement actions with former employee of Northstar Bank, former employee of American Express Travel Related Services Company, Inc., and former employee of Regions Bank",
+          "label_en": "Federal Reserve Board issues enforcement actions with former employee of Northstar Bank, former employee of American Express Travel Related Services Company, Inc., and former employee of Regions Bank",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-18T15:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-a7d6226407dcbbf91cb16d35",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-a7d6226407dcbbf91cb16d35"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FOMC",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve issues FOMC statement",
+          "label_en": "Federal Reserve issues FOMC statement",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-16T18:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-da3bcbb85f4595d6b859363d",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-da3bcbb85f4595d6b859363d"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FOMC",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board and Federal Open Market Committee release economic projections from the September 15-16 FOMC meeting",
+          "label_en": "Federal Reserve Board and Federal Open Market Committee release economic projections from the September 15-16 FOMC meeting",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-16T18:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-7400cab4847e7a3384d183c8",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-7400cab4847e7a3384d183c8"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Agencies seek comment on proposed third-party risk management guidance and issue statement on community bank engagement with core service providers",
+          "label_en": "Agencies seek comment on proposed third-party risk management guidance and issue statement on community bank engagement with core service providers",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-11T14:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-801d63c5c41391b968dca5c5",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-801d63c5c41391b968dca5c5"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Agencies reduce regulatory burden for community banks, increase eligibility for 18-month exam cycle",
+          "label_en": "Agencies reduce regulatory burden for community banks, increase eligibility for 18-month exam cycle",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-10T20:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-18a063e11b9e4f0fc797761c",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-18a063e11b9e4f0fc797761c"
+        },
+        {
+          "institution": "Federal Reserve",
+          "event_kind": "FED_COMMUNICATION",
+          "tone_score": 0.0,
+          "previous_tone_score": 0.0,
+          "policy_delta": 0.0,
+          "forward_guidance_score": 0.0,
+          "gold_implication_score": -0.0,
+          "confidence": 45.0,
+          "label_ar": "اتصال الاحتياطي الفيدرالي — Federal Reserve Board announces termination of enforcement actions with United Texas Bank, Quontic Bank Acquisition Corp., and Quontic Bank Holdings Corp.",
+          "label_en": "Federal Reserve Board announces termination of enforcement actions with United Texas Bank, Quontic Bank Acquisition Corp., and Quontic Bank Holdings Corp.",
+          "source_id": "fed_rss",
+          "source_name": "Federal Reserve RSS",
+          "source_name_ar": "الاحتياطي الفيدرالي",
+          "source_timestamp": "2026-09-04T15:00:00+00:00",
+          "trust_score": 100.0,
+          "quality_score": 85.0,
+          "freshness": "fresh",
+          "origin": "real",
+          "causal_group_id": "fed-8e50e86f77c26bb3a56197aa",
+          "independence_group": "federal_reserve",
+          "event_id": "fed-8e50e86f77c26bb3a56197aa"
+        }
+      ]
+    }
+  },
+  "cross_asset": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "state": "unavailable",
+      "domain_ar": "الأسواق المترابطة",
+      "domain": "cross_asset",
+      "native_score": 0.0,
+      "gold_impact_score": 0.0,
+      "direction": "neutral",
+      "strength": 0.0,
+      "confidence": 0.0,
+      "coverage_score": 0.0,
+      "freshness_score": 0.0,
+      "data_quality_score": 0.0,
+      "reliability_score": 0.0,
+      "horizon_class": "tactical",
+      "primary_drivers": [],
+      "counter_drivers": [],
+      "generated_at": "2026-10-10T18:01:06.315029Z",
+      "engine_version": "1.0.0",
+      "metadata": {
+        "state": "unavailable",
+        "real_driver_count": 0,
+        "proxy_driver_count": 0
+      },
+      "details": []
+    }
+  },
+  "geopolitics": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "state": "unavailable",
+      "domain_ar": "الجيوسياسة والمخاطر العالمية",
+      "domain": "geopolitical",
+      "native_score": 0.0,
+      "gold_impact_score": 0.0,
+      "direction": "neutral",
+      "strength": 0.0,
+      "confidence": 0.0,
+      "coverage_score": 0.0,
+      "freshness_score": 0.0,
+      "data_quality_score": 0.0,
+      "reliability_score": 0.0,
+      "horizon_class": "event_shock",
+      "primary_drivers": [],
+      "counter_drivers": [],
+      "generated_at": "2026-10-10T18:01:06.315029Z",
+      "engine_version": "1.0.0",
+      "metadata": {
+        "state": "unavailable"
+      },
+      "details": []
+    }
+  },
+  "flows": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "state": "unavailable",
+      "domain_ar": "التدفقات والتمركزات",
+      "domain": "flows",
+      "native_score": 0.0,
+      "gold_impact_score": 0.0,
+      "direction": "neutral",
+      "strength": 0.0,
+      "confidence": 0.0,
+      "coverage_score": 0.0,
+      "freshness_score": 0.0,
+      "data_quality_score": 0.0,
+      "reliability_score": 0.0,
+      "horizon_class": "tactical",
+      "primary_drivers": [],
+      "counter_drivers": [],
+      "generated_at": "2026-10-10T18:01:06.315029Z",
+      "engine_version": "1.0.0",
+      "metadata": {
+        "state": "unavailable",
+        "structural_gold_score": 0.0,
+        "structural_coverage_score": 0.0,
+        "structural_driver_count": 0,
+        "tactical_gold_score": 0.0
+      },
+      "details": []
+    }
+  },
+  "xau_impact": {
+    "ok": false,
+    "error": "<HTTPError 404: 'Not Found'>"
+  },
+  "btc_impact": {
+    "ok": false,
+    "error": "<HTTPError 404: 'Not Found'>"
+  },
+  "ticker": {
+    "ok": false,
+    "error": "<HTTPError 404: 'Not Found'>"
+  },
+  "source_health": {
+    "http": 200,
+    "ok": true,
+    "sample": [
+      {
+        "source_id": "bea",
+        "name_ar": "مكتب التحليل الاقتصادي الأمريكي",
+        "name_en": "U.S. Bureau of Economic Analysis",
+        "health": "config_required",
+        "health_description_ar": "يتطلب المصدر موصلًا/إعدادًا إضافيًا قبل استخدامه في التحليل الحي.",
+        "last_success_at": null,
+        "last_failure_at": null,
+        "latency_ms": null,
+        "freshness": "unavailable",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "bls",
+        "name_ar": "مكتب إحصاءات العمل الأمريكي",
+        "name_en": "U.S. Bureau of Labor Statistics",
+        "health": "healthy",
+        "health_description_ar": "المصدر يعمل وتم جلب بيانات حقيقية.",
+        "last_success_at": "2026-10-10T17:57:57.679933+00:00",
+        "last_failure_at": null,
+        "latency_ms": 3538.611399999354,
+        "freshness": "fresh",
+        "origin": "real",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "calendar_secondary",
+        "name_ar": "مزود التقويم الاقتصادي الثانوي",
+        "name_en": "Secondary Economic Calendar",
+        "health": "healthy",
+        "health_description_ar": "تم تحديث التقويم الاقتصادي الحقيقي بنجاح.",
+        "last_success_at": "2026-10-10T17:57:08.183424+00:00",
+        "last_failure_at": "2026-10-10T17:31:11.819467+00:00",
+        "latency_ms": null,
+        "freshness": "fresh",
+        "origin": "real",
+        "records_received": 83,
+        "records_accepted": 83
+      },
+      {
+        "source_id": "central_bank_gold",
+        "name_ar": "مشتريات البنوك المركزية من الذهب",
+        "name_en": "Central-Bank Gold Buying",
+        "health": "config_required",
+        "health_description_ar": "يتطلب المصدر موصلًا/إعدادًا إضافيًا قبل استخدامه في التحليل الحي.",
+        "last_success_at": null,
+        "last_failure_at": null,
+        "latency_ms": null,
+        "freshness": "unavailable",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "cftc",
+        "name_ar": "هيئة تداول السلع الآجلة — COT",
+        "name_en": "CFTC Commitments of Traders",
+        "health": "config_required",
+        "health_description_ar": "يتطلب المصدر إعدادًا إضافيًا.",
+        "last_success_at": null,
+        "last_failure_at": "2026-10-10T15:39:29.824202+00:00",
+        "latency_ms": null,
+        "freshness": "unavailable",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "fed_rss",
+        "name_ar": "الاحتياطي الفيدرالي — الإعلانات والخطب",
+        "name_en": "Federal Reserve RSS",
+        "health": "healthy",
+        "health_description_ar": "المصدر يعمل وتم جلب بيانات حقيقية.",
+        "last_success_at": "2026-10-10T17:59:02.586193+00:00",
+        "last_failure_at": "2026-10-10T16:21:52.347110+00:00",
+        "latency_ms": 2300.395500002196,
+        "freshness": "fresh",
+        "origin": "real",
+        "records_received": 20,
+        "records_accepted": 20
+      },
+      {
+        "source_id": "fred",
+        "name_ar": "قاعدة بيانات الاحتياطي الفيدرالي الاقتصادية",
+        "name_en": "FRED",
+        "health": "config_required",
+        "health_description_ar": "يتطلب المصدر إعدادًا إضافيًا.",
+        "last_success_at": null,
+        "last_failure_at": "2026-10-10T17:59:00.007885+00:00",
+        "latency_ms": null,
+        "freshness": "unavailable",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "gnews",
+        "name_ar": "مزود أخبار GNews",
+        "name_en": "GNews",
+        "health": "unknown",
+        "health_description_ar": "المصدر مضبوط وينتظر أول فحص ناجح.",
+        "last_success_at": null,
+        "last_failure_at": null,
+        "latency_ms": null,
+        "freshness": "degraded",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "gold_etf",
+        "name_ar": "تدفقات صناديق الذهب المتداولة",
+        "name_en": "Gold ETF Flows",
+        "health": "config_required",
+        "health_description_ar": "يتطلب المصدر موصلًا/إعدادًا إضافيًا قبل استخدامه في التحليل الحي.",
+        "last_success_at": null,
+        "last_failure_at": null,
+        "latency_ms": null,
+        "freshness": "unavailable",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "imf",
+        "name_ar": "صندوق النقد الدولي",
+        "name_en": "International Monetary Fund",
+        "health": "config_required",
+        "health_description_ar": "يتطلب المصدر موصلًا/إعدادًا إضافيًا قبل استخدامه في التحليل الحي.",
+        "last_success_at": null,
+        "last_failure_at": null,
+        "latency_ms": null,
+        "freshness": "unavailable",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "market_flow",
+        "name_ar": "بيانات العقود والتدفق السوقي",
+        "name_en": "Market Flow / OI / Volume / Options",
+        "health": "config_required",
+        "health_description_ar": "يتطلب المصدر موصلًا/إعدادًا إضافيًا قبل استخدامه في التحليل الحي.",
+        "last_success_at": null,
+        "last_failure_at": null,
+        "latency_ms": null,
+        "freshness": "unavailable",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "newsapi",
+        "name_ar": "مزود أخبار NewsAPI",
+        "name_en": "NewsAPI",
+        "health": "unknown",
+        "health_description_ar": "المصدر مضبوط وينتظر أول فحص ناجح.",
+        "last_success_at": null,
+        "last_failure_at": null,
+        "latency_ms": null,
+        "freshness": "degraded",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "treasury",
+        "name_ar": "وزارة الخزانة الأمريكية",
+        "name_en": "U.S. Treasury",
+        "health": "config_required",
+        "health_description_ar": "يتطلب المصدر موصلًا/إعدادًا إضافيًا قبل استخدامه في التحليل الحي.",
+        "last_success_at": null,
+        "last_failure_at": null,
+        "latency_ms": null,
+        "freshness": "unavailable",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      },
+      {
+        "source_id": "world_bank",
+        "name_ar": "البنك الدولي",
+        "name_en": "World Bank",
+        "health": "unknown",
+        "health_description_ar": "يتطلب المصدر موصلًا/إعدادًا إضافيًا قبل استخدامه في التحليل الحي.",
+        "last_success_at": null,
+        "last_failure_at": null,
+        "latency_ms": null,
+        "freshness": "degraded",
+        "origin": "unknown",
+        "records_received": 0,
+        "records_accepted": 0
+      }
+    ]
+  },
+  "xau_lineage": {
+    "ok": false,
+    "error": "<HTTPError 404: 'Not Found'>"
+  },
+  "btc_lineage": {
+    "ok": false,
+    "error": "<HTTPError 404: 'Not Found'>"
+  },
+  "xau_outcomes": {
+    "ok": false,
+    "error": "<HTTPError 404: 'Not Found'>"
+  },
+  "btc_outcomes": {
+    "ok": false,
+    "error": "<HTTPError 404: 'Not Found'>"
+  },
+  "db_schema": {
+    "http": 200,
+    "ok": true,
+    "sample": {
+      "central_bank_events": [
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "institution",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_kind",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "rate_before",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "rate_expected",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "rate_after",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "rate_surprise_bps",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "tone_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "previous_tone_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "policy_delta",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "forward_guidance_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "dot_plot_shift",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "qe_qt_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "balance_sheet_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "hawkish_probability",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "dovish_probability",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "speaker",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "statement_hash",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "statement_version",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "gold_implication_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "confidence",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        }
+      ],
+      "data_vintages": [
+        {
+          "name": "vintage_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "source_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "field_name",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "value_numeric",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "value_text",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "valid_for_period",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "source_published_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "known_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "revision_number",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "supersedes_vintage_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "event_expectations": [
+        {
+          "name": "expectation_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "provider_source_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "forecast_value",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "consensus_median",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "consensus_mean",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "consensus_low",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "consensus_high",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "respondent_count",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "unit",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "period",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "observed_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "known_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "freshness_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "quality_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "flow_observations": [
+        {
+          "name": "observation_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "flow_type",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "source_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "known_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "value",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "unit",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "frequency",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "native_horizon",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "flow_direction",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "strength_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "crowding_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "confirmation_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "divergence_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "origin",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "freshness_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "quality_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fund_events": [
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "source_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "category",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "subcategory",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "event_type",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_code",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "title_en",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "title_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "country",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "currency",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "source_timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "published_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "received_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "processed_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "declared_impact",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "gold_relevance",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "novelty_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "freshness_state",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "data_quality_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "raw_hash",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "dedup_group_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "causal_group_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "independence_group",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "source_latency_ms",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "ingestion_latency_ms",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "processing_latency_ms",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "schema_version",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fund_sources": [
+        {
+          "name": "source_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "name_ar",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "name_en",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "organization",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "category",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "transport",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "base_endpoint",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "documentation_url",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "auth_type",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "api_key_env",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "polling_interval_sec",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "freshness_limit_sec",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "rate_limit_per_min",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "provider_priority",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "fallback_group",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "trust_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "license_name",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "storage_allowed",
+          "type": "BOOLEAN",
+          "nullable": "NO"
+        },
+        {
+          "name": "redistribution_allowed",
+          "type": "BOOLEAN",
+          "nullable": "NO"
+        },
+        {
+          "name": "commercial_use_notes",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "nullable": "NO"
+        },
+        {
+          "name": "health_state",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "last_success_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "last_failure_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "last_latency_ms",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "schema_version",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fundamental_audit_log": [
+        {
+          "name": "audit_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "actor",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "action",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "entity_type",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "entity_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "before_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "after_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "correlation_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "reason",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fundamental_blackout_windows": [
+        {
+          "name": "blackout_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "starts_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "ends_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "impact",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "affected_assets_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "policy_version",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "state",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "reason_code",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "reason_ar",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fundamental_event_outcomes": [
+        {
+          "name": "outcome_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "prediction_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "price_at_event",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "return_1m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "return_5m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "return_15m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "return_60m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "return_4h",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "mfe_5m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "mae_5m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "mfe_60m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "mae_60m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "actual_direction_5m",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "actual_direction_15m",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "actual_direction_60m",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "actual_direction_4h",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "correct_5m",
+          "type": "BOOLEAN",
+          "nullable": "YES"
+        },
+        {
+          "name": "correct_15m",
+          "type": "BOOLEAN",
+          "nullable": "YES"
+        },
+        {
+          "name": "correct_60m",
+          "type": "BOOLEAN",
+          "nullable": "YES"
+        },
+        {
+          "name": "correct_4h",
+          "type": "BOOLEAN",
+          "nullable": "YES"
+        },
+        {
+          "name": "dominant_driver",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "unexpected_driver",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "lesson_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "evaluated_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fundamental_explanations": [
+        {
+          "name": "explanation_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "prediction_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "headline_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "what_happened_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "why_it_matters_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "economic_meaning_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "transmission_to_gold_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "gold_effect_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "confirmations_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "contradictions_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "weakening_factors_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "why_confidence_changed_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "invalidation_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "expected_horizon_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "actual_outcome_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "lesson_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "simple_summary_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "advanced_summary_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "explanation_version",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fundamental_factor_scores": [
+        {
+          "name": "score_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "symbol",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "domain",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "native_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "gold_impact_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "direction",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "strength",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "confidence",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "coverage_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "freshness_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "data_quality_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "reliability_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "horizon_class",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "primary_drivers_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "counter_drivers_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "source_count",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "engine_version",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fundamental_fusion_results": [
+        {
+          "name": "fusion_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "symbol",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "net_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "direction",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "strength",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "confidence",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "coverage_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "macro_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "monetary_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "cross_asset_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "geopolitical_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "flows_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "macro_weight",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "monetary_weight",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "cross_asset_weight",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "geopolitical_weight",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "flows_weight",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "agreement_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "conflict_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "freshness_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "data_quality_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "dominant_cluster",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "minority_cluster",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "weight_reasons_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "fusion_version",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fundamental_guard_decisions": [
+        {
+          "name": "decision_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "signal_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "prediction_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "blackout_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "requested_action",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "decision",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "reason_code",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "reason_ar",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "risk_version",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "executor_guard_version",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "fundamental_training_features": [
+        {
+          "name": "feature_row_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "prediction_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "symbol",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_type",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "declared_impact",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "actual",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "forecast",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "previous",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "surprise_zscore",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "finbert_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "gold_relevance",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "policy_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "dxy",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "us2y",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "us10y",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "real_yield",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "vix",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "spx",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "oil",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "geopolitical_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "flows_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "technical_regime",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "volatility_regime",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "session",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "target_return_5m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "target_return_15m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "target_return_60m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "target_return_4h",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "dataset_split",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "leakage_guard_version",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "feature_version",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "known_at_cutoff",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "geopolitical_events": [
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "region",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "countries_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "event_class",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "severity_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "escalation_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "deescalation_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "persistence_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "global_relevance",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "safe_haven_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "energy_risk_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "currency_risk_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "source_consensus_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "independent_source_count",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "story_cluster_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "gold_implication_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "confidence",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        }
+      ],
+      "gold_impact_predictions": [
+        {
+          "name": "prediction_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "symbol",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "fusion_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "prediction_stage",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "direction",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "strength",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "confidence",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "confidence_validation",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "coverage_score",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "bullish_probability_5m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "bearish_probability_5m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "neutral_probability_5m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "bullish_probability_15m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "bearish_probability_15m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "neutral_probability_15m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "bullish_probability_60m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "bearish_probability_60m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "neutral_probability_60m",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "bullish_probability_4h",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "bearish_probability_4h",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "neutral_probability_4h",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "structural_bias",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "conflict_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "freshness_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "data_quality_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "primary_drivers_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "counter_drivers_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "confirmations_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "contradictions_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "weakening_factors_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "invalidation_conditions_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "transmission_chain_json",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "blackout_active",
+          "type": "BOOLEAN",
+          "nullable": "NO"
+        },
+        {
+          "name": "blackout_reason",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "model_version",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "macro_releases": [
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "indicator_code",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "indicator_name_en",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "indicator_name_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "frequency",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "unit",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "actual",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "forecast",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "previous",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "first_release_value",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "revised_previous",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "latest_value",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "consensus_low",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "consensus_high",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "surprise_absolute",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "surprise_percent",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "surprise_zscore",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "revision_effect_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "historical_importance",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "gold_relevance",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "rate_implication_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "usd_implication_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "yield_implication_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "gold_implication_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "release_timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "revision_timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        }
+      ],
+      "market_series_observations": [
+        {
+          "name": "observation_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "series_code",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "source_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "received_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "value",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "unit",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "frequency",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "native_horizon",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "origin",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "freshness_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "quality_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "model_evaluations": [
+        {
+          "name": "evaluation_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "model_name",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "model_version",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "evaluated_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "dataset_start",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "dataset_end",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "sample_count",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "brier_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "accuracy",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "precision_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "recall_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "calibration_error",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "notes",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "passed",
+          "type": "BOOLEAN",
+          "nullable": "NO"
+        }
+      ],
+      "news_articles": [
+        {
+          "name": "article_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "event_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "source_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "headline",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "summary",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "body_excerpt",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "url",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "language",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "published_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "received_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "dedup_hash",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "story_cluster_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "original_source_id",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "is_reprint",
+          "type": "BOOLEAN",
+          "nullable": "NO"
+        },
+        {
+          "name": "provider",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "source_trust",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "freshness_state",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "data_quality_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        }
+      ],
+      "news_nlp_analysis": [
+        {
+          "name": "analysis_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "article_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "finbert_label",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "finbert_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "gold_relevance",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "topic",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "event_type",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "economic_relevance",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "geopolitical_severity",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "safe_haven_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "novelty_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "surprise_language_score",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "model_name",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "model_version",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "analyzed_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "ohlcv": [
+        {
+          "name": "symbol",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "timeframe",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "open",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "high",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "low",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "close",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "volume",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "prediction_reasoning_steps": [
+        {
+          "name": "step_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "prediction_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "sequence_no",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "from_factor",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "to_factor",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "relationship",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "direction",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "strength",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "confidence",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "confirmed",
+          "type": "BOOLEAN",
+          "nullable": "YES"
+        },
+        {
+          "name": "historical_support",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "explanation_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "source_fetch_runs": [
+        {
+          "name": "fetch_run_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "source_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "started_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "finished_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "YES"
+        },
+        {
+          "name": "http_status",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "success",
+          "type": "BOOLEAN",
+          "nullable": "NO"
+        },
+        {
+          "name": "records_received",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "records_accepted",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "records_rejected",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "duplicates",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "latency_ms",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "rate_limit_remaining",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "error_code",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "error_message",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "payload_hash",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "source_health_history": [
+        {
+          "name": "health_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "source_id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "observed_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        },
+        {
+          "name": "health_state",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "freshness_state",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "latency_ms",
+          "type": "DOUBLE",
+          "nullable": "YES"
+        },
+        {
+          "name": "consecutive_failures",
+          "type": "INTEGER",
+          "nullable": "NO"
+        },
+        {
+          "name": "status_code",
+          "type": "INTEGER",
+          "nullable": "YES"
+        },
+        {
+          "name": "description_ar",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "ticks": [
+        {
+          "name": "symbol",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "bid",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "ask",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "spread",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "timestamp",
+          "type": "TIMESTAMP WITH TIME ZONE",
+          "nullable": "NO"
+        }
+      ],
+      "trades": [
+        {
+          "name": "id",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "symbol",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "side",
+          "type": "VARCHAR",
+          "nullable": "NO"
+        },
+        {
+          "name": "entry_price",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "exit_price",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "pnl_pips",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "pnl_usd",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "rr_ratio",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "duration_s",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "session",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        },
+        {
+          "name": "conviction",
+          "type": "DOUBLE",
+          "nullable": "NO"
+        },
+        {
+          "name": "opened_at",
+          "type": "TIMESTAMP",
+          "nullable": "NO"
+        },
+        {
+          "name": "closed_at",
+          "type": "TIMESTAMP",
+          "nullable": "NO"
+        },
+        {
+          "name": "strategy",
+          "type": "VARCHAR",
+          "nullable": "YES"
+        }
+      ]
+    }
+  }
+}

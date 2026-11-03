@@ -1,0 +1,17 @@
+path: _pdfs/_bis/borio_bis_2016_cross_currency_basis.pdf
+title_guess: Covered interest parity lost: understanding the
+ids: 
+priority: warm
+extract_status: ok
+---
+has been 
+systematically violated since the Great Financial Crisis. Espe cially puzzling have been the 
+violations since 2014, even once banks had strengthened their balance sheets and regained easy 
+access to funding. We offer a framework to think about these violations, stressing the combination 
+of hedging demand and tighter limits to arbitrage, which in turn reflect a tighter management of 
+risks and bank balance sheet constraints. We fi nd empirical support for this framework both 
+across currencies and over time. 
+JEL classification: F31, G15, G2. 
+Covered interest parity (CIP) is the closest thing to a physical law in international 
+finance. It holds that the interest rate differential between two currencies in the cash 
+money markets should equal the differential between the forwar

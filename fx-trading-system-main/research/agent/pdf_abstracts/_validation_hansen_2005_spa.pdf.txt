@@ -1,0 +1,15 @@
+path: _pdfs/_validation/hansen_2005_spa.pdf
+title_guess: A Test for Superior Predictive Ability
+ids: 
+priority: warm
+extract_status: ok
+---
+rior predictive ability. The new test compares favorably to the reality check
+(RC) for data snooping, because it is more powerful and less sensitive to poor and irrelevant alternatives.
+The improvements are achieved by two modiﬁcations of the RC. We use a studentized test statistic that
+reduces the inﬂuence of erratic forecasts and invoke a sample-dependent null distribution. The advantages
+of the new test are conﬁrmed by Monte Carlo experiments and an empirical exercise in which we compare
+a large number of regression-based forecasts of annual U.S. inﬂation to a simple random-walk forecast.
+The random-walk forecast is found to be inferior to regression-based forecasts and, interestingly, the best
+sample performance is achieved by models that have a Phillips curve structure.
+KEY WORDS: For

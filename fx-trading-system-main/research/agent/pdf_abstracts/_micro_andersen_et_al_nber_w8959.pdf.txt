@@ -1,0 +1,18 @@
+path: _pdfs/_micro/andersen_et_al_nber_w8959.pdf
+title_guess: MICRO EFFECTS OF MACRO ANNOUNCEMENTS:
+ids: w8959
+priority: warm
+extract_status: ok
+---
+/www.nber.org/papers/w8959
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+May 2002
+This work was supported by the National Science Foundation and the Wharton Financial Institutions Center. We are
+grateful to Olsen and Associates for making available their real-time exchange rate quotations data, and to Money Market
+Services International for making available their news announcement expectations data. For useful comments we thank
+the Editor and three referees, as well as Ricardo Cabellero, Dean Croushore, Kathryn Dominguez, Bernard Dumas,
+Martin Evans, Michael Fleming, Jeff Frankel, Linda Goldberg, Ken Kavajecz, Rich Lyons, Nelson Mark, Frank
+Schorfheide, Nick Souleles, Allan Timmermann, Mark Watson, Ingrid Werner, and Jonathan Wright, and participants
+at

@@ -1,0 +1,15 @@
+path: _pdfs/02_factor/lustig_stathopoulos_verdelhan_term_structure_carry.pdf
+title_guess: The Term Structure of Currency Carry Trade Risk Premia
+ids: 
+priority: warm
+extract_status: ok
+---
+zon, the returns to currency carry trades decrease as the maturity of the foreign
+bonds increases. Across developed countries, the local currency term premia, which increase with the maturity
+of the bonds, oﬀset the currency risk premia. Similarly, in the time-series, the predictability of foreign bond
+returns in dollars declines with the bonds’ maturities. Leading no-arbitrage models in international ﬁnance do
+not match the downward term structure of currency carry trade risk premia. We derive a simple preference-
+free condition that no-arbitrage models need to reproduce in the absence of carry trade risk premia on
+long-term bonds.
+∗Lustig: Stanford Graduate School of Business, 355 Knight Way, Stanford, CA 94305 (hlustig@stanford.edu). Stathopou-
+los: UNC Kenan-Flagler Business School, 30

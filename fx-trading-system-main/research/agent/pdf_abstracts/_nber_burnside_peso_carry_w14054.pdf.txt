@@ -1,0 +1,28 @@
+path: _pdfs/_nber/burnside_peso_carry_w14054.pdf
+title_guess: DO PESO PROBLEMS EXPLAIN THE RETURNS TO THE CARRY TRADE?
+ids: w14054
+priority: hot
+extract_status: ok
+---
+We study the properties of the carry trade, a currency speculation strategy in which an investor borrows
+low-interest-rate currencies and lends high-interest-rate currencies. This strategy generates payoffs
+which are on average large and uncorrelated with traditional risk factors. We argue that these payoffs
+reflect a peso problem. The underlying peso event features high values of the stochastic discount factor
+rather than very large negative payoffs.
+A. Craig Burnside
+Department of Economics
+Duke University
+213 Social Sciences Building
+Durham, NC 27708-0097
+and NBER
+burnside@econ.duke.edu
+Martin S. Eichenbaum
+Department of Economics
+Northwestern University
+2003 Sheridan Road
+Evanston, IL 60208
+and NBER
+eich@northwestern.edu
+Isaac Kleshchelski
+Olin Business School
+Washington University in St. Louis

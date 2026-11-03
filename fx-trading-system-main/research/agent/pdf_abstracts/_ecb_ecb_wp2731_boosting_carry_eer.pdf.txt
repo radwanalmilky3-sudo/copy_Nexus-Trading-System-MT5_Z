@@ -1,0 +1,12 @@
+path: _pdfs/_ecb/ecb_wp2731_boosting_carry_eer.pdf
+title_guess: Boosting carry with equilibrium
+ids: 
+priority: hot
+extract_status: ok
+---
+We build currency portfolios based on the paradigm that exchange rates slowly converge
+to their equilibrium to highlight three results. First, this property can be exploited to build
+profitable portfolios. Second, the slow pace of convergence at short-horizons is consistent
+with the evidence of profitable carry trade strategies, i.e. the common practice of borrowing
+in low-yield currencies and investing in high-yield currencies. Third, the predictive power of
+equilibrium exchange rates may boost the performance of carry trade strategies.

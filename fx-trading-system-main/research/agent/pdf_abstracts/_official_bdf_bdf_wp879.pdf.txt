@@ -1,0 +1,16 @@
+path: _pdfs/_official/bdf/bdf_wp879.pdf
+title_guess: Exchange Rate Undervaluation and African
+ids: wp879
+priority: warm
+extract_status: ok
+---
+of undervaluation of African currencies in export “surges” of some 
+primary and manufactured goods. We calculate country-product specific misalignments on 
+the basis of the absolute purchasing power parity principle adjusted for the productivity 
+level. Using a panel of 41 African countries and a basket of 149 primary and 
+manufactured exported goods (4-digit HS code), we identify 96 export surges over the 
+period 1995-2017. The complementary log-log (cloglog), which more appropriately treats 
+rare events, brings to light undervaluation as an influential determinant for triggering 
+an export surge then sustaining it over time. This effect is controlled for relevant 
+covariates. Results prove robust to alternative calculations of export surges and to 
+different estimators used in regression

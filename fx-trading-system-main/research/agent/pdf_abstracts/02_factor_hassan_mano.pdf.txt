@@ -1,0 +1,18 @@
+path: _pdfs/02_factor/hassan_mano.pdf
+title_guess: FORWARD AND SPOT EXCHANGE RATES IN A MULTI-CURRENCY WORLD
+ids: 
+priority: warm
+extract_status: ok
+---
+CH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+July 2014, Revised October 2018
+We are grateful to Pol Antras, Craig Burnside, John Cochrane, Xavier Gabaix, Jeremy Graveline, 
+Ralph Koijen, Hanno Lustig, Matteo Maggiori, Lukas Menkhoff, Toby Moskowitz, Ralph Ossa, 
+Andreas Schrimpf, Alireza Tahbaz-Salehi, Andrea Vedolin, and Adrien Verdelhan. We also 
+thank seminar participants at the University of Chicago, CITE Chicago, the Chicago Junior 
+Finance Conference, KU Leuven, University of Sydney, New York Federal Reserve, University 
+of Zurich, SED annual meetings, and the NBER Summer Institute for useful comments. All 
+mistakes remain our own. Tarek Hassan is grateful for financial support from the Fama-Miller 
+Center for Research in Finance at the University of Chicago. The views expressed 

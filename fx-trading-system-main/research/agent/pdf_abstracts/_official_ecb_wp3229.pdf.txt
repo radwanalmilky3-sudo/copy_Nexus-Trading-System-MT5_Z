@@ -1,0 +1,18 @@
+path: _pdfs/_official/ecb_wp3229.pdf
+title_guess: Michael Ehrmann, Massimo Ferrari Minesso,
+ids: wp3229
+priority: warm
+extract_status: ok
+---
+We revisit the debate on the effectiveness of central bank communication on exchange
+rates, contrasting a skeptical view, which holds that communication neither moves
+exchange rates nor influences them in the desired direction, with an optimistic view
+that it does. Using nearly 100 official ECB statements on exchange rates made dur-
+ing its monetary policy press conferences since 2002, we show that the ECB tends
+to mention the exchange rate when the real effective exchange rate deviates from its
+equilibrium value, whereas journalists’ questions are mainly responsive to the nominal
+exchange rate. Studying the effects of these mentions, our findings by and large sup-
+port the skeptical view: after controlling for monetary policy shocks, exchange rate
+communication has limited immediate effects on the euro exchange rate, which fade
+quickly. Effectiveness is particularly limited when interest rates are at their effective
+lower bound.

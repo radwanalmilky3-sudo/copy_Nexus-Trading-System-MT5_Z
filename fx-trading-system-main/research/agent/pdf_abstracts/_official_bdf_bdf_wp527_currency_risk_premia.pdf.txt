@@ -1,0 +1,69 @@
+path: _pdfs/_official/bdf/bdf_wp527_currency_risk_premia.pdf
+title_guess: BITRAGE-FREE NELSON-SIEGEL TERM STRUCTURE
+ids: 
+priority: warm
+extract_status: ok
+---
+ON GÉNÉRALE DES ÉTUDES ET DES RELATIONS INTERNATIONALES 
+
+DIRECTION GÉNÉRALE DES ÉTUDES ET DES RELATIONS INTERNATIONALES 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+AN ARBITRAGE-FREE NELSON-SIEGEL TERM STRUCTURE 
+MODEL WITH STOCHASTIC VOLATILITY FOR THE 
+DETERMINATION OF CURRENCY RISK PREMIA 
+ 
+Sarah Mouabbi 
+ 
+ 
+December 2014 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Les Documents de travail reflètent les idées personnelles de leurs auteurs et n'expriment pas 
+nécessairement la position de la Banque de France. Ce document est disponible sur le site internet de la 
+Banque de France « www.banque-france.fr ». 
+Working Papers reflect the opinions of the authors and do not necessarily express the views of the Banque 
+de France. This document is available on the Banque de France Websi

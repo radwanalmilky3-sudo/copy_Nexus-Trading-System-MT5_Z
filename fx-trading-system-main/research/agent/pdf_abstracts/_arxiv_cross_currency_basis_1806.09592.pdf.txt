@@ -1,0 +1,17 @@
+path: _pdfs/_arxiv/cross_currency_basis_1806.09592.pdf
+title_guess: Candidate Phases for SU (2) Adjoint
+ids: 
+priority: warm
+extract_status: ok
+---
+udy, Princeton, NJ 08540, USA
+2 Department of Physics, Harvard University, Cambridge, MA 02138, USA
+We study four-dimensional adjoint QCD with gauge group SU (2) and two Weyl fermion
+flavors, which has an SU (2)R chiral symmetry. The infrared behavior of this theory is
+not firmly established. We explore candidate infrared phases by embedding adjoint QCD
+into N = 2 supersymmetric Yang-Mills theory deformed by a supersymmetry-breaking
+scalar mass M that preserves all global symmetries and ’t Hooft anomalies. This includes
+’t Hooft anomalies that are only visible when the theory is placed on manifolds that do not
+admit a spin structure. The consistency of this procedure is guaranteed by a nonabelian
+spin-charge relation involving the SU (2)R symmetry that is familiar from topologically
+twiste

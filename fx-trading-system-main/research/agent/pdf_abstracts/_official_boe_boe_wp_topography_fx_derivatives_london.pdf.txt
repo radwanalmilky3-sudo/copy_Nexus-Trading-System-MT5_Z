@@ -1,0 +1,18 @@
+path: _pdfs/_official/boe/boe_wp_topography_fx_derivatives_london.pdf
+title_guess: Staff Working Paper No. 1,103
+ids: 
+priority: warm
+extract_status: ok
+---
+We analyse the behaviour of all financial and non‑financial firms active in the UK 
+FX derivatives market – the largest global centre for currency trading – using 
+transaction‑level data. Based on firm‑level net currency derivatives exposures, we find 
+that UK and EU pension funds, investment funds, insurers, and non‑financial corporations 
+use FX derivatives primarily for hedging purposes, with dealer banks accommodating 
+these clients’ hedging needs. In contrast, hedge funds predominantly utilise FX derivatives 
+to speculate, with their trading activity consistent with carry trade, momentum, and 
+macroeconomic news investment strategies. Lastly, the paper documents many novel facts 
+that should motivate theoretical models.
+Key words:
+ FX derivatives, exchange rates, non‑bank financial institutions, banks, 
+non‑financial corporations, hedging, speculation, macro news.

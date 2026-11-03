@@ -1,0 +1,18 @@
+path: _pdfs/_nber/burnside_carry_w13918.pdf
+title_guess: THE "THIN FILM OF GOLD":
+ids: w13918
+priority: hot
+extract_status: ok
+---
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+April 2008
+We would like to thank Nitin Malla, Anna Heinrich and Marit Wehner for excellent research assistance.
+We received helpful comments from Michael Bordo, Warren Coats, Wolfram Fischer, Carl-Ludwig
+Holtfrerich, Christopher M. Meissner, Martin Schüler, Alan M. Taylor, Marc Weidenmier, and the
+participants of the Berlin Colloquium on Quantitative Economic History. Michael Bordo, Michael
+Clemens, Trish Kelly, Christopher M. Meissner, Maurice Obstfeld, Hugh Rockoff, Nathan Sussman,
+Alan M. Taylor and Jeffrey Williamson generously shared data. All remaining errors are our own.
+The views expressed herein are those of the author(s) and do not necessarily reflect the views of the
+National Bureau of Economic R

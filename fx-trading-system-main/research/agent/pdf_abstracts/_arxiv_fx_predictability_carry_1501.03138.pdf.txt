@@ -1,0 +1,16 @@
+path: _pdfs/_arxiv/fx_predictability_carry_1501.03138.pdf
+title_guess: Subleading harmonic ﬂows in hydrodynamic simulations of heavy ion collisions
+ids: 
+priority: warm
+extract_status: ok
+---
+ated: August 22, 2018)
+We perform a principal component analysis (PCA) of v3(pT ) in event-by-event hydrodynamic
+simulations of Pb+Pb collisions at the Large Hadron Collider (LHC). The PCA procedure identiﬁes
+two dominant contributions to the two-particle correlation function, which together capture 99.9%
+of the squared variance. We ﬁnd that the subleading ﬂow (which is the largest source of ﬂow
+factorization breaking in hydrodynamics) is predominantly a response to the radial excitations of a
+third-order eccentricity. We present a systematic study of the hydrodynamic response to these radial
+excitations in 2+1D viscous hydrodynamics. Finally, we construct a good geometrical predictor for
+the orientation angle and magnitude of the leading and subleading ﬂows using two Fourier modes
+of the 

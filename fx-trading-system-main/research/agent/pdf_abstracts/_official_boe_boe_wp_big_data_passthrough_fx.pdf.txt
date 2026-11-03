@@ -1,0 +1,58 @@
+path: _pdfs/_official/boe/boe_wp_big_data_passthrough_fx.pdf
+title_guess: boe wp big data passthrough fx
+ids: 
+priority: warm
+extract_status: ok
+---
+CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+Staff W orking Paper N o. 579 
+W hat can Big D ata tell us about the 
+passthrough of big exchange rate 
+changes? 
+John Lew is 
+January 2016 
+Staff W orking Papers describe

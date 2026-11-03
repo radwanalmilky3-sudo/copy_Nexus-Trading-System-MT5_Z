@@ -1,0 +1,17 @@
+path: _pdfs/_validation/harvey_liu_zhu_author.pdf
+title_guess: … and the Cross-Section of Expected Returns
+ids: 
+priority: warm
+extract_status: ok
+---
+rs and factors attempt to explain the cross-section of expected returns.
+Given this extensive data mining, it does not make sense to use the usual criteria for
+establishing signiﬁcance. Which hurdle should be used for current research? Our paper
+introduces a new multiple testing framework and provides historical cutoffs from the ﬁrst
+empirical tests in 1967 to today. A new factor needs to clear a much higher hurdle, with
+a t-statistic greater than 3.0. We argue that most claimed research ﬁndings in ﬁnancial
+economics are likely false. ( JEL C12, C52, G12)
+Received October 22, 2014; accepted June 15, 2015 by Editor Andrew Karolyi.
+Over forty years ago, one of the ﬁrst tests of the capital asset pricing model
+(CAPM) found that the market beta was a signiﬁcant explanator of the cross-
+section

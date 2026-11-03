@@ -1,0 +1,15 @@
+path: _pdfs/_official/boe/boe_wp_granular_banking_flows_fx.pdf
+title_guess: Staff Working Paper No. 1,043
+ids: 
+priority: warm
+extract_status: ok
+---
+Using data on the external positions of global banks in the world’s largest banking hub, the 
+UK, and a granular international-banking model, we show that large banks’ idiosyncratic net 
+flows into USD debt influence exchange-rate dynamics. UK-resident banks’ USD demand 
+is, on average, price-elastic, whereas their counterparties’ USD supply is price-inelastic. We 
+document a structural shift − from banks’ being price-inelastic before the global financial 
+crisis to price-elastic afterwards − linked to a marked rise in banks’ hedging on-balance-sheet 
+USD net exposures via FX derivatives. This change may help explain the tighter link between 
+exchange rates and macroeconomic fundamentals since the crisis.
+Key words: Capital flows, exchange rates, FX derivatives, international banking.

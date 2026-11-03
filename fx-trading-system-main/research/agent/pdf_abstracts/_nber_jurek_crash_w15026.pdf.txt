@@ -1,0 +1,18 @@
+path: _pdfs/_nber/jurek_crash_w15026.pdf
+title_guess: COMPUTING DSGE MODELS WITH RECURSIVE PREFERENCES
+ids: w15026
+priority: hot
+extract_status: ok
+---
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+June 2009
+We thank Michel Juillard for his help with computational issues and Larry Christiano, Dirk Krueger,
+and participants at the Penn Macro lunch for comments. Beyond the usual disclaimer, we must note
+that any views expressed herein are those of the authors and not necessarily those of the Federal Reserve
+Bank of Atlanta or the Federal Reserve System. Finally, we also thank the NSF for financial support.
+The views expressed herein are those of the author(s) and do not necessarily reflect the views of the
+National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been peer-
+reviewed or been subject to the review by the NBER Board of Direct

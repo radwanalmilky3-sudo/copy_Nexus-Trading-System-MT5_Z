@@ -1,0 +1,20 @@
+path: _pdfs/_official/cftc_tff_explanatory_notes.pdf
+title_guess: TRADERS IN FINANCIAL FUTURES
+ids: 
+priority: warm
+extract_status: ok
+---
+o transparency implemented in 
+2009 that disaggregated data in the CFTC’s weekly Commitments of Traders (COT) Reports. 
+The new report separates large traders in the financial markets into the following four categories: 
+Dealer/Intermediary; Asset Manager/Institutional; Leveraged Funds; and Other Reportables. 
+The legacy COT report separates reportable traders only into “commercial” and “non-
+commercial” categories. 
+ 
+The TFF report, like the COT reports, provides a breakdown of each Tuesday's open interest for 
+markets in which 20 or more traders hold positions equal to or above the reporting levels 
+established by the CFTC. This report is published in futures-only and futures-and-options-
+combined formats. The TFF report is published side-by-side with the legacy COT. 
+ 
+The TFF Report 
+

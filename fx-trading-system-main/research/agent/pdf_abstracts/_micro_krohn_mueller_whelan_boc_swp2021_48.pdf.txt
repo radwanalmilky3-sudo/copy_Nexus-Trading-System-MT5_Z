@@ -1,0 +1,31 @@
+path: _pdfs/_micro/krohn_mueller_whelan_boc_swp2021_48.pdf
+title_guess: Bank of Canada staff working papers provide a forum for staff to publish work-in-progress research independently from
+ids: 
+priority: warm
+extract_status: ok
+---
+olicy orthodoxy. Therefore, the views 
+expressed in this paper are solely those of the authors and may differ from official Bank of Canada views. No 
+responsibility for them should be attributed to the Bank. 
+ 
+ISSN 1701-9397 ©2021 Bank of Canada 
+Staff Working Paper/Document de travail du personnel — 
+2021-48 
+ 
+Last updated: October 6, 2021 
+Foreign Exchange Fixings 
+and Returns Around the 
+Clock 
+by Ingomar Krohn,1 Philippe Mueller2 and Paul Whelan3 
+1Financial Markets Department 
+Bank of Canada, Ottawa, Ontario, Canada K1A 0G9 
+2Warwick Business School 
+ Coventry, CV4 7AL, UK 
+3Copenhagen Business School 
+ Solbjerg Pl. 3, 2000 Frederiksberg, DK 
+IKrohn@bank-banque-canada.ca, Philippe.Mueller@wbs.ac.uk, pawh.fi@cbs.dk 
+
+i 
+ 
+Acknowledgements 
+We would like to thank Benjamin Anderegg, Da

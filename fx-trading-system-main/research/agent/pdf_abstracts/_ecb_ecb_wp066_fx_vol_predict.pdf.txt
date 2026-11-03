@@ -1,0 +1,21 @@
+path: _pdfs/_ecb/ecb_wp066_fx_vol_predict.pdf
+title_guess: EUROPEAN CENTRAL BANK
+ids: 
+priority: cold
+extract_status: ok
+---
+SCACCIAVILLANI
+June 2001
+WORKING PAPER SERIES
+* Authors’ e-mail address: vincent.brousseau@ecb.int; fabio.scacciavillani@gs.com 
+We wish to thank Satu Jaatinen for providing some of the data used in this study. Furthermore we acknowledge the extremely usefu l comments made by Charles Goodhart,
+Carsten Detken, Philipp Hartmann, Benoît Mojon, an anonymous referee and the participants at the Conference on “The euro: what’s in the future” in Venice on 8 to 9 June 2000.
+We accept sole responsibility for any remaining errors.The views expressed in this paper are not necessarily those of the Europ ean Central Bank.
+WORKING PAPER NO. 66
+CAN SHORT-TERM FOREIGN
+EXCHANGE VOLATILITY 
+BE PREDICTED BY THE
+GLOBAL HAZARD INDEX?
+BY VINCENT BROUSSEAU
+AND FABIO SCACCIAVILLANI*
+June 2001

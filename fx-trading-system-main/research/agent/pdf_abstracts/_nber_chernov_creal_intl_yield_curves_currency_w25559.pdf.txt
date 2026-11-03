@@ -1,0 +1,18 @@
+path: _pdfs/_nber/chernov_creal_intl_yield_curves_currency_w25559.pdf
+title_guess: THE ENDOWMENT MODEL AND MODERN PORTFOLIO THEORY
+ids: w25559
+priority: warm
+extract_status: ok
+---
+ESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+February 2019, Revised November 2022
+For helpful comments, we thank an anonymous Associate Editor, two anonymous referees, 
+Patrick Bolton, Bruno Biais (Editor), Winston Dou, Thomas Gilbert, Harrison Hong, Steve 
+Kaplan, Monika Piazzesi, Jim Poterba, Tom Sargent, Mark Schroder, and Luis Viceira; seminar 
+participants at Columbia University; and participants at the European Finance Association and 
+NBER New Developments in Long-Term Asset Management conferences. We thank Matt Hamill 
+and Ken Redd of NACUBO and John Griswold and Bill Jarvis of Commonfund for assistance 
+with data. Dimmock gratefully acknowledges financial support from the Singapore Ministry of 
+Education research grant R-315-000-133-133. The views expressed herein are tho

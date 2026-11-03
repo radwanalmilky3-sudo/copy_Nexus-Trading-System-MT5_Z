@@ -1,0 +1,28 @@
+path: _pdfs/_official/boe/boe_wp_affine_fx_risk_premium.pdf
+title_guess: Affine term structure models for the foreign
+ids: 
+priority: warm
+extract_status: ok
+---
+Luca Benati* 
+ 
+ 
+Working Paper no. 291 
+ 
+ 
+ 
+* Bank of England, Threadneedle Street, London, EC2R 8AH. 
+Email: luca.benati@bankofengland.co.uk. 
+ 
+ 
+ 
+ 
+ 
+ 
+The views expressed in this paper are those of the author, and not necessarily those of the Bank of 
+England. I wish to thank Nikos Panigirtzoglou for helpful discussions, Liuren Wu for most helpful 
+suggestions at an early stage of the project, Nicky Anderson, Peter Andrews, Mark Astley, Qiang Dai, 
+participants at a seminar at the Bank of England, and at the C.V. Starr/Review of Economic Dynamics 
+Conference ‘Finance and the Macroeconomy’, New York University, 11-12 October 2002, for 
+comments, and David Backus for kindly providing the data set used in Backus, Telmer and Wu (1999). 
+Usual disclaimers apply. This paper was finalised

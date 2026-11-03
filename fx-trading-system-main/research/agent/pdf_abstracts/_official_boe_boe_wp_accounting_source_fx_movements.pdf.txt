@@ -1,0 +1,9 @@
+path: _pdfs/_official/boe/boe_wp_accounting_source_fx_movements.pdf
+title_guess: Accounting for the source of exchange rate movements: new evidence
+ids: 
+priority: warm
+extract_status: ok
+---
+5 
+ 
+Summary 7

@@ -1,0 +1,19 @@
+path: _pdfs/_micro/mancini_ranaldo_wrampelmeyer_epfl.pdf
+title_guess: Electronic copy available at: http://ssrn.com/abstract=1447869
+ids: 
+priority: warm
+extract_status: ok
+---
+A daily return reversal measure of liquidity is developed and estimated using a new compre-
+hensive ultra-high frequency data set of foreign exchange rates during the ﬁnancial crisis period of
+2007–2008. The measure captures market participants’ perception of periods with high and low
+liquidity in the expected manner. Tests for commonality in foreign exchange (FX) liquidity show
+that liquidity co-moves strongly across currencies. Systematic FX liquidity decreases dramatically
+during the subprime crisis, especially after the default of Lehman Brothers in September 2008.
+To investigate whether there exists a return premium for illiquidity, a factor model similar to
+Lustig, Roussanov, and Verdelhan (2009) is augmented by a liquidity risk factor constructed from
+shocks to systematic liquidity. Empirical results indicate that liquidity risk is a heavily priced
+state variable important for the determination of FX returns. Previously identiﬁed risk factors
+such as the carry trade and market risk factors are no longer signiﬁcant once common liquidity
+risk is incorporated in the asset pricing model. This ﬁnding helps to explain deviations from
+uncovered interest rate parity as classical tests do not include liquidity risk.

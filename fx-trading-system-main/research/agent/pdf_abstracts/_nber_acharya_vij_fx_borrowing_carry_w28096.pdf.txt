@@ -1,0 +1,19 @@
+path: _pdfs/_nber/acharya_vij_fx_borrowing_carry_w28096.pdf
+title_guess: FOREIGN CURRENCY BORROWING OF CORPORATIONS AS CARRY TRADES:
+ids: w28096
+priority: warm
+extract_status: ok
+---
+BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+November 2020
+We thank Valentina Bruno, Stephen Cecchetti, Hyeyoon Jung, Sebnem Kalemli-Ozcan, Philip 
+Lane, Hae Kang Lee, Prachi Mishra, N.R. Prabhala, Raghuram Rajan, Jack Shim, Hyun Song 
+Shin and participants at the Moody's/NYU Stern Salomon Center/ICRA Conference on Fixed 
+Income Research in India, the NSE-NYU Conference on Indian Financial Markets, and the 
+IBRN-IMF Conference for helpful comments. We are grateful for financial support provided by 
+the NSE-NYU Stern Initiative on the Study of Indian Capital Markets. The views expressed in 
+this paper are those of the authors and do not necessarily represent those of the NSE, NYU or the 
+National Bureau of Economic Research.
+NBER working papers are circulated fo

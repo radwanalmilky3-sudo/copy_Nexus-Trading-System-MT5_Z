@@ -1,0 +1,18 @@
+path: _pdfs/_nber/lustig_verdelhan_investing_currency_w21882.pdf
+title_guess: IMMIGRATION IN AMERICAN ECONOMIC HISTORY
+ids: w21882
+priority: warm
+extract_status: ok
+---
+sachusetts Avenue
+Cambridge, MA 02138
+January 2016
+We thank Steven Durlauf (editor), Matthias Blum, George Borjas, David Card, Giovanni Peri, Gavin
+Wright, and seven referees for helpful comments and encouragement. We are grateful for Santiago
+Perez for excellent research assistance. The views expressed herein are those of the authors and do
+not necessarily reflect the views of the National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been peer-
+reviewed or been subject to the review by the NBER Board of Directors that accompanies official
+NBER publications.
+© 2016 by Ran Abramitzky and Leah Platt Boustan. All rights reserved. Short sections of text, not
+to exceed two paragraphs, may be quoted without explicit permission

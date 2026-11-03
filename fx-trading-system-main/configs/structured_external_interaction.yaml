@@ -1,0 +1,38 @@
+schema_version: 1
+status: implementation_ready_outcome_blind_not_authorized
+symbols: [EURUSD, GBPUSD]
+decision_frequency: 1D_UTC
+decision_start: 2016-01-01T00:00:00Z
+decision_end_exclusive: 2026-01-01T00:00:00Z
+price_features:
+  - momentum_252d_skip_21d
+  - vol_ratio_21_126
+state_features:
+  - us_cpi_12m_log_inflation
+  - us_ip_6m_log_growth
+event_nuisance_controls:
+  - benchmark_publication_state
+  - phillyfed_spf_release_state
+formal_hypotheses: [INT-01, INT-02, INT-03, INT-04]
+matched_shadow_hypotheses: [SHADOW-01, SHADOW-02, SHADOW-03, SHADOW-04]
+hypotheses_per_fold: 8
+train_years: 5
+test_years: 1
+step_years: 1
+maximum_purge_horizon_days: 63
+rebalance_common_trading_days: 21
+bootstrap_block_days: 63
+bootstrap_samples: 50000
+fdr_method: benjamini_hochberg
+fdr_level: 0.10
+by_sensitivity_only: true
+minimum_complete_date_coverage: 0.60
+ecdf_policy: train_fold_only_clip_oos_to_training_endpoints
+missing_policy: drop_entire_common_date_for_all_eight_hypotheses
+oos_policy: evaluate_only_formal_hypotheses_selected_in_training
+outcome_authorization_required: true
+external_package_dir: outputs/structured_external_feature_package_20260723
+external_acceptance_manifest: outputs/structured_external_package_acceptance_20260723/acceptance_manifest.json
+price_panel_status: awaiting_verified_fresh_dukascopy_daily_cache
+maximum_success_state: external_interaction_candidate_requires_new_forward
+trading_approval: false

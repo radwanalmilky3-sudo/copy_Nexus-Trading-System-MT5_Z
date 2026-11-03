@@ -1,0 +1,22 @@
+path: _pdfs/_official/boe_capital_flows_fx_2025.pdf
+title_guess: Staff Working Paper No. 1,141
+ids: 
+priority: warm
+extract_status: ok
+---
+In response to an unanticipated monetary policy tightening in the US, the demand/
+financial channel of the international transmission of the shock dominates over the 
+expenditure‑switching effect. For a typical small open economy with flexible exchange 
+rates, credit spreads increase, while real GDP and exports fall despite a depreciation of 
+the local currency. In an estimated two‑country open economy model, financial and pricing 
+frictions that assign a prominent role to the global reserve currency are key to account for 
+the empirical evidence. Model‑based counterfactual policy analysis suggests that, even in 
+the presence of a global financial cycle, the exchange rate regime matters. The volatility 
+of output and inflation is an increasing function of the weight associated to the stabilisation 
+of the exchange rate in the monetary policy rule. The introduction of countercyclical policy 
+instruments that target either domestic credit or capital flows dampens economic fluctuations. 
+In a fixed exchange rate regime, either instrument can limit the negative spillovers of foreign 
+monetary policy shocks on real economic activity, but not on inflation.
+Key words:
+ Exchange rates flexibility, currency invoicing, dilemma, expenditure‑switching, 
+foreign exchange liabilities, global financial cycle, trilemma.

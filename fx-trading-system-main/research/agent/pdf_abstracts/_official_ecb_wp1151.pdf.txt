@@ -1,0 +1,25 @@
+path: _pdfs/_official/ecb_wp1151.pdf
+title_guess: Working Pa P er Serie S
+ids: wp1151
+priority: warm
+extract_status: ok
+---
+tair Dieppe
+WORKING PAPER SERIES
+NO 1151 / JANUARY 2010
+This paper can be downloaded without charge from
+http://www.ecb.europa.eu or from the Social Science Research Network
+electronic library at http://ssrn.com/abstract_id=1536018.
+In 2010 all ECB 
+publications 
+feature a motif 
+taken from the 
+€500 banknote.
+METHODOLOGICAL ADVANCES IN THE 
+ASSESSMENT OF EQUILIBRIUM 
+EXCHANGE RATES 1
+by Matthieu Bussière 2, Michele Ca’ Zorzi 3, 
+Alexander Chudík 3 and Alistair Dieppe 3
+1 The authors are grateful to Gianni Amisano, Lorenzo Bini-Smaghi, Filippo di Mauro, Ettore Dorrucci, Marcel Fratzscher, Stelios Makrydakis,
+ Frank Moss, Gilles Noblet, Chiara Osbat, Bernd Schnatz, Frank Smets, Livio Stracca, Christian Thimann and seminar participants at the 
+European Central Bank, for their comments and su

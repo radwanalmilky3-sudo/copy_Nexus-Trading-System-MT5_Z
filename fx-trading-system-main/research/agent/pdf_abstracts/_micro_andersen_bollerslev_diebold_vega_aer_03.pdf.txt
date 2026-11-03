@@ -1,0 +1,8 @@
+path: _pdfs/_micro/andersen_bollerslev_diebold_vega_aer_03.pdf
+title_guess: 39VOL.93NO.1 ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS
+ids: 
+priority: warm
+extract_status: ok
+---
+time exchange-rate quotations, macroeconomic expectations, and macroeconomic realizations, we characterize the conditional means of U.S. dollar spot exchange rates. In particular, we /bullet5 nd that announcement surprises produce conditional mean jumps; hence high-frequency exchange-rate dynamics are linked to fundamentals. The details of the linkage are intriguing and include announcement timing and sign effects. The sign effect refers to the fact that the market reacts to news in an asymmetric fashion: bad news has greater impact than good news, which we relate to recent theoretical work on information processing and price discovery. (JELF3, F4, G1, C5) 
+How is news about fundamentals incorpo- rated into asset prices? The topic confronted by this question— characterization of the price 

@@ -1,0 +1,18 @@
+path: _pdfs/_official/bdf/bdf_wp1018.pdf
+title_guess: Revisiting 15 Years of Unusual
+ids: wp1018
+priority: warm
+extract_status: ok
+---
+The European Central Bank and the Federal Reserve introduced new policy instruments and 
+made changes to their operational frameworks to address the global financial crisis (2008) 
+and the Covid-19 pandemic (2020). We study the macroeconomic effects of these monetary 
+policy evolutions on both sides of the Atlantic Ocean by developing and estimating a 
+tractable two-country dynamic stochastic general equilibrium model. We show that the euro 
+area and the United States faced shocks of different natures, explaining some asynchronous 
+monetary policy measures between 2008 and 2023. However, counterfactual exercises 
+highlight that all conventional and unconventional policies implemented since 2008 have 
+appropriately (i) supported economic growth and (ii) maintained inflation on track in both 
+areas. The exception is the delayed reaction to the inflationary surge during 2021 -2022. 
+Furthermore, exchange rate shocks played a significant role in shaping the overall monetary 
+conditions of the two economies.

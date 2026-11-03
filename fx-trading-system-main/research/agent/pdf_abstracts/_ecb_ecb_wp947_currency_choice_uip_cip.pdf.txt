@@ -1,0 +1,27 @@
+path: _pdfs/_ecb/ecb_wp947_currency_choice_uip_cip.pdf
+title_guess: Working Pa P er Serie S
+ids: 
+priority: warm
+extract_status: ok
+---
+and Mark Joy
+WORKING PAPER SERIES
+NO 947 / OCTOBER 2008
+In 2008 all ECB 
+publications 
+feature a motif 
+taken from the 
+10 banknote.
+FOREIGN-CURRENCY BONDS
+CURRENCY CHOICE AND THE ROLE 
+OF UNCOVERED AND COVERED 
+INTEREST PARITY 1
+by Maurizio Michael Habib 2
+ and Mark Joy 3
+This paper can be downloaded without charge from
+http://www.ecb.europa.eu or from the Social Science Research Network
+electronic library at http://ssrn.com/abstract_id=1275832.
+1 The authors would like to thank Christophe Beuve, Carsten Detken, Simone Manganelli, Adalbert Winkler, and an anonymous referee for 
+useful comments on the paper. The views expressed in this paper are those of the authors and do not necessarily reflect 
+those of the European Central Bank.
+2 European Central Bank, Directorate General Internationa

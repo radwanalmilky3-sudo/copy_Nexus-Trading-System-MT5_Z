@@ -1,0 +1,58 @@
+﻿=== V6.1 package integrity ===
+V6.1 PACK INTEGRITY PASS ù 49 files
+PASS: V6.1 package integrity
+=== Exact target SHA verification ===
+V6.1 TARGET VERIFY PASS ù 30 exact path states
+PASS: Exact target SHA verification
+=== V6.1 DB schema/fields/index/UPSERT contract ===
+PASS DB schema contract ù 36 required tables, 115 critical fields, 19 indexes
+PASS mutable UPSERT contract and additive acknowledge migration
+PASS: V6.1 DB schema/fields/index/UPSERT contract
+PASS: NEXUS_TRADING_MODE=paper
+=== Python compileall ===
+PASS: Python compileall
+=== V6.1 final contracts ===
+............                                                             [100%]
+12 passed in 1.30s
+PASS: V6.1 final contracts
+=== Full pytest suite ===
+........................................................................ [ 32%]
+........................................................................ [ 65%]
+........................................................................ [ 98%]
+....                                                                     [100%]
+220 passed in 184.23s (0:03:04)
+PASS: Full pytest suite
+=== Dashboard TypeScript typecheck ===
+PASS: Dashboard TypeScript typecheck
+=== V6.1 runtime/API/DB evidence ===
+PASS api_health HTTP 200
+PASS data_health HTTP 200
+PASS news_health HTTP 200
+PASS gold_overview HTTP 200
+PASS macro HTTP 200
+PASS monetary HTTP 200
+PASS cross_asset HTTP 200
+PASS geopolitics HTTP 200
+PASS flows HTTP 200
+FAIL xau_impact HTTP Error 404: Not Found
+FAIL btc_impact HTTP Error 404: Not Found
+FAIL ticker HTTP Error 404: Not Found
+PASS source_health HTTP 200
+FAIL xau_lineage HTTP Error 404: Not Found
+FAIL btc_lineage HTTP Error 404: Not Found
+FAIL xau_outcomes HTTP Error 404: Not Found
+FAIL btc_outcomes HTTP Error 404: Not Found
+PASS db_schema HTTP 200
+FAIL causal cross-asset runtime contract ù service may still be running pre-V6.1 code
+FAIL TTS hard limit contract ù service may still be running pre-V6.1 code
+FAIL V6.1 live DB tables missing ['alert_delivery_log', 'asset_event_outcomes', 'asset_factor_profiles', 'asset_registry', 'economic_indicator_catalog', 'economic_indicator_observations', 'event_asset_impacts', 'fundamental_knowledge_claims', 'fundamental_knowledge_sources', 'local_ai_analysis_runs', 'news_story_clusters', 'news_ticker_items']
+FAIL V6.1 live DB fields missing asset_factor_profiles ['active', 'allowed_horizons_json', 'asset_id', 'conditions_json', 'domain', 'factor_code', 'profile_id', 'relationship_type', 'version']
+FAIL V6.1 live DB fields missing event_asset_impacts ['asset_id', 'calculated_at', 'claim_ids_json', 'confidence', 'coverage', 'direction', 'event_id', 'freshness', 'horizon', 'impact_id', 'impact_score', 'known_at', 'quality', 'source_ids_json']
+FAIL V6.1 live DB fields missing asset_event_outcomes ['actual_direction_15m', 'actual_direction_4h', 'actual_direction_5m', 'actual_direction_60m', 'asset_id', 'captured_at', 'impact_id', 'mae', 'market_timestamp', 'mfe', 'outcome_id', 'price_15m', 'price_4h', 'price_5m', 'price_60m', 'price_at_prediction', 'quality', 'return_15m', 'return_4h', 'return_5m', 'return_60m']
+FAIL V6.1 live DB fields missing news_story_clusters ['fingerprint', 'first_seen_at', 'independent_source_count', 'last_seen_at', 'source_count', 'status', 'story_cluster_id']
+FAIL V6.1 live DB fields missing news_ticker_items ['acknowledge_note', 'acknowledged', 'acknowledged_at', 'acknowledged_by', 'actual_value', 'asset_id', 'confidence', 'created_at', 'direction', 'event_id', 'expires_at', 'forecast_value', 'impact_id', 'previous_value', 'revision_value', 'starts_at', 'status', 'story_cluster_id', 'supersedes_id', 'surprise_value', 'ticker_item_id', 'updated_at']
+FAIL V6.1 live DB fields missing alert_delivery_log ['acknowledged_before_send', 'channel', 'delivery_id', 'duration_ms', 'error', 'finished_at', 'repeat_index', 'result', 'started_at', 'ticker_item_id']
+FAIL V6.1 live DB fields missing local_ai_analysis_runs ['analysis_id', 'asset_id', 'claims_used_json', 'event_id', 'hallucination_flags_json', 'impact_id', 'input_snapshot_hash', 'latency_ms', 'model_name', 'prompt_version', 'response_json', 'schema_valid', 'source_ids_json', 'structured_input_json']
+PASS V6.1 live DB fields central_bank_events 13
+Evidence: V6_1_RUNTIME_EVIDENCE.json
+RESULT: NOT READY — BLOCKER FOUND: V6.1 runtime/API/DB evidence failed with exit 1

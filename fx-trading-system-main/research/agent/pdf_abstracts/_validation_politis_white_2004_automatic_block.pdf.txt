@@ -1,0 +1,28 @@
+path: _pdfs/_validation/politis_white_2004_automatic_block.pdf
+title_guess: Automatic Block-Length Selection for the
+ids: 
+priority: warm
+extract_status: ok
+---
+We review the different block bootstrap methods for time series, and present
+them in a uniﬁed framework. We then revisit a recent result of Lahiri [Lahiri,
+S. N. (1999b). Theoretical comparisons of block bootstrap methods, Ann. Statist.
+27:386–404] comparing the different methods and give a corrected bound on
+their asymptotic relative efﬁciency; we also introduce a new notion of ﬁnite-
+sample “attainable” relative efﬁciency. Finally, based on the notion of spectral
+estimation via the ﬂat-top lag-windows of Politis and Romano [Politis, D. N.,
+Romano, J. P. (1995). Bias-corrected nonparametric spectral estimation. J. Time
+Series Anal. 16:67–103], we propose practically useful estimators of the optimal
+block size for the aforementioned block bootstrap methods. Our estimators are
+characterized by the fastest possible rate of convergence which is adaptive on
+the strength of the correlation of the time series as measured by the correlogram.
+Key Words: Bandwidth choice; Block bootstrap; Resampling; Subsampling;
+Time series; Variance estimation.
+∗Correspondence: Dimitris N. Politis, Department of Mathematics, University of California,
+San Diego, La Jolla, CA 92093, USA; E-mail: dpolitis@ucsd.edu.
+53
+DOI: 10.1081/ETC-120028836 0747-4938 (Print); 1532-4168 (Online)
+Copyright © 2004 by Marcel Dekker, Inc. www.dekker.com
+Downloaded By: [Duke University] At: 23:29 26 October 2009
+ORDER REPRINTS
+54 Politis and White

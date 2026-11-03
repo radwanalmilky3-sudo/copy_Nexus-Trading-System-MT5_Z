@@ -1,0 +1,12 @@
+path: _pdfs/_official/bdf/bdf_wp834_sterilized_fx_intervention.pdf
+title_guess: France. This document is available on publications.banque-france.fr/en
+ids: 
+priority: warm
+extract_status: ok
+---
+Though most central banks actively intervene on the foreign exchange market, the literature 
+offers mixed evidence on their effectiveness: particularly for unannounced interventions. We 
+use new, declassified data from the archives of the Bank of England and the institutional 
+features of the Bretton Woods era to estimate the effects of intervention on the exchange 
+rate. We find that a purchase of pounds equivalent to 1% of the money supply causes a 
+statistically significant, 4-5 basis point appreciation in the pound.

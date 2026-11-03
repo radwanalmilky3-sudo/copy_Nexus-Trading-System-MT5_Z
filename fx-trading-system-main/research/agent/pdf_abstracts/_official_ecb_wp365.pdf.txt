@@ -1,0 +1,25 @@
+path: _pdfs/_official/ecb_wp365.pdf
+title_guess: by Michael Ehrmann and
+ids: wp365
+priority: warm
+extract_status: ok
+---
+n 
+from the 
+€100 banknote.
+WORKING PAPER SERIES
+NO. 365 / MAY 2004
+EXCHANGE RATES 
+AND FUNDAMENTALS 
+NEW EVIDENCE FROM
+REAL-TIME DATA1
+by Michael Ehrmann and 
+Marcel Fratzscher2
+1 We would like to thank Bernd Schnatz, the referee and seminar participants at the Joint Lunchtime Seminar series of the Center
+for Financial Studies, the Bundesbank and the European Central Bank for comments and Reuters and Standard&Poor’s for
+providing some of the data series.The views presented in the paper are those of the authors and do not necessarily reflect thos e
+of the European Central Bank.
+2 European Central Bank, Kaiserstrasse 29, D-60311 Frankfurt/Main, Germany,
+email: michael.ehrmann@ecb.int, marcel.fratzscher@ecb.int.
+This paper can be downloaded without charge from 
+http://www.ecb.int or from the

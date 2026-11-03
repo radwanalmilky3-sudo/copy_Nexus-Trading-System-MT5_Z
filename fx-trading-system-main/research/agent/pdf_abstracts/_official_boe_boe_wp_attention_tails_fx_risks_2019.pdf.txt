@@ -1,0 +1,17 @@
+path: _pdfs/_official/boe/boe_wp_attention_tails_fx_risks_2019.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+We document how the entire distribution of exchange rate returns responds to changes in global financial 
+conditions. We measure global financial conditions as the common component of country-specific 
+financial condition indices, computed consistently across a large panel of developed and emerging 
+economies. Based on quantile regression results, we provide a characterisation and ranking of the tail 
+behaviour of a large sample of currencies in response to a tightening of global financial conditions, 
+corroborating some of the prevailing narratives about safe haven and risky currencies. We then carry out a 
+portfolio sorting exercise to identify the macroeconomic fundamentals associated with such different tail 
+behaviour, and find that currency portfolios sorted on the basis of relative interest rates, current account 
+balances and levels of international reserves display a higher likelihood of large losses in response to a 
+tightening of global financial conditions.
+Key words: Exchange rates, tail risks, financial conditions indices, global financial cycle, quantile regression.

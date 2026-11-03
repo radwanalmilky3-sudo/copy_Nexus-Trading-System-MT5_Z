@@ -1,0 +1,39 @@
+file	units	step	url	action	utc	bytes	console_errors	http_responses	click_outcome
+001-login-unauthenticated-20261023T155608Z.png	52	login-unauthenticated	/login		2026-10-23T15:56:08.347Z	26484	0		
+002-overview-20261023T155616Z.png	1	overview	/dashboard		2026-10-23T15:56:16.927Z	125855	0	117	
+003-positions-20261023T155624Z.png	2	positions	/dashboard	Positions	2026-10-23T15:56:24.361Z	45329	2	97	clicked[main]: positions
+004-risk-20261023T155631Z.png	3	risk	/dashboard	Risk	2026-10-23T15:56:31.916Z	114215	2	98	clicked[main]: risk
+005-news-20261023T155638Z.png	4,7-14	news	/dashboard	News	2026-10-23T15:56:39.163Z	119623	4	122	clicked[main]: news
+006-agents-20261023T155646Z.png	5,18	agents	/dashboard	Agents	2026-10-23T15:56:46.806Z	112880	0	77	clicked[main]: agents
+007-intelligence-20261023T155653Z.png	6	intelligence	/dashboard	Intelligence	2026-10-23T15:56:54.062Z	171629	2	89	clicked[main]: intelligence
+008-fundamental-20261023T155702Z.png	7-14	fundamental	/dashboard	التحليل الأساسي	2026-10-23T15:57:02.757Z	162197	4	153	clicked[main]: التحليل الأساسي
+009-journal-20261023T155709Z.png	16	journal	/dashboard	Journal	2026-10-23T15:57:09.986Z	42074	4	166	clicked[main]: journal
+010-backtest-20261023T155717Z.png	17	backtest	/dashboard	Backtest	2026-10-23T15:57:17.220Z	57816	4	165	clicked[main]: backtest
+011-console-20261023T155724Z.png	18	console	/dashboard	Console	2026-10-23T15:57:24.381Z	44848	0	68	clicked[main]: console
+012-strategies-20261023T155731Z.png	19	strategies	/dashboard/strategies		2026-10-23T15:57:32.531Z	406258	2	74	
+013-models-20261023T155738Z.png	20-24	models	/dashboard/models		2026-10-23T15:57:39.039Z	99335	0	23	
+014-model-comparison-20261023T155745Z.png	20-24	model-comparison	/dashboard/model-comparison		2026-10-23T15:57:45.480Z	97385	0	25	
+015-history-20261023T155752Z.png	25	history	/dashboard/history		2026-10-23T15:57:52.200Z	42704	0	29	
+016-settings-trading-20261023T155759Z.png	26	settings-trading	/dashboard/settings		2026-10-23T15:57:59.712Z	183197	0	37	
+017-settings-risk-20261023T155805Z.png	26	settings-risk	/dashboard/settings		2026-10-23T15:58:05.844Z	183197	0	34	
+018-settings-signals-20261023T155811Z.png	26	settings-signals	/dashboard/settings	Señales	2026-10-23T15:58:12.002Z	185733	0	34	clicked[main]: señales & calidad
+019-settings-models-20261023T155817Z.png	26	settings-models	/dashboard/settings	Modelos	2026-10-23T15:58:18.182Z	187992	0	34	clicked[main]: modelos & entrenamiento
+020-settings-notifications-20261023T155829Z.png	33-37	settings-notifications	/dashboard/settings	Notificaciones	2026-10-23T15:58:30.173Z	183384	0	34	clicked[main]: notificaciones | expect 'Notif. navegador': MISSING
+021-settings-lower-20261023T155834Z.png	33-37	settings-lower	/dashboard/settings	bottom	2026-10-23T15:58:34.595Z	12954	0	9	
+022-settings-broker-panel-20261023T155838Z.png	27-31	settings-broker-panel	/dashboard/settings	bottom	2026-10-23T15:58:39.034Z	178129	0	10	
+023-progress-20261023T155900Z.png	38	progress	/dashboard/progress		2026-10-23T15:59:11.066Z	230772	0	52	
+024-rlab-datasets-20261023T155921Z.png	39	rlab-datasets	/dashboard/research-lab		2026-10-23T15:59:21.596Z	85312	0	38	
+025-rlab-cleaning-20261023T155928Z.png	40	rlab-cleaning	/dashboard/research-lab	التنظيف	2026-10-23T15:59:28.162Z	61171	0	36	clicked[main]: التنظيفcleaning
+026-rlab-validation-20261023T155934Z.png	41	rlab-validation	/dashboard/research-lab	التحقق	2026-10-23T15:59:34.785Z	65231	0	42	clicked[main]: التحققvalidation
+027-rlab-provenance-20261023T155941Z.png	42	rlab-provenance	/dashboard/research-lab	التتبّع	2026-10-23T15:59:41.473Z	64536	0	40	clicked[main]: التتبّعprovenance
+028-rlab-strategies-20261023T155947Z.png	43	rlab-strategies	/dashboard/research-lab	الاستراتيجيات	2026-10-23T15:59:48.090Z	62014	0	40	clicked[main]: الاستراتيجياتstrategies
+029-rlab-backtests-20261023T155954Z.png	44	rlab-backtests	/dashboard/research-lab	الاختبارات التاريخية	2026-10-23T15:59:54.636Z	61920	0	39	clicked[main]: الاختبارات التاريخيةbacktests
+030-rlab-news-20261023T160001Z.png	45	rlab-news	/dashboard/research-lab	الأخبار	2026-10-23T16:00:01.505Z	69715	0	29	clicked[main]: الأخبارnews
+031-rlab-artifacts-20261023T160011Z.png	46	rlab-artifacts	/dashboard/research-lab	المخرجات	2026-10-23T16:00:11.352Z	61481	0	29	clicked[main]: المخرجاتartifacts
+032-audit-progress-20261023T160018Z.png	47	audit-progress	/dashboard/audit-progress		2026-10-23T16:00:18.460Z	103064	0	15	
+033-deep-learning-20261023T160025Z.png	48	deep-learning	/dashboard/deep-learning		2026-10-23T16:00:25.271Z	12954	0	8	
+034-ml-models-20261023T160031Z.png	49	ml-models	/dashboard/ml-models		2026-10-23T16:00:31.875Z	12954	0	8	
+035-reinforcement-learning-20261023T160038Z.png	50	reinforcement-learning	/dashboard/reinforcement-learning		2026-10-23T16:00:38.850Z	12954	0	8	
+036-analytics-20261023T160044Z.png	1,51	analytics	/analytics		2026-10-23T16:00:45.257Z	47566	0	9	
+037-root-redirect-20261023T160100Z.png	51	root-redirect	/		2026-10-23T16:01:05.162Z	125518	0	61	
+038-shared-notifications-20261023T160114Z.png	51	shared-notifications	/dashboard	bell	2026-10-23T16:01:15.291Z	147684	2	113	clicked bell

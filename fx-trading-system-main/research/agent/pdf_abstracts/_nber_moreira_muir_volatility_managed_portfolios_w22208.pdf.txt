@@ -1,0 +1,17 @@
+path: _pdfs/_nber/moreira_muir_volatility_managed_portfolios_w22208.pdf
+title_guess: VOLATILITY MANAGED PORTFOLIOS
+ids: w22208
+priority: hot
+extract_status: ok
+---
+bridge, MA 02138
+April 2016
+We thank Matthew Baron, Jonathan Berk, Olivier Boguth, John Campbell, John Cochrane, Kent 
+Daniel, Peter DeMarzo, Wayne Ferson, Marcelo Fernandes, Stefano Giglio, William Goetzmann, 
+Mark Grinblatt, Ben Hebert, Steve Heston, Jon Ingersoll, Ravi Jagannathan, Bryan Kelly, Ralph 
+Koijen, Serhiy Kosak, Hanno Lustig, Justin Murfin, Stefan Nagel, David Ng, Lubos Pastor, 
+Myron Scholes, Ivan Shaliastovich, Ken Singleton, Tuomo Vuoltenahoo, Jonathan Wallen, Lu 
+Zhang, and participants at Yale SOM, UCLA Anderson, Stanford GSB, Michigan Ross, Chicago 
+Booth, Ohio State, Baruch College, Cornell, the NYU Five Star conference, the Colorado Winter 
+Finance Conference, the Jackson Hole Winter Finance Conference, the ASU Sonoran 
+Conference, the UBC winter conference, the NBER,

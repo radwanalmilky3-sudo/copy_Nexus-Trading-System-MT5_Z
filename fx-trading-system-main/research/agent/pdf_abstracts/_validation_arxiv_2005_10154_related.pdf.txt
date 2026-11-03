@@ -1,0 +1,14 @@
+path: _pdfs/_validation/arxiv_2005_10154_related.pdf
+title_guess: Coronavirus: Case for Digital Money?
+ids: 
+priority: warm
+extract_status: ok
+---
+We discuss the pros of adopting government-issued digital currencies as 
+well as a supranational digital iCurrency. One suc h pro is to get rid of 
+paper money (and coinage), a ubiquitous medium for spreading 
+germs, as highlighted by the recent coronavirus outbreak. We set 
+forth three policy recommendations for adapting mob ile devices 
+as new digital wallets, regulatory oversight of sov ereign digital 
+currencies and user data protection, and a supranat ional digital 
+iCurrency for facilitating international digital monetary linkages.

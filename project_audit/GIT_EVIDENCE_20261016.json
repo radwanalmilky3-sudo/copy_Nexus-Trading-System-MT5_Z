@@ -1,0 +1,173 @@
+{
+  "generated_at": "2026-10-16T11:55:19Z",
+  "total_files_changed": 119,
+  "by_subsystem": {
+    "shared": [
+      {"path": "shared/config_loader.py", "insertions": 76, "deletions": 9},
+      {"path": "shared/duckdb_client.py", "insertions": 25, "deletions": 58},
+      {"path": "shared/http_client.py", "insertions": 9, "deletions": 1},
+      {"path": "shared/redis_client.py", "insertions": 311, "deletions": 62},
+      {"path": "shared/safety.py", "insertions": 22, "deletions": 4},
+      {"path": "shared/sessions.py", "insertions": 3, "deletions": 1}
+    ],
+    "nexus_data": [
+      {"path": "services/nexus_data/duckdb_store.py", "insertions": 372, "deletions": 19},
+      {"path": "services/nexus_data/fundamental_store.py", "insertions": 3, "deletions": 1},
+      {"path": "services/nexus_data/main.py", "insertions": 137, "deletions": 7}
+    ],
+    "nexus_api": [
+      {"path": "services/nexus_api/routers/agents.py", "insertions": 40, "deletions": 8},
+      {"path": "services/nexus_api/routers/backtest.py", "insertions": 25, "deletions": 8},
+      {"path": "services/nexus_api/routers/config.py", "insertions": 73, "deletions": 22},
+      {"path": "services/nexus_api/routers/intelligence.py", "insertions": 243, "deletions": 222},
+      {"path": "services/nexus_api/routers/intermarket.py", "insertions": 20, "deletions": 3},
+      {"path": "services/nexus_api/routers/notifications.py", "insertions": 19, "deletions": 11},
+      {"path": "services/nexus_api/routers/performance.py", "insertions": 30, "deletions": 5},
+      {"path": "services/nexus_api/routers/positions.py", "insertions": 21, "deletions": 2},
+      {"path": "services/nexus_api/routers/regime.py", "insertions": 40, "deletions": 19}
+    ],
+    "nexus_risk": [
+      {"path": "services/nexus_risk/main.py", "insertions": 174, "deletions": 8}
+    ],
+    "nexus_executor": [
+      {"path": "services/nexus_executor/main.py", "insertions": 369, "deletions": 2},
+      {"path": "services/nexus_executor/mt5_executor.py", "insertions": 5, "deletions": 0}
+    ],
+    "nexus_ml": [
+      {"path": "services/nexus_ml/artifact_guard.py", "insertions": 18, "deletions": 0, "status": "untracked"},
+      {"path": "services/nexus_ml/ensemble.py", "insertions": 4, "deletions": 0},
+      {"path": "services/nexus_ml/main.py", "insertions": 53, "deletions": 4},
+      {"path": "services/nexus_ml/model_registry.py", "insertions": 4, "deletions": 0},
+      {"path": "services/nexus_ml/models/hmm_regime.py", "insertions": 3, "deletions": 3},
+      {"path": "services/nexus_ml/models/isolation_anomaly.py", "insertions": 3, "deletions": 3},
+      {"path": "services/nexus_ml/models/random_forest_features.py", "insertions": 3, "deletions": 3},
+      {"path": "services/nexus_ml/traders/base_trader.py", "insertions": 23, "deletions": 0},
+      {"path": "services/nexus_ml/traders/dl_trader.py", "insertions": 61, "deletions": 33},
+      {"path": "services/nexus_ml/traders/ml_trader.py", "insertions": 13, "deletions": 1},
+      {"path": "services/nexus_ml/traders/rl_lifecycle.py", "insertions": 5, "deletions": 1},
+      {"path": "services/nexus_ml/traders/rl_trader.py", "insertions": 13, "deletions": 1},
+      {"path": "services/nexus_ml/traders_api.py", "insertions": 91, "deletions": 16}
+    ],
+    "nexus_agents": [
+      {"path": "services/nexus_agents/agents/arbitrator.py", "insertions": 26, "deletions": 4},
+      {"path": "services/nexus_agents/agents/base_agent.py", "insertions": 96, "deletions": 33},
+      {"path": "services/nexus_agents/agents/bear_researcher.py", "insertions": 1, "deletions": 1},
+      {"path": "services/nexus_agents/agents/bull_researcher.py", "insertions": 1, "deletions": 1},
+      {"path": "services/nexus_agents/agents/intermarket.py", "insertions": 1, "deletions": 1},
+      {"path": "services/nexus_agents/agents/market_analyst.py", "insertions": 1, "deletions": 1},
+      {"path": "services/nexus_agents/agents/news_sentinel.py", "insertions": 37, "deletions": 3},
+      {"path": "services/nexus_agents/agents/order_flow.py", "insertions": 1, "deletions": 1},
+      {"path": "services/nexus_agents/agents/portfolio_strategist.py", "insertions": 144, "deletions": 60},
+      {"path": "services/nexus_agents/agents/position_manager.py", "insertions": 1, "deletions": 1},
+      {"path": "services/nexus_agents/agents/risk_manager.py", "insertions": 23, "deletions": 9},
+      {"path": "services/nexus_agents/agents/session_governor.py", "insertions": 1, "deletions": 1},
+      {"path": "services/nexus_agents/agents/trade_executor.py", "insertions": 15, "deletions": 1},
+      {"path": "services/nexus_agents/brain_budget.py", "insertions": 116, "deletions": 0},
+      {"path": "services/nexus_agents/daily_brief.py", "insertions": 26, "deletions": 2},
+      {"path": "services/nexus_agents/graph.py", "insertions": 45, "deletions": 4},
+      {"path": "services/nexus_agents/main.py", "insertions": 163, "deletions": 44},
+      {"path": "services/nexus_agents/prompts/arbitrator.yaml", "insertions": 39, "deletions": 12},
+      {"path": "services/nexus_agents/prompts/news_sentinel.yaml", "insertions": 23, "deletions": 2},
+      {"path": "services/nexus_agents/prompts/portfolio_strategist.yaml", "insertions": 31, "deletions": 13},
+      {"path": "services/nexus_agents/prompts/position_manager.yaml", "insertions": 34, "deletions": 13},
+      {"path": "services/nexus_agents/prompts/session_governor.yaml", "insertions": 33, "deletions": 22},
+      {"path": "services/nexus_agents/prompts/trade_executor.yaml", "insertions": 35, "deletions": 15},
+      {"path": "services/nexus_agents/research/researcher.py", "insertions": 49, "deletions": 3},
+      {"path": "services/nexus_agents/shadow_trades.py", "insertions": 42, "deletions": 1},
+      {"path": "services/nexus_agents/state.py", "insertions": 31, "deletions": 0},
+      {"path": "services/nexus_agents/tools/risk_tools.py", "insertions": 30, "deletions": 23}
+    ],
+    "nexus_features": [
+      {"path": "services/nexus_features/correlation.py", "insertions": 22, "deletions": 7},
+      {"path": "services/nexus_features/cross_asset.py", "insertions": 115, "deletions": 15},
+      {"path": "services/nexus_features/indicators.py", "insertions": 30, "deletions": 11},
+      {"path": "services/nexus_features/institutional_features.py", "insertions": 42, "deletions": 7},
+      {"path": "services/nexus_features/main.py", "insertions": 35, "deletions": 18},
+      {"path": "services/nexus_features/multi_timeframe.py", "insertions": 14, "deletions": 0},
+      {"path": "services/nexus_features/session_tagger.py", "insertions": 23, "deletions": 6},
+      {"path": "services/nexus_features/trend_analyzer.py", "insertions": 35, "deletions": 13},
+      {"path": "services/nexus_features/volatility.py", "insertions": 12, "deletions": 6}
+    ],
+    "nexus_monitor": [
+      {"path": "services/nexus_monitor/main.py", "insertions": 8, "deletions": 1},
+      {"path": "services/nexus_monitor/metrics_exporter.py", "insertions": 167, "deletions": 42},
+      {"path": "services/nexus_monitor/performance.py", "insertions": 139, "deletions": 32},
+      {"path": "services/nexus_monitor/telegram_bot.py", "insertions": 85, "deletions": 20}
+    ],
+    "nexus_news": [
+      {"path": "services/nexus_news/calendar_parser.py", "insertions": 7, "deletions": 5},
+      {"path": "services/nexus_news/fundamental/adapters.py", "insertions": 17, "deletions": 16},
+      {"path": "services/nexus_news/fundamental/outcome_collector_v61.py", "insertions": 16, "deletions": 14},
+      {"path": "services/nexus_news/news_fetcher.py", "insertions": 7, "deletions": 5},
+      {"path": "services/nexus_news/url_safety.py", "insertions": 31, "deletions": 0, "status": "untracked"}
+    ],
+    "dashboard": [
+      {"path": "dashboard/src/app/dashboard/layout.tsx", "insertions": 12, "deletions": 23},
+      {"path": "dashboard/src/app/dashboard/model-comparison/page.tsx", "insertions": 32, "deletions": 7},
+      {"path": "dashboard/src/app/dashboard/page.tsx", "insertions": 37, "deletions": 13},
+      {"path": "dashboard/src/app/dashboard/settings/page.tsx", "insertions": 40, "deletions": 10},
+      {"path": "dashboard/src/components/UserMenu.tsx", "insertions": 69, "deletions": 3},
+      {"path": "dashboard/src/components/progress/ErrorFixCell.tsx", "insertions": 16, "deletions": 1},
+      {"path": "dashboard/src/components/progress/HierarchicalTable.tsx", "insertions": 2, "deletions": 2},
+      {"path": "dashboard/src/components/progress/ProgressCell.tsx", "insertions": 7, "deletions": 3},
+      {"path": "dashboard/src/components/trade-controls/AutoTradeToggle.tsx", "insertions": 5, "deletions": 0},
+      {"path": "dashboard/src/components/trade-controls/KillSwitch.tsx", "insertions": 6, "deletions": 1},
+      {"path": "dashboard/src/components/trade-controls/ModeSelector.tsx", "insertions": 4, "deletions": 0},
+      {"path": "dashboard/src/components/windows/BacktestPanel.tsx", "insertions": 0, "deletions": 1},
+      {"path": "dashboard/src/components/windows/GenAIBrief.tsx", "insertions": 26, "deletions": 6},
+      {"path": "dashboard/src/components/windows/LiveDecisionPanel.tsx", "insertions": 28, "deletions": 16},
+      {"path": "dashboard/src/components/windows/ModelsByRegime.tsx", "insertions": 15, "deletions": 3},
+      {"path": "dashboard/src/components/windows/PLDashboard.tsx", "insertions": 16, "deletions": 0},
+      {"path": "dashboard/src/components/windows/RLLifecycle.tsx", "insertions": 32, "deletions": 14},
+      {"path": "dashboard/src/components/windows/RegimeIndicator.tsx", "insertions": 9, "deletions": 0},
+      {"path": "dashboard/src/lib/api-client.ts", "insertions": 5, "deletions": 0},
+      {"path": "dashboard/src/lib/system-state.ts", "insertions": 37, "deletions": 0, "status": "untracked"},
+      {"path": "dashboard/src/lib/ws-client.ts", "insertions": 217, "deletions": 60}
+    ],
+    "root": [
+      {"path": ".env.example", "insertions": 1, "deletions": 1},
+      {"path": "DB_SCHEMA_ACTUAL.md", "insertions": 11, "deletions": 5},
+      {"path": "bootstrap_ensemble.py", "insertions": 10, "deletions": 3},
+      {"path": "config/risk_rules.yaml", "insertions": 6, "deletions": 1},
+      {"path": "notebooks/04-backtesting.ipynb", "insertions": 3, "deletions": 1},
+      {"path": "notebooks/05-strategy-analysis.ipynb", "insertions": 5, "deletions": 1},
+      {"path": "project_audit/DISTRIBUTED_FIX_BATCH_20261016.md", "insertions": 26, "deletions": 0, "status": "untracked"},
+      {"path": "project_audit/REMAINING_WORK.md", "insertions": 4, "deletions": 2},
+      {"path": "project_audit/VERIFICATION_GATE_20261016.md", "insertions": 20, "deletions": 0, "status": "untracked"},
+      {"path": "scripts/apply_schema.py", "insertions": 53, "deletions": 3},
+      {"path": "scripts/update_dashboard.py", "insertions": 104, "deletions": 4},
+      {"path": "tests/test_agents/test_risk_context_fail_closed.py", "insertions": 2, "deletions": 1},
+      {"path": "tests/test_api/test_backtest_sources.py", "insertions": 5, "deletions": 0},
+      {"path": "tests/test_api/test_config_agents_read_authorization.py", "insertions": 2, "deletions": 0},
+      {"path": "tests/test_api/test_routers.py", "insertions": 1, "deletions": 1},
+      {"path": "tests/test_data/test_historical_connectors.py", "insertions": 3, "deletions": 3},
+      {"path": "tests/test_data/test_internal_queries.py", "insertions": 6, "deletions": 0},
+      {"path": "tests/test_data/test_ohlcv_persistence.py", "insertions": 8, "deletions": 3},
+      {"path": "tests/test_fundamental/test_v61_final_contracts.py", "insertions": 1, "deletions": 1}
+    ]
+  },
+  "git_log_recent": [
+    "add85a2 استرجاع DASHBOARD_STATE",
+    "e23da44 بعد: إصلاح redis_client.py",
+    "f3f2861 قبل: إصلاح redis_client.py",
+    "73f149b النسخة الأولى: قبل إصلاحات إضافية"
+  ],
+  "verification": {
+    "python_tests": "1000/1000 passed",
+    "typescript": "PASS"
+  },
+  "subsystem_fix_summary": {
+    "shared": "Redis-5 reclaim+DLQ, config loader, duckdb single-writer",
+    "nexus_data": "Candle completeness checks, provenance columns (source/quality/fetched_at), backfill task, WAL protection, explicit trade-close consumer ack, idempotent schema apply",
+    "nexus_api": "Fail-closed 502/503 on source failure across 10+ routers, GET /api/config/risk reads nexus-risk at runtime, honest display_only config responses, 41 mutations + WS + trading.view auth verified",
+    "nexus_risk": "Separate NEXUS_RISK_APPROVAL_SECRET, reject execution on stale/disconnected account snapshot, approval bound after size/slippage/expiry changes, SETNX idempotency for trade-close effects",
+    "nexus_executor": "Separate NEXUS_RISK_APPROVAL_SECRET, reject execution on stale/disconnected account snapshot, approval binding, SETNX idempotency, PARTIAL fill handling instead of misleading reject",
+    "nexus_ml": "DL trader leakage fix (normalizer on first 80% + temporal validation), label_next_bar_direction naming, retraining lock + recovery, artifact path guard (models_store only), prediction provenance",
+    "nexus_agents": "Prompt limit cleanup across 6 prompts, min_conviction/blackout/anti-tilt wired to real values, explicit signal ack + reclaim + DLQ, broken risk_manager redis fix, per-cycle circuit breaker + LLM budget, fail-closed LLM provider",
+    "nexus_features": "Ichimoku column fix, NaN warmup as mean regime, bfill future-leak removal in correlation, -inf guard in institutional features, route registration order fix",
+    "nexus_monitor": "Sortino null+flag instead of zero, Prometheus NaN cleanup, telegram token redaction from error texts, rate-limit on attempts",
+    "nexus_news": "safe_url API-key redaction (fetcher/calendar/adapters), news_blackout_minutes=5 alignment, collector announces unavailable instead of empty ready, notebooks closed_at ordering + PnL as returns",
+    "dashboard": "No optimistic LIVE/auto-trade flips (sync from /api/system/mode after PIN), reject fabricated success/zero states (LiveDecision, PLDashboard, Regime, RL, GenAI, settings), UserMenu via ApiClient, ws-client JWT handshake first frame",
+    "root": "Schema/docs/scripts alignment: apply_schema idempotency gate, risk_rules.yaml fields, DB_SCHEMA provenance columns, notebooks QuantStats returns, audit docs + test updates for fail-closed contracts"
+  }
+}

@@ -1,0 +1,33 @@
+path: _pdfs/_validation/arxiv_2105_10019.pdf
+title_guess: Enhancing Cross-Sectional Currency Strategies by
+ids: 
+priority: warm
+extract_status: ok
+---
+The performance of a cross-sectional currency strategy depends
+crucially on accurately ranking instruments prior to portfolio con-
+struction. While this ranking step is traditionally performed using
+heuristics, or by sorting the outputs produced by pointwise re-
+gression or classification techniques, strategies using Learning to
+Rank algorithms have recently presented themselves as competitive
+and viable alternatives. Although the rankers at the core of these
+strategies are learned globally and improve ranking accuracy on
+average, they ignore the differences between the distributions of
+asset features over the times when the portfolio is rebalanced. This
+flaw renders them susceptible to producing sub-optimal rankings,
+possibly at important periods when accuracy is actually needed
+the most. For example, this might happen during critical risk-off
+episodes, which consequently exposes the portfolio to substantial,
+unwanted drawdowns. We tackle this shortcoming with an analo-
+gous idea from information retrieval: that a query’s top retrieved
+documents or the local ranking context provide vital information
+about the query’s own characteristics, which can then be used to
+refine the initial ranked list. In this work, we use a context-aware
+Learning-to-rank model that is based on the Transformer archi-
+tecture to encode top/bottom ranked assets, learn the context and
+exploit this information to re-rank the initial results. Backtesting
+on a slate of 31 currencies, our proposed methodology increases
+the Sharpe ratio by around 30% and significantly enhances various
+performance metrics. Additionally, this approach also improves the
+Sharpe ratio when separately conditioning on normal and risk-off
+market states.

@@ -1,0 +1,17 @@
+path: _pdfs/_nber/koijen_moskowitz_pedersen_vrugt_carry_w19325.pdf
+title_guess: 1050 Massachusetts Avenue
+ids: w19325
+priority: hot
+extract_status: ok
+---
+Massachusetts Avenue
+Cambridge, MA 02138
+August 2013
+We are grateful for helpful comments from Cliff Asness, Jules van Binsbergen, John Cochrane, Pierre
+Collin-Dufresne (discussant), Kent Daniel (discussant), Lars Hansen, John Heaton, Antti Ilmanen,
+Ronen Israel, Andrea Frazzini, Owen Lamont (discussant), John Liew, Francis Longstaff, Hanno Lustig
+(discussant), Yao Hua Ooi, Lubos Pastor, Anna Pavlova, Maik Schmeling (discussant), Stijn Van
+Nieuwerburgh, Dimitri Vayanos, Moto Yogo, as well as from seminar participants at AQR Capital
+Management, the 2012 American Finance Association Conference meetings (Chicago), Chicago Booth,
+the Chicago Mercantile Exchange, the University of Exeter, NOVA (Portugal), State Street Global
+Markets, the 2012 NBER Asset Pricing Summer Institute, the 1st Foreign

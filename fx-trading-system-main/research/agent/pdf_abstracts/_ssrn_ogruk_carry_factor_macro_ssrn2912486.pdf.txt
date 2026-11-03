@@ -1,0 +1,15 @@
+path: _pdfs/_ssrn/ogruk_carry_factor_macro_ssrn2912486.pdf
+title_guess: The International Journal of Business and Finance Research
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper evaluates the performance of carry trade strategies with macro fundamentals in a Markov 
+switching dynamic factor augmented regression framework and compares the performance statistics with 
+the benchmark model of a random walk and momentum strategy. I make simulations with the Japanese Yen, 
+Swiss Franc and US Dollar as funding currencies agai nst six target currencies. Carry trade, a currency 
+speculation strategy between the high-interest rate and low-interest rate currencies, generates high payoffs 
+on average but has a possibility of crash risk. I argue that risk adjusted returns, mean returns and down-
+side risk perform better when purchasing power parity model is used in a both regime switching and linear 
+factor augmented regression framework for Franc trades and perform as good as benchmark model of 
+momentum strategy for Dollar and Yen trades.

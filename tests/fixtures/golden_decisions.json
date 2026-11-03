@@ -1,0 +1,389 @@
+{
+  "version": 1,
+  "created_for_phase": 0,
+  "config_note": "default RulesEngineConfig(), no YAML",
+  "determinism_note": "Every scenario pins mock_time_utc (unittest.mock patches rules_engine.datetime) so check_friday_close and check_news_blackout are wall-clock independent. check_all_rules runs all 9 checks; news_blackout uses scenario.upcoming_news via set_upcoming_news (empty by default).",
+  "default_limits": {
+    "max_daily_loss_pct": 5.0,
+    "max_weekly_drawdown_pct": 8.0,
+    "max_open_positions": 3,
+    "max_correlation": 0.7,
+    "max_spread_multiplier": 2.0,
+    "max_slippage_pips": 1.0,
+    "min_rr_ratio": 1.5,
+    "friday_close_utc_hour": 20,
+    "news_blackout_minutes": 5
+  },
+  "scenarios": [
+    {
+      "id": "clean_approve_baseline",
+      "description": "Healthy state, valid RR (2.0), normal spread, no slippage — all rules pass.",
+      "proposal": {
+        "id": "golden-clean-001",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.104,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: clean baseline"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 0,
+        "open_positions": [],
+        "current_spread": 0.0001,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {"passed": true, "violation_rules": []}
+    },
+    {
+      "id": "daily_loss_breach",
+      "description": "Daily loss -5.5% breaches max_daily_loss_pct of 5.0% (abs >= limit).",
+      "proposal": {
+        "id": "golden-daily-loss-002",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.104,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: daily loss breach"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": -5.5,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 0,
+        "open_positions": [],
+        "current_spread": 0.0001,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["max_daily_loss"]}
+    },
+    {
+      "id": "weekly_drawdown_breach",
+      "description": "Weekly drawdown -8.5% breaches max_weekly_drawdown_pct of 8.0% (abs >= limit).",
+      "proposal": {
+        "id": "golden-weekly-dd-003",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.104,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: weekly drawdown breach"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": -8.5,
+        "open_positions_count": 0,
+        "open_positions": [],
+        "current_spread": 0.0001,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["max_weekly_drawdown"]}
+    },
+    {
+      "id": "max_positions_breach",
+      "description": "3 open positions already — at the max_open_positions limit of 3 (count >= limit).",
+      "proposal": {
+        "id": "golden-max-positions-004",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.104,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: max open positions"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 3,
+        "open_positions": [],
+        "current_spread": 0.0001,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["max_positions"]}
+    },
+    {
+      "id": "min_rr_breach",
+      "description": "Reward 0.0015 / risk 0.002 = R:R 0.75 below configured min_rr_ratio of 1.5.",
+      "proposal": {
+        "id": "golden-min-rr-005",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.1015,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: min_rr breach"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 0,
+        "open_positions": [],
+        "current_spread": 0.0001,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["min_rr_ratio"]}
+    },
+    {
+      "id": "spread_breach",
+      "description": "Current spread 0.0004 is 4x the 0.0001 average — exceeds max_spread_multiplier of 2.0.",
+      "proposal": {
+        "id": "golden-spread-006",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.104,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: spread breach"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 0,
+        "open_positions": [],
+        "current_spread": 0.0004,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["spread_limit"]}
+    },
+    {
+      "id": "slippage_breach",
+      "description": "XAUUSD: expected 2500.00 vs actual 2500.50 = 0.50 price distance / pip_size 0.01 = 50 pips, over max_slippage_pips of 1.0.",
+      "proposal": {
+        "id": "golden-slippage-007",
+        "symbol": "XAUUSD",
+        "direction": "BUY",
+        "entry": 2500.0,
+        "sl": 2490.0,
+        "tp1": 2530.0,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: slippage breach"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 0,
+        "open_positions": [],
+        "current_spread": 0.3,
+        "avg_spread": 0.3,
+        "expected_price": 2500.0,
+        "actual_price": 2500.5
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["slippage_limit"]}
+    },
+    {
+      "id": "multiple_violations",
+      "description": "Daily loss -6.5%, 3 open positions, and 5x spread at once — three violations expected (sorted).",
+      "proposal": {
+        "id": "golden-multi-008",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.104,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: multiple simultaneous violations"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": -6.5,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 3,
+        "open_positions": [],
+        "current_spread": 0.0005,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {
+        "passed": false,
+        "violation_rules": ["max_daily_loss", "max_positions", "spread_limit"]
+      }
+    },
+    {
+      "id": "correlation_limit",
+      "description": "Proposing EURUSD while long GBPUSD — hardcoded correlation 0.85 exceeds max_correlation of 0.7.",
+      "proposal": {
+        "id": "golden-corr-009",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.104,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: correlated exposure"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 1,
+        "open_positions": [
+          {
+            "id": "open-gbpusd-1",
+            "symbol": "GBPUSD",
+            "side": "BUY",
+            "entry_price": 1.27,
+            "current_price": 1.27,
+            "sl": 1.265,
+            "tp1": 1.28,
+            "size": 0.1,
+            "status": "open"
+          }
+        ],
+        "current_spread": 0.0001,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["correlation_limit"]}
+    },
+    {
+      "id": "duplicate_position",
+      "description": "Already holding XAUUSD and proposing another XAUUSD trade — duplicate_position rejection.",
+      "proposal": {
+        "id": "golden-dup-010",
+        "symbol": "XAUUSD",
+        "direction": "BUY",
+        "entry": 2500.0,
+        "sl": 2490.0,
+        "tp1": 2530.0,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: duplicate position"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 1,
+        "open_positions": [
+          {
+            "id": "open-xauusd-1",
+            "symbol": "XAUUSD",
+            "side": "BUY",
+            "entry_price": 2480.0,
+            "current_price": 2500.0,
+            "sl": 2470.0,
+            "tp1": 2520.0,
+            "size": 0.1,
+            "status": "open"
+          }
+        ],
+        "current_spread": 0.3,
+        "avg_spread": 0.3,
+        "expected_price": 2500.0,
+        "actual_price": 2500.0
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-08T12:00:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["duplicate_position"]}
+    },
+    {
+      "id": "friday_close_after_cutoff",
+      "description": "Wall-clock dependent check_friday_close pinned via mock: Friday 21:30 UTC >= 20:00 cutoff — no new trades. 2024-01-05 is a Friday.",
+      "proposal": {
+        "id": "golden-friday-011",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.104,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: friday close cutoff"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 0,
+        "open_positions": [],
+        "current_spread": 0.0001,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [],
+      "mock_time_utc": "2024-01-05T21:30:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["friday_close"]}
+    },
+    {
+      "id": "news_blackout",
+      "description": "Wall-clock dependent check_news_blackout pinned via mock: high-impact event 3 minutes ahead (within 5-minute blackout). 2024-06-03 is a Monday.",
+      "proposal": {
+        "id": "golden-news-012",
+        "symbol": "EURUSD",
+        "direction": "BUY",
+        "entry": 1.1,
+        "sl": 1.098,
+        "tp1": 1.104,
+        "conviction": 0.8,
+        "reasoning": "golden fixture: news blackout window"
+      },
+      "current_state": {
+        "balance": 10000.0,
+        "daily_loss_pct": 0.0,
+        "weekly_dd_pct": 0.0,
+        "open_positions_count": 0,
+        "open_positions": [],
+        "current_spread": 0.0001,
+        "avg_spread": 0.0001,
+        "expected_price": 1.1,
+        "actual_price": 1.1
+      },
+      "upcoming_news": [
+        {
+          "event_name": "Golden Fixture High-Impact Event",
+          "currency": "USD",
+          "impact": "high",
+          "timestamp": "2024-06-03T12:03:00+00:00"
+        }
+      ],
+      "mock_time_utc": "2024-06-03T12:00:00+00:00",
+      "expected": {"passed": false, "violation_rules": ["news_blackout"]}
+    }
+  ]
+}

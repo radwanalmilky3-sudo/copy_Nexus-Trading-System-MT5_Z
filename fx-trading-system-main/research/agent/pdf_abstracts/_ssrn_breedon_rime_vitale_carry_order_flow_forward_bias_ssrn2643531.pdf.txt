@@ -1,0 +1,22 @@
+path: _pdfs/_ssrn/breedon_rime_vitale_carry_order_flow_forward_bias_ssrn2643531.pdf
+title_guess: School of Economics and Finance
+ids: 
+priority: hot
+extract_status: ok
+---
+der Flow and the Forward
+Bias Puzzle *
+Francis Breedon
+Queen Mary, University of London 
+Dagﬁnn Rime
+BI Norwegian Business School 
+Paolo Vitale
+University Gabriele d’Annunzio §
+October 2015
+* We thank Pasquale della Corte, Martin Evans, Steinar Holden, Hanno Lustig, Michael Moore, Carol
+Osler, Tarun Ramadorai, Francesco Ravazzolo, Lucio Sarno, Adrien Verdelhan and participants at semi-
+nars at the University of Bologna, the University of Modena, the EIEF Research Center in Rome, Luiss
+University, Warwick Business School, Cass Business School, Norges Bank, the Norwegian University of
+Science and Technology, the University of Sassari, the Central Bank of Turkey, the 2011 EFA meeting, the
+XX International Tor Vergata Conference on Money, Banking and Finance, the Bank of Italy Workshop
+on Fi

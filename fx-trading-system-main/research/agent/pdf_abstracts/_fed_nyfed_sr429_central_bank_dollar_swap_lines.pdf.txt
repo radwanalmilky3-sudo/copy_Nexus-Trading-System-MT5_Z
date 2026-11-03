@@ -1,0 +1,20 @@
+path: _pdfs/_fed/nyfed_sr429_central_bank_dollar_swap_lines.pdf
+title_guess: Central Bank Dollar Swap Lines and Overseas Dollar Funding Costs
+ids: 
+priority: cold
+extract_status: ok
+---
+uary 2010
+This paper presents preliminary findings and is being distributed to economists
+and other interested readers solely to stimulate discussion and elicit comments.
+The views expressed in the paper are those of the authors and are not necessarily
+reflective of views at the Federal Reserve Bank of New York or the Federal
+Reserve System. Any errors or omissions are the responsibility of the authors.
+Central Bank Dollar Swap Lines and Overseas Dollar Funding Costs
+Linda S. Goldberg, Craig Kennedy, and Jason Miu 
+Federal Reserve Bank of New York Staff Reports, no. 429
+January 2010; revised February 2010
+JEL classification: E44, F36, G32 
+Abstract
+Following a scarcity of dollar funding available internationally to banks and financial
+institutions, in December 2007 the Federal Reserve bega

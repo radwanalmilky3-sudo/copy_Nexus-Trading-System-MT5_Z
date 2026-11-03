@@ -1,0 +1,18 @@
+path: _pdfs/_nber/farhi_maggiori_global_currency_hierarchy_w22295.pdf
+title_guess: A MODEL OF THE INTERNATIONAL MONETARY SYSTEM
+ids: w22295
+priority: hot
+extract_status: ok
+---
+ssachusetts Avenue
+Cambridge, MA 02138
+May 2016
+We thank Pol Antras, Julien Bengui, Guillermo Calvo, Dick Cooper, Ana Fostel, Jeffry Frieden, 
+Mark Gertler, Gita Gopinath, Pierre-Olivier Gourinchas, Veronica Guerrieri, Guido Lorenzoni, 
+Arnaud Mehl, Brent Neiman, Jaromir Nosal, Maurice Obstfeld, Jonathan Ostry, Helene Rey, 
+Kenneth Rogoff, Jesse Schreger, Andrei Shleifer, Jeremy Stein, and seminar participants at the 
+NBER (IFM, MEFM, EFMB), University of California Berkeley, University of Chicago Booth, 
+Yale University, Boston College, Boston University, Stanford GSB, MIT Sloan, LSE, LBS, 
+Oxford University, Imperial College, PSE Conference of Sovereign Risk, Harvard University, 
+CREI-Pompeu Fabra, Brown University, Yale Cowles Conference on General Equilibrium 
+Theory, Einaudi Institute

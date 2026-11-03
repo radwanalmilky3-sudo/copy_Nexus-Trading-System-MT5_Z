@@ -1,0 +1,64 @@
+# Formal Dukascopy SQLite receive universe (M0 intake contract).
+# Range is half-open UTC: [start, end).
+schema_version: 1
+contract_name: dukascopy_sqlite_intake_v1
+unified_range:
+  start: "2016-01-01T00:00:00Z"
+  end_exclusive: "2026-01-01T00:00:00Z"
+parser_version: dukascopy-bi5-v1
+database_schema_version: "1"
+provider: dukascopy
+required_sidecars:
+  - ".sha256"
+  - ".json"
+required_batch_manifest: "_sqlite_manifest.json"
+# Full receive universe (14). Order is frozen.
+receive_universe:
+  - EURUSD
+  - GBPUSD
+  - USDJPY
+  - USDCHF
+  - AUDUSD
+  - NZDUSD
+  - USDCAD
+  - EURGBP
+  - EURJPY
+  - GBPJPY
+  - AUDJPY
+  - CADJPY
+  - USDNOK
+  - USDSEK
+# Slow-horizon research weights only the first 12.
+slow_horizon_universe:
+  - EURUSD
+  - GBPUSD
+  - USDJPY
+  - USDCHF
+  - AUDUSD
+  - NZDUSD
+  - USDCAD
+  - EURGBP
+  - EURJPY
+  - GBPJPY
+  - AUDJPY
+  - CADJPY
+# FIX-W requires these nine USD legs; order is frozen independently of the
+# full receive order.
+fix_w_universe:
+  - EURUSD
+  - GBPUSD
+  - USDJPY
+  - USDCHF
+  - AUDUSD
+  - NZDUSD
+  - USDCAD
+  - USDNOK
+  - USDSEK
+# FIX-W G9 data legs use USDNOK/USDSEK; they never enter slow weights.
+fix_w_extra_legs:
+  - USDNOK
+  - USDSEK
+notes:
+  - "Local receive/audit only; no VPS credentials."
+  - "A symbol is formal-ready only when range, parser, sidecars, and batch manifest all match."
+  - "Legacy GBPUSD 1.0.0 ending 2025-09-15 is not formal-ready for this contract."

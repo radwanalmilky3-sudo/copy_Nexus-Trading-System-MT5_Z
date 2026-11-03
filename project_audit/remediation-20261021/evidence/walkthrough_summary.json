@@ -1,0 +1,20 @@
+{
+  "base": "http://127.0.0.1:3100",
+  "steps": 38,
+  "screenshots": 38,
+  "console_errors": 26,
+  "console_warnings": 0,
+  "http_responses": 2069,
+  "http_4xx": 0,
+  "http_5xx": 0,
+  "request_failures": 150,
+  "ws_connections": 302,
+  "ws_url_bases": [
+    "ws://127.0.0.1:3100/_next/webpack-hmr",
+    "ws://127.0.0.1:9000/",
+    "ws://127.0.0.1:9000/ws/agents",
+    "ws://127.0.0.1:9000/ws/positions",
+    "ws://127.0.0.1:9000/ws/risk"
+  ],
+  "finished_utc": "2026-10-23T16:01:15.483Z"
+}

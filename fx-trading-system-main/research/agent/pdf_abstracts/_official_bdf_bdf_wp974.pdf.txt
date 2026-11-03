@@ -1,0 +1,14 @@
+path: _pdfs/_official/bdf/bdf_wp974.pdf
+title_guess: Gains from Commitment: The Case
+ids: wp974
+priority: warm
+extract_status: ok
+---
+This paper argues that the exchange rate regime matters for inflation and economic activity, 
+with substantial benefits arising from a currency peg. At the heart of these benefits lies an 
+increase in credibility that reduces the inflationary bias once central banks commit to peg 
+their currency to a credible anchor. Using an open economy model, we provide a credibility 
+estimate for 170 economies for 1950 -2019 which aligns with other central bank 
+independence measures. We document that committing to a peg persistently lowers inflation 
+and its volatility while increasing real economic growth. Less credible countries benefit more 
+from fixing the exchange rate.

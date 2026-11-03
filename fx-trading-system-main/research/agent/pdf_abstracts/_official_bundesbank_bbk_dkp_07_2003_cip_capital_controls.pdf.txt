@@ -1,0 +1,24 @@
+path: _pdfs/_official/bundesbank/bbk_dkp_07_2003_cip_capital_controls.pdf
+title_guess: The international integration
+ids: 
+priority: warm
+extract_status: ok
+---
+r
+Sabine Herrmann
+Axel Jochem
+Discussion paper 07/03
+Economic Research Centre
+of the Deutsche Bundesbank
+March 2003
+The discussion papers published in this series represent
+the authors’ personal opinions and do not necessarily reflect the views
+of the Deutsche Bundesbank.
+Deutsche Bundesbank, Wilhelm-Epstein-Strasse 14, 60431 Frankfurt am Main,
+Postfach 10 06 02, 60006 Frankfurt am Main
+Tel +49 69 9566-1
+Telex within Germany 41227, telex from abroad 414431, fax +49 69 5601071
+Please address all orders in writing to: Deutsche Bundesbank,
+Press and Public Relations Division, at the above address or via fax No. +49 69 9566-3077
+Reproduction permitted only if source is stated.
+ISBN 3–935821–56–5

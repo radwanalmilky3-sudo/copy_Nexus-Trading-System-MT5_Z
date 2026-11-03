@@ -1,0 +1,18 @@
+path: _pdfs/_nber/jiang_krishnamurthy_lustig_foreign_safe_w27371.pdf
+title_guess: THE MICRO AND MACRO DYNAMICS OF CAPITAL FLOWS
+ids: w27371
+priority: warm
+extract_status: ok
+---
+H
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+June 2020, revised July 2025
+We thank Jose Mota Aquino, Rodrigo Heresi, Alejandra Martinez, Eugene Oue, and Makoto 
+Tanaka for excellent research assistance. We are grateful to Aimee Chin, Andres Drenik, Sebastian 
+Fanelli, Pierre-Olivier Gourinchas, Fadi Hassan, Dirk Jenter, Sebnem Kalemli-Ozcan, Loukas 
+Karabarbounis, Marti Mestieri, Dmitry Mukhin, Veronica Rappoport, Hélène Rey, Andres 
+Rodriguez-Clare, Eugenio Rojas and Bent Sorensen, as well as participants at several seminars and 
+conferences for helpful comments. The views expressed here are those of the authors and do not 
+necessarily represent those of the Federal Reserve Bank of Dallas or the Federal Reserve System. 
+This work was funded by UK Research and Innovation (UKRI) under th

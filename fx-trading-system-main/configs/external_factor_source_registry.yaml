@@ -1,0 +1,227 @@
+schema_version: 1
+registry_date: "2026-07-19"
+sources:
+  - source_id: official_rates_current_archive
+    family: rates
+    manifest_path: data/official_rates/manifest.json
+    manifest_sha256: 6ad0a432c2add1ed418fff79fd989ce624afe0436406732c2416a9b3409cf9b4
+    data_path: data/official_rates/normalized/official_rate_observations.csv
+    data_sha256: 791ccf064ab1ce0d5522767871a4837f18645796fe176c568fff5a5d52fdae8c
+    quality: exploratory_current_vintage
+    roles: [directional_factor, regime_factor, research_context]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: false
+    available_time_policy: official observation plus conservative source-specific lag
+    revision_policy: current archive; no observation-by-vintage history
+    license_status: internal_research_review_required
+    blockers:
+      - Current-vintage history cannot prove the value known at each historical date.
+      - NZD has no successful primary source in this archive.
+      - Overnight and policy rates are not OIS or tradable forward points.
+
+  - source_id: cftc_tff_positioning_current_revised
+    family: positioning
+    manifest_path: data/point_in_time/currency_positioning.manifest.json
+    manifest_sha256: 05ef3206f871303eceec4eb15ef4ae549602831cad18062fe88ec438134248e0
+    data_path: data/point_in_time/currency_positioning.csv
+    data_sha256: ff2e2c8e57dfff465d82dd76be62008b677b55b397ad1b51634837b88a0964d3
+    quality: conservative_pit_current_archive
+    roles: [directional_factor, regime_factor, research_context]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: false
+    available_time_policy: report date plus 60 calendar days
+    revision_policy: current compressed archive; not an as-published weekly vintage
+    license_status: internal_research_review_required
+    blockers:
+      - Actual release timestamps are not verified for every report.
+      - Historical compressed values may contain later revisions.
+
+  - source_id: supplemental_fx_current_archives
+    family: macro_risk_commodity
+    manifest_path: data/supplemental_fx/manifest.json
+    manifest_sha256: 1ed392452974f960981a564aa0139e07d61fcd359f9a21e71e2c10e649f46eff
+    data_path: data/supplemental_fx/normalized/supplemental_observations.csv
+    data_sha256: ee7ba3019cad5c27bb8148874ce0833292b7e6013380d84da8489c478e28b9db
+    quality: exploratory_current_vintage
+    roles: [directional_factor, regime_factor, research_context]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: false
+    available_time_policy: source-specific conservative release lag
+    revision_policy: current archives except separately registered preserved-vintage datasets
+    license_status: mixed_sources_review_required
+    blockers:
+      - Dataset combines sources with different revision and licensing policies.
+      - Current commodity and risk histories are not observation-by-vintage panels.
+
+  - source_id: nyfed_gscpi_preserved_vintages
+    family: supply_chain_risk
+    manifest_path: data/supplemental_fx/manifest.json
+    manifest_sha256: 1ed392452974f960981a564aa0139e07d61fcd359f9a21e71e2c10e649f46eff
+    data_path: data/supplemental_fx/normalized/gscpi_vintages.csv
+    data_sha256: ca73842f9253bf2737a3a252dcd573ee2daca746c5ce68c23e378794690d9cda
+    quality: verified_strict_pit
+    roles: [regime_factor]
+    formal_directional_eligible: false
+    formal_regime_eligible: true
+    formal_event_control_eligible: false
+    available_time_policy: preserved monthly vintage publication date
+    revision_policy: use only values contained in each preserved vintage
+    license_status: internal_research_review_required
+    blockers: []
+
+  - source_id: phillyfed_rtdsm_vintages
+    family: us_macro_vintages
+    manifest_path: data/supplemental_fx/phillyfed_rtdsm_manifest.json
+    manifest_sha256: d6f990a5d6d10c492526952a4510c3555d3f7791310f970dfccd9f831f6c386d
+    data_path: data/supplemental_fx/normalized/phillyfed_rtdsm_vintages.csv.gz
+    data_sha256: e799dcfbcc5b78f0c0867f34b71eac1fffafef31aa897a5091ec2573d0226cb5
+    quality: verified_vintage_conservative_availability
+    roles: [regime_factor]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: false
+    available_time_policy: row-level CPI mid-quarter or verified/conservative G17 policy
+    revision_policy: values remain inside their source vintage; never substitute latest history
+    license_status: internal_research_review_required
+    blockers:
+      - Formal use requires a row-level eligibility filter for verified versus unresolved IP dates.
+      - Publication dates have no intraday timestamp and become usable on the next New York day.
+
+  - source_id: phillyfed_rtdsm_verified_rows
+    family: us_macro_vintages
+    manifest_path: data/supplemental_fx/phillyfed_rtdsm_manifest.json
+    manifest_sha256: d6f990a5d6d10c492526952a4510c3555d3f7791310f970dfccd9f831f6c386d
+    data_path: data/supplemental_fx/normalized/phillyfed_rtdsm_vintages.csv.gz
+    data_sha256: e799dcfbcc5b78f0c0867f34b71eac1fffafef31aa897a5091ec2573d0226cb5
+    row_filter: external_eligibility == verified_strict_pit
+    quality: verified_strict_pit
+    roles: [regime_factor]
+    formal_directional_eligible: false
+    formal_regime_eligible: true
+    formal_event_control_eligible: false
+    available_time_policy: CPI mid-quarter vintage dates or verified Federal Reserve G17 release dates, next New York day
+    revision_policy: use same-vintage levels only; unresolved IP-month rows are excluded
+    license_status: official_direct_internal_research
+    blockers: []
+
+  - source_id: treasury_tic_tressect_vintages
+    family: us_cross_border_treasury_flows
+    manifest_path: data/treasury_tic/normalized/tressect_manifest.json
+    manifest_sha256: 55d7b16253bb0db1b33ef2c8be43d537e6795b8ec611b313734591589c8ae390
+    data_path: data/treasury_tic/normalized/tressect_vintages.csv
+    data_sha256: 8c6be757e40446f43ff440f483b4e64c589ecef343077f1281dcca7a8110f926
+    quality: verified_strict_pit
+    roles: [regime_factor, research_context]
+    formal_directional_eligible: false
+    formal_regime_eligible: true
+    formal_event_control_eligible: false
+    available_time_policy: official TIC archive release date plus one UTC day boundary
+    revision_policy: use only rows from the as-published release vintage; never substitute latest history
+    license_status: official_direct_internal_research
+    blockers: []
+
+  - source_id: phillyfed_spf_release_calendar
+    family: macro_event_calendar
+    manifest_path: data/supplemental_fx/phillyfed_spf_manifest.json
+    manifest_sha256: b747f2106c800364e812684eb191e1a7550e451ef6cfeaa609c6283c6ddea6a5
+    data_path: data/supplemental_fx/normalized/phillyfed_spf_release_calendar_2016_2025.csv
+    data_sha256: 522ee0300c4618bbead9b8ef8e59cf2936d3a1142ac4bea479e128d4e0d60de7
+    quality: verified_strict_pit
+    roles: [event_control]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: true
+    available_time_policy: verified official release date; no intraday surprise use
+    revision_policy: calendar only; consolidated forecast values are excluded
+    license_status: official_direct_internal_research
+    blockers: []
+
+  - source_id: benchmark_publication_calendar
+    family: fx_event_calendar
+    manifest_path: data/benchmark_calendars/benchmark_publication_calendar_2016_2025.manifest.json
+    manifest_sha256: ee26d5c8c3cce9460947289e5f67ece7d3e4a378da870fa758d09e4e931b9772
+    data_path: data/benchmark_calendars/benchmark_publication_calendar_2016_2025.csv
+    data_sha256: 226dada52f60d22d8c1a386f8ef6042457b2c9930ab90bafc67398e1b8011046
+    quality: verified_strict_pit
+    roles: [event_control]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: true
+    available_time_policy: official/archived service calendar and methodology rules
+    revision_policy: fixed raw documents and hashes
+    license_status: private_audit_redistribution_review_required
+    blockers: []
+
+  - source_id: central_bank_policy_calendar_partial
+    family: monetary_policy_events
+    manifest_path: data/central_bank_calendars/central_bank_policy_events_2016_2025.manifest.json
+    manifest_sha256: 5fc04fb35acb5c1edac15d165bb331909e0a21b6869d1057e0a63065e2f06e26
+    data_path: data/central_bank_calendars/central_bank_policy_events_2016_2025.csv
+    data_sha256: 06d6f47965a39df79a22db6d44bd8ac35979b6bc34245b4cc111e6ee5e399ffa
+    quality: verified_vintage_conservative_availability
+    roles: [event_control]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: false
+    available_time_policy: per-row verified actual, official date-only, or official rule-derived
+    revision_policy: fixed official archive evidence
+    license_status: official_direct_internal_research
+    blockers:
+      - BOE, SNB, BOC, and RBNZ adapters are absent; complete=false.
+      - Eighteen events have date-only rather than intraday timestamps.
+
+  - source_id: central_bank_policy_calendar_eurusd_strict_rows
+    family: monetary_policy_events
+    manifest_path: data/central_bank_calendars/central_bank_policy_events_2016_2025.manifest.json
+    manifest_sha256: 5fc04fb35acb5c1edac15d165bb331909e0a21b6869d1057e0a63065e2f06e26
+    data_path: data/central_bank_calendars/central_bank_policy_events_2016_2025.csv
+    data_sha256: 06d6f47965a39df79a22db6d44bd8ac35979b6bc34245b4cc111e6ee5e399ffa
+    row_filter: authority in {FED, ECB}; timestamp_quality in {verified_actual_publication, official_rule_derived}; cancelled=false; release_at_utc is not null
+    quality: verified_strict_pit
+    roles: [event_control]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: true
+    available_time_policy: official release_at_utc from actual FED publication or frozen ECB official rule; no date-only rows
+    revision_policy: fixed official archive evidence and parent manifest hash
+    license_status: official_direct_internal_research
+    blockers: []
+
+  - source_id: cftc_weekly_swaps_activity
+    family: derivatives_activity
+    manifest_path: data/cftc_weekly_swaps/cftc_weekly_swaps_manifest.json
+    manifest_sha256: 5cbe1796ec32c042b01839de49202b92481301cd5fdf7eca8e135edeb578f699
+    data_path: data/cftc_weekly_swaps/cftc_weekly_swaps_fx_activity.csv
+    data_sha256: b5186131f3cde69bec42f2e38d2ab355dc5d915e73cbb62ec81483ecca38ef20
+    quality: research_only_retrieved_later
+    roles: [research_context]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: false
+    available_time_policy: archive edition label or later project retrieval when publication is unresolved
+    revision_policy: archived editions with known gaps and methodology breaks
+    license_status: internal_research_review_required
+    blockers:
+      - Not signed order flow, price, forward points, or a directional FX measure.
+      - Release time and original-release archive integrity are incomplete.
+
+  - source_id: ons_gdp_realtime_catalog_only
+    family: uk_macro_vintages
+    manifest_path: data/ons_gdp_realtime/manifests/ons_gdp_realtime_catalog_manifest.json
+    manifest_sha256: 85ba54e23062270d7848a2b4247c696d0c7cb113b2e65f32052f0bcc07faa825
+    data_path: data/ons_gdp_realtime/normalized/ons_gdp_realtime_edition_catalog.csv
+    data_sha256: 441ee890fdc67e0fa764d86cc0c714b0a8f8ddc53c7dd577a6e824e8f8fb7eca
+    quality: ineligible
+    roles: [research_context]
+    formal_directional_eligible: false
+    formal_regime_eligible: false
+    formal_event_control_eligible: false
+    available_time_policy: unavailable until workbook-embedded original publication dates are parsed
+    revision_policy: catalog only; workbooks not downloaded
+    license_status: uk_open_government_licence_3
+    blockers:
+      - Historical workbooks are not downloaded or normalized.
+      - Edition pages repeat the latest page release date and cannot establish historical availability.

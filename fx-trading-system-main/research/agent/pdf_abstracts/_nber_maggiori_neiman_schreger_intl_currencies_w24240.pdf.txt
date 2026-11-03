@@ -1,0 +1,20 @@
+path: _pdfs/_nber/maggiori_neiman_schreger_intl_currencies_w24240.pdf
+title_guess: HIGH-PRICED DRUGS IN MEDICARE PART D:
+ids: w24240
+priority: cold
+extract_status: ok
+---
+AL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+January 2018
+We are grateful to Louise Sheiner for detailed comments, to Chris Avery, Maciej Kotowski and 
+to participants in the May 2, 2017 Brookings meeting on prescription drug pricing and regulation 
+for numerous helpful suggestions. We are grateful to the Brookings Institution for financial 
+support of an earlier version of this paper. The views expressed herein are those of the authors 
+and do not necessarily reflect the views of the National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been 
+peer-reviewed or been subject to the review by the NBER Board of Directors that accompanies 
+official 
+NBER publications.
+© 2018 by Richard G. Frank

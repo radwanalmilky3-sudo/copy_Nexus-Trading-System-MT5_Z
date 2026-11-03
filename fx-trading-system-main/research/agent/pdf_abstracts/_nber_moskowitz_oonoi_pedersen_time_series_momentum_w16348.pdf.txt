@@ -1,0 +1,18 @@
+path: _pdfs/_nber/moskowitz_oonoi_pedersen_time_series_momentum_w16348.pdf
+title_guess: RISK PREFERENCES ARE NOT TIME PREFERENCES:
+ids: w16348
+priority: hot
+extract_status: ok
+---
+tp://www.nber.org/papers/w16348
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+September 2010
+We are grateful for the insightful comments of many colleagues, including Nageeb Ali, Michelle Cohen,
+Soo Hong Chew, Vince Crawford, Tore Ellingsen, Guillaume Fréchette, Glenn Harrison, David Laibson,
+Mark Machina, William Neilson, Muriel Niederle, Matthew Rabin, Joel Sobel, Lise Vesterlund, participants
+at the Economics and Psychology lecture series at Paris 1, the Psychology and Economics segment
+at Stanford Institute of Theoretical Economics 2009, the Amsterdam Workshop on Behavioral and
+Experimental Economics 2009, the Harvard Experimental and Behavioral Economics Seminar, and
+members of the graduate experimental economics courses at Stanford University and 

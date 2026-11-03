@@ -1,0 +1,37 @@
+﻿# python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# node
+node_modules/
+dist/
+build/
+.next/
+
+# archives
+*.zip
+*.rar
+*.7z
+
+# data and backups
+dump.rdb
+*.rdb
+backups/
+data/
+models_store/
+
+# secrets
+.env
+.env.*
+*.key
+*.pem
+
+# logs and editors
+*.log
+logs/
+.vscode/
+.idea/
+.claude/

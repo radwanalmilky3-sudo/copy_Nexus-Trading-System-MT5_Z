@@ -1,0 +1,18 @@
+path: _pdfs/_nber/verdelhan_factor_structure_exchange_rates_w23773.pdf
+title_guess: GRAVITY IN FX R-SQUARED:
+ids: w23773
+priority: warm
+extract_status: ok
+---
+UREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+September 2017
+We received helpful comments from Tarek Hassan, Bob Hodrick, Andrew Karolyi, Patrick 
+Kehoe, Ralph Koijen, Arvind Krishnamurthy, Nelson Mark, Brent Neiman, Paul Pfleiderer, 
+Monika Piazzesi, Martin Schneider, Brian Waters, participants at the SFS Cavalcade in Toronto, 
+the 5th Workshop on Financial Determinants of Exchange Rates at the SNB Zurich, the Chicago 
+Booth International Macro-Finance Conference, the Annual Conference on International Finance, 
+NYU Stern, the Stanford GSB, NBER International Finance and Macroeconomics, and NBER 
+Macroeconomics within and Across Borders. We are grateful to Romain Wacziarg for helpful 
+comments and for giving us access to his data. The views expressed herein are 

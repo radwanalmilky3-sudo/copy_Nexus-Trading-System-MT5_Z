@@ -1,0 +1,8 @@
+path	role	change	verification
+shared/redis_client.py	P1 Redis recovery	Added Redis 5-compatible XPENDING/XCLAIM reclaim, bounded DLQ handoff, stable idempotency key, and atomic processed marker	Not run per user instruction; no live Redis contacted
+services/nexus_data/main.py	Agent 1 scope review	Reviewed trade-close consumer ACK behavior; no change made	Not run per user instruction; no live DB contacted
+services/nexus_features/main.py	Agent 1 scope review	Reviewed OHLCV consumer ACK behavior; no change made	Not run per user instruction; no live Redis or trading contacted
+services/nexus_data/main.py	P1 historical backfill	On start/end misses, fetches completed MT5 range, persists idempotently through the data owner, then re-queries DuckDB; no synthetic fallback for bounded ranges	Not run per user instruction; no live DB/broker contacted
+services/nexus_data/mt5_connector.py	P1 historical backfill	Added inclusive completed-bar range retrieval using MT5 copy_rates_range, with isolated-worker support and limit bound	Not run per user instruction; no live broker contacted
+services/nexus_data/mt5_worker.py	P1 historical backfill	Added isolated MT5 ohlcv_range operation with ISO bounds and forming-bar exclusion	Not run per user instruction; no live broker contacted
+project_audit/requirements_lock.tsv	P2 dependency review	Generated offline conservative normalized constraint list for all requirements.txt files; unresolved websockets conflict is explicitly blocked	No installation, network, or tests

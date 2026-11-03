@@ -1,0 +1,20 @@
+path: _pdfs/_nber/burnside_eichenbaum_kleshchelski_rebelo_carry_peso_w13237.pdf
+title_guess: OLDER AND WISER? BIRTH ORDER AND IQ OF YOUNG MEN
+ids: w13237
+priority: warm
+extract_status: ok
+---
+CONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+July 2007
+Black and Devereux gratefully acknowledge financial support from the National Science Foundation
+and the California Center for Population Research. Salvanes thanks the Research Council of Norway
+for financial support. We are grateful to the Medical Birth Registry for Norway for providing the birth
+registry data. The views expressed herein are those of the author(s) and do not necessarily reflect the
+views of the National Bureau of Economic Research.
+© 2007 by Sandra E. Black, Paul J. Devereux, and Kjell G. Salvanes. All rights reserved. Short sections
+of text, not to exceed two paragraphs, may be quoted without explicit permission provided that full
+credit, including © notice, is given to the source.
+
+Older and Wiser?

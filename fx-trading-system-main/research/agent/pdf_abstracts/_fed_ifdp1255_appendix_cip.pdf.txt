@@ -1,0 +1,15 @@
+path: _pdfs/_fed/ifdp1255_appendix_cip.pdf
+title_guess: Credit Migration and Covered Interest Rate Parity
+ids: ifdp1255
+priority: warm
+extract_status: ok
+---
+ata from SDC Global New
+Issuance database, Moody's Default & Recovery database and Bloomberg. The data merge uses ISINs and
+CUSIPs when possible. If neither of the identiers are available, the merge is performed using issuer ticker,
+coupon, and maturity. The merged data set contains corporate bonds that are non-oating, non-perpetual
+and have no-embedded options (straight, bullet bonds). Securities with remaining maturities of less than
+one year and of less than ten percent of the original maturity are excluded since the liquidity for these bonds
+are poor and pricing is often missing. This also eectively rules out short-term funding instruments such as
+commercial paper. Loans, convertible bonds, and asset backed securities (such as CMBS) are also excluded
+from the data set. Since the ana

@@ -1,0 +1,12 @@
+path: _pdfs/_arxiv/carry_cee_risk_1801.03356.pdf
+title_guess: Two-ﬁeld cosmological models and the
+ids: 
+priority: warm
+extract_status: ok
+---
+We propose a class of two-ﬁeld cosmological models derived from
+gravity coupled to non-linear sigma models whose target space is a non-
+compact and geometrically-ﬁnite hyperbolic surface, which provide a wide
+generalization of so-called α-attractor models and can be studied using uni-
+formization theory. We illustrate cosmological dynamics in such models for
+the case of the hyperbolic triply-punctured sphere.

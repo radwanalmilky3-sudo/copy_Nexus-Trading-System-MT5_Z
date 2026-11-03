@@ -1,0 +1,22 @@
+path: _pdfs/_official/boe/boe_wp_yen_real_exchange_stationary.pdf
+title_guess: The yen real exchange rate may be stationary
+ids: 
+priority: warm
+extract_status: ok
+---
+eal exchange rate may be stationary after all: evidence from
+non-linear unit root tests
+Georgios Chortareas
+and
+George Kapetanios
+Working Paper no. 311
+ Department of Accounting, Finance and Management and Essex Finance Centre, University of
+Essex. Email: gchort@essex.ac.uk.
+ Department of Economics, Queen Mary College, University of London.
+Email: G.Kapetanios@qmul.ac.uk.
+The views expressed in this paper are those of the authors, and not necessarily those of the Bank
+of England. The paper was completed while the rst author was at the Bank of England. We thank
+Andrew Bailey and Peter Westaway for valuable comments. This paper was nalised on 1
+September 2006.
+The Bank of England's working paper series is externally refereed.
+Information on the Bank's working paper series can be fou

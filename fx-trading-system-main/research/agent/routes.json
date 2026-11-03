@@ -1,0 +1,325 @@
+{
+  "updated": "2026-07-17",
+  "hubs": {
+    "entry": "README.md",
+    "agent_protocol": "AGENTS.md",
+    "human_index": "INDEX.md",
+    "notes_index": "NOTES_INDEX_ZH.md",
+    "study_closure": "STUDY_CLOSURE_ZH.md",
+    "reading_stack": "notes/READING_STACK_ZH.md",
+    "deep_study_path": "09_deep_study_path/DEEP_STUDY_PATH_ZH.md",
+    "gaps": "notes/GAPS.md",
+    "errata": "notes/ERRATA.md",
+    "mislabel": "_pdfs/MISLABEL_LOG.md",
+    "pdf_inventory": "_pdfs/INVENTORY.md",
+    "methods_map": "04_validation_methods/METHODS_MAP.md",
+    "replication_checklist": "02_factor_literature/replication_checklist.md",
+    "citation_graph": "02_factor_literature/CITATION_GRAPH.md",
+    "intraday_map": "03_microstructure_intraday/INTRADAY_SOURCE_MAP.md",
+    "datasets": "08_datasets_catalog/DATASETS.md",
+    "pdf_l3_index": "agent/pdf_index.jsonl",
+    "pdf_l3_stats": "agent/pdf_l3_stats.md"
+  },
+  "rules": [
+    "Read notes before PDFs; never bulk-load the PDF tree into context (post-purge ~341 files)",
+    "Always check MISLABEL_LOG / PDF first page title before citing a file path",
+    "cost_incomplete => no formal net PnL claims",
+    "midquote premium != implementable retail+financing net",
+    "No approved trading strategy as of library snapshot",
+    "New factor candidates require WP9 charter; do not expand search registry from reading alone",
+    "Prefer fail_closed over optimistic extension",
+    "PDF discovery: filter agent/pdf_index.jsonl then abstract_file; never dump all abstracts",
+    "PDF policy: index-first; extract on demand only (one PDF); do not bulk-write study-L3 notes for all PDFs"
+  ],
+  "routes": [
+    {
+      "intent": "carry",
+      "keywords": [
+        "carry",
+        "HML_FX",
+        "forward discount",
+        "利差",
+        "高息货币"
+      ],
+      "read_first": [
+        "02_factor_literature/notes/lustig_rfs_2011.md",
+        "02_factor_literature/notes/menkhoff_jf_2012_carry.md",
+        "02_factor_literature/notes/brunnermeier_nagel_pedersen.md",
+        "06_broker_costs/CIP_CONTRACT_CHECKLIST.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G1",
+        "G2"
+      ],
+      "do_not": [
+        "用政策利率声称真实 carry 复制",
+        "用 mid 回测写净收益"
+      ]
+    },
+    {
+      "intent": "cip_basis",
+      "keywords": [
+        "CIP",
+        "cross-currency basis",
+        "covered interest",
+        "远期点",
+        "basis"
+      ],
+      "read_first": [
+        "06_broker_costs/CIP_CONTRACT_CHECKLIST.md",
+        "06_broker_costs/notes/du_tepper_verdelhan_cip.md",
+        "06_broker_costs/notes/borio_bis_basis.md",
+        "02_factor_literature/notes/avdjiev_du_koch_shin_cip_dollar.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G2",
+        "C2",
+        "C3"
+      ],
+      "do_not": [
+        "用 F_hat 顶替可交易 forward",
+        "用误标 avdjiev_*_w24555 PDF"
+      ]
+    },
+    {
+      "intent": "momentum",
+      "keywords": [
+        "momentum",
+        "TSMOM",
+        "动量",
+        "趋势"
+      ],
+      "read_first": [
+        "02_factor_literature/notes/menkhoff_jfe_2012_mom.md",
+        "02_factor_literature/notes/moskowitz_ooi_pedersen.md",
+        "02_factor_literature/notes/asness_moskowitz_pedersen.md",
+        "04_validation_methods/notes/harvey_liu_zhu_factor_zoo.md"
+      ],
+      "fail_closed_if": [],
+      "do_not": [
+        "忽略搜索账本中已有形成期网格",
+        "把 OOS 翻号当可交易"
+      ]
+    },
+    {
+      "intent": "value_reer",
+      "keywords": [
+        "value",
+        "REER",
+        "PPP",
+        "价值"
+      ],
+      "read_first": [
+        "02_factor_literature/notes/menkhoff_rfs_value.md",
+        "08_datasets_catalog/notes/bis_reer_gli_lbs.md",
+        "05_data_contracts/PIT_AND_VINTAGE_GUIDE.md"
+      ],
+      "fail_closed_if": [
+        "G5"
+      ],
+      "do_not": [
+        "把 current-vintage REER 当 strict PIT 方向 alpha"
+      ]
+    },
+    {
+      "intent": "validation_fdr_dsr_pbo_spa",
+      "keywords": [
+        "FDR",
+        "DSR",
+        "PBO",
+        "SPA",
+        "多重检验",
+        "过拟合",
+        "bootstrap"
+      ],
+      "read_first": [
+        "04_validation_methods/METHODS_MAP.md",
+        "04_validation_methods/notes/harvey_liu_zhu_factor_zoo.md",
+        "04_validation_methods/notes/bailey_2014_deflated_sharpe.md",
+        "04_validation_methods/notes/bailey_pbo_cscv.md",
+        "04_validation_methods/notes/hansen_2005_spa.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "V1",
+        "V3",
+        "V6"
+      ],
+      "do_not": [
+        "盲信 arch SPA studentize",
+        "用 finalists 代替完整 trial count"
+      ]
+    },
+    {
+      "intent": "intraday_fix_local",
+      "keywords": [
+        "FIX-W",
+        "WMR",
+        "定盘",
+        "LOCAL-PAPER",
+        "intraday",
+        "fixing"
+      ],
+      "read_first": [
+        "03_microstructure_intraday/INTRADAY_SOURCE_MAP.md",
+        "03_microstructure_intraday/notes/krohn_mueller_whelan.md",
+        "03_microstructure_intraday/notes/breedon_ranaldo.md",
+        "03_microstructure_intraday/notes/lseg_wmr_methodology.md",
+        "01_foundations/notes/wmr_ecb_tokyo_fix_comparison.md"
+      ],
+      "fail_closed_if": [
+        "G8",
+        "G10"
+      ],
+      "do_not": [
+        "用 1h bar 声称验证 5 秒边界",
+        "用未来平仓 spread 过滤"
+      ]
+    },
+    {
+      "intent": "macro_surprise",
+      "keywords": [
+        "surprise",
+        "NFP",
+        "CPI",
+        "公告",
+        "consensus"
+      ],
+      "read_first": [
+        "03_microstructure_intraday/notes/faust_et_al.md",
+        "03_microstructure_intraday/notes/andersen_et_al_aer.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G4"
+      ],
+      "do_not": [
+        "无 consensus 时构造方向 surprise"
+      ]
+    },
+    {
+      "intent": "liquidity_vrp_options",
+      "keywords": [
+        "liquidity risk",
+        "VRP",
+        "risk reversal",
+        "期权",
+        "Cboe",
+        "EVZ"
+      ],
+      "read_first": [
+        "02_factor_literature/notes/soderlind_somogyi_2024.md",
+        "02_factor_literature/notes/della_corte_vrp.md",
+        "08_datasets_catalog/notes/cboe_fx_vol_indices.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G2",
+        "R1",
+        "R2"
+      ],
+      "do_not": [
+        "Cboe 30D 冒充 1Y OTC VRP",
+        "spot 22d 收益冒充 forward excess"
+      ]
+    },
+    {
+      "intent": "costs_swap_financing",
+      "keywords": [
+        "swap",
+        "rollover",
+        "financing",
+        "点差",
+        "成本",
+        "OANDA"
+      ],
+      "read_first": [
+        "06_broker_costs/SWAP_FORWARD_SOURCES.md",
+        "06_broker_costs/notes/oanda_financing_docs.md",
+        "01_foundations/notes/rollover_swap_mechanics.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G1",
+        "C1",
+        "C4"
+      ],
+      "do_not": [
+        "公开 1y financing 外推 2016-2025 净收益"
+      ]
+    },
+    {
+      "intent": "pit_vintage_data",
+      "keywords": [
+        "PIT",
+        "vintage",
+        "as-published",
+        "available_time",
+        "ALFRED",
+        "RTDSM",
+        "CFTC"
+      ],
+      "read_first": [
+        "05_data_contracts/PIT_AND_VINTAGE_GUIDE.md",
+        "05_data_contracts/notes/alfred_and_rtdsm_pit.md",
+        "05_data_contracts/notes/cftc_release_and_revision_boundaries.md",
+        "08_datasets_catalog/DATASETS.md"
+      ],
+      "fail_closed_if": [
+        "G5",
+        "G6",
+        "G7"
+      ],
+      "do_not": [
+        "CFTC current archive 当 as-published vintage"
+      ]
+    },
+    {
+      "intent": "project_status_v4",
+      "keywords": [
+        "v4",
+        "空模型",
+        "是否有盈利因子",
+        "hand-off",
+        "WP"
+      ],
+      "read_first": [
+        "STUDY_CLOSURE_ZH.md",
+        "notes/GAPS.md"
+      ],
+      "external_readonly": [
+        "docs/LONG_HORIZON_FACTOR_RESEARCH_ZH.md",
+        "docs/PROJECT_HANDOFF_SUMMARY_ZH.md",
+        "docs/FX_FACTOR_LITERATURE_MAP_ZH.md"
+      ],
+      "fail_closed_if": [],
+      "do_not": [
+        "声称已有批准策略",
+        "把探索结果写成可交易"
+      ]
+    },
+    {
+      "intent": "order_flow",
+      "keywords": [
+        "order flow",
+        "订单流",
+        "Evans",
+        "Lyons"
+      ],
+      "read_first": [
+        "03_microstructure_intraday/notes/evans_lyons.md",
+        "02_factor_literature/notes/breedon_rime_vitale_carry_order_flow.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "R4",
+        "R16"
+      ],
+      "do_not": [
+        "用 CFTC 或 tick count 冒充 signed OF"
+      ]
+    }
+  ]
+}

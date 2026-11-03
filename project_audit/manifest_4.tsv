@@ -1,0 +1,37 @@
+path	status	evidence_or_scope
+services\nexus_monitor\__init__.py	Inspected (static)	No executable behavior; no change
+services\nexus_monitor\main.py	Inspected (static)	Health polling, Redis stream listener, Telegram notifications, and task shutdown reviewed; no runtime/test execution
+services\nexus_monitor\metrics_exporter.py	Implemented, not verified	Escapes Prometheus service-label values; in-memory counter durability remains an open contract question; no test run
+services\nexus_monitor\performance.py	Inspected (static)	Pure performance calculation path reviewed; no database access performed; no change
+services\nexus_monitor\requirements.txt	Inspected (static)	Dependency declarations reviewed; no change
+services\nexus_monitor\telegram_bot.py	Inspected (static)	Optional Telegram import, rate limiting, and exception handling reviewed; no external request sent; no change
+services\nexus_news\__init__.py	Inspected (static)	No executable behavior requiring repair identified; no change
+services\nexus_news\calendar_parser.py	Implemented, not verified	Uses the pinned HTTP client with redirects disabled; no external request sent
+services\nexus_news\fundamental\__init__.py	Inspected (static)	Package initializer reviewed; no change
+services\nexus_news\fundamental\adapters.py	Implemented, not verified	External spreadsheet HTTP path uses the pinned HTTP client with redirects disabled; no external request sent
+services\nexus_news\fundamental\asset_impact.py	Inspected (static)	Fundamental asset-impact path reviewed; no change
+services\nexus_news\fundamental\blackout.py	Inspected (static)	Blackout state logic reviewed; no change
+services\nexus_news\fundamental\bootstrap_v5.py	Inspected (static)	Bootstrap path reviewed without execution; no change
+services\nexus_news\fundamental\engines.py	Implemented, not verified	Existing non-finite input guard recorded by project_audit; no change
+services\nexus_news\fundamental\explanations.py	Inspected (static)	Explanation generation path reviewed; no change
+services\nexus_news\fundamental\indicator_catalog.py	Inspected (static)	Indicator catalog reviewed; no change
+services\nexus_news\fundamental\news_intelligence.py	Inspected (static)	News intelligence path reviewed; no external request sent; no change
+services\nexus_news\fundamental\normalization.py	Inspected (static)	Normalization path reviewed; no change
+services\nexus_news\fundamental\outcome_collector_v61.py	Inspected (static)	Data-service and managed-source boundaries reviewed; no request or DB access; no change
+services\nexus_news\fundamental\outcomes.py	Inspected (static)	Outcome processing reviewed; no change
+services\nexus_news\fundamental\quality.py	Inspected (static)	Quality evaluation path reviewed; no change
+services\nexus_news\fundamental\replay.py	Inspected (static)	Replay path reviewed without execution; no change
+services\nexus_news\fundamental\runtime.py	Fixed and verified (audit evidence)	Existing runtime fix retained; no new change
+services\nexus_news\fundamental\scoring.py	Inspected (static)	Scoring path reviewed; no change
+services\nexus_news\fundamental\source_base.py	Implemented, not verified	JSON/text HTTP helpers use the pinned HTTP client with redirects disabled; no external request sent
+services\nexus_news\fundamental\source_registry.py	Inspected (static)	Source definitions reviewed; no change
+services\nexus_news\fundamental\ticker.py	Inspected (static)	Ticker path reviewed; no change
+services\nexus_news\fundamental\training.py	Inspected (static)	Training code not executed; no change
+services\nexus_news\internal_auth.py	Fixed and verified (audit evidence)	Existing constant-time internal-secret guard retained; no change
+services\nexus_news\main.py	Implemented, not verified	Task ownership and AsyncExitStack cleanup recorded by project_audit; no runtime execution
+services\nexus_news\news_fetcher.py	Implemented, not verified	NewsAPI/GNews/GDELT clients use the pinned HTTP client with redirects disabled; no external request sent
+services\nexus_news\requirements.txt	Inspected (static)	Dependency declarations reviewed; no change
+services\nexus_news\sentinel.py	Inspected (static)	Fail-closed news/calendar sentinel state path reviewed; no change
+services\nexus_news\social_sentiment.py	Inspected (static)	Sentiment path reviewed; no external request sent; no change
+shared\source_manager.py	Implemented, not verified	Adds global-IP resolution, rejects embedded endpoint credentials, and is used by the pinned transport; no DNS or HTTP request was executed
+shared\http_client.py	Implemented, not verified	Adds pinned HTTPX/httpcore transport: resolves one global IP per TCP connect, preserves hostname for TLS, and refuses redirect-following pinned clients; no request was sent

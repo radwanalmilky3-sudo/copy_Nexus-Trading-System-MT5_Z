@@ -1,0 +1,36 @@
+path: _pdfs/_arxiv/ames_carry_tail_dependence_1406.4322.pdf
+title_guess: Upside and Downside Risk Exposures of
+ids: 
+priority: warm
+extract_status: ok
+---
+Currency carry trade is the investment strategy that involves selling low
+interest rate currencies in order to purchase higher interest rate currencies, thus prof-
+iting from the interest rate differentials. This is a well known ﬁnancial puzzle to ex-
+plain, since assuming foreign exchange risk is uninhibited and the markets have ra-
+tional risk-neutral investors, then one would not expect proﬁts from such strategies.
+That is, according to uncovered interest rate parity (UIP), changes in the related ex-
+change rates should offset the potential to proﬁt from such interest rate differentials.
+However, it has been shown empirically, that investors can earn proﬁts on average
+by borrowing in a country with a lower interest rate, exchanging for foreign cur-
+rency, and investing in a foreign country with a higher interest rate, whilst allowing
+for any losses from exchanging back to their domestic currency at maturity.
+This paper explores the ﬁnancial risk that trading strategies seeking to exploit a
+violation of the UIP condition are exposed to with respect to multivariate tail depen-
+dence present in both the funding and investment currency baskets. It will outline
+in what contexts these portfolio risk exposures will beneﬁt accumulated portfolio
+returns and under what conditions such tail exposures will reduce portfolio returns.
+Key words: Currency carry trade, Multivariate tail dependence, Forward premium
+puzzle, Mixture models, Generalized Archimedean copula
+Matthew Ames
+Department of Statistical Science, University College London, UK,
+e-mail: m.ames.12@ucl.ac.uk
+Gareth W. Peters
+Lecturer, Department of Statistical Science, University College London, UK;
+Adjunct Scientist, Commonwealth Scientiﬁc and Industrial Research Organisation, Australia;
+Research Associate, Oxford-Man Institute, Oxford University, UK
+Guillaume Bagnarosa
+Assistant Professor, ESC Rennes School of Business;
+Honorary Research Associate, Department of Computer Science, University College London, UK
+Ioannis Kosmidis
+Lecturer, Department of Statistical Science, University College London, UK

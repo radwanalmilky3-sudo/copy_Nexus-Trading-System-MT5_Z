@@ -1,0 +1,14 @@
+path: _pdfs/_arxiv/cip_dollar_funding_2102.01613.pdf
+title_guess: arXiv:2102.01613v1 [math.CO] 2 Feb 2021
+ids: 
+priority: warm
+extract_status: ok
+---
+A palindromic composition of n is a composition of n which can
+be read the same way forwards and backwards. In this paper we d eﬁne an
+anti-palindromic composition of n to be a composition of n which has no
+mirror symmetry amongst its parts. W e then give a surprising connection
+between the number of anti-palindromic compositions of n and the so-called
+tribonacci sequence, a generalization of the Fibonacci seq uence. W e conclude
+by deﬁning a new q-analogue of the Fibonacci sequence, which is related to
+certain equivalence classes of anti-palindromic composit ions.

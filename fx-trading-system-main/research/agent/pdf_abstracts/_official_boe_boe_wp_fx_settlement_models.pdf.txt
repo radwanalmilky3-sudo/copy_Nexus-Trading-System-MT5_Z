@@ -1,0 +1,18 @@
+path: _pdfs/_official/boe/boe_wp_fx_settlement_models.pdf
+title_guess: How do different models of foreign
+ids: 
+priority: warm
+extract_status: ok
+---
+Large, international banking groups have sought to centralise their cross-currency liquidity management:
+liquidity shortages in one currency are financed using liquidity surpluses in another currency. The
+nature of risks to financial stability emerging from global liquidity management depends on how these
+foreign exchange transactions settle. I analyse these risks in a game of asymmetric information. The
+main result is that the transition from local to global liquidity management, and better co-ordination in
+settlement of foreign exchange transactions, have two effects. On the one hand, the likelihood rises that
+payments are delayed beyond their due date. On the other hand, solvency shocks are less likely to be
+passed on to other banks. The main assumption is that lending between subsidiaries of the same
+banking group takes place under symmetric information, while external interbank market loans are
+extended under asymmetric information. More co-ordinated settlement increases the exposure of the
+intragroup lender relative to the interbank lender and leads to more informed lending.
+Key words: Liquidity risk, foreign exchange settlement.

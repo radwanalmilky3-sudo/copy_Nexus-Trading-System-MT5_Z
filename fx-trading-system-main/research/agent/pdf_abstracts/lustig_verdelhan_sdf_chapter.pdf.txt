@@ -1,0 +1,17 @@
+path: _pdfs/lustig_verdelhan_sdf_chapter.pdf
+title_guess: ON THE ASSET MARKET VIEW OF EXCHANGE RATES
+ids: 
+priority: warm
+extract_status: ok
+---
+50 Massachusetts Avenue
+Cambridge, MA 02138
+December 2012, Revised November 2018
+Previous versions of this paper were entitled “Exchange Rates and International Risk Sharing” 
+and “Exchange Rate Determination, Risk Sharing, and the Asset Market View.” We thank three 
+anonymous referees, Hengjie Ai, Andrew Ang, Snehal Banerjee, Martin Bodenstein, John 
+Cochrane, Bernard Dumas, Martin Eichenbaum, Martin Evans, Nir Jaimovich, Jonathan Parker, 
+Uday Rajan, Sergio Rebelo, Lucio Sarno, Raj Singh, Gabriel Talmain, Giorgio Valente, Jules 
+Van Binsbergen, seminar participants at Cass Business School, Duke University, Essex Business 
+School, the Federal Reserve Board, and the University of Michigan, and conference participants 
+at Northwestern University, the University of Glasgow, the University of

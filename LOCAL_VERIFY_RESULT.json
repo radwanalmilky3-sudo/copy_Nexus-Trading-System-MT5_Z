@@ -1,0 +1,45 @@
+﻿{
+    "timestamp":  "2026-10-10T05:46:22.3566722+03:00",
+    "status":  "STATIC_LOCAL_VERIFY_PASS",
+    "results":  [
+                    {
+                        "name":  "PAPER mode",
+                        "status":  "PASS",
+                        "detail":  "No LIVE mode in .env"
+                    },
+                    {
+                        "name":  "No Docker artifacts",
+                        "status":  "PASS",
+                        "detail":  "No compose/Dockerfile found"
+                    },
+                    {
+                        "name":  "Python compileall",
+                        "status":  "PASS",
+                        "detail":  "Full repository compiled"
+                    },
+                    {
+                        "name":  "Golden contract tests",
+                        "status":  "PASS",
+                        "detail":  "Focused contracts passed"
+                    },
+                    {
+                        "name":  "Frontend build",
+                        "status":  "PASS",
+                        "detail":  "npm run build passed"
+                    },
+                    {
+                        "name":  "Local AI endpoint",
+                        "status":  "PASS",
+                        "detail":  "Ollama/OpenAI-compatible /v1/models reachable"
+                    },
+                    {
+                        "name":  "Preflight",
+                        "status":  "PASS",
+                        "detail":  "python preflight.py passed"
+                    }
+                ],
+    "blockers":  [
+
+                 ],
+    "live_certified":  false
+}

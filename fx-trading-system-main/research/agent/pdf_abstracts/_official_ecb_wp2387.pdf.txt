@@ -1,0 +1,20 @@
+path: _pdfs/_official/ecb_wp2387.pdf
+title_guess: Attention to the tail(s):
+ids: wp2387
+priority: warm
+extract_status: ok
+---
+We document
+how the distribution of exchange rate returns responds to changes in global
+ﬁnancial conditions. We measure global ﬁnancial conditions as the common component
+of country-speciﬁc ﬁnancial condition indices, computed consistently across a large panel
+of developed and emerging economies. Based on quantile regression results, we provide a
+characterisation and ranking of the tail behaviour of a large sample of currencies in response
+to a tightening of global ﬁnancial conditions, corroborating (and quantifying) some of the
+prevailing narratives about safe haven and risky currencies. Our approach delivers a more
+nuanced picture than one based on standard OLS regression. We then carry out a portfolio
+sorting exercise to identify the macroeconomic fundamentals associated with such diﬀerent
+tail behaviour, and ﬁnd that currency portfolios sorted on the basis of net foreign asset
+positions, relative interest rates, current account balances and levels of international reserves
+display a higher likelihood of large losses in response to a tightening of global ﬁnancial
+conditions.

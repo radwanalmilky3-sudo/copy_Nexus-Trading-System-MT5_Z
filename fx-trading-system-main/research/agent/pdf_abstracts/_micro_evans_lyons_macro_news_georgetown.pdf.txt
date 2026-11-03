@@ -1,0 +1,16 @@
+path: _pdfs/_micro/evans_lyons_macro_news_georgetown.pdf
+title_guess: How Is Macro News T ransmitted to Exchange Rates?
+ids: 
+priority: warm
+extract_status: ok
+---
+Macro news can a¤ect currency prices directly, and indirectly via order  ow. Past research shows that the
+direct e¤ects of scheduled macro news account for less than 10 percent of daily price variance. This paper
+shows that the arrival of macro news can account for more than 30 percent of daily price variance. Two
+features of our analysis account for this  nding: (i) We consider the broad spectrum of macro news items
+that market participants actually observe, not just scheduled announcements. (ii) We allow the arrival of
+news to a¤ect prices indirectly via its impact on the volatility of order  ow. Our analysis shows that order
+ ow variations contribute more to currency price dynamics following the arrival of public macro news than
+at other times. This is not consistent with news e¤ects being common knowledge that is impounded in price
+directly. Roughly two-thirds of the total e¤ect of macro news on the DM/$ exchange rate is transmitted via
+order  ow.

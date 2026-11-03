@@ -1,0 +1,18 @@
+path: _pdfs/_official/boe/boe_wp_unintended_consequence_dollar_assets.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+We study investor trading behaviour and yield patterns in the UK government bond market during the 
+recent Covid crisis. We show that the yield spike in mid-March 2020 was accompanied by heavy selling of 
+gilts by UK-based insurance companies and pension funds (ICPFs), which we argue was an indirect result of 
+the US dollar’s global prominence. Non-US institutions invest a large portion of their capital in dollar 
+assets and hedge their dollar exposures by selling dollars forward through FX derivatives. In crisis periods, 
+dollars appreciate against other currencies. To meet margin calls on these short-dollar FX positions, 
+non-US institutions sell their domestic safe assets, thereby contributing to the yield spikes in domestic 
+markets.
+Key words: Covid crisis, gilt yields, variation margin, FX derivatives, global reserve currency, 
+currency
+ 
+hedging.

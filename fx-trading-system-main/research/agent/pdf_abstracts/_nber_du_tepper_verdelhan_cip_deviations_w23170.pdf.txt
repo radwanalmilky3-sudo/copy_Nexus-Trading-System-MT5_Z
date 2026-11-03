@@ -1,0 +1,18 @@
+path: _pdfs/_nber/du_tepper_verdelhan_cip_deviations_w23170.pdf
+title_guess: DEVIATIONS FROM COVERED INTEREST RATE PARITY
+ids: w23170
+priority: hot
+extract_status: ok
+---
+EARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+February 2017
+First version: November 2015. The views in this paper are solely the responsibility of the authors 
+and should not be interpreted as reflecting the views of the Board of Governors of the Federal 
+Reserve System, any other person associated with the Federal Reserve System, or the National 
+Bureau of Economic Research. We thank Claudio Borio, Francois Cocquemas, Pierre Collin-
+Dufresne, Doug Diamond, Xavier Gabaix, Benjamin Hebert, Arvind Krishnamurthy, Robert 
+McCauley, Charles Engel, Pierre-Olivier Gourinchas, Sebastian Infante, Martin Lettau, Hanno 
+Lustig, Matteo Maggiori, Warren Naphtal, Brent Neiman, Jonathan Parker, Thomas Philippon, 
+Arvind Rajan, Adriano Rampini, Fabiola Ravazzolo, Andrew Rose, Hyun Song Shin, Jeremy 

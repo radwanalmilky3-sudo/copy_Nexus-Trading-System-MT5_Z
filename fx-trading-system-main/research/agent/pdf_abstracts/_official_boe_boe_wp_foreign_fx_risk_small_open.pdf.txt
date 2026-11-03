@@ -1,0 +1,19 @@
+path: _pdfs/_official/boe/boe_wp_foreign_fx_risk_small_open.pdf
+title_guess: Foreign exchange rate risk in a
+ids: 
+priority: warm
+extract_status: ok
+---
+a De Paoli
+(1)
+and Jens Søndergaard
+(2)
+Abstract
+Resolving the forward premium puzzle requires a volatile foreign exchange rate risk premium that
+covaries negatively with the expected depreciation rate. Earlier work has shown how models featuring
+consumption habits can generate such premia when either trade costs or ‘deep habits’ are assumed. 
+We show that as long as consumption habits are slow-moving and shocks are highly persistent, a
+standard small open endowment economy — without any additional features — can address the puzzle.
+Moreover endogenising the labour supply decision in the small open economy can improve the model’s
+ability to match risk premia observations so long as it makes business cycles less synchronised.
+(1) Monetary Assessment and Strategy Division, Bank of England. E

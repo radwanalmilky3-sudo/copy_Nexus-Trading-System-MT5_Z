@@ -1,0 +1,22 @@
+path: _pdfs/_official/bdf/bdf_wp660.pdf
+title_guess: Banque de France Working Paper #660 January 2018
+ids: wp660
+priority: warm
+extract_status: ok
+---
+This paper provides an estimation of the reaction o f firm-level exports consecutive to real 
+exchange rate movements, the exchange rate elastici ty of exports. Following recent theoretical 
+works emphasizing the role played by firm heterogen eity, we test in particular how the exchange 
+rate elasticity may be affected by firm-level produ ctivity, and how the heterogeneous reaction of 
+different firms may contribute to shape the aggrega te reaction of countries' exports. The analysis 
+relies on a unique cross-country micro-based datase t of exporters available for 11 European 
+countries (2001-2011), which details in particular information about firms' productivity and export 
+performance. Our results show that while the averag e exchange rate elasticity across firms is quite 
+weak, it is also highly heterogeneous. The least pr oductive firms within each country and sector 
+tend to react more to real exchange rate movements than the most productive firms. This weak 
+reaction of highly productive and large exporters t ends to reduce the macroeconomic exchange 
+rate elasticity in all countries. Cross-country dif ferences in the shape of the productivity 
+distribution among exporters have a strong influenc e on the macroeconomic exchange rate 
+elasticity: countries populated with a higher density of low productive firms tend to respond more 
+to exchange rate movements in terms of aggregate ex ports than countries populated with highly 
+productive exporters.

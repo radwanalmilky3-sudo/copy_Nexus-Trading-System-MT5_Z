@@ -1,0 +1,14 @@
+path: _pdfs/_official/boe/boe_wp_central_bank_swap_lines_micro.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper investigates the impact of central bank swap lines during the 2020 pandemic using micro-level 
+data. Using confidential transaction-level data from the Bank of England, we study how swap line drawings 
+affect dealer pricing and exposures in foreign exchange (FX) forwards and swaps. We find that swap line 
+usage reduces pricing inefficiencies and violations of covered interest parity in both interdealer and 
+customer- dealer markets. Moreover, on average, dealers use swap lines to substitute for expensive 
+synthetic dollar funding obtained through FX derivatives instead of engaging in arbitrage transactions to 
+exploit deviations from covered interest parity.
+Key words: Central bank swap lines, foreign exchange swaps, covered interest rate parity, central banking.

@@ -1,0 +1,18 @@
+path: _pdfs/_nber/hassan_zhang_economics_currency_risk_w27810.pdf
+title_guess: TOKEN-BASED PLATFORM FINANCE
+ids: w27810
+priority: warm
+extract_status: ok
+---
+enue
+Cambridge, MA 02138
+September 2020, Revised May 2021
+We thank the anonymous referee, Patrick Bolton, Markus Brunnermeier, Peter DeMarzo, Darrell 
+Duﬃe, Daniel Ferreira (discussant), Sebastian Gryglewicz (discussant), Zhiguo He, Wei Jiang, 
+Andrew Karolyi, Maureen O’Hara, Dmitry Orlov (discussant), Emiliano S. Pagnotta (discussant), 
+Christine Parlour, Uday Rajan, Jean-Charles Rochet, Fahad Saleh (discussant), David Skeie 
+(discussant), Michael Sockin (discussant), René Stulz, Pierre-Olivier Weill, Ying Wu, Miao 
+Zhang, and conference/seminar participants at ABFER/CEPR/CUHK Financial Economics 
+Symposium, AFA 2020, Carnegie Mellon University Tepper School of Business, Central Bank 
+Research Association 2019, CEPR ESSFM Gerzensee, Chicago Financial Institutions 
+Conference, City Univers

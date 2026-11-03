@@ -1,0 +1,26 @@
+path: _pdfs/_official/bundesbank/bbk_dkp_20_2022_fx_interventions.pdf
+title_guess: Foreign exchange interventions and
+ids: 
+priority: warm
+extract_status: ok
+---
+Nathan
+(Bank of Israel)
+Discussion Papers represent the authors‘ personal opinions and do not
+necessarily reflect the views of the Deutsche Bundesbank or the Eurosystem.
+Editorial Board: Daniel Foos 
+Stephan Jank 
+T h o m a s K i c k 
+Martin Kliem 
+Malte Knüppel 
+Christoph Memmel 
+Panagiota Tzamourani 
+Deutsche Bundesbank, Wilhelm-Epstein-Straße 14, 60431 Frankfurt am Main, 
+Postfach 10 06 02, 60006 Frankfurt am Main 
+Tel +49 69 9566-0 
+Please address all orders in writing to: Deutsche Bundesbank, 
+Press and Public Relations Division, at the above address or via fax +49 69 9566-3077 
+Internet http://www.bundesbank.de 
+Reproduction permitted only if source is stated. 
+ISBN 978–3–95729–888–1
+ISSN 2749–295 8

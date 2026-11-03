@@ -1,0 +1,16 @@
+path: _pdfs/_micro/ranaldo_somogyi_asymmetric_info_cfr.pdf
+title_guess: Heterogeneous Information Content
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper studies the information content of trades in the world's largest over-the-
+counter market, the foreign exchange (FX) market. The results are derived from a com-
+prehensive order ow dataset distinguishing between dierent groups of market partici-
+pants and covering a broad cross-section of currency pairs. Our ndings show that both
+the contemporary and permanent price impact are heterogeneous across agents, time, and
+currency pairs, supporting the asymmetric information theory. A trading strategy based
+on the permanent price impact capturing superior information generates high returns even
+after accounting for risk, transaction costs, and other common risk factors documented in
+the FX literature.
+J.E.L. classication : G12, G15, F31

@@ -1,0 +1,21 @@
+path: _pdfs/_arxiv/algorithmic_mm_dealer_2106.06974.pdf
+title_guess: Algorithmic market making in dealer markets with hedging and
+ids: 
+priority: warm
+extract_status: ok
+---
+In dealer markets, dealers provide prices at which they agree to buy and sell the assets and secu-
+rities they have in their scope. With ever increasing trading volume, this quoting task has to be done
+algorithmically in most markets such as foreign exchange markets or corporate bond markets. Over
+the last ten years, many mathematical models have been designed that can be the basis of quoting
+algorithms in dealer markets. Nevertheless, in most (if not all) models, the dealer is a pure internalizer,
+setting quotes and waiting for clients. However, on many dealer markets, dealers also have access to an
+inter-dealer market or even public trading venues where they can hedge part of their inventory. In this
+paper, we propose a model taking this possibility into account, therefore allowing dealers to externalize
+part of their risk. The model displays an important feature well known to practitioners that within a
+certain inventory range the dealer internalizes the ﬂow by appropriately adjusting the quotes and starts
+externalizing outside of that range. The larger the franchise, the wider is the inventory range suitable
+for pure internalization. The model is illustrated numerically with realistic parameters for USDCNH
+spot market.
+Key words: Dealer markets, Market making, Algorithmic trading, Stochastic optimal control, Viscosity
+solutions

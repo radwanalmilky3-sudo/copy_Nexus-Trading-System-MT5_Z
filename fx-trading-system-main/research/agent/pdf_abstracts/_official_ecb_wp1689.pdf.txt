@@ -1,0 +1,24 @@
+path: _pdfs/_official/ecb_wp1689.pdf
+title_guess: Working Pa Per Se rieS
+ids: wp1689
+priority: warm
+extract_status: ok
+---
+m 
+the €20 banknote.
+note: This Working Paper should not be reported as representing 
+the views 
+of the European Central Bank (ECB). The views expressed are 
+those of the authors and do not necessarily reflect those of the ECB.
+
+© European Central Bank, 2014
+Address 
+ Kaiserstrasse 29, 60311 Frankfurt am Main, Germany 
+Postal addr
+ess Postfach 16 03 19, 60066 Frankfurt am Main, Germany 
+Telephone +49 69 1344 0 
+Internet http://www.ecb.europa.eu
+All rights reserved. 
+Any reproduction, publication and reprint in the form of a different publication, whether printed or produced 
+electronically, in whole or in part, is permitted only with the explicit written authorisation of the ECB or the authors. This paper can 
+be downloaded without charge from http://www.ecb.europa.eu or from the Social Sc

@@ -1,0 +1,18 @@
+path: _pdfs/_validation/arxiv_1409_7720_risk_premia_tail.pdf
+title_guess: arXiv:1409.7720v3 [q-fin.GN] 30 Oct 2015
+ids: 
+priority: warm
+extract_status: ok
+---
+sks and Excess Returns
+Y. Lemp´ eri` ere, C. Deremble, T. T. Nguyen
+P. Seager, M. Potters, J. P. Bouchaud
+Capital Fund Management,
+23 rue de l’Universit´ e, 75007 Paris, France
+(Received 00 Month 20XX; in ﬁnal form 00 Month 20XX )
+We present extensive evidence that “risk premium” is strong ly correlated with tail-risk skewness but very
+little with volatility. We introduce a new, intuitive deﬁni tion of skewness and elicit an approximately
+linear relation between the Sharpe ratio of various risk pre mium strategies (Equity, Fama-French, FX
+Carry, Short Vol, Bonds, Credit) and their negative skewnes s. We ﬁnd a clear exception to this rule: trend
+following has both positive skewness and positive excess re turns. This is also true, albeit less markedly, of
+the Fama-French “Value” factor and o

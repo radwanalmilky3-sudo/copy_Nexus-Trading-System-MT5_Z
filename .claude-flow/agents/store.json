@@ -1,0 +1,28 @@
+{
+  "agents": {
+    "agent-1792786732232-kc5qnb": {
+      "agentId": "agent-1792786732232-kc5qnb",
+      "agentType": "researcher",
+      "status": "idle",
+      "health": 0,
+      "taskCount": 1,
+      "config": {
+        "readOnly": true,
+        "maxTurns": 12,
+        "model": "haiku"
+      },
+      "createdAt": "2026-10-23T20:18:52.259Z",
+      "domain": "codebase-audit",
+      "model": "haiku",
+      "modelRoutedBy": "explicit",
+      "executionHistory": [
+        {
+          "at": "2026-10-23T20:19:08.870Z",
+          "success": false,
+          "durationMs": 457
+        }
+      ]
+    }
+  },
+  "version": "3.0.0"
+}

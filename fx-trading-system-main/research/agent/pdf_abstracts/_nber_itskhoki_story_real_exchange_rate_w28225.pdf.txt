@@ -1,0 +1,17 @@
+path: _pdfs/_nber/itskhoki_story_real_exchange_rate_w28225.pdf
+title_guess: THE STORY OF THE REAL EXCHANGE RATE
+ids: w28225
+priority: hot
+extract_status: ok
+---
+ge, MA 02138
+December 2020
+When citing this paper, please use the following: Itskhoki O. 2021. The Story of the Real 
+Exchange Rate. Annu. Rev. Econ. 13. DOI: 10.1146/annurev-economics-080218-025532. Based 
+on my graduate lectures that I taught at Princeton in 2009-2019. I am grateful to Ken Rogoff for 
+introducing me to this topic in his Ph.D. class at Harvard in 2005, as well as to my coauthors Gita 
+Gopinath, Roberto Rigobon, Emmanuel Farhi, Brent Neiman, Mary Amiti, Joep Konings and 
+Dmitry Mukhin, with whom I worked in this area and who shaped my understanding of the topic. 
+I also benefited from conversations with Mark Aguiar, Andy Atkeson, Ariel Burstein, Charles 
+Engel, Pierre-Olivier Gourinchas, Jon Steinsson and many others. All errors are, of course, my 
+own. The views expressed

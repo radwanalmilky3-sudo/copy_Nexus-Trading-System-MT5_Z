@@ -1,0 +1,19 @@
+path: _pdfs/_nber/avdjiev_du_koch_shin_cip_w24555.pdf
+title_guess: DEBT OVERHANG, ROLLOVER RISK, AND CORPORATE INVESTMENT:
+ids: w24555
+priority: hot
+extract_status: ok
+---
+/papers/w24555
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+April 2018
+We are grateful for useful comments from Olivier Blanchard, Laura Blattner, Stijn Claessens, 
+Gita Gopinath, Alberto Martin, Giuseppe Nicoletti, Steven Ongena, Marco Pagano, Thomas 
+Philippon, Alex Popov, Moritz Schularick, and David Thesmar, and from seminar presentations 
+at the 2019 American Economic Association Annual Meeting, University of Bonn, London 
+Business School, Oxford University, University of Maryland, University of Zurich, Bank of 
+Canada, European Central Bank, International Monetary Fund, OECD, World Bank, and 21st 
+Dubrovnik Economic Conference. We also thank Di Wang and Jun Hee Kwak for their excellent 
+research assistance. The views expressed are our own and sho

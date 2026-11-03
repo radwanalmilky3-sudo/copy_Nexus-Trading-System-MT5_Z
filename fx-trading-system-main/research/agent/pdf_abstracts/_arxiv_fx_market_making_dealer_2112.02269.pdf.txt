@@ -1,0 +1,15 @@
+path: _pdfs/_arxiv/fx_market_making_dealer_2112.02269.pdf
+title_guess: Market making by an FX dealer: tiers, pricing ladders and
+ids: 
+priority: warm
+extract_status: ok
+---
+Key words: Market making, foreign exchange market, internalization, stochastic optimal control.
+Dealers make money by providing liquidity to clients but face flow uncertainty and thus price risk.
+They can efficiently skew their prices and wait for clients to mitigate risk (internalization), or trade with
+other dealers in the open market to hedge their position and reduce their inventory (externalization).
+Of course, the better control associated with externalization comes with transaction costs and market
+impact. The internalization vs. externalization dilemma has been a topic of recent active discussion
+within the foreign exchange (FX) community. This paper offers an optimal control framework for market
+making tackling both pricing and hedging, thus answering a question well known to dealers: ‘to hedge,
+or not to hedge?’

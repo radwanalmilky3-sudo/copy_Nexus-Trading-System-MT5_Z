@@ -1,0 +1,14 @@
+path: _pdfs/_arxiv/du_tepper_verdelhan_1605.03155_cip_deviations.pdf
+title_guess: A PARTIAL DIFFERENTIAL EQUATION FOR THE RANK ONE
+ids: 
+priority: warm
+extract_status: ok
+---
+A Partial Diﬀerential Equation (PDE) for the rank one convex
+envelope is introduced. Existence and uniqueness of viscosity solutions to
+the PDE is established. Elliptic ﬁnite diﬀerence schemes are constructed and
+convergence of ﬁnite diﬀerence solutions to the viscosity solution of the PDE
+is proven. Computational results are presented and laminates are computed
+from the envelopes. Results include the Kohn-Strang example, the classical
+four gradient example, and an example with eight gradients which produces
+nontrivial laminates.

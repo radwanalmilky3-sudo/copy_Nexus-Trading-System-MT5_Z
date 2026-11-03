@@ -1,0 +1,56 @@
+path: _pdfs/_bis/bis_pap81_currency_carry_latam.pdf
+title_guess: Currency carry trades in
+ids: 
+priority: hot
+extract_status: ok
+---
+by Julio A Santaella, Bank 
+of Mexico 
+Monetary and Economic Department 
+April 2015 
+ 
+JEL Classification: F31, G15 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+The views expressed are those of the au thors and not necess arily the views of 
+the BIS. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+This publication is available on the BIS website (www.bis.org). 
+ 
+ 
+© Bank for International Settlements 2015. A ll rights reserved. Brief excerpts may be 
+reproduced or translated provided the source is stated. 
+ 
+ 
+ISSN 1609-0381 (print) 
+ISBN 978-92-9197-081-0 (print) 
+ISSN 1682-7651 (online) 
+ISBN 978-92-9197-080-3 (online)

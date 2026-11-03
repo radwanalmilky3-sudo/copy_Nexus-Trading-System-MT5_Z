@@ -1,0 +1,21 @@
+path: _pdfs/_ecb/ecb_wp2149_carry_to_curvy_trades.pdf
+title_guess: From carry trades to curvy trades Ferdinand Dreher, Johannes Gräb,
+ids: 
+priority: hot
+extract_status: ok
+---
+Traditional carry trade strategies are based on diﬀe
+rences in short-term interest 
+rates, neglecting any other information embedded in yield curves. We derive return 
+distributions of carry trade portfolios among G10 currencies, where the signals to 
+buy and sell currencies are based on summary measures of the yield curve, the 
+Nelson-Siegel factors. We ﬁnd that a strategy based on the relative curvature factor, 
+the curvy trade, yields higher Sharpe ratios and a smaller return skewness than 
+traditional carry trade strategies. Curvy trades build less upon the typical carry 
+currencies, like the Japanese yen and the Swiss franc, and are hence less susceptible 
+to crash risk. In line with that, standard pricing factors of traditional carry trade 
+returns, such as exchange rate volatility, fail to explain curvy trade returns in a 
+linear asset pricing framework. Our ﬁndings are in line with recent interpretations 
+of the curvature factor. A relatively high curvature signals a relatively higher path 
+of future short-term rates over the medium-term putting upward pressure on the 
+currency.

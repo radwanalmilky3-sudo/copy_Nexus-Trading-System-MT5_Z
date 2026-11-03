@@ -1,0 +1,21 @@
+path: _pdfs/_nber/itskhoki_w24741.pdf
+title_guess: EVOLUTION OF MODERN BUSINESS CYCLE MODELS:
+ids: w24741
+priority: warm
+extract_status: ok
+---
+s/w24741
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+June 2018
+We thank Adrien Auclert, Mark Gertler, Robert Hall, Gordon Hanson, Robert Lucas, Ellen 
+McGrattan, Juan Pablo Nicolini, John Taylor, and Timothy Taylor for their comments, and are 
+especially thankful to John Cochrane for his detailed feedback. The views expressed herein are 
+those of the authors and not necessarily those of the Federal Reserve Bank of Minneapolis, the 
+Federal Reserve System, or the National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been 
+peer-reviewed or been subject to the review by the NBER Board of Directors that accompanies 
+official 
+NBER publications.
+© 2018 by Patrick J. Kehoe, Virgiliu Midri

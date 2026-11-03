@@ -1,0 +1,15 @@
+path: _pdfs/_arxiv/fx_options_intermediate_currency_1912.01387.pdf
+title_guess: Pricing FX Options under Intermediate Currency
+ids: 
+priority: warm
+extract_status: ok
+---
+We suggest an intermediate currency approach that allows us to price options on all FX
+markets simultaneously under the same risk-neutral measure which ensures consistency of
+FX option prices across all markets. In particular, it is suﬃcient to calibrate a model to the
+volatility smile on the domestic market as, due to the consistency of pricing formulas, the
+model automatically reproduces the correct smile for the inverse pair (the foreign market).
+We ﬁrst consider the case of two currencies and then the multi-currency setting. We illustrate
+the intermediate currency approach by applying it to the Heston and SABR stochastic
+volatility models, to the model in which exchange rates are described by an extended skewed
+normal distribution, and also to the model-free approach of option pricing.

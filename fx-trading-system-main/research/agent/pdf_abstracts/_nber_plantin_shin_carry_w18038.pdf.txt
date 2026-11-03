@@ -1,0 +1,18 @@
+path: _pdfs/_nber/plantin_shin_carry_w18038.pdf
+title_guess: KNOWLEDGE, TESTS, AND FADEOUT IN EDUCATIONAL INTERVENTIONS
+ids: w18038
+priority: warm
+extract_status: ok
+---
+NOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+May 2012
+We thank Kevin Lang and Thomas Lemieux for the conversations that motivated this research, and
+Raj Chetty, Caroline Hoxby, Kevin Lang, Larry Katz, Jesse Rothstein, and seminar participants at
+the NBER Education Program meetings for helpful comments. We are also grateful for the outstanding
+research assistance of Sarah Cohodes. This work was supported by the Institute of Education Sciences,
+U.S. Department of Education grant [R305C090023] to the President and Fellows of Harvard College.
+Cascio also gratefully acknowledges funding from the National Academy of Education and the National
+Academy of Education/Spencer Postdoctoral Fellowship Program and a Rockefeller-Haney Fellowship
+from Dartmouth College. The views expressed

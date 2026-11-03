@@ -1,0 +1,15 @@
+path: _pdfs/_official/bundesbank/bbk_2022_interest_parity_crisis.pdf
+title_guess: The validity of interest parity in times
+ids: 
+priority: warm
+extract_status: ok
+---
+ship is referred to as interest parity. Here, a dis -
+tinction is made between covered and uncovered interest parity. With covered interest parity, 
+cross- border investments are hedged against exchange rate changes. There is therefore no 
+exchange rate risk when the transaction is concluded. In theory, the interest rate differential 
+between the currency areas should correspond to the rate of change between the forward and 
+spot rates. It should not be possible in this case to make a risk- free profit through trading (inter-
+est rate arbitrage). With uncovered interest parity, investments in the other currency area are not 
+hedged against exchange rate changes. Under simplified assumptions, the interest rate differen -
+tial should correspond to the rate of change between the present and e

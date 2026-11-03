@@ -1,0 +1,18 @@
+path: _pdfs/_micro/breedon_ranaldo_intraday_patterns_snb_wp2011_04.pdf
+title_guess: 2011-4Swiss National Bank Working Papers
+ids: 
+priority: warm
+extract_status: ok
+---
+sarily represent those of the 
+Swiss National Bank. Working Papers describe research in progress. Their aim is to elicit comments and to 
+further debate.
+Copyright ©
+The Swiss National Bank (SNB) respects all third-party rights, in particular rights relating to works protected
+by copyright (information or data, wordings and depictions, to the extent that these are of an individual
+character).
+SNB publications containing a reference to a copyright (© Swiss National Bank/SNB, Zurich/year, or similar) 
+may, under copyright law, only be used (reproduced, used via the internet, etc.) for non-commercial purposes 
+and provided that the source is mentioned. Their use for commercial purposes is only permitted with the 
+prior express consent of the SNB.
+General information and data published without

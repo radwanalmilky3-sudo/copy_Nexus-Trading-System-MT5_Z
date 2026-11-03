@@ -1,0 +1,14 @@
+path: _pdfs/_validation/arxiv_2506_18738_currency_related.pdf
+title_guess: arXiv:2506.18738v1 [econ.EM] 23 Jun 2025
+ids: 
+priority: warm
+extract_status: ok
+---
+Using a 100-day symmetric window around the January 2025 U.S . presidential inauguration, non-
+parametric statistical methods with bootstrap resampling (10,000 iterations) analyze distributional prop-
+erties and anomalies. Results indicate a statistically sig niﬁcant 3.61% Indonesian rupiah depreciation
+post-inauguration, with a large eﬀect size (Cliﬀ’s Delta = − 0.9224, CI: [ − 0.9727,− 0.8571]). Central
+tendency shifted markedly, yet volatility remained stable (variance ratio = 0 .9061, p = 0 .504). Four
+signiﬁcant anomalies exhibiting temporal clustering are d etected. These ﬁndings provide quantitative
+evidence of political transition eﬀects on emerging market currencies, highlighting implications for mon-
+etary policy and currency risk management.

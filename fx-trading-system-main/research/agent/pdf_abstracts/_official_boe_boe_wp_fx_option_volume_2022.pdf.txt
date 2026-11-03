@@ -1,0 +1,14 @@
+path: _pdfs/_official/boe/boe_wp_fx_option_volume_2022.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+We study the information content of foreign exchange (FX) option volume using a unique dataset on 
+over-the-counter FX options with disclosed counterparty identities and contract characteristics. Our study 
+shows that FX option volume can predict future exchange rate returns, especially when the demand for the 
+US dollar is high. In support of information-based arguments, we also document that the exchange rate 
+predictability is stronger around macro-announcement days or when using options with higher embedded 
+leverage. Finally, we show that hedge funds and real money investors have superior skills in predicting 
+future exchange rates compared to other investor types.
+Key words: Currency return, foreign exchange option, Informed trading, dollar demand.

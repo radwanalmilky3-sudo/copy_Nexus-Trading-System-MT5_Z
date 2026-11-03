@@ -1,0 +1,13 @@
+path: _pdfs/_micro/krohn_mueller_whelan_insead.pdf
+title_guess: Foreign Exchange Fixings and Returns Around the Clock
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper documents a new stylised fact in foreign exchange markets: intraday currency
+returns display prolonged reversals around the major benchmark ﬁxings, characterised by an
+appreciation of the U.S. dollar pre-ﬁxing and a depreciation thereafter. Moreover, they are a
+systematic feature of the data being present every day of the week, month of the year, and
+during each of the twenty years in our sample. We study a set of risk based explanations
+and present evidence consistent with inventory risk models which link intraday dollar order
+imbalance to price reversals across time zones.

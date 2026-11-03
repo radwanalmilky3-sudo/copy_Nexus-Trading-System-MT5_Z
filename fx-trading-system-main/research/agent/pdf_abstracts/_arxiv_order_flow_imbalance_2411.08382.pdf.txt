@@ -1,0 +1,19 @@
+path: _pdfs/_arxiv/order_flow_imbalance_2411.08382.pdf
+title_guess: HYBRID VECTOR AUTO REGRESSION AND NEURAL NETWORK MODEL FOR ORDER FLOW
+ids: 
+priority: warm
+extract_status: ok
+---
+In high-frequency trading, accurate prediction of Order Flow Imbalance (OFI) is crucial for
+understanding market dynamics and maintaining liquidity. This paper introduces a hybrid predictive
+model that combines Vector Auto Regression (V AR) with a simple feedforward neural network (FNN)
+to forecast OFI and assess trading intensity. The V AR component captures linear dependencies, while
+residuals are fed into the FNN to model non-linear patterns, enabling a comprehensive approach to
+OFI prediction. Additionally, the model calculates the intensity on the Buy or Sell side, providing
+insights into which side holds greater trading pressure. These insights facilitate the development of
+trading strategies by identifying periods of high buy or sell intensity. Using both synthetic and real
+trading data from Binance, we demonstrate that the hybrid model offers significant improvements in
+predictive accuracy and enhances strategic decision-making based on OFI dynamics. Furthermore,
+we compare the hybrid model’s performance with standalone FNN and V AR models, showing that
+the hybrid approach achieves superior forecasting accuracy across both synthetic and real datasets,
+making it the most effective model for OFI prediction in high-frequency trading.

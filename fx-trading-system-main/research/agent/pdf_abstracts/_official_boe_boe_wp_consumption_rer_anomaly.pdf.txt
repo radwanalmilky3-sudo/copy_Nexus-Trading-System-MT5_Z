@@ -1,0 +1,8 @@
+path: _pdfs/_official/boe/boe_wp_consumption_rer_anomaly.pdf
+title_guess: On the consumption-real exchange rate anomaly
+ids: 
+priority: warm
+extract_status: ok
+---
+5
+Summary 7

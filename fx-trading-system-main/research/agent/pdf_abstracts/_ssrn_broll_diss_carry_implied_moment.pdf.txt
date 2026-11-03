@@ -1,0 +1,8 @@
+path: _pdfs/_ssrn/broll_diss_carry_implied_moment.pdf
+title_guess: Tag der mündlichen Prüfung: 21.12.2016 Erstgutachter: Prof. Dr. Ansgar Belke Zweitgutachter: Prof. Dr. Bernd Kempa
+ids: 
+priority: warm
+extract_status: ok
+---
+ssenschaften der Universität Duisburg-Essen Campus Essen vorgelegt von Name: Michael Broll Ort: Ratibor Essen 2017 
+Tag der mündlichen Prüfung: 21.12.2016 Erstgutachter: Prof. Dr. Ansgar Belke Zweitgutachter: Prof. Dr. Bernd Kempa

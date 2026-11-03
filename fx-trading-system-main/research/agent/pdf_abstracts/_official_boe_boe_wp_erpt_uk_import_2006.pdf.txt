@@ -1,0 +1,24 @@
+path: _pdfs/_official/boe/boe_wp_erpt_uk_import_2006.pdf
+title_guess: Exchange rate pass-through into UK import
+ids: 
+priority: warm
+extract_status: ok
+---
+umtaz
+Özlem Oomen
+and
+Jian Wangy
+Working Paper no. 312
+ Bank of England
+Email: haroon.mumtaz@bankofengland.co.uk
+ Bank of England
+Email: ozlem.oomen@bankofengland.co.uk
+y Federal Reserve Bank of Dallas
+Email: Jian.Wang@dal.frb.org
+The views expressed in this paper are those of the authors, and not necessarily those of the Bank
+of England or the Federal Reserve Bank of Dallas. The authors are grateful to Mark Astley,
+Charles Engel and Peter Sinclair for fruitful discussions and helpful suggestions. The paper also
+beneted from comments of seminar participants at the Bank of England and University of
+Wisconsin and two anonymous referees. This paper was nalised on 5 July 2006.
+The Bank of England's working paper series is externally refereed.
+Information on the Bank's working paper ser

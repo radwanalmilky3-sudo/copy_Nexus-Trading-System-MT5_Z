@@ -1,0 +1,15 @@
+path: _pdfs/_official/ecb_wp1921.pdf
+title_guess: The real exchange rate and
+ids: wp1921
+priority: warm
+extract_status: ok
+---
+We investigate the impact of movements in the real exchange rate on economic
+growth based on  ve-year average data for a panel of over 150 countries in the post
+Bretton Woods period. Unlike previous literature, we use external instruments to
+deal with possible reverse causality from growth to the real exchange rate. Our
+country-speci c instruments are (i) global capital  ows interacted with individual
+countries  nancial openness and (ii) the growth rate of o¢ cial reserves. We  nd
+that a real appreciation (depreciation) reduces (raises) signi cantly annual real GDP
+growth, more than in previous estimates in the literature. However, our results
+con rm this e¤ect only for developing countries and for pegs.

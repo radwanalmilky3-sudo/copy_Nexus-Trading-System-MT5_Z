@@ -1,0 +1,1411 @@
+{
+  "operations": [
+    {
+      "id": "file:preflight.py",
+      "set": {
+        "status": "done",
+        "notes": "Uses URL parsing for authenticated Redis URLs, reports only host:port, and avoids exposing exception text; 17 focused and 876 full-suite tests pass; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:notebooks/03-model-training.ipynb",
+      "set": {
+        "status": "done",
+        "notes": "Static review found missing next-close label became DOWN; wired to shared helper. Notebook not executed; model/data evaluation remains unverified.; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_sensitive_read_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Sensitive financial read authorization regression tests; included in full 725-test run; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_trade_proxy.py",
+      "set": {
+        "status": "done",
+        "notes": "test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:run.py",
+      "set": {
+        "status": "done",
+        "notes": "Startup cleanup now covers partial spawn failure; earlier process-tree evidence remains historical; current source changes untested.; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Implemented and verified statically' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_agents/test_news_tools_internal_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Outgoing service-secret header and symbol/hour query mapping verified; full suite after change passed; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_agents/test_risk_prompt_contract.py",
+      "set": {
+        "status": "done",
+        "notes": "Regression prevents risk prompt from asserting stale hardcoded limits or claiming final authority; focused suite 32 passed, 1 warning; full suite 878 passed, 3 warnings.; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_risk/rules_engine.py",
+      "set": {
+        "status": "done",
+        "notes": "ACR-58 uses contract-aware final-lot risk validation; focused regressions pass; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_risk/position_sizer.py",
+      "set": {
+        "status": "done",
+        "notes": "ACR-58 risk-budget lot cap, downward step rounding, and no minimum-lot risk override; focused regressions pass; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_news/fundamental/runtime.py",
+      "set": {
+        "status": "done",
+        "notes": "service; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified (audit evidence)' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_agents/tools/market_tools.py",
+      "set": {
+        "status": "done",
+        "notes": "Fetches features with internal credential; preserves Redis fallback; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_ml/models/lstm_sequence.py",
+      "set": {
+        "status": "done",
+        "notes": "service; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_agents/prompts/risk_manager.yaml",
+      "set": {
+        "status": "done",
+        "notes": "Removed hardcoded risk thresholds that contradicted runtime config; prompt now uses supplied runtime context and describes its advisory role. Regression plus 31 agent/graph tests: 32 passed, 1 warning; full suite 878 passed, 3 warnings.; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_agents/market_context.py",
+      "set": {
+        "status": "done",
+        "notes": "Pure VIX validation/classification; missing, invalid, non-finite, and non-positive readings remain unknown; focused regression suite 7 passed.; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_agents/prompts/intermarket.yaml",
+      "set": {
+        "status": "done",
+        "notes": "Prompt explicitly forbids inventing numeric values for unavailable instruments; covered by intermarket regression tests.; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_news/test_read_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Missing/wrong internal secret denied on six reads; valid secret and public health probe verified; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_runner_safety.py",
+      "set": {
+        "status": "done",
+        "notes": "Test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_health_freshness.py",
+      "set": {
+        "status": "done",
+        "notes": "Test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_risk/test_approval_contract.py",
+      "set": {
+        "status": "done",
+        "notes": "Test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_executor/test_approval_contract.py",
+      "set": {
+        "status": "done",
+        "notes": "Test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_monitor/test_performance_proxy.py",
+      "set": {
+        "status": "done",
+        "notes": "Test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_risk_mutation_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Risk API authorization regression test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_config_mutation_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Config API authorization regression test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_openapi_schema.py",
+      "set": {
+        "status": "done",
+        "notes": "Test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_source_manager_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Test; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_data/test_trade_close_consumer.py",
+      "set": {
+        "status": "done",
+        "notes": "Regression: trade-close event acknowledged only after successful persistence; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_executor/test_stream_consumer_ack.py",
+      "set": {
+        "status": "done",
+        "notes": "Reject decisions ack; approved decision guard failure remains pending; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_risk/test_stream_consumer_ack.py",
+      "set": {
+        "status": "done",
+        "notes": "Intentional invalid-proposal drop acked; proposal/trade-close processing failures remain unacknowledged; daily-PnL, recent-results and directional-streak failure cases covered; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_ml/test_model_registry.py",
+      "set": {
+        "status": "done",
+        "notes": "Versioned model registry and atomic pointer tests; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_ml/test_model_promotion.py",
+      "set": {
+        "status": "done",
+        "notes": "Candidate acceptance and anomaly preservation tests; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_ml/test_model_generation_startup.py",
+      "set": {
+        "status": "done",
+        "notes": "Startup fallback and promotion orchestration tests; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_ml/test_model_bundle_validation.py",
+      "set": {
+        "status": "done",
+        "notes": "Strict candidate save/load tests; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_strategy_mutation_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Strategy Lab mutation authorization regressions; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_ml_training_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects missing JWT/permissions before ML proxy for ML mutations; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_agent_evaluation_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects missing JWT/trading.execute before agents proxy; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_intelligence_settings_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects missing JWT/trading.settings before Redis write; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_intelligence_brief_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects missing JWT/fundamental.configure before agents proxy; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_ticker_mutation_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Protects global ticker, acknowledgements, delivery logs, and local AI analysis; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_backtest_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects missing JWT/trading.view before fetching historical trade data; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_risk/test_internal_mutation_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Risk sensitive reads and mutators reject missing/incorrect internal credentials; valid exposure read accepted; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_monitor/test_alert_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects unauthenticated Telegram alerts and direct performance reads; authorized performance proxy path remains functional; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_ml/internal_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Shared constant-time credential check for ML write endpoints; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_ml/test_internal_mutation_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects missing/wrong internal credentials before ML mutations, legacy reads, and ten parallel-trader reads; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_agents/internal_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Shared constant-time credential verification for agent-service mutations; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_agents/test_internal_mutation_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects missing/wrong internal credentials before agent mutations and eight sensitive read routes; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_data/test_subscribe_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects unauthorized runtime broker-subscription requests before broker checks or stream creation; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_source_manager_ssrf.py",
+      "set": {
+        "status": "done",
+        "notes": "Blocks loopback/private-DNS source tests and verifies redirects are not followed; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_features/internal_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Constant-time shared-secret guard for direct feature calculation requests; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_features/test_calculate_api.py",
+      "set": {
+        "status": "done",
+        "notes": "Covers cached-bar levels calculation, response schema, service auth, and agent credential forwarding; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_features/test_ohlcv_ordering.py",
+      "set": {
+        "status": "done",
+        "notes": "ACR-68 regression: descending API/DuckDB bars normalize so the final feature row is newest; 1 passed; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:services/nexus_news/internal_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Constant-time shared-secret guard for direct news text analysis; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified (audit evidence)' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_news/test_analyze_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects unauthenticated and oversized analysis requests before FinBERT, while retaining authorized behavior; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_websocket_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects missing/invalid JWT, missing channel permissions, handshake timeout, and permission-store outage; allows authorized users and cleans up connections; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_executor/test_positions_internal_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects missing/invalid internal secret before broker access; accepts configured secret; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_runner_internal_secret.py",
+      "set": {
+        "status": "done",
+        "notes": "Requires internal and strong JWT secrets during startup environment validation; missing, sample, and short JWT keys rejected; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_preflight.py",
+      "set": {
+        "status": "done",
+        "notes": "Regression tests cover authenticated Redis URL parsing, TCP fallback, and credential redaction; included in 876-test full suite; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_jwt_secret_validation.py",
+      "set": {
+        "status": "done",
+        "notes": "JWT issuance rejects missing, sample, and short keys; valid configured key round-trips token; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_data/test_sensitive_read_authorization.py",
+      "set": {
+        "status": "done",
+        "notes": "Rejects direct financial/trade/fundamental-table reads without valid internal secret; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_ml/test_trade_memory_consumer_ack.py",
+      "set": {
+        "status": "done",
+        "notes": "Failure-injection coverage confirms trade-close events are acknowledged only after trade-memory persistence succeeds; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_monitor/test_monitor_read_auth.py",
+      "set": {
+        "status": "done",
+        "notes": "Detailed Monitor health and JSON/Prometheus API reads reject missing/wrong internal secrets; public health probe and Prometheus scrape remain available; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_data/test_duckdb_wal_recovery.py",
+      "set": {
+        "status": "done",
+        "notes": "Failure-injection regression proves large WAL bytes remain intact when checkpoint fails, with recovery setting unset or explicitly enabled; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_agents/test_intermarket_agent.py",
+      "set": {
+        "status": "done",
+        "notes": "Seven isolated tests cover missing/invalid and low/normal/high VIX plus prompt constraints; imports pure helper without initializing agent registry or loading HMM artifact; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "id": "file:tests/test_api/test_position_status_cache.py",
+      "set": {
+        "status": "done",
+        "notes": "Regression reproduced cross-status Redis cache contamination before fix; status-specific cache keys now return the requested open/closed status, focused related API tests 48 passed; توافق مع FILE_MANIFEST 2026-10-16",
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null
+      },
+      "reason": "FILE_MANIFEST 2026-10-16 status='Fixed and verified' verified/fixed; phantom metrics cleared"
+    },
+    {
+      "add": {
+        "id": "file:services/nexus_ml/artifact_guard.py",
+        "name": "services/nexus_ml/artifact_guard.py",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "nexus-ml",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:services/nexus_news/url_safety.py",
+        "name": "services/nexus_news/url_safety.py",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "nexus-news",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:dashboard/src/components/progress/ProgressCell.tsx",
+        "name": "dashboard/src/components/progress/ProgressCell.tsx",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "frontend",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:dashboard/src/components/progress/ErrorFixCell.tsx",
+        "name": "dashboard/src/components/progress/ErrorFixCell.tsx",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "frontend",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:dashboard/src/components/progress/HierarchicalTable.tsx",
+        "name": "dashboard/src/components/progress/HierarchicalTable.tsx",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "frontend",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:dashboard/src/lib/system-state.ts",
+        "name": "dashboard/src/lib/system-state.ts",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "frontend",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:scripts/apply_schema.py",
+        "name": "scripts/apply_schema.py",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "infrastructure",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:scripts/update_dashboard.py",
+        "name": "scripts/update_dashboard.py",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "infrastructure",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:project_audit/DISTRIBUTED_FIX_BATCH_20261016.md",
+        "name": "project_audit/DISTRIBUTED_FIX_BATCH_20261016.md",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "infrastructure",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:project_audit/VERIFICATION_GATE_20261016.md",
+        "name": "project_audit/VERIFICATION_GATE_20261016.md",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "infrastructure",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "add": {
+        "id": "file:project_audit/REMAINING_WORK.md",
+        "name": "project_audit/REMAINING_WORK.md",
+        "description": "دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16; توافق مع FILE_MANIFEST 2026-10-16",
+        "parent_id": "infrastructure",
+        "status": "done",
+        "notes": "توافق مع FILE_MANIFEST 2026-10-16; دفعة GIT_EVIDENCE_20261016 (119 ملفًا) موثّقة بتاريخ 2026-10-16",
+        "start_time": null,
+        "end_time": null,
+        "code": null,
+        "database": null,
+        "dashboard": null,
+        "security": null,
+        "redis": null,
+        "ml": null,
+        "tests": null,
+        "infra": null,
+        "audit": null,
+        "error": null,
+        "fix": null,
+        "is_current": false
+      }
+    },
+    {
+      "id": "progress-reconcile",
+      "set": {
+        "notes": "اكتملت مزامنة الصدق 2026-10-16: تنظيف وهمي + مواءمة مانيفست + مواءمة نسب",
+        "status": "in_progress",
+        "is_current": true
+      },
+      "reason": "W2-9 truth reconciliation 2026-10-16"
+    }
+  ]
+}

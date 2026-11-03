@@ -1,0 +1,19 @@
+path: _pdfs/_official/boe_fx_expectations_dp.pdf
+title_guess: Expectations, risk and uncertainty in
+ids: 
+priority: warm
+extract_status: ok
+---
+k and uncertainty in 
+the foreign exchange market: 
+some results based on survey data 
+by 
+MP Taylor 
+July 1987 
+The object of this series is to give a wider circulation to research work being undenaken in the Bank and 
+to invite comment upon it; and any comments should be sent to the author at the address given below. 
+The author is grateful to Mark Chandler of God wins for supplying the survey response data used in this 
+paper and to John Flemming, Charles Goodhan, Tony Latter, Chris Taylor and participants at an LSE 
+workshop for comments on a previous draft. The usual disclaimer applies. Any views expressed are those 
+of the author and are not necessarily those of the Bank of England. 
+Issued by the Economics Division, Bank of England, London, EC2R 8AH to which requests for individual 

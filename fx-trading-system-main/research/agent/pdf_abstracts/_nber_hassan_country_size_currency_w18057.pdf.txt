@@ -1,0 +1,18 @@
+path: _pdfs/_nber/hassan_country_size_currency_w18057.pdf
+title_guess: COUNTRY SIZE, CURRENCY UNIONS, AND INTERNATIONAL ASSET RETURNS
+ids: w18057
+priority: warm
+extract_status: ok
+---
+CH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+May 2012
+I would like to thank Philippe Aghion, John Y. Campbell, John Cochrane, Nicolas Coeurdacier, Emmanuel
+Farhi, Nicola Fuchs-Schündeln, Piere-Olivier Gourinchas, Stéphane Guibaud, Elhanan Helpman, Yves
+Nosbusch, Thomas Mertens, Nathan Nunn, Helene Rey, Kenneth Rogoff, and Adrien Verdelhan for
+helpful comments. I also thank workshop participants at Harvard Business School, Harvard University,
+MIT Sloan, Berkeley Haas, Kellogg Graduate School of Management, University of Chicago Booth,
+NYU Stern, Columbia Business School, Duke, Northwestern, London Business School, London School
+of Economics, Brown, Boston University, the World Bank, INSEAD, IIES Stockholm, the Federal
+Reserve Bank of Boston, the Austrian Central Bank, Universitat Pompeu

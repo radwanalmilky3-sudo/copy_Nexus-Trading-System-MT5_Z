@@ -1,0 +1,15 @@
+path: _pdfs/_official/boe/boe_wp_mp_rules_foreign_currency_positions.pdf
+title_guess: Monetary policy rules and foreign currency
+ids: 
+priority: warm
+extract_status: ok
+---
+Using an endogenous portfolio choice model, this paper examines how different monetary policy
+regimes can lead to different foreign currency positions by changing the cyclical properties of the
+nominal exchange rate. We find that strict inflation-targeting regimes are associated with a short
+position in foreign currency, while the opposite is true for non inflation targeting regimes. We also
+explore how these different external positions affect the international transmission of monetary shocks
+through the valuation channel. When central banks follow inflation-targeting Taylor-type rules,
+valuation effects of monetary expansions are beggar-thy-self, but they are beggar-thy-neighbour in a
+money growth targeting regime (or when monetary policy puts weight on output stabilisation).
+Key words: Portfolio choice, international transmission of shocks, monetary policy.

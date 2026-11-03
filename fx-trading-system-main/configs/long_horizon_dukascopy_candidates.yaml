@@ -1,0 +1,76 @@
+schema_version: 1
+declaration_id: slow_directional_registry_freeze_20260716
+frozen_at: "2026-07-16T05:00:00+08:00"
+registration_market_data_cutoff: "2026-07-13"
+candidate_set_is_complete: true
+candidate_universe_scope: implemented_active_directional_slow_hypotheses_excluding_deferred_missing_data
+directions_selected_from_dukascopy_outcomes: false
+fresh_forward_required: true
+inference_eligibility: exploratory_reused_history_requires_new_forward
+selected_candidate_for_future_dsr_diagnostic: slow_commodity_currency_alignment__42d
+total_trials_evaluated: 3504
+candidates:
+  - name: slow_commodity_currency_alignment__21d
+    hypothesis_id: slow_commodity_currency_alignment
+    factor: commodity_currency_alignment_12m
+    expected_sign: positive
+    horizon_sessions: 21
+    eligible_symbols: &slow_symbols
+      [EURUSD, GBPUSD, USDJPY, USDCHF, AUDUSD, NZDUSD, USDCAD, EURGBP, EURJPY, GBPJPY, AUDJPY, CADJPY]
+    gross_target: 1.0
+    transform: cross_sectional_centered_rank_gross_normalized
+    missing_data_rule: require_all_eligible_symbols_or_flat
+  - name: slow_commodity_currency_alignment__42d
+    hypothesis_id: slow_commodity_currency_alignment
+    factor: commodity_currency_alignment_12m
+    expected_sign: positive
+    horizon_sessions: 42
+    eligible_symbols: *slow_symbols
+    gross_target: 1.0
+    transform: cross_sectional_centered_rank_gross_normalized
+    missing_data_rule: require_all_eligible_symbols_or_flat
+  - name: slow_commodity_currency_alignment__63d
+    hypothesis_id: slow_commodity_currency_alignment
+    factor: commodity_currency_alignment_12m
+    expected_sign: positive
+    horizon_sessions: 63
+    eligible_symbols: *slow_symbols
+    gross_target: 1.0
+    transform: cross_sectional_centered_rank_gross_normalized
+    missing_data_rule: require_all_eligible_symbols_or_flat
+  - name: slow_value_trend_agreement__42d
+    hypothesis_id: slow_value_trend_agreement
+    factor: value_trend_agreement
+    expected_sign: positive
+    horizon_sessions: 42
+    eligible_symbols: *slow_symbols
+    gross_target: 1.0
+    transform: cross_sectional_centered_rank_gross_normalized
+    missing_data_rule: require_all_eligible_symbols_or_flat
+  - name: slow_value_trend_agreement__63d
+    hypothesis_id: slow_value_trend_agreement
+    factor: value_trend_agreement
+    expected_sign: positive
+    horizon_sessions: 63
+    eligible_symbols: *slow_symbols
+    gross_target: 1.0
+    transform: cross_sectional_centered_rank_gross_normalized
+    missing_data_rule: require_all_eligible_symbols_or_flat
+  - name: slow_positioning_crowding_reversal__21d
+    hypothesis_id: slow_positioning_crowding_reversal
+    factor: positioning_crowding_reversal
+    expected_sign: positive
+    horizon_sessions: 21
+    eligible_symbols: *slow_symbols
+    gross_target: 1.0
+    transform: cross_sectional_centered_rank_gross_normalized
+    missing_data_rule: require_all_eligible_symbols_or_flat
+  - name: slow_positioning_crowding_reversal__42d
+    hypothesis_id: slow_positioning_crowding_reversal
+    factor: positioning_crowding_reversal
+    expected_sign: positive
+    horizon_sessions: 42
+    eligible_symbols: *slow_symbols
+    gross_target: 1.0
+    transform: cross_sectional_centered_rank_gross_normalized
+    missing_data_rule: require_all_eligible_symbols_or_flat

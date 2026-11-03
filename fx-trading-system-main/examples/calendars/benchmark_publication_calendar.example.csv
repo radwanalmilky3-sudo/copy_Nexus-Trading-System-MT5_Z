@@ -1,0 +1,6 @@
+event_name,local_date,status,local_time,timezone,source_url,quality,retrieved_at
+tokyo_fix,2025-12-25,not_published,09:55,Asia/Tokyo,https://example.invalid/replace-with-official-calendar,unverified,2026-01-02T00:00:00Z
+ecb_fix,2025-12-25,not_published,14:15,Europe/Berlin,https://example.invalid/replace-with-official-calendar,unverified,2026-01-02T00:00:00Z
+wmr_fix,2025-12-25,not_published,16:00,Europe/London,https://example.invalid/replace-with-official-calendar,unverified,2026-01-02T00:00:00Z
+wmr_fix,2025-12-30,published,16:00,Europe/London,https://example.invalid/replace-with-official-calendar,unverified,2026-01-02T00:00:00Z
+wmr_fix,2025-12-31,early_time,13:00,Europe/London,https://example.invalid/replace-with-official-calendar,unverified,2026-01-02T00:00:00Z

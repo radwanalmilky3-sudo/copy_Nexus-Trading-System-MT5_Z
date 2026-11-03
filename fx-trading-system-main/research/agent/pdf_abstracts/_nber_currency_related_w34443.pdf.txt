@@ -1,0 +1,20 @@
+path: _pdfs/_nber/currency_related_w34443.pdf
+title_guess: EQUILIBRIUM EXCHANGE RATES AND CURRENCY PREMIA
+ids: w34443
+priority: warm
+extract_status: ok
+---
+NAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+November 2025
+No additional funding sources to disclose. The views expressed herein are those of the authors and 
+do not necessarily reflect the views of the National Bureau of Economic Research or the 
+International Monetary Fund.
+NBER working papers are circulated for discussion and comment purposes. They have not been 
+peer-reviewed or been subject to the review by the NBER Board of Directors that accompanies 
+official NBER publications.
+© 2025 by Mai C. Dao, Pierre-Olivier Gourinchas, and Oleg Itskhoki. All rights reserved. Short 
+sections of text, not to exceed two paragraphs, may be quoted without explicit permission provided 
+that full credit, including © notice, is given to the source.
+Breaking Parity: Eq

@@ -1,0 +1,18 @@
+path: _pdfs/_nber/verdelhan_habit_w13062.pdf
+title_guess: VOLATILITY, LABOR MARKET FLEXIBILITY, AND THE PATTERN OF COMPARATIVE
+ids: w13062
+priority: warm
+extract_status: ok
+---
+UREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+April 2007
+We are grateful to Pol Antràs, Gordon Hanson, Peter Neary, Barbara Petrongolo, Steve Redding, Tony
+Venables, Jaume Ventura, and seminar participants in Alicante, Banco de España, Bocconi, Cambridge,
+ERWIT 2006, Harvard, LSE, NBER, Oxford, Pompeu Fabra, Princeton, Valencia, the AEA 2006 Meeting,
+and the EEA 2006 Meeting for helpful discussions and suggestions. Kalina Manova, Martin Stewart,
+and Rob Varady provided superb research assistance. All errors remain ours. Cuñat gratefully acknowledges
+financial support from CICYT (SEC 2002-0026). Melitz thanks the International Economics Section
+at Princeton University for its hospitality while this paper was written. The views expressed herein
+are those of the aut

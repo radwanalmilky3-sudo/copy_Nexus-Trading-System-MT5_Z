@@ -1,0 +1,14 @@
+path: _pdfs/02_factor/della_corte_riddiough_sarno_currency_premia_imbalances.pdf
+title_guess: Currency Premia and Global Imbalancesy
+ids: 
+priority: warm
+extract_status: ok
+---
+W e show that a global imbalance risk factor that captures the spread in countriesexternal
+imbalances and their propensity to issue external liabilities in foreign currency explains the
+cross-sectional variation in currency excess returns. The economic intuition is simple: net
+debtor countries o¤ er a currency risk premium to compensate investors willing to  nance
+negative external imbalances because their currencies depreciate in bad times. This mechanism
+is consistent with exchange rate theory based on capital  ows in imperfect  nancial markets.
+W e also  nd that the global imbalance factor is priced in cross sections of other major asset
+markets.

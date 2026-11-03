@@ -1,0 +1,73 @@
+# Research-only fixed cost assumptions (machine-readable).
+# quote_quality: software_fixture
+# Does NOT unlock formal_net_returns_ready or trading_approval.
+
+schema_version: 1
+assumption_id: research_fixed_cost_v1
+document: docs/RESEARCH_FIXED_COST_ASSUMPTIONS_ZH.md
+status: software_fixture
+formal_net_returns_ready: false
+trading_approval: false
+
+account:
+  broker_brand: Interactive Brokers
+  broker_entity: IBKR_RESEARCH_ASSUMPTION_UNVERIFIED
+  account_type: IBKR_Pro_FX_margin_assumption
+  account_currency: USD
+  product_profile: rolling_spot_margin
+
+coverage:
+  start: "2016-01-01T00:00:00Z"
+  end_exclusive: "2026-01-01T00:00:00Z"
+
+execution:
+  slippage_pips: 0.15
+  commission_per_million: 35.0
+  default_spread_pips: 0.8
+  spread_pips:
+    EURUSD: 0.8
+    GBPUSD: 0.8
+    USDJPY: 0.8
+    USDCHF: 0.8
+    AUDUSD: 0.8
+    NZDUSD: 0.8
+    USDCAD: 0.8
+    EURGBP: 1.2
+    EURJPY: 1.2
+    GBPJPY: 1.2
+    AUDJPY: 1.4
+    CADJPY: 1.4
+    USDNOK: 3.0
+    USDSEK: 3.0
+  cost_stress_multipliers: [1.0, 1.5, 2.0]
+  promotion_required_stress_multiplier: 1.5
+
+financing:
+  quote_quality: software_fixture
+  source: research_fixed_cost_assumptions_v1
+  provenance: docs/RESEARCH_FIXED_COST_ASSUMPTIONS_ZH.md
+  version: research_fixed_cost_v1
+  unit: account_currency_per_unit
+  day_count: actual_360
+  triple_swap_weekday: wednesday
+  # Fixed annual rates (cash direction: pay negative / receive positive).
+  # Converted to daily account_currency_per_unit by /360 in the builder.
+  annual_rates:
+    EURUSD: {long: -0.015, short: 0.005}
+    GBPUSD: {long: -0.010, short: 0.000}
+    USDJPY: {long: 0.020, short: -0.035}
+    USDCHF: {long: 0.012, short: -0.025}
+    AUDUSD: {long: -0.005, short: -0.005}
+    NZDUSD: {long: -0.008, short: -0.002}
+    USDCAD: {long: 0.005, short: -0.015}
+    EURGBP: {long: -0.008, short: -0.002}
+    EURJPY: {long: 0.010, short: -0.025}
+    GBPJPY: {long: 0.012, short: -0.028}
+    AUDJPY: {long: 0.015, short: -0.030}
+    CADJPY: {long: 0.012, short: -0.028}
+    USDNOK: {long: 0.005, short: -0.020}
+    USDSEK: {long: 0.005, short: -0.020}
+
+outputs:
+  financing_csv: data/research_costs/broker_financing_research_fixed_v1.csv
+  financing_manifest: data/research_costs/broker_financing_research_fixed_v1.manifest.json

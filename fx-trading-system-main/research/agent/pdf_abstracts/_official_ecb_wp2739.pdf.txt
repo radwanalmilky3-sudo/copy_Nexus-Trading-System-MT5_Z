@@ -1,0 +1,8 @@
+path: _pdfs/_official/ecb_wp2739.pdf
+title_guess: Foreign currency exposure and the
+ids: wp2739
+priority: warm
+extract_status: ok
+---
+Exchange rate movements affect the economy through changes in net exports, i.e. the trade
+channel, and through valuation changes in assets and liabilities denominated in foreign currencies,

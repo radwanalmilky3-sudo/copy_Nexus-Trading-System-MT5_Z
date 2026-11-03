@@ -1,0 +1,19 @@
+path: _pdfs/_micro/evans_lyons_order_flow_berkeley.pdf
+title_guess: Exchange Rate Fundamentals and Order Flow
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper addresses whether transaction ﬂows in foreign exchange markets convey information about fun-
+damentals. We begin with a GE model in the spirit of Hayek (1945) in which fundamental information is
+ﬁrst manifest in the economy at the micro level, i.e., in a way that is not symmetrically observed by all
+agents. With this information structure, induced forei gn exchange transactions play a central role in the
+aggregation process, providing testable links between transaction ﬂows, exchange rates, and future funda-
+mentals. We test these links using data on all end-user currency trades received by Citibank over 6.5 years,
+as a m p l es uﬃciently long to analyze real-time forecasts at the quarterly horizon. The predictions are borne
+out in four empirical ﬁndings that de ﬁne this paper’s main contribution: (1) transaction ﬂows forecast future
+macro variables such as output growth, money growth, and in ﬂation, (2) transaction ﬂows forecast these
+macro variables signi ﬁcantly better than spot rates do, (3) transaction ﬂows (proprietary) forecast future
+spot rates, and (4) though proprietary ﬂows convey new information about future fundamentals, much of this
+information is still not impounded in the spot rate one quarter later. A bottom line is that the signi ﬁcance
+of transaction ﬂows for exchange rates extends well beyond high frequencies.

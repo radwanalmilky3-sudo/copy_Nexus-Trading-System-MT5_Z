@@ -1,0 +1,18 @@
+path: _pdfs/_nber/verdelhan_w18896.pdf
+title_guess: TRADE THEORY WITH NUMBERS:
+ids: w18896
+priority: warm
+extract_status: ok
+---
+BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+March 2013
+This is a draft of a chapter to appear in the Handbook of International Economics, Vol. 4, eds. Gopinath,
+Helpman and Rogoff. We thank Rodrigo Rodrigues Adao, Jakub Kominiarczuk, Mu-Jeung Yang,
+and Yury Yatsynovich for excellent research assistance. We thank Costas Arkolakis, Edward Balistreri,
+Dave Donaldson, Jonathan Eaton, Keith Head, Elhanan Helpman, Rusell Hillberry, Pete Klenow, Thierry
+Mayer, Thomas Rutherford, Robert Stern, Dan Trefler, and Jonathan Vogel for helpful discussions
+and comments. All errors are our own. The views expressed herein are those of the authors and do
+not necessarily reflect the views of the National Bureau of Economic Research.
+NBER working papers are circulated for discussi

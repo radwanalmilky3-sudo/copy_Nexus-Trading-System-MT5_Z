@@ -1,0 +1,17 @@
+path: _pdfs/_official/boe/boe_wp_exchange_rates_and_prices_1998.pdf
+title_guess: Exchange rates and prices: sources of sterling
+ids: 
+priority: warm
+extract_status: ok
+---
+ey@bankofengland.co.uk
+** Department of Applied Economics, University of Cambridge, Sidgwick Avenue,
+ Cambridge CB3 9DE. E-mail: a.garratt@econ.cam.ac.uk.
+The views expressed are those of the authors and not necessarily those of the Bank of England. We
+would like to thank Clive Briault, Andrew Haldane, Danny Quah, Chris Salmon, Frank Smets and
+Peter Westaway for their useful comments. Remaining errors are, of course, entirely our responsibility.
+Our thanks go to Siobhan Phillips for excellent research assistance.
+Issued by the Bank of England, London EC2R 8AH to which requests for individual copies should be
+addressed; envelopes should be marked for the attention of the Publications Group
+(telephone: 0171 601 4030). Working papers are also available from the Bank’s Internet site at
+http:\\

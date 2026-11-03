@@ -1,0 +1,20 @@
+path: _pdfs/_ssrn/jylha_arbitrage_capital_currency_carry_ssrn1107797_aalto.pdf
+title_guess: Arbitrage capital and
+ids: 
+priority: hot
+extract_status: ok
+---
+W-459
+Petri Jylhä – Matti Suominen – Jussi-Pekka Lyytinen
+arbitrage caPitaL 
+and 
+currency carry trade 
+returnS
+a Financial Markets and Services research Paper 
+For more finance related research at HSe, see www.hse.fi/fms/
+november
+2008
+HeLSingin KauPPaKOrKeaKOuLu
+HeLSinKi ScHOOL OF ecOnOMicS
+WOrKing PaPerS
+W-459

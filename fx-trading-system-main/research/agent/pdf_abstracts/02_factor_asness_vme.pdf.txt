@@ -1,0 +1,38 @@
+path: _pdfs/02_factor/asness_vme.pdf
+title_guess: THE JOURNAL OF FINANCE • VOL. LXVIII, NO. 3 • JUNE 2013
+ids: 
+priority: warm
+extract_status: ok
+---
+We ﬁnd consistent value and momentum return premia across eight diverse markets
+and asset classes, and a strong common factor structure among their returns. Value
+and momentum returns correlate more strongly across asset classes than passive
+exposures to the asset classes, but value and momentum are negatively correlated
+with each other, both within and across asset classes. Our results indicate the pres-
+ence of common global risks that we characterize with a three-factor model. Global
+funding liquidity risk is a partial source of these patterns, which are identiﬁable only
+when examining value and momentum jointly across markets. Our ﬁndings present
+a challenge to existing behavioral, institutional, and rational asset pricing theories
+that largely focus on U.S. equities.
+TWO OF THE MOST studied capital market phenomena are the relation between
+an asset’s return and the ratio of its “long-run” (or book) value relative to its
+current market value, termed the “value” effect, and the relation between an
+asset’s return and its recent relative performance history , termed the “mo-
+mentum” effect. The returns to value and momentum strategies have become
+central to the market efﬁciency debate and the focal points of asset pricing stud-
+ies, generating numerous competing theories for their existence. We offer new
+insights into these two market anomalies by examining their returns jointly
+across eight diverse markets and asset classes. We ﬁnd signiﬁcant return pre-
+mia to value and momentum in every asset class and strong comovement of
+their returns across asset classes, both of which challenge existing theories for
+their existence. We provide a simple three-factor model that captures the global
+returns across asset classes, the Fama–French U.S. stock portfolios, and a set
+of hedge fund indices.
+∗Asness is at AQR Capital Management; Moskowitz is at the University of Chicago Booth
+School of Business and NBER and is a consultant to AQR Capital; and Pedersen is at the New
+Y ork University Stern School of Business, Copenhagen Business School, AQR, CEPR, FRIC, and
+NBER. We thank Aaron Brown, John Cochrane, Kent Daniel, Gene Fama, Kenneth French, Cam
+Harvey (the Editor), Ronen Israel, Robert Krail, John Liew, Harry Mamaysky , Michael Mendelson,
+Stefan Nagel, Lars Nielsen, Otto Van Hemert, Jeff Wurgler, and an anonymous referee for helpful
+comments, as well as seminar participants at the University of Chicago, Princeton University ,
+Duke University , the Danish Society of

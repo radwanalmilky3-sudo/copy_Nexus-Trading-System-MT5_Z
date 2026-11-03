@@ -1,0 +1,17 @@
+path: _pdfs/_micro/evans_lyons_macro_news_nber_w9433.pdf
+title_guess: HOW IS MACRO NEWS TRANSMITTED
+ids: w9433
+priority: warm
+extract_status: ok
+---
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+January 2003
+This paper was circulated under the previous title “Why Order Flow Explains Exchange Rates.” We thank
+the following for helpful comments: Brian Boyer, Anusha Chari, Frank Diebold, Jon Faust, Simon Gervais,
+Aditya Kaul, Antonio Mello, John Rogers, Andrew Rose, and seminar participants at the Empirical Exchange
+Rate Models conference (Sept. 2001), the American Finance Association meetings (Jan. 2002), the Yale
+Market Microstructure conference (June 2002), U.C. Berkeley, Alberta, Michigan, London Business School,
+the New York Fed, Aix-Marseille, and Virginia. Bo th authors thank the National Science Foundation for
+financial assistance. The views expressed herein are t hose of the authors and not necessarily those of the
+National Burea

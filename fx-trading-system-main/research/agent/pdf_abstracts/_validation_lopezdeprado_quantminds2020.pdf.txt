@@ -1,0 +1,16 @@
+path: _pdfs/_validation/lopezdeprado_quantminds2020.pdf
+title_guess: Insights from QuantMinds
+ids: 
+priority: warm
+extract_status: ok
+---
+Innovations in
+quant trading
+strategies and
+modelling
+Insights from QuantMinds
+International 2020
+Click here or press enter for the accessibility optimised version
+
+Contents & introduction
+Click here or press enter for the accessibility optimised version

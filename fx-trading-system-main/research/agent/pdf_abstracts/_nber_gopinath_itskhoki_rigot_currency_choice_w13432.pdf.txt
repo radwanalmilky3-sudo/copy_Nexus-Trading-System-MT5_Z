@@ -1,0 +1,18 @@
+path: _pdfs/_nber/gopinath_itskhoki_rigot_currency_choice_w13432.pdf
+title_guess: CURRENCY CHOICE AND EXCHANGE RATE PASS-THROUGH
+ids: w13432
+priority: warm
+extract_status: ok
+---
+ESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+September 2007
+We wish to thank the international price program of the Bureau of Labor Statistics for access to unpublished
+micro data. We owe a huge debt of gratitude to our project coordinator Rozi Ulics for her invaluable
+help on this project. The views expressed here do not necessarily reflect the views of the BLS. We
+thank Mark Aguiar, Pol Antras, Ariel Burstein, Linda Goldberg, Emi Nakamura, Andy Neumeyer,
+Ken Rogoff, Daryl Slusher and seminar participants at numerous venues for their comments. We thank
+Igor Barenboim, Loukas Karabarbounis and Kelly Shue for excellent research assistance. A previous
+version of this paper was circulated under the title ''Pass-through at the Dock: Pricing to Currency
+and to Market?'' This research i

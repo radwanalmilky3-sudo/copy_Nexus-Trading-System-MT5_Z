@@ -1,0 +1,28 @@
+path: _pdfs/_arxiv/carry_inflation_uncertainty_1409.2457.pdf
+title_guess: On the Chain Pair Simpliﬁcation Problem
+ids: 
+priority: warm
+extract_status: ok
+---
+The problem of eﬃciently computing and visualizing the structural resemblance
+between a pair of protein backbones in 3D has led Bereg et al. [BJW+08] to pose the
+Chain Pair Simpliﬁcation problem (CPS). In this problem, given two polygonal chains
+A and B of lengthsm and n, respectively, one needs to simplify them simultaneously,
+such that each of the resulting simpliﬁed chains,A′ and B′, is of length at mostk and
+the discrete Fréchet distance betweenA′ and B′ is at mostδ, wherek and δ are given
+parameters.
+In this paper we study the complexity of CPS under the discrete Fréchet distance
+(CPS-3F), i.e., where the quality of the simpliﬁcations is also measured by the discrete
+Fréchet distance. Since CPS-3F was posed in 2008, its complexity has remained open.
+However, it was believed to beNP-complete, since CPS under the Hausdorﬀ distance
+(CPS-2H) was shown to beNP-complete. We ﬁrst prove that the weighted version
+of CPS-3F is indeed weaklyNP-complete even on the line, based on a reduction
+from the set partition problem. Then, we prove that CPS-3F is actually polynomially
+solvable, by presenting anO(m2n2 min{m,n}) time algorithm for the corresponding
+minimization problem. In fact, we prove a stronger statement, implying, for example,
+that if weights are assigned to the vertices of only one of the chains, then the problem
+remains polynomially solvable. We also study a few less rigid variants of CPS and
+present eﬃcient solutions for them.
+Finally, we present some experimental results that suggest that (the minimization
+version of) CPS-3F is signiﬁcantly better than previous algorithms for the motivating
+biological application.

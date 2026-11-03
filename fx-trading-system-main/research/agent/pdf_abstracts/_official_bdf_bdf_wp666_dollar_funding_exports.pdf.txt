@@ -1,0 +1,19 @@
+path: _pdfs/_official/bdf/bdf_wp666_dollar_funding_exports.pdf
+title_guess: Banque de France Working Paper #666 February 2018
+ids: 
+priority: warm
+extract_status: ok
+---
+How do financial frictions in currency markets affect firm-level exports? We bring new answer to 
+this question by looking at a recent episode in the summer of 2011 when the cost of US dollar 
+funding increased markedly for European banks and their clients. Our analysis relies on a unique 
+dataset of matched banks and exporters located in France. We measure the exposure of individual 
+exporters to the 2011 dollar funding shock using information about their lending banks' cross -
+border US dollar liabilities before the shock. Controlling for observed and unobserved firm-level 
+factors and product-destination-level demand effects, we find robust evidence that more exposed 
+firms reduced more their exports to the United States in the twelve months that followed the 
+shock. The magnitude of this financial trade cost is equivalent to a counterfactual rise in US tariffs 
+by 2 to 5 percentage points. Finally, we document various transmission channels related to firms' 
+natural hedging, market power, relations with US banks in France or use of financial instruments 
+to hedge.
+4

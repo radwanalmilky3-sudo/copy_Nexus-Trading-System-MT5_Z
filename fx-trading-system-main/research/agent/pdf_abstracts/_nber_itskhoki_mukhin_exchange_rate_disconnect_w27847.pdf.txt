@@ -1,0 +1,20 @@
+path: _pdfs/_nber/itskhoki_mukhin_exchange_rate_disconnect_w27847.pdf
+title_guess: THE ECONOMICS OF CURRENCY RISK
+ids: w27847
+priority: hot
+extract_status: ok
+---
+Avenue
+Cambridge, MA 02138
+September 2020
+We thank David Lagakos, Thomas Mertens, Jesse Schreger, and Jingye Wang for helpful 
+comments. We thank John Caramichael for excellent research assistance. All mistakes and 
+omissions remain our own. The views in this paper are solely the responsibility of the authors and 
+should not be interpreted as reflecting the views of the Board of Governors of the Federal 
+Reserve System, any other person associated with the Federal Reserve System, or the National 
+Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been 
+peer-reviewed or been subject to the review by the NBER Board of Directors that accompanies 
+official 
+NBER publications.
+© 2020 by Tarek Alexander Hassan and Tony Zhang. All ri

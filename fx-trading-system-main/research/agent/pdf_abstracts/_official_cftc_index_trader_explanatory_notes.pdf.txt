@@ -1,0 +1,15 @@
+path: _pdfs/_official/cftc_index_trader_explanatory_notes.pdf
+title_guess: The Commodity Futures Trading Commission has begun releasing quarterly data on index investment activity in commodity
+ids: 
+priority: warm
+extract_status: ok
+---
+typically characterized by a passive strategy designed to gain exposure to 
+commodity price movements as part of a portfolio diversification strategy. Exposure to commodity price movements can be 
+based on investment in a broad index of commodities, a sub-index of related commodities, or a single-commodity index. 
+The index investment data is an outgrowth of Recommendation 2 of the September 2008 Staff Report on Commodity Swap 
+Dealers & Index Traders (September 2008 Report).1 The data expands upon the information found in the September 2008 
+Report by reporting the gross long and gross short notional values and equivalent number of futures contracts for each U.S. 
+market. 
+SCOPE OF DATA COLLECTED 
+To capture relevant information of index activity in commodity markets, the Commission sough

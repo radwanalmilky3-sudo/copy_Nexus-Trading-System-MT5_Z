@@ -1,0 +1,17 @@
+path: _pdfs/_bis/qtr_r_qt1812b_geography_dollar_funding.pdf
+title_guess: The geography of dollar funding of non-US banks1
+ids: 
+priority: warm
+extract_status: ok
+---
+branches and subsidiaries in the United States were a major source of dollar 
+funding, but the role of these affiliates has declined. Instead, dollars are increasingly raised in the 
+home country. Where dollar funding is raised, however, is distinct from the location of the funding 
+provider, as cross-border liabilities play a large role. In aggregate, a larger share of dollar funding 
+is provided by US residents than is raised at fo reign banks’ US branches and subsidiaries. In the 
+light of these facts, we discuss potential chal lenges related to the current geography of dollar 
+funding. 
+JEL classification: G15, F30, G21. 
+Internationally active non-US banks have substantial US dollar assets. How do they 
+fund the $12.8 trillion of dollar liabilities that finances their dollar assets? 
+

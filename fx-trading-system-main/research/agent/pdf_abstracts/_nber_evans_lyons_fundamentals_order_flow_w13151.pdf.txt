@@ -1,0 +1,17 @@
+path: _pdfs/_nber/evans_lyons_fundamentals_order_flow_w13151.pdf
+title_guess: EXCHANGE RATE FUNDAMENTALS AND ORDER FLOW
+ids: w13151
+priority: warm
+extract_status: ok
+---
+Massachusetts Avenue
+Cambridge, MA 02138
+June 2007
+We thank the following for valuable comments: Anna Pavlova, Andrew Rose and seminar participants
+at the NBER (October 2004 meeting of IFM), the Board of Governors at the Federal Reserve, the European
+Central Bank, the London Business School, the University of Warwick, the Graduate School of Business
+at the University of Chicago, UC Berkeley, the Bank of Canada, the International Monetary Fund,
+and the Federal Reserve Bank of New York. Both authors thank the National Science Foundation for
+financial support, which includes funding for a clearinghouse for recent micro-based research on exchange
+rates (at georgetown.edu/faculty/evansm1 and at faculty.haas.berkeley.edu/lyons). The views expressed
+herein are those of the author(s) and do not ne

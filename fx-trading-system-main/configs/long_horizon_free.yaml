@@ -1,0 +1,50 @@
+data:
+  provider: yahoo
+  directory: data/long_horizon_public
+  symbols:
+    [EURUSD, GBPUSD, USDJPY, USDCHF, AUDUSD, NZDUSD, USDCAD, EURGBP, EURJPY, GBPJPY, AUDJPY, CADJPY]
+  interval: 1d
+  price_mode: mid
+  start: "2006-06-01"
+  end: null
+
+external:
+  enabled: true
+  raw_directory: data/external_raw
+  cftc_file: data/point_in_time/currency_positioning.csv
+  official_rates_file: data/official_rates/normalized/official_rate_observations.csv
+  supplemental_file: data/supplemental_fx/normalized/supplemental_observations.csv
+  gscpi_vintages_file: data/supplemental_fx/normalized/gscpi_vintages.csv
+  reer_release_lag_days: 60
+  reer_maximum_staleness_days: 120
+  positioning_maximum_staleness_days: 35
+  risk_daily_release_lag_days: 1
+  risk_weekly_release_lag_days: 7
+  risk_maximum_staleness_days: 21
+  rate_reference_maximum_staleness_days: 75
+  supplemental_maximum_staleness_days: 120
+  gscpi_maximum_staleness_days: 75
+  current_vintage_quality: exploratory_current_vintage
+
+research:
+  horizons: [21, 42, 63]
+  momentum_windows: [21, 63, 126, 252]
+  trend_windows: [63, 126, 252]
+  volatility_windows: [21, 63, 126]
+  momentum_skip_days: 21
+  reer_windows_months: [36, 60]
+  rebalance_interval_days: 21
+  train_years: 8
+  test_years: 2
+  step_years: 2
+  minimum_history_years: 10
+  minimum_market_coverage: 0.80
+  minimum_cross_symbol_coverage: 0.90
+  minimum_factor_coverage: 0.60
+  minimum_absolute_train_ic: 0.01
+  factor_fdr_level: 0.10
+  minimum_walk_forward_folds: 3
+  bootstrap_samples: 20000
+  bootstrap_block_days: 63
+  random_state: 42
+  output_directory: outputs/long_horizon_free

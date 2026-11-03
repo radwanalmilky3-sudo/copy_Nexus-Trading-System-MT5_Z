@@ -1,0 +1,19 @@
+path: _pdfs/_nber/farhi_gabaix_rare_disasters_exchange_rates_w13805.pdf
+title_guess: RARE DISASTERS AND EXCHANGE RATES
+ids: w13805
+priority: hot
+extract_status: ok
+---
+venue
+Cambridge, MA 02138
+February 2008
+For helpful comments, we thank Andy Atkeson, David Backus, Robert Barro, Daniel Cohen, Alex
+Edmans, Christian Julliard, Pat and Tim Kehoe, Raj Mehra, Emi Nakamura, Eric van Wincoop, and
+seminar participants at Boston University, Dartmouth, LBS, LSE, Minneapolis Fed, NBER, New York
+Fed, NYU, UBC, and the University of Virginia. Gabaix thanks the NSF for support. The views expressed
+herein are those of the author(s) and do not necessarily reflect the views of the National Bureau of
+Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been peer-
+reviewed or been subject to the review by the NBER Board of Directors that accompanies official
+NBER publications.
+© 2008 by Emmanuel Farhi and Xavier Gabaix. 

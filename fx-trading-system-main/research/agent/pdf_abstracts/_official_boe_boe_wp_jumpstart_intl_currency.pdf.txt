@@ -1,0 +1,15 @@
+path: _pdfs/_official/boe/boe_wp_jumpstart_intl_currency.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+Monetary and financial policies that lower the cost of credit for working capital in a currency outside of its 
+country can provide the impetus for that currency to be used in international trade. This paper shows this 
+in theory, by exploring the complementarity in the currency used for financing working capital and the 
+currency used for invoicing sales. Financial policies by a central bank can jump-start the use of its currency 
+outside a country’s borders. In the data, the creation of 38 swap lines by the People’s Bank of China 
+between 2009 and 2018 provides a test of the theory. Signing a swap line with a country is significantly 
+associated with increases in the use of the RMB in payments to and from that country in the following 
+months.
+Key words: Trade credit, RMB internationalisation, swap lines.

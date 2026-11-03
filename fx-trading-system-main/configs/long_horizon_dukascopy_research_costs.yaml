@@ -1,0 +1,86 @@
+# Long-horizon research on formal 14-universe Dukascopy data
+# with RESEARCH fixed costs (software_fixture only).
+# formal_net_returns_ready remains false.
+
+data:
+  provider: dukascopy
+  directory: data/dukascopy_sqlite_fresh_20160101_20260101_v111
+  swap_directory: data/research_costs
+  # financing file is broker_financing_research_fixed_v1.csv (built by script)
+  maximum_swap_staleness_days: 3
+  symbols:
+    [EURUSD, GBPUSD, USDJPY, USDCHF, AUDUSD, NZDUSD, USDCAD, EURGBP, EURJPY, GBPJPY, AUDJPY, CADJPY]
+  interval: 1d
+  price_mode: bid_ask
+  start: "2016-01-01"
+  end: "2026-01-01"
+
+costs:
+  # From configs/research_fixed_costs.yaml — research estimate only
+  default_spread_pips: 0.8
+  spread_pips:
+    EURUSD: 0.8
+    GBPUSD: 0.8
+    USDJPY: 0.8
+    USDCHF: 0.8
+    AUDUSD: 0.8
+    NZDUSD: 0.8
+    USDCAD: 0.8
+    EURGBP: 1.2
+    EURJPY: 1.2
+    GBPJPY: 1.2
+    AUDJPY: 1.4
+    CADJPY: 1.4
+    USDNOK: 3.0
+    USDSEK: 3.0
+  slippage_pips: 0.15
+  commission_per_million: 35.0
+  cost_basis: research_fixed_cost_v1
+  quote_quality: software_fixture
+  formal_net_returns_ready: false
+
+external:
+  enabled: true
+  raw_directory: data/external_raw
+  cftc_file: data/point_in_time/currency_positioning.csv
+  official_rates_file: data/official_rates/normalized/official_rate_observations.csv
+  supplemental_file: data/supplemental_fx/normalized/supplemental_observations.csv
+  gscpi_vintages_file: data/supplemental_fx/normalized/gscpi_vintages.csv
+  reer_release_lag_days: 60
+  reer_maximum_staleness_days: 120
+  positioning_maximum_staleness_days: 35
+  risk_daily_release_lag_days: 1
+  risk_weekly_release_lag_days: 7
+  risk_maximum_staleness_days: 21
+  rate_reference_maximum_staleness_days: 75
+  supplemental_maximum_staleness_days: 120
+  gscpi_maximum_staleness_days: 75
+  current_vintage_quality: exploratory_current_vintage
+
+research:
+  horizons: [21, 42, 63]
+  momentum_windows: [21, 63, 126, 252]
+  trend_windows: [63, 126, 252]
+  volatility_windows: [21, 63, 126]
+  momentum_skip_days: 21
+  reer_windows_months: [36, 60]
+  rebalance_interval_days: 21
+  train_years: 8
+  test_years: 2
+  step_years: 2
+  minimum_history_years: 10
+  minimum_market_coverage: 0.80
+  minimum_cross_symbol_coverage: 0.90
+  minimum_factor_coverage: 0.60
+  minimum_absolute_train_ic: 0.01
+  factor_fdr_level: 0.10
+  minimum_walk_forward_folds: 3
+  bootstrap_samples: 50000
+  bootstrap_block_days: 63
+  random_state: 42
+  cost_stress_multipliers: [1.0, 1.5, 2.0]
+  promotion_required_stress_multiplier: 1.5
+  output_directory: outputs/long_horizon_dukascopy_research_costs
+  # Safety pins — do not flip without explicit user authorization
+  return_labels_opened: false
+  report_layers: [gross, research_net, formal_net_na]

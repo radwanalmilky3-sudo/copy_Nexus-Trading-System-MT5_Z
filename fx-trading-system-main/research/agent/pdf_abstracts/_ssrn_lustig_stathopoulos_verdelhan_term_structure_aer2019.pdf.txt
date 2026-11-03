@@ -1,0 +1,19 @@
+path: _pdfs/_ssrn/lustig_stathopoulos_verdelhan_term_structure_aer2019.pdf
+title_guess: American Economic Review 2019, 109(12): 4142–4177
+ids: 
+priority: hot
+extract_status: ok
+---
+erdelhan*
+Fixing the investment horizon, the returns to currency carry trades 
+decrease as the maturity of the foreign bonds increases. Across devel-
+oped countries, the local currency term premia, which increase with 
+the maturity of the bonds, offset the currency risk premia. Similarly, 
+in the time-series, the predictability of foreign bond returns in dollars 
+declines with the bonds’ maturities. Leading no-arbitrage models in 
+international finance do not match the downward term structure of 
+currency carry trade risk premia. We derive a simple preference-free 
+condition that no-arbitrage models need to reproduce in the absence 
+of carry trade risk premia on long-term bonds. (JEL E43, G12, G15)
+Carry trades correspond to simple investment strategies that are funded by bor -
+rowing in l

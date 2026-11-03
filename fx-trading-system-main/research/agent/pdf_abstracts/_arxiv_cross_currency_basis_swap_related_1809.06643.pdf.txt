@@ -1,0 +1,26 @@
+path: _pdfs/_arxiv/cross_currency_basis_swap_related_1809.06643.pdf
+title_guess: A Consistent Stochastic Model of the Term Structure
+ids: 
+priority: warm
+extract_status: ok
+---
+Explicitly taking into account the risk incurred when borrowing at a shorter
+tenor versus lending at a longer tenor (“roll-over risk”), we construct a stochastic
+model framework for the term structure of interest rates in which a frequency basis
+(i.e. a spread applied to one leg of a swap to exchange one ﬂoating interest rate for
+another of a different tenor in the same currency) arises endogenously. This roll-
+over risk consists of two components, a credit risk component due to the possibility
+of being downgraded and thus facing a higher credit spread when attempting to roll
+over short–term borrowing, and a component reﬂecting the (systemic) possibility
+of being unable to roll over short–term borrowing at the reference rate (e.g., LI-
+BOR) due to an absence of liquidity in the market. The modelling framework is of
+“reduced form” in the sense that (similar to the credit risk literature) the source of
+credit risk is not modelled (nor is the source of liquidity risk). However, the frame-
+work has more structure than the literature seeking to simply model a different
+term structure of interest rates for each tenor frequency, since relationships between
+rates for all tenor frequencies are established based on the modelled roll-over risk.
+We proceed to consider a speciﬁc case within this framework, where the dynamics
+of interest rate and roll-over risk are driven by a multifactor Cox/Ingersoll/Ross–
+type process, show how such model can be calibrated to market data, and used for
+relative pricing of interest rate derivatives, including bespoke tenor frequencies not
+liquidly traded in the market.

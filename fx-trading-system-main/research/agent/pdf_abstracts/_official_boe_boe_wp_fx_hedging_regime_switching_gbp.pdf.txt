@@ -1,0 +1,25 @@
+path: _pdfs/_official/boe/boe_wp_fx_hedging_regime_switching_gbp.pdf
+title_guess: Staff Working Paper No. 1,042
+ids: 
+priority: warm
+extract_status: ok
+---
+We develop a four-state regime-switching model for optimal foreign exchange (FX) hedging 
+using forward contracts. The states reflect four possible market conditions, defined by the 
+direction and magnitude of deviation of the prevailing FX spot rate from its long-term trends. 
+The model’s performance is tested for five currencies against pound sterling for various 
+horizons. Our analysis compares the hedging outcomes of the proposed model to those of 
+other frequently used hedging approaches. The empirical results suggest that our model 
+demonstrates the highest level of risk reduction for the US dollar, euro, Japanese yen and 
+Turkish lira and the second-best performance for the Indian rupee. The risk reduction is 
+significantly higher for lira, which suggests that the proposed model might be able to provide 
+much more effective hedging for highly volatile currencies. The improved performance of the 
+model can be attributed to the adjustability of the estimation horizon for the optimal hedge 
+ratio based on the prevailing market conditions. This, in turn, allows it to better capture 
+fat-tail properties frequently observed in FX returns. Our findings suggest that FX investors 
+tend to use short-term memory (focus more on recent price movements) during low market 
+conditions (relative to trend) and long-term memory in high ones. It would be also useful to 
+build a better understanding of how investor behaviour depends on market conditions and 
+mitigate the adverse behavioural implications of short-term memory, such as panic.
+Key words: Regime switching, foreign exchange hedging, hedging effectiveness, 
+high-volatility currencies, forward hedging.

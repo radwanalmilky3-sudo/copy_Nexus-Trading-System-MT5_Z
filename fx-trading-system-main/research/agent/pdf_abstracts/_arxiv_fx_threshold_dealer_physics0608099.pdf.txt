@@ -1,0 +1,11 @@
+path: _pdfs/_arxiv/fx_threshold_dealer_physics0608099.pdf
+title_guess: arXiv:physics/0608099v2 [physics.soc-ph] 9 Aug 2006
+ids: 
+priority: warm
+extract_status: ok
+---
+We introduce a deterministic dealer model which implements most of the empirical laws, such
+as fat tails in the price change distributions, long term mem ory of volatility and non-Poissonian
+intervals. We also clarify the causality between microscop ic dealers’ dynamics and macroscopic
+market’s empirical laws.
+PACS numbers: 02.60.Cb, 05.40.-a, 05.45.-a, 89.65.Gh

@@ -1,0 +1,19 @@
+path: _pdfs/_fed/ifdp899_yen_carry_trades.pdf
+title_guess: Board of Governors of the Federal Reserve System
+ids: ifdp899
+priority: warm
+extract_status: ok
+---
+This paper examines the available data that may shed light on the carry trade in 
+Japanese yen. We define an individual or a sector to be engaged in the carry trade if it has a 
+short position in yen and a long position in other currencies. The tendency of large yen 
+movements to be skewed toward appreciations is consistent with the existence of substantial 
+carry positions, and other evidence from market prices provides some modest support for an 
+effect from the carry trade. Data on bank loans and bond holdings by currency reveal a large 
+apparent yen carry position of the Japanese official sector and modest carry positions in the 
+Japanese and foreign banking sectors. The Japanese private non-banking sector has a large 
+long foreign-currency position, but does not have a short yen position, and is thus not 
+engaged in the yen carry trade in the aggregate. However, it is possible that exporters and 
+investors in Japan use the derivatives markets to hedge some of their long foreign-currency 
+exposure, with the private non-banking sector outside of Japan (including most hedge funds) 
+likely to be taking on most of the associated carry exposure.

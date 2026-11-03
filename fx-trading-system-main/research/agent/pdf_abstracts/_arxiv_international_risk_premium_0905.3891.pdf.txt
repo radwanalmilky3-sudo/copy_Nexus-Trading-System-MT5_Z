@@ -1,0 +1,17 @@
+path: _pdfs/_arxiv/international_risk_premium_0905.3891.pdf
+title_guess: La prime de risque dans un cadre international : le risque de change est-il apprécié ?
+ids: 
+priority: warm
+extract_status: ok
+---
+In this article, we investigate whether exchange ra te risk is priced. We use a multivariate GARCH-in-
+Mean specification and test alternative conditional international CAPM versions. Our results support 
+strongly the international asset-pricing model that in cludes exchange rate risk for both developed and 
+emerging stock markets. However, there are important time and cross-country variations in the relative 
+size and dynamics of different risk premia. 
+ 
+ 
+ 
+ 
+ 
+Mots clefs : MEDAFI, Intégration, Risque de change.

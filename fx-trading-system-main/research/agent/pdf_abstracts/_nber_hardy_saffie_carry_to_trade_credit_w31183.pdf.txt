@@ -1,0 +1,18 @@
+path: _pdfs/_nber/hardy_saffie_carry_to_trade_credit_w31183.pdf
+title_guess: FROM CARRY TRADES TO TRADE CREDIT:
+ids: w31183
+priority: warm
+extract_status: ok
+---
+ONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+April 2023
+We benefited from helpful comments by Boragan Aruoba, Stefan Avdjiev, Pierre De Leo, Kinda 
+Hachem, Sebnem Kalemli-Ozcan, William Mullins, Hyun Song Shin, Ina Simonovska, Pablo 
+Slutzky, Colin Ward, and Frank Warnock, as well as seminar and conference participants at the 
+BIS, IMF, CBC-IMF-IMFER emerging markets conference, the Washington Area Symposium on 
+International Finance, and especially at the NBER conference on International Fragmentation, 
+Supply Chains, and Financial Frictions. We are also thankful to Victoria Nuguer, Valentina 
+Bruno, and Tim Schmidt-Eisenlohr for excellent discussions that greatly improved this 
+manuscript. All errors are our own. The views expressed here are those of the

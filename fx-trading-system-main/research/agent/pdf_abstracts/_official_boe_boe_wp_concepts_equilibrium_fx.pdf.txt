@@ -1,0 +1,20 @@
+path: _pdfs/_official/boe/boe_wp_concepts_equilibrium_fx.pdf
+title_guess: Concepts of equilibrium exchange rates
+ids: 
+priority: warm
+extract_status: ok
+---
+becca.driver@bankofengland.co.uk; peter.westaway@bankofengland.co.uk 
+ 
+ 
+The views expressed are those of the authors and do not necessarily reflect those of the Bank 
+of England. We would like to thank Peter Andrews, Andrew Bailey, Charlie Bean, Andrew 
+Hauser, Marion Kohler, Ronnie MacDonald, Stephen Millard, James Nixon, Simon Price, 
+Paul Robinson, Ben Schreiber, Peter Sinclair, Christoph Thoenissen, Simon Wren-Lewis and 
+seminar participants at the Bank of England, the Central Bank of Cyprus, the Centre for 
+Central Banking Studies Exchange Rate Workshop, 2001, the SEACEN Workshop on 
+Competitiveness, 2002, and the MNB Research Workshop, 2003, as well as three anonymous 
+referees for helpful comments and suggestions. 
+ 
+ 
+Copies of working papers may be obtained from Publications Gro

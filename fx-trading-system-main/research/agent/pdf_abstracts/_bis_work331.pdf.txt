@@ -1,0 +1,44 @@
+path: _pdfs/_bis/work331.pdf
+title_guess: Central banks and competition
+ids: work331
+priority: hot
+extract_status: ok
+---
+JEL classification: E58, E61, K21, L4 
+ 
+Keywords: central bank independence, monetary policy, 
+competition law, merger policy, financial stability, banks 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+BIS Working Papers are written by members of the Monetary and Economic Department of 
+the Bank for International Settlements, and from time to time by other economists, and are 
+published by the Bank. The papers are on subjects of topical interest and are technical in 
+character. The views expressed in them are those of their authors and not necessarily the 
+views of the BIS. 
+ 
+ 
+ 
+ 
+Copies of publications are available from: 
+Bank for International Settlements 
+Communications 
+CH-4002 Basel, Switzerland 
+ 
+E-mail: publications@bis.org 
+Fax: +41 61 280 9100 and +41 61 280 8100 
+This publication is avai

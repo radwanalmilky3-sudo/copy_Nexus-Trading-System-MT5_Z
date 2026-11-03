@@ -1,0 +1,22 @@
+path: _pdfs/_micro/faust_rogers_wright_ifdp784_hf_announcements.pdf
+title_guess: Board of Governors of the Federal Reserve System
+ids: ifdp784
+priority: warm
+extract_status: ok
+---
+Many recent papers have studied movements in stock, bond, and currency 
+prices over short windows of time around m acro announcements. This paper adds to the 
+announcement effects literature in two ways . First, we study the joint announcement 
+effects across a broad range of assets--exc hange rates and U.S. and foreign term 
+structures. In order to ev aluate whether the joint eff ects can be reconciled with 
+conventional theory, we interpre t the joint movements in light of uncovered interest rate 
+parity or changes in risk premia. For se veral real macro announcements, we find that a 
+stronger than expected release appreciates th e dollar today, but that it must either (i) 
+lower the relative risk premiu m for holding foreign currency ra ther than dollars, or (ii) 
+imply considerable future expected dolla r depreciation. The latter implies an 
+overshooting behavior akin to that described by Dornbusch (1976). Second, we use a 
+longer span of high frequency data than has been common in announcement work. A 
+longer span of high frequency data contributes to the prec ision of our estimates and 
+allows us to explore the possibility that the effects of macro surprises on asset prices have 
+varied over time. We find evidence, for exampl e, that PPI releases had a larger effect on 
+U.S. interest rates before about 1992 than subsequently.

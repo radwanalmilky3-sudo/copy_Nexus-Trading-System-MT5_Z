@@ -1,0 +1,20 @@
+path: _pdfs/_official/boe/boe_wp_currency_crises_external_bs.pdf
+title_guess: Common determinants of currency crises:
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper investigates the role of external balance sheet variables as determinants of currency crises in
+emerging market (EME) and advanced economies. A random effect probit model is used in a panel of
+40 countries with monthly data over the January 1980–December 2004 period. The main results of the
+paper are as follows. First, size and, particularly, the composition of a country’s external balance sheet
+are found to play an important role in the onset of crises. Second, EMEs seem to be more sensitive to
+external balance sheet variables than developed countries, and so too do economies with fixed or 
+quasi-fixed exchange rate regimes. Third, further support is provided to standard theoretical
+explanations of currency crises. The likelihood of a crisis is found to increase with: the extent to which
+the real exchange rate rises above its trend; faster growth in broad money (relative to the level of
+international reserves); larger current account and budget balance deficits; lower GDP growth; and, if
+a neighbouring country already has a crisis. Economic fundamentals are also found to be a more
+important explanation of the onset of currency crises during the 1980s than during the 1990s, suggesting
+that more recent crises are less ‘fundamentally’ driven.
+Key words: Currency crises, early warnings system, emerging markets.

@@ -1,0 +1,18 @@
+data:
+  provider: dukascopy
+  directory: data/dukascopy_bid_ask
+  dukascopy_cache_directory: data/dukascopy_cache
+  dukascopy_concurrency: 8
+  dukascopy_max_retries: 2
+  symbols:
+    [EURUSD, GBPUSD, USDJPY, USDCHF, AUDUSD, NZDUSD, USDCAD, EURGBP, EURJPY, GBPJPY, AUDJPY, CADJPY]
+  interval: 4h
+  price_mode: bid_ask
+  start: "2016-01-01"
+  end: "2025-09-15"
+
+risk:
+  close_before_weekend: false
+
+factor:
+  output_directory: outputs/dukascopy_download_contract

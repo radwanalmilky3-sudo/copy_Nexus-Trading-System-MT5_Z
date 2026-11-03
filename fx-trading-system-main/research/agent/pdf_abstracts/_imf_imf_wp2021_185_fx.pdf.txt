@@ -1,0 +1,17 @@
+path: _pdfs/_imf/imf_wp2021_185_fx.pdf
+title_guess: U.S. Dollar Currency Premium in Corporate Bonds
+ids: 
+priority: warm
+extract_status: ok
+---
+on Y. Liao ‡
+July 2021
+We isolate a U.S. dollar currency premium by comparing corporate bonds issued in the 
+dollar and the euro by ﬁrms outside the U.S. and euro a rea. W e make several empirical 
+observations that dissect the perceived advantage of borrowing in the dollar. First, while 
+the dollar dominates global debt issuance, borrowing costs in the dollar are more expensive 
+without a currency hedge and about the same with a currency hedge when compared to the 
+euro. This observed parity in currency-hedged corporate borrowing stands in contrast to 
+the persistent deviation from covered interest parity in risk-free rates. Second, we observe 
+a dollar safety premium in relative hedged borrowing costs, found in the subset of bonds 
+with high credit ratings and short maturities, attribute

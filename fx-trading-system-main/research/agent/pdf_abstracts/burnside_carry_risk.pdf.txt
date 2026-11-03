@@ -1,0 +1,22 @@
+path: _pdfs/burnside_carry_risk.pdf
+title_guess: CARRY TRADES AND RISK
+ids: 
+priority: warm
+extract_status: ok
+---
+August 2011
+I thank Martin Eichenbaum, Barry Rafferty, Sergio Rebelo, Nikolai Roussanov, Lucio Sarno and an
+anonymous referee for helpful comments. The views expressed herein are those of the author and do
+not necessarily reflect the views of the National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been peer-
+reviewed or been subject to the review by the NBER Board of Directors that accompanies official
+NBER publications.
+© 2011 by Craig Burnside. All rights reserved. Short sections of text, not to exceed two paragraphs,
+may be quoted without explicit permission provided that full credit, including © notice, is given to
+the source.
+
+Carry Trades and Risk
+Craig Burnside
+NBER Working Paper No. 17278
+August 2011
+JEL No. F3

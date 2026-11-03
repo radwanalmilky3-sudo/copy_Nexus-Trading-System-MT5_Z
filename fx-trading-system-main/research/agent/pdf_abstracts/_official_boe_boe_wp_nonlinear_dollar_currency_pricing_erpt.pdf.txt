@@ -1,0 +1,17 @@
+path: _pdfs/_official/boe/boe_wp_nonlinear_dollar_currency_pricing_erpt.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+We investigate pass-through of exchange rate changes into UK import prices for 55 sectors using 
+sector-specific exchange rate indices. Estimating a separate error correction model for each sector, we 
+document substantial sectoral variation in pass-through, but find that compositional effects have not 
+generated much variation in aggregate pass-through over time. Aggregating our sectoral results, we find 
+that 74% of exchange rate changes are passed through to aggregate import prices in the long run. 
+Pass-through is faster for larger exchange rate changes than smaller ones; and for movements driven by 
+the US dollar than for broader based exchange rate changes. This greater sensitivity to the dollar exchange 
+rate changes suggests the US dollar is used as a vehicle currency for invoicing some imports from 
+non-US countries. We find no evidence of a comparable role for the euro nor for asymmetries in 
+pass-through at the aggregate level.
+Key words: Exchange rate pass-through, import prices, vehicle currencies, non-linearities.

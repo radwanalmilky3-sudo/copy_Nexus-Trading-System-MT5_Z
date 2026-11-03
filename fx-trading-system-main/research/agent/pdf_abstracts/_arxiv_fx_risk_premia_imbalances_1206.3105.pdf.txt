@@ -1,0 +1,14 @@
+path: _pdfs/_arxiv/fx_risk_premia_imbalances_1206.3105.pdf
+title_guess: arXiv:1206.3105v1 [math.MG] 14 Jun 2012
+ids: 
+priority: warm
+extract_status: ok
+---
+We study the Lipschitz Geometry of Complex Algebraic Singularities. F or
+this purpose we introduce the notion of choking horns. A Choking ho rn is a family of
+cycles on the family of the sections of an algebraic variety by very sm all spheres centered
+at a singular point, such that the cycles cannot be boundaries of ne arby chains. The
+presence of choking horns is an obstruction to metric conicalness a s we can see with some
+classical isolated hypersurfaces singularities which we prove are no t metrically conic. We
+also show that there exist inﬁnitely countably many singular varieties , which are locally
+homeomorphic, but not locally bi-Lipschitz equivalent with respect to the inner metric.

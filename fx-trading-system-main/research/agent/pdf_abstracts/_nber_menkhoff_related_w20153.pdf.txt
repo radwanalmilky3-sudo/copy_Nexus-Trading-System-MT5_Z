@@ -1,0 +1,19 @@
+path: _pdfs/_nber/menkhoff_related_w20153.pdf
+title_guess: IDENTIFYING IDEOLOGY:
+ids: w20153
+priority: warm
+extract_status: ok
+---
+20153
+http://www.nber.org/papers/w20153
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+May 2014
+Previously circulated as "A Revealed Preference Approach to the Elicitation of Political Attitudes:
+Experimental Evidence on Anti-Americanism in Pakistan." We would like to thank Roland Benabou,
+Chris Blattman, Sylvain Chassang, Ernesto Dal B o, Stefano DellaVigna, Lena Edlund, Fred Finan,
+Ray Fisman, Paola Giuliano, Macartan Humphreys, Matthew Kahn, Ethan Kaplan, Dean Karlan, Asim
+Ijaz Khwaja, Jennifer Lerner, David Levine, Aprajit Mahajan, Ted Miguel, Rohini Pande, Petra Persson,
+Torsten Persson, Daniel Posner, Jacob Shapiro, Jesse Shapiro, Nico Voigtländer, Romain Wacziarg,
+Reed Walker, and seminar participants at the Barcelona GSE Summer Forum, BU, CEGA (B

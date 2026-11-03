@@ -1,0 +1,20 @@
+path: _pdfs/_official/boe/boe_wp_unconventional_fx_tail_risk.pdf
+title_guess: Staff Working Paper No. 1,068
+ids: 
+priority: warm
+extract_status: ok
+---
+We examine how the tail risk of currency returns of nine countries, from 2000 to 2020, were 
+impacted by central bank monetary and liquidity measures across the globe with an original 
+and unique dataset that we make publicly available. Using a standard factor model, we derive 
+theoretical measures of tail risks of currency returns which we then relate to the various 
+policy instruments employed by central banks. We find empirical evidence for the existence 
+of a cross-border transmission channel of central bank policy through the FX market. The 
+tail impact is particularly sizeable for asset purchases and swap lines. The effects last for 
+up to one month, and are proportionally higher in a hypothetical joint QE action scenario. 
+This cross-border source of tail risk is largely undiversifiable, even after controlling for the 
+US
+ dollar dominance and the effects of its own monetary policy stance.
+Key words:
+ Unconventional and conventional monetary policy, liquidity measures, currency 
+tail risk, systematic and idiosyncratic components of tail risk.

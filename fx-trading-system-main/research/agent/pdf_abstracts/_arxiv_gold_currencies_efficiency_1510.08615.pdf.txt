@@ -1,0 +1,17 @@
+path: _pdfs/_arxiv/gold_currencies_efficiency_1510.08615.pdf
+title_guess: Gold, currencies and market eﬃciency
+ids: 
+priority: cold
+extract_status: ok
+---
+Gold and currency markets form a unique pair with speciﬁc interactions and dynamics. We
+focus on the eﬃciency ranking of gold markets with respect to the currency of purchase.
+By utilizing the Eﬃciency Index (EI) based on fractal dimension, approximate entropy
+and long-term memory on a wide portfolio of 142 gold price series for diﬀerent currencies,
+we construct the eﬃciency ranking based on the extended EI methodology we provide.
+Rather unexpected results are uncovered as the gold prices in major currencies lay among
+the least eﬃcient ones whereas very minor currencies are among the most eﬃcient ones.
+We argue that such counterintuitive results can be partly attributed to a unique period
+of examination (2011-2014) characteristic by quantitative easing and rather unorthodox
+monetary policies together with the investigated illegal collusion of major foreign exchange
+market participants, as well as some other factors discussed in some detail.

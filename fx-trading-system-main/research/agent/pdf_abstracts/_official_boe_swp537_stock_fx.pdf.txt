@@ -1,0 +1,58 @@
+path: _pdfs/_official/boe_swp537_stock_fx.pdf
+title_guess: boe swp537 stock fx
+ids: 
+priority: warm
+extract_status: ok
+---
+CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+Staff W orking Paper N o. 537 
+W hat do stock m arkets tell us about 
+exchange rates? 
+G ino C enedese, Richard Payne, Lucio Sarno and 
+G iorgio V alente 
+July 2015 
+Staff

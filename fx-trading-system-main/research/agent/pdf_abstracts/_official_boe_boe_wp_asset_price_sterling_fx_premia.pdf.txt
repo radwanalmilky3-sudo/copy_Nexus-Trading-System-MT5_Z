@@ -1,0 +1,8 @@
+path: _pdfs/_official/boe/boe_wp_asset_price_sterling_fx_premia.pdf
+title_guess: Asset price based estimates of sterling exchange rate risk premia
+ids: 
+priority: warm
+extract_status: ok
+---
+5
+Summary 7

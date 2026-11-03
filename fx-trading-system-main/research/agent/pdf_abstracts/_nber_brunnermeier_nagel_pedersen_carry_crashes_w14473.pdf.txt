@@ -1,0 +1,18 @@
+path: _pdfs/_nber/brunnermeier_nagel_pedersen_carry_crashes_w14473.pdf
+title_guess: CARRY TRADES AND CURRENCY CRASHES
+ids: w14473
+priority: hot
+extract_status: ok
+---
+ARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+November 2008
+Special thanks goes to Craig Burnside, Gabriele Galati, Jean Imbs, Jakub Jurek, Hanno Lustig, Igor
+Makarov, Michael Melvin, Martin Oehmke, Nikolai Roussanov, Adrien Verdelhan and the editors
+Daron Acemoglu, Ken Rogoff and Mike Woodford. We are also grateful to comments from seminar
+participants at New York University, BGI, International Monetary Fund and conference participants
+at the German Economists Abroad conference, the American Economics Association Meetings 2008,
+NBER Behavioral Finance Meetings and P. Woolley Center at the London School of Economics. Brunnermeier
+acknowledges financial support from the Alfred P. Sloan Foundation. Lasse Pedersen is affiliated
+with AQR Capital Management, a global asset management firm 

@@ -1,0 +1,44 @@
+path: _pdfs/_bis/bis_wp405_info_flows_fx.pdf
+title_guess: Information Flows in Foreign
+ids: 
+priority: warm
+extract_status: ok
+---
+Economic Department 
+March 2013 (revised March 2016) 
+ 
+ JEL classification: F31, G12, G15 
+Keywords: Order Flow, Foreign Exchange Risk Premia, 
+Heterogeneous Information, Carry Trades 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+BIS Working Papers are written by members of the Monetary and Economic 
+Department of the Bank for International Settlements, and from time to time by 
+other economists, and are published by th e Bank. The papers are on subjects of 
+topical interest and are technical in char acter. The views expressed in them are 
+those of their authors and not necessarily the views of the BIS. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+This publication is available on the BIS website (www.bis.org). 
+ 
+ 
+© Bank for International Settlements 2016. A ll rights reserved. Brief excerpts may be 
+reproduced or translated provid

@@ -1,0 +1,16 @@
+path: _pdfs/_bis/bis_qtr_2103c_dollar_funding_covid.pdf
+title_guess: Dollar funding of non-US banks through Covid-191
+ids: 
+priority: warm
+extract_status: ok
+---
+ore money market funds (MMFs). Other non-bank financial institutions were behind 
+this increase, as they drove the strong rise in deposits booked inside and outside the United States. 
+Non-US banks’ issuance of international debt securities in US dollars remained resilient in 2020. 
+Additionally, the currency composition of banks’ total bond issuance t ilted towards the dollar 
+after March. Overall, our findings point to changes in funding relationships that could have long-
+lasting effects on the functioning of dollar funding markets. 
+JEL classification: G15, F30, G21. 
+The “dash for cash” episode during the height of the Covid-19 crisis in March led to 
+severe strains in dollar funding markets (FSB (2020), BIS (2020)). A prompt and forceful 
+policy response by central banks through emer

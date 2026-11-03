@@ -1,0 +1,28 @@
+path: _pdfs/_ecb/ecb_wp1889_tech_geography_fx.pdf
+title_guess: Cables, Sharks and Servers:
+ids: 
+priority: warm
+extract_status: ok
+---
+We analyze the impact of technology on production and trade in services, 
+focusing on the foreign exchange market. We identify exogenous 
+technological changes by the connection of countries to submarine fiber -
+optic cables used for electronic trading , but which were not laid for 
+purposes related to the foreign exchange market. We estimate the impact 
+of cable connection s on the share of offshore foreign exchange 
+transactions. C able connections between local markets and matching 
+servers in the major financial centers lower the fixed cost s of trading 
+currencies and increase the share of currency trades occur ring onshore. 
+At the same time, however, they attenuate the effect of standard spatial 
+frictions such as distance, local market liquidity, and restrictive 
+regulations that otherwise prevent transactions from moving to the major 
+financial centers. Our estimates suggest that the second effect dominates. 
+Technology dampens the impact of spatial frictions by up to 80 percent 
+and increases, in net terms, the share of offshore trading by 21 percentage 
+points. Technology also has economically important implications for the 
+distribution of foreign exchange transactions across financial centers, 
+boosting the share in global turnover of London, the world’s largest 
+trading venue, by as much as one-third. 
+ 
+Key words : Technology, Geography, Foreign Exchange Market, 
+Exogeneity, Submarine Fiber-Optic Cables

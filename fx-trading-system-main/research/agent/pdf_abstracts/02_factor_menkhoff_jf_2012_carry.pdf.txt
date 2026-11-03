@@ -1,0 +1,17 @@
+path: _pdfs/02_factor/menkhoff_jf_2012_carry.pdf
+title_guess: educational, or not-for-profit purposes without prior permission or charge, unless otherwise
+ids: 
+priority: warm
+extract_status: ok
+---
+oses without prior permission or charge, unless otherwise
+indicated, provided that the authors, title and full bibliographic details are credited, a
+hyperlink and/or URL is given for the original metadata page and the content is not changed
+in any way. For full details of reuse please refer to City Research Online policy.
+City Research Online: http://openaccess.city.ac.uk/ publications@citystgeorges.ac.uk
+Citation: Menkhoff, L., Sarno, L., Schmeling, M. & Schrimpf, A. (2012). Carry 
+trades and global foreign exchange volatility. The Journal Of Finance, 67(2), pp. 
+681-718. doi: 10.1111/j.1540-6261.2012.01728.x 
+This is the unspecified version of the paper.
+This version of the publication may differ from the final published version. To cite 
+this item please consult the publisher's version.

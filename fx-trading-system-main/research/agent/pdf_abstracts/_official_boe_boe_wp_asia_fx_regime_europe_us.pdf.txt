@@ -1,0 +1,39 @@
+path: _pdfs/_official/boe/boe_wp_asia_fx_regime_europe_us.pdf
+title_guess: Does Asia’s choice of exchange rate regime
+ids: 
+priority: warm
+extract_status: ok
+---
+hange rate regime affect Europe’s exposure to US shocks? 
+ 
+ 
+ 
+ 
+Bojan Markovic* 
+and 
+Laura Povoledo** 
+ 
+ 
+Working Paper no. 318 
+ 
+ 
+ 
+ 
+* Monetary Analysis, Bank of England, Threadneedle Street, London, EC2R 8AH. 
+Email: bojan.markovic@bankofengland.co.uk. 
+** The University of Reading, Economics Department, PO Box 218, Reading RG6 6AA. 
+Email: l.povoledo@reading.ac.uk. 
+ 
+ 
+ 
+ 
+ 
+ 
+The views expressed in this paper are those of the authors, and not necessarily those of the Bank of 
+England. We wish to thank an anonymous referee, Martin Brooke, Michael B. Devereux, Karen Dury, 
+Francesco Giavazzi, and the participants of the ZEI Summer School for useful comments and Mike 
+Smith for valuable research assistance. This paper was finalised on 4 January 2007. 
+ 
+ 
+ 
+The Bank of England’s w

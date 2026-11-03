@@ -1,0 +1,16 @@
+path: _pdfs/_micro/breedon_rime_vitale_nyfed.pdf
+title_guess: A Transaction Data Study of the Forward Bias Puzzle ∗
+ids: 
+priority: warm
+extract_status: ok
+---
+Using a unique data set we demonstrate that a large share of the FX for-
+ward discount bias can be accounted for by order ﬂow. A simple microstructure-
+based decomposition suggests that order ﬂow creates a time-varying risk pre-
+mium that is correlated with the forward discount. The order ﬂow related risk
+premium is particularly important in currency pairs traditionally associated
+with carry trade activity, as for these crosses it accounts for more than half
+of the forward bias. We also ﬁnd evidence that order ﬂow is partly driven
+by carry trade activity which is itself is driven by expectations of carry trade
+proﬁts. However, carry trading increases currency-crash risk, in that the
+carry-induced order ﬂow generates negative skewness in FX returns.

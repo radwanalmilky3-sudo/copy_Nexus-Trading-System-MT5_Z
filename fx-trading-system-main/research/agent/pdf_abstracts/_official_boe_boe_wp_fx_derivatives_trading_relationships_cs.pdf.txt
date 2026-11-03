@@ -1,0 +1,20 @@
+path: _pdfs/_official/boe/boe_wp_fx_derivatives_trading_relationships_cs.pdf
+title_guess: Staff Working Paper No. 1,154
+ids: 
+priority: warm
+extract_status: ok
+---
+Using granular transaction-level data, this paper investigates the characteristics and 
+implications of dealer-client trading relationships in the over-the-counter FX derivatives 
+market. We first document that dealer-client trading relationships are persistent over time. 
+Then, to shed light on the role of relationship strength for client access to these instruments 
+during times of dealer stress, we examine the collapse of Credit Suisse in March 2023. In this 
+episode, although Credit Suisse’s EURUSD notional traded and trade count declined sharply, 
+clients who had previously relied less heavily on Credit Suisse did not differentially reduce 
+their Credit Suisse-specific trading activity relative to more reliant clients. Instead, clients 
+who had previously relied more heavily on the bank were able to substitute to other existing 
+dealer relationships without incurring additional costs. Overall, these findings suggest that 
+search and bargaining frictions were not particularly costly for heavily reliant clients after the 
+shock: relationship persistence did not differentially prevent them from reallocating activity to 
+existing alternative dealers when their relationship dealer came under stress.
+Key words: Foreign exchange, derivatives, trading relationships.

@@ -1,0 +1,53 @@
+path: _pdfs/_nber/menkhoff_sarno_schmeling_schrimpf_currency_momentum_bis_work366.pdf
+title_guess: by Lukas Menkhoff, Lucio Sarno, Maik Schmeling and Andreas
+ids: work366
+priority: hot
+extract_status: ok
+---
+L classification: F31, G12, G15. 
+ 
+Keywords: Momentum Returns, Limits to Arbitrage, Idiosyncratic 
+Volatility, Carry Trades. 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+BIS Working Papers are written by members of the Monetary and Economic Department of 
+the Bank for International Settlements, and from time to time by other economists, and are 
+published by the Bank. The papers are on subjects of topical interest and are technical in 
+character. The views expressed in them are those of their authors and not necessarily the 
+views of the BIS. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+This publication is available on the BIS website (www.bis.org). 
+ 
+ 
+© Bank for International Settlements 2011. All rights reserved. Brief excerpts may be 
+reproduced or translated provided the source is stated. 
+ 
+ 
+ISSN 1020-0959 (p

@@ -1,0 +1,15 @@
+path: _pdfs/_validation/arxiv_1402_2198.pdf
+title_guess: Multi-scale Representation of High Frequency Market
+ids: 
+priority: warm
+extract_status: ok
+---
+We introduce an event based framework of directional changes and overshoots to map con-
+tinuous ﬁnancial data into the so-called Intrinsic Network - a state based discretisation of
+intrinsically dissected time series. Deﬁning a method for state contraction of Intrinsic Network,
+we show that it has a consistent hierarchical structure that allows for multi-scale analysis of
+ﬁnancial data. We deﬁne an information theoretic measurement termed Liquidity that char-
+acterises the unlikeliness of price trajectories and argue that the new metric has the ability to
+detect and predict stress in ﬁnancial markets. We show empirical examples within the Foreign
+Exchange market where the new measure not only quantiﬁes liquidity but also acts as an early
+warning signal.

@@ -1,0 +1,14 @@
+path: _pdfs/_micro/melvin_prins_equity_hedging_wmr_ecb.pdf
+title_guess: Equity hedging and exchange rates at the London 4pm Fix
+ids: 
+priority: warm
+extract_status: ok
+---
+We test the hypothesis that hedging by international equity portfolio 
+managers affects exchange rates – the “hedging channel of exchange rate 
+adjustment”. A key institutional feature of the foreign exchange market , the 
+“London 4pm fix ”, is used to identify times when hedging trades 
+concentrate. The direction of hedging trades is identified by past equity 
+returns. Equity market appreciation over the month predicts currency 
+depreciation before the end -of-month fix, providing evidence that hedging 
+activity plays a role in exchange rate determination.

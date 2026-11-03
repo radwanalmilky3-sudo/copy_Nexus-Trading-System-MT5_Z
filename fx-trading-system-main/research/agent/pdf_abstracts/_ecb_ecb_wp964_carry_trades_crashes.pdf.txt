@@ -1,0 +1,25 @@
+path: _pdfs/_ecb/ecb_wp964_carry_trades_crashes.pdf
+title_guess: Working Pa P er Serie S
+ids: 
+priority: hot
+extract_status: ok
+---
+O 964 / NOVEMBER 2008
+In 2008 all ECB 
+publications 
+feature a motif 
+taken from the 
+10 banknote.
+DO FIRMS PROVIDE 
+WAGE INSURANCE
+AGAINST SHOCKS?
+EVIDENCE FROM 
+HUNGARY 1
+by Gábor Kátay 2
+This paper can be downloaded without charge from
+http://www.ecb.europa.eu or from the Social Science Research Network
+electronic library at http://ssrn.com/abstract_id=1291174.
+1 Part of this work was carried out while I was visiting the European Central Bank (ECB), whose hospitality is gratefully acknowledged. 
+I am especially indebted to Frank Smets, Gabriel Fagan, Ana Lamo, Philip Vermeulen and other colleagues at the DG-R for their 
+useful comments and support. I would like to acknowledge the critical and extensive comments from Fabiano Scivardi, 
+Gábor Kézdi and colleagues at the Economics Departme

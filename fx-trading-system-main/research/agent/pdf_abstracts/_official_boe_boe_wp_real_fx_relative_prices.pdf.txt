@@ -1,0 +1,8 @@
+path: _pdfs/_official/boe/boe_wp_real_fx_relative_prices.pdf
+title_guess: Real exchange rates and the relative prices of non-traded and traded
+ids: 
+priority: warm
+extract_status: ok
+---
+5
+Summary 7

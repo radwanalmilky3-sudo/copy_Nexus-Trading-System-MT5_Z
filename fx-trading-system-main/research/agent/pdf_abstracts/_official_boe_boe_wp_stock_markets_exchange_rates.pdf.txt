@@ -1,0 +1,58 @@
+path: _pdfs/_official/boe/boe_wp_stock_markets_exchange_rates.pdf
+title_guess: boe wp stock markets exchange rates
+ids: 
+priority: warm
+extract_status: ok
+---
+CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+Staff W orking Paper N o. 537 
+W hat do stock m arkets tell us about 
+exchange rates? 
+G ino C enedese, Richard Payne, Lucio Sarno and 
+G iorgio V alente 
+July 2015 
+Staff

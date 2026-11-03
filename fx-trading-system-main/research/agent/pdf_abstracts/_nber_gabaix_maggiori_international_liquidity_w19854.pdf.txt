@@ -1,0 +1,18 @@
+path: _pdfs/_nber/gabaix_maggiori_international_liquidity_w19854.pdf
+title_guess: INTERNATIONAL LIQUIDITY AND EXCHANGE RATE DYNAMICS
+ids: w19854
+priority: hot
+extract_status: ok
+---
+50 Massachusetts Avenue
+Cambridge, MA 02138
+January 2014
+We thank our editors Andrei Shleifer, Pol Antràs, Elhanan Helpman and referees, and Ariel Burstein,
+John Campbell, Nicolas Coeurdacier, Alessandro Dovis, Bernard Dumas, Emmanuel Farhi, Luca
+Fornaro,Kenneth Froot, Nicolae Garleanu, Gita Gopinath, Pierre-Olivier Gourinchas, Oleg Itskhoki,
+AndrewKarolyi, Nobuhiro Kiyotaki, Anton Korinek, Arvind Krishnamurthy, Guido Lorenzoni, Brent
+Neiman,Maurice Obstfeld, Stavros Panageas, Anna Pavlova, Fabrizio Perri, Hélène Rey, Kenneth
+Rogoff,
+Lucio Sarno, Hyun Song Shin, Andrei Shleifer, Jeremy Stein, Adrien Verdelhan, and seminar
+participantsat NBER (EFG, IFM, ME, IPM, IAP, MWAB, MATS), Princeton University, Harvard
+University,MIT, Stanford SITE, UC Berkeley, University of Chicago Booth, Nor

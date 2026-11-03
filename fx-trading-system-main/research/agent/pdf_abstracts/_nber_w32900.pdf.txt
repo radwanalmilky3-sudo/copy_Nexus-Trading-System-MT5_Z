@@ -1,0 +1,19 @@
+path: _pdfs/_nber/w32900.pdf
+title_guess: REASSESSING SOURCES OF RISK PREMIUMS IN CURRENCY MARKETS
+ids: w32900
+priority: hot
+extract_status: ok
+---
+EAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+September 2024, Revised April 2025
+We thank Viral Acharya, Federico Baldi-Lanfranchi, Max Croce, Pasquale Della Corte, Lira Mota, 
+as well as participants in seminars and conferences at the Bank for International Settlements, the 
+2024
+ BI-SHOF conference, the 2024 CEPR Paris Symposium, CIREQ-CMP Econometrics 
+Conference in Honor of Eric Ghysels, Copenhagen Business School, the 2024 ESSFM meeting in 
+Gerzensee, London Business School, London School of Economics, NYU Stern, University of 
+Notre Dame, University of Lancaster, University of Lausanne / EPFL, the 2024 UNSW Asset 
+Pricing Workshop, University of Texas Austin, and Warwick Business School. We thank Haohang 
+Wu for excellent research assistance. Dahlquist gratef

@@ -1,0 +1,15 @@
+path: _pdfs/_arxiv/currency_momentum_network_2501.07135.pdf
+title_guess: FOLLOW THE LEADER : E NHANCING SYSTEMATIC
+ids: 
+priority: warm
+extract_status: ok
+---
+We present a systematic, trend-following strategy, applied to commodity futures markets, that
+combines univariate trend indicators with cross-sectional trend indicators that capture so-called
+momentum spillover, which can occur when there is a lead-lag relationship between the trending
+behaviour of different markets. Our strategy utilises two methods for detecting lead-lag relationships,
+with a method for computing network momentum, to produce a novel trend-following indicator. We
+use our new trend indicator to construct a portfolio whose performance we compare to a baseline
+model which uses only univariate indicators, and demonstrate statistically significant improvements
+in Sharpe ratio, skewness of returns, and downside performance, using synthetic bootstrapped data
+samples taken from time-series of actual prices.

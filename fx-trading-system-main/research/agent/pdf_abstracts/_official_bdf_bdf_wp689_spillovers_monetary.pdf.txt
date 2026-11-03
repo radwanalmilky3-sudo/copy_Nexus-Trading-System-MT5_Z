@@ -1,0 +1,16 @@
+path: _pdfs/_official/bdf/bdf_wp689_spillovers_monetary.pdf
+title_guess: International Spillovers of Monetary
+ids: 
+priority: warm
+extract_status: ok
+---
+In this paper we provide empirical evidence on the impact of US and UK monetary policy 
+changes on credit supply of banks operating in Italy and France over the period 2000 -2015, 
+exploring the existence of an international bank lending channel. Exploiting bank balance 
+sheet heterogeneity, we find that monetary policy tightening abroad leads to a reduction of 
+credit supply at home, in particular for US monetary policy changes. Our results show that 
+USD funding plays an important role in the transmission mechanis m, especially for French 
+banks which rely to a larger extent on USD funding. We also show that banks adjust their 
+euro and foreign currency lending differently, thus implying that funding sources in 
+different currencies are not perfect substitutes. This is especially the case when tensions in 
+currency swap markets are high, thus resulting in costly cross-currency funding.

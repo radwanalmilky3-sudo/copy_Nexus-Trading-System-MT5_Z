@@ -1,0 +1,48 @@
+path	status	note
+dashboard/src/app/dashboard/layout.tsx	Fixed and reviewed	Gateway mode payload is re-read every 5 seconds and atomically reconciles LIVE/PAPER, auto_trade, and kill_switch; no mode mutation was performed during review.
+dashboard/src/stores/dashboardStore.ts	Reviewed	Store state and persistence reviewed; server hydration remains authoritative for mode, auto-trade, and kill-switch.
+dashboard/src/lib/api-client.ts	Reviewed	System mode and auto-trade API response contracts reviewed.
+dashboard/src/components/trade-controls/AutoTradeToggle.tsx	Reviewed	Toggle confirms the requested auto_trade value from the server, updates the shared store, preserves PIN confirmation, and relies on layout polling for full mode/kill-switch reconciliation.
+dashboard/src/components/trade-controls/ModeSelector.tsx	Reviewed	Paper-only mode control reviewed; no LIVE activation path added.
+dashboard/src/app/dashboard/page.tsx	Reviewed	Dashboard consumers of mode state reviewed.
+dashboard/src/components/windows/SystemConsole.tsx	Reviewed	System mode and auto-trade display consumer reviewed.
+dashboard/src/components/windows/SystemDiagnostic.tsx	Reviewed	Dashboard diagnostic consumer reviewed.
+dashboard/src/components/trade-controls/KillSwitch.tsx	Reviewed	Kill-switch state consumer reviewed.
+dashboard/src/app/dashboard/progress/page.tsx	Reviewed	Progress page reviewed for dashboard scope.
+dashboard/src/components/progress/HierarchicalTable.tsx	Reviewed	Progress table reviewed for dashboard scope.
+dashboard/src/app/progress-state/route.ts	Reviewed	Progress state route reviewed for dashboard scope.
+dashboard/src/components/fundamental/DataLineagePanel.tsx	Reviewed	Reviewed for safe rendering and data-shape handling.
+dashboard/src/components/fundamental/FundamentalCharts.tsx	Reviewed	Reviewed for safe rendering and data-shape handling.
+dashboard/src/components/fundamental/FundamentalWorkspace.tsx	Reviewed	Reviewed for safe rendering, bounded rows, and API refresh cleanup.
+dashboard/src/components/fundamental/LocalAIAnalystPanel.tsx	Reviewed	Reviewed for safe rendering of optional analysis data.
+dashboard/src/components/fundamental/MultiAssetImpactPanel.tsx	Reviewed	Reviewed for safe rendering and optional market-impact data.
+dashboard/src/components/fundamental/NewsIntelligencePanel.tsx	Reviewed	Reviewed for safe rendering and source-data handling.
+dashboard/src/components/fundamental/NewsTickerBar.tsx	Fixed and reviewed	Malformed sessionStorage delivery state is ignored instead of crashing ticker initialization; polling and timer cleanup reviewed.
+dashboard/src/components/fundamental/NewsTickerControlPanel.tsx	Reviewed	Reviewed for bounded controls and safe settings updates.
+dashboard/src/components/windows/ActivePositions.tsx	Reviewed	Reviewed for snapshot mapping, refresh cleanup, and safe position controls.
+dashboard/src/components/windows/AgentConsole.tsx	Reviewed	Reviewed for polling cleanup and safe message rendering.
+dashboard/src/components/windows/AgentFlowchart.tsx	Reviewed	Reviewed for status polling cleanup and fallback states.
+dashboard/src/components/windows/AutonomousMLPanel.tsx	Reviewed	Reviewed for polling cleanup and optional metrics rendering.
+dashboard/src/components/windows/BacktestPanel.tsx	Reviewed	Reviewed for safe result rendering.
+dashboard/src/components/windows/CorrelationMatrix.tsx	Reviewed	Reviewed for polling cleanup and nullable matrix values.
+dashboard/src/components/windows/CrossAsset.tsx	Reviewed	Reviewed for safe API data rendering.
+dashboard/src/components/windows/ErgodicIntelligencePanel.tsx	Reviewed	Reviewed for polling cleanup and optional analytics data.
+dashboard/src/components/windows/GatewayDiagnostic.tsx	Reviewed	Reviewed for diagnostic polling cleanup and fallback values.
+dashboard/src/components/windows/GenAIBrief.tsx	Reviewed	Reviewed for safe optional response rendering.
+dashboard/src/components/windows/LiveChart.tsx	Reviewed	Reviewed for safe chart input handling.
+dashboard/src/components/windows/LiveDecisionPanel.tsx	Reviewed	Reviewed for polling cleanup and optional decision values.
+dashboard/src/components/windows/ModelsByRegime.tsx	Reviewed	Reviewed for safe API response rendering.
+dashboard/src/components/windows/MTFConfluence.tsx	Reviewed	Reviewed for polling cleanup and optional timeframe values.
+dashboard/src/components/windows/NewsFeed.tsx	Reviewed	Reviewed for polling cleanup and bounded filtered rendering.
+dashboard/src/components/windows/PLDashboard.tsx	Reviewed	Reviewed for polling cleanup and guarded metric rendering.
+dashboard/src/components/windows/RegimeIndicator.tsx	Reviewed	Reviewed for polling cleanup and optional regime data.
+dashboard/src/components/windows/RegimeLive.tsx	Reviewed	Reviewed for polling cleanup and fallback display.
+dashboard/src/components/windows/RiskMonitor.tsx	Reviewed	Reviewed for polling cleanup and guarded risk values.
+dashboard/src/components/windows/RLLifecycle.tsx	Reviewed	Reviewed for polling cleanup and optional lifecycle data.
+dashboard/src/components/windows/SessionClock.tsx	Reviewed	Reviewed for interval cleanup and deterministic session rendering.
+dashboard/src/components/windows/SignalQualityGate.tsx	Reviewed	Reviewed for polling cleanup and optional quality data.
+dashboard/src/components/windows/SystemConsole.tsx	Reviewed	Reviewed for polling cleanup and bounded log rendering.
+dashboard/src/components/windows/SystemDiagnostic.tsx	Reviewed	Reviewed for polling cleanup and fallback diagnostics.
+dashboard/src/components/windows/SystemHealth.tsx	Reviewed	Reviewed for safe service/pipeline rendering.
+dashboard/src/components/windows/TradeJournal.tsx	Reviewed	Reviewed for polling cleanup and optional journal metrics.
+dashboard/src/components/windows/TradeMemoryPanel.tsx	Reviewed	Reviewed for polling cleanup and optional memory metrics.

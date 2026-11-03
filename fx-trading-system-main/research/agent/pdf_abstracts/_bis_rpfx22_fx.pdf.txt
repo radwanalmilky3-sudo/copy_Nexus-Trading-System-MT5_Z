@@ -1,0 +1,17 @@
+path: _pdfs/_bis/rpfx22_fx.pdf
+title_guess: Triennial Central Bank Survey
+ids: 
+priority: hot
+extract_status: ok
+---
+d extracts may be reproduced or translated provided the source is stated. 
+www.bis.org
+email@bis.org
+Tools to access and download the results of the BIS Triennial Central Bank Survey: 
+• BIS website – tables in PDF of the BIS’s most current data
+• BIS Statistics Explorer – a browsing tool for pre-defined views of the BIS’s most current data
+• BIS Statistics Warehouse – a search tool for customised queries of the BIS’s most current data
+BIS Triennial Central Bank Survey 2022
+Monetary and Economic Department
+Queries concerning this release may be directed to statistics@bis.org
+Follow us

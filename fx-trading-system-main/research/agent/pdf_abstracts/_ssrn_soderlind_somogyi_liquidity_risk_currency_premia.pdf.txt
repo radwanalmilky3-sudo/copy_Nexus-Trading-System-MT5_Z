@@ -1,0 +1,15 @@
+path: _pdfs/_ssrn/soderlind_somogyi_liquidity_risk_currency_premia.pdf
+title_guess: Liquidity Risk and Currency Premia *
+ids: 
+priority: warm
+extract_status: ok
+---
+The currency market is the world’s largest financial market by trading volume. We show
+that even in this highly liquid market exposure to liquidity risk commands an economically
+significant risk premium of up to 3.6% per year. Liquidity risk is not subsumed by exist-
+ing currency risk factors and successfully prices the cross-section of currency excess returns.
+Moreover, we find that liquidity risk and carry trade premia are correlated, although this
+correlation is limited to static rather than dynamic carry trades. Building upon this result, we
+propose a liquidity-based explanation for the carry trade, which adds significant explanatory
+power to existing theories.
+J.E.L. classification: G12, G15, F31

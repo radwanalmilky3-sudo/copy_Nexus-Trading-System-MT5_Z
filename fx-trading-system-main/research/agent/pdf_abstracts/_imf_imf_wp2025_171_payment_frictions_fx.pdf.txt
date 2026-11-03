@@ -1,0 +1,16 @@
+path: _pdfs/_imf/imf_wp2025_171_payment_frictions_fx.pdf
+title_guess: IMF Working Papers describe research in
+ids: 
+priority: warm
+extract_status: ok
+---
+Cross-border payments are changing: existing intermediaries are upgrading their networks and 
+new platforms based on novel digital forms of money are being explored, even as geoeconomic fragmentation is 
+introducing new frictions. We develop a stylized model to assess the potential implications for the level and 
+volatility of capital flows and exchange rates. On levels, we find that lower frictions in cross-border payments 
+reduce UIP deviations and increase capital flows. On volatility, we find that the impact of lower frictions depends 
+on the type of shock and the degree to which frictions decline. For real shocks, lower frictions increase capital 
+flow volatility and reduce exchange rate volatility. For financial shocks, lower frictions increase exchange rate 
+volatility while the impact on capital flow volatility is ambiguous. Specifically, when frictions decline by a small 
+amount, capital flow volatility increases, while the opposite holds when the reduction in frictions is large. An 
+increase in frictions reverses these results.

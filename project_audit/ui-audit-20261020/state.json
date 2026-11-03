@@ -1,0 +1,196 @@
+{
+  "updated": "2026-10-20T21:12:30.026Z",
+  "current": "الدفعة الأولى مثبتة مرئيًا: الصفقات، المخاطر المجهولة، ذاكرة التداول، نتيجة صفر صفقات",
+  "fixes": 4,
+  "apiFailures": [
+    "GET /api/agents/decision/XAUUSD → 502",
+    "GET /api/ml/traders/autonomous/status → 502",
+    "GET /api/ml/traders/status → 502",
+    "GET /api/v2/market/candles → 401",
+    "GET /api/trade-memory/metrics → 404",
+    "GET /api/ml/traders/mode → 502",
+    "GET /api/risk/settings → 502",
+    "GET /api/intelligence/institutional/XAUUSD → 502"
+  ],
+  "pages": [
+    {
+      "name": "Trading",
+      "path": "/dashboard",
+      "state": "reviewed",
+      "note": "فُتحت التابات العشرة والتسعة الفرعية للتحليل الأساسي؛ بعض الخدمات متوقفة. الأزرار المؤثرة في التداول لم تُنفذ."
+    },
+    {
+      "name": "Strategies",
+      "path": "/dashboard/strategies",
+      "state": "reviewed",
+      "note": "كل فلاتر الحالة ومقاييس الترتيب والتحديث؛ المصدر offline فلا بيانات أو تفاصيل. لم تُشغل دورة بحث أو تفعيل."
+    },
+    {
+      "name": "Models",
+      "path": "/dashboard/models",
+      "state": "reviewed",
+      "note": "ML/DL/RL تعرض تعذر الخدمة؛ HMM UNKNOWN مع أصفار. تحديث ونهاية الصفحة؛ التدريب غير مختبر بسبب غياب الخدمة."
+    },
+    {
+      "name": "Compare",
+      "path": "/dashboard/model-comparison",
+      "state": "reviewed",
+      "note": "تعذر تحميل المقارنة؛ الجداول والمنحنيات فارغة؛ Train All لم يُنفذ."
+    },
+    {
+      "name": "History",
+      "path": "/dashboard/history",
+      "state": "reviewed",
+      "note": "المدد والبحث XAUUSDs تستجيب؛ صفر سجلات؛ التصدير والترقيم غير قابلين لاختبار بيانات فعلية."
+    },
+    {
+      "name": "Settings",
+      "path": "/dashboard/settings",
+      "state": "reviewed",
+      "note": "الأقسام الأربعة + تابات الوسيط الخمسة + تابات المستخدم الخمسة. اتصال MT5 متطابق؛ بحث الأصول يعمل؛ حفظ/حذف/صلاحيات غير منفذة عمدًا."
+    },
+    {
+      "name": "متابعة التطوير",
+      "path": "/dashboard/progress",
+      "state": "reviewed",
+      "note": "الرسوم والجدول ونهاية الصفحة وفتح مجموعات هرمية؛ المهلة قطعت توثيق بعض الفروع، وليس كل ملف فرعي مختبرًا."
+    },
+    {
+      "name": "مختبر البحث",
+      "path": "/dashboard/research-lab",
+      "state": "reviewed",
+      "note": "التابات الثمانية وثلاثة أوضاع المصادر؛ 2944 شمعة M15؛ الارتباط مرصود، الاختبارات أهلية فقط ومتوقفة. لم نجلب أو نحذف بيانات أثناء التدقيق."
+    },
+    {
+      "name": "نتائج التدقيق",
+      "path": "/dashboard/audit-progress",
+      "state": "reviewed",
+      "note": "223 ملفًا مقروءًا، بصمات وخطة؛ البحث والتحديث فُحصا كواجهة؛ لا تمثل نجاح اختبارات النظام."
+    },
+    {
+      "name": "ML Models",
+      "path": "/dashboard/ml-models",
+      "state": "reviewed",
+      "note": "المسار فُتح فعليًا؛ Status unavailable وService unavailable؛ التدريب معطل ولم يُنفذ."
+    },
+    {
+      "name": "Deep Learning",
+      "path": "/dashboard/deep-learning",
+      "state": "reviewed",
+      "note": "المسار فُتح فعليًا؛ Status unavailable وService unavailable؛ التدريب معطل ولم يُنفذ."
+    },
+    {
+      "name": "Reinforcement Learning",
+      "path": "/dashboard/reinforcement-learning",
+      "state": "reviewed",
+      "note": "المسار فُتح فعليًا؛ Status unavailable وService unavailable؛ التدريب معطل ولم يُنفذ."
+    }
+  ],
+  "findings": [
+    {
+      "id": "UI-01",
+      "title": "شعار جميع الأنظمة تعمل يظهر قبل اكتمال فحص الخدمات",
+      "evidence": "09-trading-overview-top.png ثم 13-trading-health-details.png — تغيّر إلى أربع خدمات غير متاحة"
+    },
+    {
+      "id": "UI-02",
+      "title": "Tilt يظهر normal رغم أن مصدر Anti-tilt بلا بيانات",
+      "evidence": "14-trading-risk-gateway-details.png · إصلاح 21 أكتوبر: لقطات127–129، API200، اختبارات86 وTypeScript",
+      "status": "fixed_verified"
+    },
+    {
+      "id": "UI-03",
+      "title": "الصفقات تعرض No open positions و0 رغم STALE وانتهاء مهلة المصدر",
+      "evidence": "15-trading-positions-stale.png · إصلاح 21 أكتوبر: لقطات127–129، API200، اختبارات86 وTypeScript",
+      "status": "fixed_verified"
+    },
+    {
+      "id": "UI-04",
+      "title": "Cross-Asset يمنح 3/5 ويعرض NEUTRAL رغم no_data",
+      "evidence": "21-trading-intelligence-top.png مع AX لحالة DXY وUS10Y"
+    },
+    {
+      "id": "UI-05",
+      "title": "Trade Memory يعرض undefined trades",
+      "evidence": "22-trading-intelligence-middle.png"
+    },
+    {
+      "id": "API-01",
+      "title": "طلب /api/trade-memory/metrics غير موجود: HTTP 404",
+      "evidence": "سجل nexus-api الحالي + مطابقة ملفات Python · إصلاح 21 أكتوبر: لقطات127–129، API200، اختبارات86 وTypeScript",
+      "status": "fixed_verified"
+    },
+    {
+      "id": "UX-01",
+      "title": "المحلل المحلي: تباين ضعيف في حقل السؤال وتصميم أبيض غير متسق",
+      "evidence": "33-fundamental-local-ai.png"
+    },
+    {
+      "id": "UX-02",
+      "title": "صحة مصادر التحليل الأساسي تعرض رؤوس جدول فارغًا بلا حالة صف واضحة",
+      "evidence": "25-fundamental-overview.png"
+    },
+    {
+      "id": "AI-01",
+      "title": "المحلل المحلي يرجع ConnectError عند سؤال فعلي",
+      "evidence": "34-fundamental-local-ai-connect-error.png"
+    },
+    {
+      "id": "UI-06",
+      "title": "الاختبار التاريخي يصنف أداء صفر صفقات بأنه سلبي ومهمش بدل بيانات غير كافية",
+      "evidence": "37-trading-backtest-zero-results.png · إصلاح 21 أكتوبر: لقطات127–129، API200، اختبارات86 وTypeScript",
+      "status": "fixed_verified"
+    },
+    {
+      "id": "UX-03",
+      "title": "إعدادات الشريط الأبيض تحجب قراءة الشريط العلوي وبعض الحقول ضعيفة التباين",
+      "evidence": "51-settings-general-section-4.png و52"
+    },
+    {
+      "id": "DATA-01",
+      "title": "المصادر تعرض جاهز للتحليل رغم يتطلب إعدادًا أو health_only؛ النجاح المعروض اختبار محفوظ قديم",
+      "evidence": "69-settings-sources.png و71 و72"
+    },
+    {
+      "id": "UX-04",
+      "title": "إجراءات جدول المصادر تتجاوز عرض الشاشة وتتطلب تمريرًا أفقيًا غير واضح",
+      "evidence": "70-settings-source-search.png"
+    },
+    {
+      "id": "UX-05",
+      "title": "رسوم متابعة التطوير بعناوين متداخلة ومقصوصة",
+      "evidence": "83-development-progress-top.png و84"
+    },
+    {
+      "id": "UI-07",
+      "title": "علامات مكتملة في متابعة التطوير مع نسب صفرية/جزئية تحتاج تعريفًا واضحًا",
+      "evidence": "85-development-progress-table.png"
+    },
+    {
+      "id": "UX-06",
+      "title": "ملخص أرشيف عام صفر أو not-connected بجانب بيانات حساب فعلية",
+      "evidence": "97-research-cleaning-current.png و102"
+    },
+    {
+      "id": "UX-07",
+      "title": "عرض الدليل ينقل إلى تاب التحقق ولا يفتح دليل الصف مباشرة",
+      "evidence": "106-research-backtest-eligibility.png ثم107"
+    },
+    {
+      "id": "GAP-01",
+      "title": "فلاتر الأرشيف الإضافية غير مفعلة، والاختبار بالمختبر أهلية فقط",
+      "evidence": "زر فلاتر يظهر إشعار عدم التفعيل؛106"
+    },
+    {
+      "id": "UX-08",
+      "title": "US10Y يظهر في السياق رغم أنه غير مختار وغير مطلوب حاليًا",
+      "evidence": "105-research-correlation-rows.png"
+    },
+    {
+      "id": "UX-09",
+      "title": "قائمة المستخدم تتجاوز الحافة اليمنى وتقص نص إعدادات الحساب",
+      "evidence": "125-shared-user-menu.png"
+    }
+  ],
+  "subtabsReviewed": 14
+}

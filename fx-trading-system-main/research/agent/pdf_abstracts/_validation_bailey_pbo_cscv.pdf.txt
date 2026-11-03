@@ -1,0 +1,17 @@
+path: _pdfs/_validation/bailey_pbo_cscv.pdf
+title_guess: THE PROBABILITY OF BACKTEST
+ids: 
+priority: warm
+extract_status: ok
+---
+Many investment ﬁrms and portfolio managers rely on backtests
+(i.e., simulations of performance based on historical market data) to
+select investment strategies and allocate capital. Standard statistical
+techniques designed to prevent regression overﬁtting, such as hold-
+out, tend to be unreliable and inaccurate in the context of investment
+backtests. We propose a general framework to assess the probabil-
+ity of backtest overﬁtting (PBO). We illustrate this framework with
+speciﬁc generic, model-free and nonparametric implementations in the
+context of investment simulations, which implementations we call com-
+binatorially symmetric cross-validation (CSCV). We show that CSCV
+produces reasonable estimates of PBO for several useful examples.

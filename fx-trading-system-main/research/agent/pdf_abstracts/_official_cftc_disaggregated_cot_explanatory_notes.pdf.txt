@@ -1,0 +1,19 @@
+path: _pdfs/_official/cftc_disaggregated_cot_explanatory_notes.pdf
+title_guess: Disaggregated Commitments of Traders Report
+ids: 
+priority: warm
+extract_status: ok
+---
+rt on September 4, 2009. 
+The first iteration of the report covered 22 major physical commodity markets; on December 4, 
+2009, the remaining physical commodity markets were included.
+1
+ 
+The Disaggregated COT report increases transparency from the legacy COT reports by separating 
+traders into the following four categories of traders: Producer/Merchant/Processor/User; Swap 
+Dealers; Managed Money; and Other Reportables. The legacy COT report separates reportable 
+traders only into “commercial” and “non-commercial” categories. 
+All of t
+he COT reports provide a breakdown of each Tuesday's open interest for markets in 
+which 20 or more traders hold positions equal to or above the reporting levels established by the 
+CFTC. The reports are published in futures-only formats as well as futures-a

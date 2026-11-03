@@ -1,0 +1,8 @@
+{
+  "expected_server": "OneRoyal-Server",
+  "symbol_map": {
+    "XAUUSD": "XAUUSDs"
+  },
+  "clock_evidence": null,
+  "exceptions": []
+}

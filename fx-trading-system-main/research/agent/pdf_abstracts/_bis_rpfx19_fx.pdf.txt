@@ -1,0 +1,38 @@
+path: _pdfs/_bis/rpfx19_fx.pdf
+title_guess: turnover in April 2019
+ids: 
+priority: hot
+extract_status: ok
+---
+lts of the BIS Triennial Central Bank Survey: 
+• BIS website – tables in PDF of the BIS’s most current data 
+• BIS Statistics Explorer – a browsing tool for pre-defined views of the BIS’s most current data 
+• BIS Statistics Warehouse – a search tool for customised queries of the BIS’s most current data 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Questions about the BIS Triennial Central Bank Survey may be addressed to statistics@bis.org. 
+This publication is available on the BIS website (www.bis.org/statistics/rpfx19.htm). 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+© Bank fo r International Settlements 201 9. All rights reserved. Brief excerpts may be reproduced or 
+translated provided the source is stated.

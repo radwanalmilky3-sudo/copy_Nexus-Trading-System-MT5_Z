@@ -1,0 +1,18 @@
+path: _pdfs/_nber/ready_roussanov_ward_commodity_carry_w19371.pdf
+title_guess: COMMODITY TRADE AND THE CARRY TRADE:
+ids: w19371
+priority: hot
+extract_status: ok
+---
+F ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+August 2013
+We benefited from comments by Andy Abel, Rui Albuquerque, Dave Backus, Gurdip Bakshi, John
+Campbell, Mike Chernov, Ric Colacito, Max Croce, Darrell Duffie, Xavier Gabaix, Jeremy Graveline,
+Robin Greenwood, Tarek Hassan, Burton Hollifield, Urban Jermann, Karen Lewis, Debbie Lucas,
+Don Keim, Brent Neiman, Jose Scheinkman, Ivan Shaliastovich, Rob Stambaugh, Andreas Stathopoulos,
+Sheridan Titman, Adrien Verdelhan, Jessica Wachter, Amir Yaron, Stan Zin, and audiences at the
+CEPR ESSFM Gerzensee, Minnesota Asset Pricing conference, Oxford-MAN Currency Trading conference,
+NBER SI, NBIM, SECOR, Texas Finance Festival, SED, WFA, and Wharton. Roussanov acknowledges
+financial support from the Iwanowski Family Research Fello

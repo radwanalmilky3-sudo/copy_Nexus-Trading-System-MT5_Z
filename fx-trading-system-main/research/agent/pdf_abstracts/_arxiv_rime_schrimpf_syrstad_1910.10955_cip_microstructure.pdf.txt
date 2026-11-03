@@ -1,0 +1,12 @@
+path: _pdfs/_arxiv/rime_schrimpf_syrstad_1910.10955_cip_microstructure.pdf
+title_guess: arXiv:1910.10955v7 [math.AP] 24 Apr 2023
+ids: 
+priority: warm
+extract_status: ok
+---
+We consider the initial value Cauchy problem for a class of ev olution
+equations whose Hamiltonian is the Weyl quantization of a ho mogeneous quadratic
+form with non-negative deﬁnite real part. The solution semi group is shown to be
+strongly continuous on several spaces: the Shubin–Sobolev spaces, the Schwartz space,
+the tempered distributions, the equal index Beurling type G elfand–Shilov spaces and
+their dual ultradistribution spaces.

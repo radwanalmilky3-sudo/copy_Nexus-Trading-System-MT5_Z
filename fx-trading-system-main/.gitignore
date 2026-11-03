@@ -1,0 +1,25 @@
+.DS_Store
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+data/*.csv
+data/*.parquet
+data/**
+outputs/*
+!outputs/.gitkeep
+
+# Research raw acquisitions (copyrighted bulk; not for public repo)
+research/_pdfs/
+research/_html_snapshots/
+research/agent/cache/
+research/**/_pdfs/
+research/**/_html_snapshots/
+*.bi5
+*.sqlite
+*.sqlite.*

@@ -1,0 +1,17 @@
+path: _pdfs/_nber/itskhoki_w31933.pdf
+title_guess: OPTIMAL EXCHANGE RATE POLICY
+ids: w31933
+priority: warm
+extract_status: ok
+---
+Cambridge, MA 02138
+December 2023
+We thank Ozge Akinci, Adrien Auclert, Gianluca Benigno, Emine Boz, Charles Engel, Sebastian 
+Fanelli, Masao Fukui, Luca Fornaro, Guido Lorenzoni and Ivan Werning for insightful 
+discussions, Mark Aguiar, Manuel Amador, Andy Atkeson, Philippe Bacchetta, Suman Basu, 
+Javier Bianchi, Anmol Bhandari, V.V.Chari, Mick Devereux, Mike Golosov, Pierre-Olivier 
+Gourinchas, Lars Hansen, Tarek Hassan, Sebnem Kalemli-Özcan, Rohan Kekre, Robert 
+Kollmann, Karen Lewis, Emi Nakamura, Maury Obstfeld, Fabrizio Perri, Hélène Rey, Ken 
+Rogoff, Dejanir Silva, Jón Steinsson, Ludwig Straub, Steve Wu and seminar/conference 
+participants for useful comments. The views expressed herein are those of the authors and do not 
+necessarily reflect the views of the National Bureau of Econ

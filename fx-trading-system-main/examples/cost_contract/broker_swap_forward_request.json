@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "document_kind": "broker_swap_forward_data_request",
+  "status": "broker_entity_unconfirmed",
+  "account": {
+    "broker_legal_entity": null,
+    "account_type": null,
+    "account_currency": null,
+    "triple_swap_weekday": null,
+    "notes": "No broker, legal entity, account currency, or triple-swap rule is assumed."
+  },
+  "coverage_requested": {
+    "start": "2016-01-01T00:00:00Z",
+    "end_exclusive": "2026-01-01T00:00:00Z"
+  },
+  "symbols": [
+    "EURUSD", "GBPUSD", "USDJPY", "USDCHF", "AUDUSD", "NZDUSD", "USDCAD",
+    "EURGBP", "EURJPY", "GBPJPY", "AUDJPY", "CADJPY", "USDNOK", "USDSEK"
+  ],
+  "swap_fields": [
+    "symbol",
+    "effective_time",
+    "available_time",
+    "long_financing",
+    "short_financing",
+    "unit",
+    "day_count",
+    "rollover_multiplier",
+    "triple_swap_weekday",
+    "source",
+    "provenance",
+    "quote_quality",
+    "broker_entity",
+    "account_currency",
+    "version"
+  ],
+  "forward_fields": [
+    "symbol",
+    "observation_time",
+    "available_time",
+    "tenor",
+    "bid_points",
+    "ask_points",
+    "points_unit",
+    "spot_bid",
+    "spot_ask",
+    "source",
+    "provenance",
+    "quote_quality",
+    "broker_entity",
+    "version",
+    "revision_id"
+  ],
+  "acceptance": {
+    "formal_verdict_if_missing": "cost_incomplete_research_only",
+    "oanda_practice_allowed_as": "execution_software_stress_only",
+    "policy_rate_proxy_allowed_as": "research_only_not_formal_cost"
+  }
+}

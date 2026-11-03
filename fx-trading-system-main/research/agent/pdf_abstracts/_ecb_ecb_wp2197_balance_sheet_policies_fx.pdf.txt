@@ -1,0 +1,25 @@
+path: _pdfs/_ecb/ecb_wp2197_balance_sheet_policies_fx.pdf
+title_guess: Does a big bazooka matter?
+ids: 
+priority: warm
+extract_status: ok
+---
+We estimate the
+eﬀects of quantitative easing (QE) measures by the ECB and the
+Federal Reserve on the US dollar-euro exchange rate at frequencies and horizons rele-
+vant for policymakers. To do so, we derive a theoretically-consistent local projection
+regression equation from the standard asset pricing formulation of exchange rate de-
+termination. We then proxy unobserved QE shocks by future changes in the relative
+size of central banks’ balance sheets, which we instrument with QE announcements
+in two-stage least squares regressions in order to account for their endogeneity. We
+ﬁnd that QE measures have large and persistent eﬀects on the exchange rate. For
+example, our estimates imply that the ECB’s APP program which raised the ECB’s
+balance sheet relative to that of the Federal Reserve by 35 percentage points between
+September 2014 and the end of 2016 depreciated the euro vis-` a-vis the US dollar by
+12%. Regarding transmission channels, we ﬁnd that a relative QE shock that ex-
+pands the ECB’s balance sheet relative to that of the Federal Reserve depreciates the
+US dollar-euro exchange rate by reducing euro-dollar short-term money market rate
+diﬀerentials, by widening the cross-currency basis and by eliciting adjustments in
+currency risk premia. Changes in the expectations about the future monetary policy
+stance, reﬂecting the “signalling” channel of QE, also contribute to the exchange
+rate response to QE shocks.

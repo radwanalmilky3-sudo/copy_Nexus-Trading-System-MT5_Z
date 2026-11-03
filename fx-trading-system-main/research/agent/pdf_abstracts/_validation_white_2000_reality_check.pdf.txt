@@ -1,0 +1,16 @@
+path: _pdfs/_validation/white_2000_reality_check.pdf
+title_guess: .Econometrica, Vol. 68, No. 5 September, 2000 , 1097 ]1126
+ids: 
+priority: warm
+extract_status: ok
+---
+erence or model selection. When such data reuse occurs, there is always the possibility
+that any satisfactory results obtained may simply be due to chance rather than to any
+merit inherent in the method yielding the results. This problem is practically unavoidable
+in the analysis of time-series data, as typically only a single history measuring a given
+phenomenon of interest is available for analysis. It is widely acknowledged by empirical
+researchers that data snooping is a dangerous practice to be avoided, but in fact it is
+endemic. The main problem has been a lack of suf®ciently simple practical methods
+capable of assessing the potential dangers of data snooping in a given situation. Our
+purpose here is to provide such methods by specifying a straightforward procedure for
+testing the nu

@@ -1,0 +1,21 @@
+path: _pdfs/_bis/bis_wp773_carry_to_trade_credit.pdf
+title_guess: From carry trades to trade
+ids: 
+priority: warm
+extract_status: ok
+---
+updated April 2023
+JEL classification: E44, G15.
+Keywords: Emerging market corporate debt, currency 
+mismatch, liability dollarization, carry trades, trade credit 
+B
+IS Working Papers are written by members of the Monetary and Economic 
+Department of the Bank for International Settlements, and from time to time by other 
+economists, and are published by the Bank. The papers are on subjects of topical 
+interest and are technical in character. The views expressed in them are those of their 
+authors and not necessarily the views of the BIS. 
+This publication is available on the BIS website (www.bis.org). 
+© Bank for International Settlements 2019. All rights reserved. Brief excerpts may be 
+reproduced or translated provided the source is stated. 
+ISSN 1020-0959 (print) 
+ISSN 1682-7678 (online

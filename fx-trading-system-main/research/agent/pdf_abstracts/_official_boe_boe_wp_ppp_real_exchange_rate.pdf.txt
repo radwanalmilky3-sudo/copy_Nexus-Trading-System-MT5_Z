@@ -1,0 +1,8 @@
+path: _pdfs/_official/boe/boe_wp_ppp_real_exchange_rate.pdf
+title_guess: PPP and the real exchange rate–real interest rate differential puzzle revisited :
+ids: 
+priority: warm
+extract_status: ok
+---
+5
+Summary 7

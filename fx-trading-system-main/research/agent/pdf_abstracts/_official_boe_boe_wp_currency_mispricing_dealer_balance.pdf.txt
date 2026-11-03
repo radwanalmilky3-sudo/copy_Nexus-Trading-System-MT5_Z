@@ -1,0 +1,14 @@
+path: _pdfs/_official/boe/boe_wp_currency_mispricing_dealer_balance.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+We relate currency mispricing originating from the breakdown of covered interest rate parity to the dealer 
+balance-sheet constraints resulting from the post-crisis financial regulation. Using a unique data set on 
+contract-level foreign exchange derivatives with disclosed counterparty identities, we find that dealers 
+with a higher leverage ratio demand an additional premium from their clients for synthetic dollar funding. 
+We handle endogeneity using two exogenous variations associated with the public disclosure of the 
+leverage ratio, and the introduction of the UK leverage ratio framework while controlling for changes in 
+demand conditions at the client level.
+Key words: Exchange rates, dollar basis covered interest parity condition, arbitrage opportunities.

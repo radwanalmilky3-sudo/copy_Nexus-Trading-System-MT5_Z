@@ -1,0 +1,40 @@
+# Consumed by scripts/run_two_pair_long_horizon_research.py. The script loads the verified
+# outcome-blind daily SQLite cache directly; provider=csv prevents accidental network download.
+data:
+  provider: csv
+  directory: data/dukascopy_sqlite
+  swap_directory: null
+  symbols: [EURUSD, GBPUSD]
+  interval: 1d
+  price_mode: bid_ask
+  start: "2016-01-01"
+  end: "2025-09-15"
+
+external:
+  # Start with price/path factors. External families can be enabled in a separately registered run.
+  enabled: false
+
+research:
+  research_mode: time_series_panel
+  horizons: [21, 42, 63]
+  momentum_windows: [21, 63, 126, 252]
+  trend_windows: [63, 126, 252]
+  volatility_windows: [21, 63, 126]
+  momentum_skip_days: 21
+  reer_windows_months: [36, 60]
+  rebalance_interval_days: 21
+  train_years: 5
+  test_years: 1
+  step_years: 1
+  minimum_history_years: 9
+  minimum_market_coverage: 0.80
+  minimum_cross_symbol_coverage: 0.90
+  minimum_factor_coverage: 0.60
+  minimum_absolute_train_ic: 0.01
+  factor_fdr_level: 0.10
+  minimum_walk_forward_folds: 3
+  bootstrap_samples: 50000
+  bootstrap_block_days: 63
+  random_state: 42
+  output_directory: outputs/long_horizon_two_pair_time_series
+

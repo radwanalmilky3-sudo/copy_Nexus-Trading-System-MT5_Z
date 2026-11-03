@@ -1,0 +1,199 @@
+{
+ "operations": [
+  {
+   "id": "shared",
+   "set": {
+    "code": 78,
+    "database": 66,
+    "dashboard": 0,
+    "security": 88,
+    "redis": 84,
+    "ml": 0,
+    "tests": 89,
+    "infra": 66,
+    "audit": 76
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "nexus-data",
+   "set": {
+    "code": 78,
+    "database": 75,
+    "dashboard": 0,
+    "security": 66,
+    "redis": 74,
+    "ml": 0,
+    "tests": 72,
+    "infra": 64,
+    "audit": 76
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "nexus-api",
+   "set": {
+    "code": 80,
+    "database": 46,
+    "dashboard": 0,
+    "security": 82,
+    "redis": 48,
+    "ml": 0,
+    "tests": 80,
+    "infra": 62,
+    "audit": 76
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "nexus-features",
+   "set": {
+    "code": 78,
+    "database": 30,
+    "dashboard": 0,
+    "security": 76,
+    "redis": 62,
+    "ml": 66,
+    "tests": 66,
+    "infra": 54,
+    "audit": 68
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "nexus-ml",
+   "set": {
+    "code": 79,
+    "database": 56,
+    "dashboard": 0,
+    "security": 77,
+    "redis": 54,
+    "ml": 72,
+    "tests": 72,
+    "infra": 54,
+    "audit": 76
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "nexus-agents",
+   "set": {
+    "code": 80,
+    "database": 30,
+    "dashboard": 0,
+    "security": 79,
+    "redis": 64,
+    "ml": 62,
+    "tests": 80,
+    "infra": 54,
+    "audit": 68
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "nexus-news",
+   "set": {
+    "code": 78,
+    "database": 56,
+    "dashboard": 0,
+    "security": 84,
+    "redis": 52,
+    "ml": 30,
+    "tests": 72,
+    "infra": 54,
+    "audit": 68
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "nexus-risk",
+   "set": {
+    "code": 79,
+    "database": 44,
+    "dashboard": 0,
+    "security": 80,
+    "redis": 66,
+    "ml": 30,
+    "tests": 79,
+    "infra": 62,
+    "audit": 76
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "nexus-executor",
+   "set": {
+    "code": 79,
+    "database": 34,
+    "dashboard": 0,
+    "security": 75,
+    "redis": 68,
+    "ml": 0,
+    "tests": 79,
+    "infra": 62,
+    "audit": 76
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "nexus-monitor",
+   "set": {
+    "code": 78,
+    "database": 30,
+    "dashboard": 0,
+    "security": 80,
+    "redis": 38,
+    "ml": 0,
+    "tests": 70,
+    "infra": 76,
+    "audit": 68
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "frontend",
+   "set": {
+    "code": 74,
+    "database": 0,
+    "dashboard": 84,
+    "security": 75,
+    "redis": 20,
+    "ml": 20,
+    "tests": 72,
+    "infra": 54,
+    "audit": 68
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "infrastructure",
+   "set": {
+    "code": 60,
+    "database": 46,
+    "dashboard": 0,
+    "security": 76,
+    "redis": 50,
+    "ml": 10,
+    "tests": 86,
+    "infra": 68,
+    "audit": 76
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  },
+  {
+   "id": "progress-reconcile",
+   "set": {
+    "code": 85,
+    "database": null,
+    "dashboard": 88,
+    "security": 70,
+    "redis": null,
+    "ml": null,
+    "tests": 85,
+    "infra": 80,
+    "audit": 85
+   },
+   "reason": "استعادة قيم بشرية مُحكَمة من bak + مواءمة بوابة الصدق"
+  }
+ ]
+}

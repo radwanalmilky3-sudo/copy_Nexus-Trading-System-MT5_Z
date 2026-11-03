@@ -1,0 +1,16 @@
+path: _pdfs/_validation/hansen_lunde_nason_mcs.pdf
+title_guess: School of Economics and Management
+ids: 
+priority: warm
+extract_status: ok
+---
+The paper introduces the model conﬁdence set (MCS) and applies it to the selection of models. A
+MCS is a set of models that is constructed such that it will con tain the best model with a given level
+of conﬁdence. The MCS is in this sense analogous to a conﬁdenc e interval for a parameter. The MCS
+acknowledges the limitations of the data, such that uninformative data yields a MCS with many models,
+whereas informative data yields a MCS with only a few models. The MCS procedure does not assume
+that a particular model is the true model, in fact the MCS procedure can be used to compare more general
+objects, beyond the comparison of models. We apply the MCS pr ocedure to two empirical problems.
+First, we revisit the inﬂation forecasting problem posed by Stock and Watson (1999), and compute the
+MCS for their set of inﬂation forecasts. Second, we compare a number of Taylor rule regressions and
+determine the MCS of the best in terms of in-sample likelihood criteria.

@@ -1,0 +1,17 @@
+path: _pdfs/_fed/bostonfed_cpp1703_bank_reg_cip.pdf
+title_guess: Uncovering Covered Interest Parity:
+ids: 
+priority: warm
+extract_status: ok
+---
+We analyze the factors underlying the r ecent deviations from covered interest parity. We show that 
+these deviations can be explained by tighter post-crisis bank capital regulations that made the provision 
+of foreign exchange swaps more costly. Moreover, the recent monetary policy and related interest rate 
+divergence between the U nited States and other major foreign countries has led to a surge in demand 
+for swapping low interest rate currencies into the U.S. dollar. Given the higher bank balance sheet 
+costs resulting from these regulatory changes , the increased demand for U.S. dollars in the swap 
+market could not be supplied at a constant price, thereby amplifying violation s of covered interest 
+parity. Furthermore, we show that dollar swap line agreements existing between the Federal Reserve 
+and foreign central banks mitigate pr essure in the swap market. However, the current conditions that 
+govern the provision of dollar funding through foreign central banks are not favorable enough to 
+reduce deviations from covered interest parity to zero.

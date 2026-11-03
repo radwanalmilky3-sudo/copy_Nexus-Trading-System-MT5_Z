@@ -1,0 +1,22 @@
+path: _pdfs/_nber/aloosh_currency_factors_w25449.pdf
+title_guess: 1050 Massachusetts Avenue
+ids: w25449
+priority: warm
+extract_status: ok
+---
+We examine the ability of existing and new factor models to explain the comovements of G10- 
+currency changes, measured using the novel concept of “currency baskets”, representing the 
+overall movement of a particular currency. Using a clustering technique, we find a clear two-
+block structure in currency comovements with the first block containing mostly the dollar 
+currencies, and the other the European currencies. A factor model incorporating this “clustering” 
+factor and two additional factors, a commodity currency factor and a “world” factor based on 
+trading volumes, fits currency basket correlations much better than extant factors, such as value 
+and carry, do. In particular, it explains on average about 60% of currency variation and generates 
+a root mean squared error relative to sample correlations of only 0.11. The model also fits 
+comovements in emerging market currencies well. Economically, the correlations between 
+currency baskets underlying the factor structure are inversely related to the physical distances 
+between countries. The factor structure is also related to the exposure of the corresponding 
+pricing kernels with respect to the global pricing kernel and is apparent in cross-country retail 
+sales growth data.
+Arash Aloosh
+NEOMA Business School

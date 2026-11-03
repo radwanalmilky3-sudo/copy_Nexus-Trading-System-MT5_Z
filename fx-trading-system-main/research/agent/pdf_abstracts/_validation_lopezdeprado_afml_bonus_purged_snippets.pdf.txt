@@ -1,0 +1,33 @@
+path: _pdfs/_validation/lopezdeprado_afml_bonus_purged_snippets.pdf
+title_guess: ADVANCES IN FINANCIAL
+ids: 
+priority: warm
+extract_status: ok
+---
+n 5 16 
+Equation 6 16 
+Equation 7 16 
+Equation 8 16 
+Equation 9 16 
+Equation 10 17 
+Equation 11 17 
+Equation 12 17 
+Equation 13 18 
+Equation 14 18 
+Equation 15 18 
+Expression 1 18 
+Equation 16 19 
+Equation 17 19 
+Equation 18 19 
+Expression 2 19 
+Equation 19 19 
+Equation 20 19 
+Equation 21 19 
+Equation 22 20 
+Equation 23 20 
+Equation 24 20 
+Equation 25 20 
+Figure 2.2 20 
+Snippet 2.1 21 
+Snippet 2.2 22 
+Snippet 2.3 22

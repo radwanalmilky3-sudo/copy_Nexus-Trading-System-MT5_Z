@@ -1,0 +1,18 @@
+path: _pdfs/_official/boe/boe_wp_trading_blows_tariffs_fx.pdf
+title_guess: Staff Working Paper No. 1,139
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper provides econometric evidence on how exchange rates respond to tariffs. We 
+construct a new tariff-shock database, which captures tariff-related announcements, threats 
+and implementations by the US, China, the euro area and Canada between 2018 and 2020, 
+and in 2025. Our shock measure accounts for both the size of tariff rates and their economic 
+relevance. We show that exchange rates react to US tariff shocks in systematically different 
+ways depending on retaliation: the US dollar (USD) appreciates if the tariff is imposed 
+unilaterally, but depreciates if other countries retaliate. This empirical pattern resonates 
+with the predictions of recent open-macro models with dominant currency pricing. In light 
+of our evidence and drawing on theory, we conclude that the USD depreciation following 
+the US tariff announcement on 2 April 2025 was not surprising. The spike in long-maturity 
+US Treasury yields was, however, more unprecedented.
+Key words: Exchange rates, event study, retaliation, tariffs.

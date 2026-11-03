@@ -1,0 +1,81 @@
+from __future__ import annotations
+
+from contextlib import asynccontextmanager
+from types import SimpleNamespace
+from unittest.mock import AsyncMock
+
+import pytest
+
+from services.nexus_api.middleware.auth import create_token
+from services.nexus_api.routers import agents
+
+
+@pytest.mark.asyncio
+async def test_agent_evaluation_proxy_attaches_internal_credential(monkeypatch):
+    monkeypatch.setenv("NEXUS_INTERNAL_API_SECRET", "test-agents-secret")
+    post = AsyncMock(return_value=SimpleNamespace(raise_for_status=lambda: None))
+
+    @asynccontextmanager
+    async def fake_client(*args, **kwargs):
+        yield SimpleNamespace(post=post)
+
+    async def allow_permission(*args, **kwargs):
+        return None
+
+    monkeypatch.setattr(agents, "new_client", fake_client)
+    monkeypatch.setattr(agents, "_require", allow_permission)
+
+    await agents.trigger_evaluation(
+        agents.EvaluateRequest(symbol="XAUUSD", timeframe="M15"),
+        actor="test-user",
+        db=object(),
+    )
+
+    assert post.await_args.kwargs["headers"] == {
+        "X-Nexus-Internal-Secret": "test-agents-secret"
+    }
+
+
+def install_fake_agents_client(monkeypatch: pytest.MonkeyPatch) -> AsyncMock:
+    response = SimpleNamespace(raise_for_status=lambda: None)
+    post = AsyncMock(return_value=response)
+
+    @asynccontextmanager
+    async def fake_client(*args, **kwargs):
+        yield SimpleNamespace(post=post)
+
+    monkeypatch.setattr(agents, "new_client", fake_client)
+    return post
+
+
+@pytest.mark.asyncio
+async def test_agent_evaluation_rejects_missing_jwt_before_agents_proxy(
+    api_client,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("NEXUS_JWT_SECRET", "test-jwt-secret-long-enough-for-hs256")
+    post = install_fake_agents_client(monkeypatch)
+
+    response = await api_client.post("/api/agents/evaluate", json={"symbol": "XAUUSD", "timeframe": "M15"})
+
+    assert response.status_code == 401
+    post.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_agent_evaluation_requires_trading_execute_before_agents_proxy(
+    api_client,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("NEXUS_JWT_SECRET", "test-jwt-secret-long-enough-for-hs256")
+    post = install_fake_agents_client(monkeypatch)
+
+    response = await api_client.post(
+        "/api/agents/evaluate",
+        json={"symbol": "XAUUSD", "timeframe": "M15"},
+        headers={"Authorization": f"Bearer {create_token('unprivileged-user')}"},
+    )
+
+    assert response.status_code == 403
+    assert response.json() == {"detail": "permission required: trading.execute"}
+    post.assert_not_awaited()

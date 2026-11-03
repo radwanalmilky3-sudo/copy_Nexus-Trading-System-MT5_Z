@@ -1,0 +1,76 @@
+data:
+  provider: csv
+  directory: data/factors_daily
+  symbols:
+    [EURUSD, GBPUSD, USDJPY, USDCHF, AUDUSD, NZDUSD, USDCAD, EURGBP, EURJPY, GBPJPY, AUDJPY, CADJPY]
+  interval: 1d
+  start: "2010-01-01"
+  # Exclusive cutoff. It includes the evaluation tail of the last development fold but ends
+  # before the previously viewed holdout begins on 2025-09-26.
+  end: "2025-09-15"
+  seed: 42
+  synthetic_bars: 5000
+
+costs:
+  default_spread_pips: 0.9
+  spread_pips:
+    EURUSD: 0.7
+    GBPUSD: 0.9
+    USDJPY: 0.8
+    USDCHF: 1.0
+    AUDUSD: 0.9
+    NZDUSD: 1.2
+    USDCAD: 1.0
+    EURGBP: 1.0
+    EURJPY: 1.2
+    GBPJPY: 1.5
+    AUDJPY: 1.4
+    CADJPY: 1.5
+  slippage_pips: 0.15
+  commission_per_million: 35.0
+
+risk:
+  initial_equity: 100000
+  risk_per_trade: 0.0025
+  max_portfolio_risk: 0.0125
+  max_open_positions: 5
+  max_gross_leverage: 3.0
+  max_currency_exposure: 1.5
+  max_correlated_positions: 2
+  correlation_threshold: 0.80
+  correlation_lookback: 120
+  max_drawdown: 0.12
+  daily_loss_limit: 0.025
+  max_reward_risk: 0.85
+  max_holding_hours: 168
+  unit_step: 1000
+  min_units: 1000
+  close_before_weekend: false
+
+factor:
+  target_atr: 0.70
+  stop_atr: 1.10
+  max_holding_hours: 120
+  train_bars: 1500
+  test_bars: 400
+  step_bars: 400
+  embargo_bars: 5
+  holdout_bars: 0
+  minimum_train_samples: 5000
+  minimum_expected_net_r: 0.03
+  cost_buffer_r: 0.02
+  minimum_direction_gap: 0.03
+  max_signals_per_timestamp: 3
+  max_features: 32
+  maximum_feature_correlation: 0.90
+  minimum_feature_coverage: 0.80
+  bootstrap_samples: 1000
+  bootstrap_block_bars: 20
+  factor_fdr_level: 0.10
+  require_fdr_significance: true
+  model_c: 0.10
+  model_l1_ratio: 0.15
+  calibration_fraction: 0.20
+  minimum_calibration_samples: 1000
+  random_state: 42
+  output_directory: outputs/factors_daily_round2_fdr_dev

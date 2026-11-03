@@ -1,0 +1,25 @@
+path: _pdfs/_validation/arxiv_1303_4314_carry.pdf
+title_guess: arXiv:1303.4314v3 [q-fin.ST] 12 Jan 2014
+ids: 
+priority: warm
+extract_status: ok
+---
+The currency carry trade is the investment strategy that involve s selling low interest rate currencies in order to
+purchase higher interest rate currencies, thus proﬁting from th e interest rate diﬀerentials. This is a well known
+ﬁnancial puzzle to explain, since assuming foreign exchange risk is un inhibited and the markets have rational
+risk-neutral investors, then one would not expect proﬁts from s uch strategies. That is uncovered interest rate
+parity (UIP), the parity condition in which exposure to foreign exch ange risk, with unanticipated changes in
+exchange rates, should result in an outcome that changes in the ex change rate should oﬀset the potential to
+proﬁt from such interest rate diﬀerentials. The two primary assum ptions required for interest rate parity are
+related to capital mobility and perfect substitutability of domestic a nd foreign assets. Given foreign exchange
+market equilibrium, the interest rate parity condition implies that the expected return on domestic assets will
+equal the exchange rate-adjusted expected return on foreign currency assets.
+However, it has been shown empirically, that investors can actually e arn arbitrage proﬁts by borrowing in
+a country with a lower interest rate, exchanging for foreign curre ncy, and investing in a foreign country with a
+higher interest rate, whilst allowing for any losses (or gains) from ex changing back to their domestic currency
+at maturity. Therefore trading strategies that aim to exploit the in terest rate diﬀerentials can be proﬁtable on
+average. The intention of this paper is therefore to reinterpret t he currency carry trade puzzle in light of heavy
+tailed marginal models coupled with multivariate tail dependence feat ures in the analysis of the risk-reward for
+the currency portfolios with high interest rate diﬀerentials and low in terest rate diﬀerentials. To achieve this
+analysis of the multivariate extreme tail dependence we develop sev eral parametric models and perform detailed
+model comparison.

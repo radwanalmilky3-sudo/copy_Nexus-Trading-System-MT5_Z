@@ -1,0 +1,55 @@
+path: _pdfs/_fed/liao_ifdp1255_credit_migration_cip.pdf
+title_guess: Credit Migration and Covered Interest Rate Parity
+ids: ifdp1255
+priority: warm
+extract_status: ok
+---
+Please cite paper as: 
+Liao, Gordon Y. (2019). Credit Migration and Covered Interest 
+Rate Parity. International Finance Discussion Papers 1255. 
+ 
+https://doi.org/10.17016/IFDP.2019.1255 
+ 
+ 
+ 
+ 
+ 
+ 
+Board of Governors of the Federal Reserve System 
+ 
+International Finance Discussion Papers 
+ 
+Number 1255 
+ 
+August 2019 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Credit Migration and Covered Interest Rate Parity 
+ 
+Gordon Y. Liao 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+NOTE: International Finance Discussion Papers are preliminary materials circulated to stimulate 
+discussion and critical comment. References to International Finance Discussion Papers (other 
+than an acknowledgment that the writer has had access to unpublished material) should be 
+cleared with the author or authors. Recent IFDPs are available on the Web at 
+w

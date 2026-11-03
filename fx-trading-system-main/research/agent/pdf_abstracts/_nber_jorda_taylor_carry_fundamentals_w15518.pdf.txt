@@ -1,0 +1,18 @@
+path: _pdfs/_nber/jorda_taylor_carry_fundamentals_w15518.pdf
+title_guess: THE CARRY TRADE AND FUNDAMENTALS:
+ids: w15518
+priority: warm
+extract_status: ok
+---
+RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+November 2009
+Taylor has been supported by the Center for the Evolution of the Global Economy at UC Davis and
+Jorda by DGCYT Grant (SEJ2007-63098-econ); part of this work was completed whilst Taylor was
+a Houblon-Norman/George Fellow at the Bank of England; all of this research support is gratefully
+acknowledged. We thank Travis Berge and Yanping Chong for excellent research assistance. We acknowledge
+helpful comments from Vineer Bhansali, Richard Meese, Michael Melvin, Stefan Nagel, Michael
+Sager, Mark Taylor, and seminar participants at The Bank of England, Barclays Global Investors,
+London Business School, London School of Economics, the 3rd annual JIMF-SCCIE conference,
+the NBER IFM program meeting, and PIMCO. All errors are ours. 

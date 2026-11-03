@@ -1,0 +1,16 @@
+path: _pdfs/_official/boe/boe_wp_fx_funding_shocks_cross_border.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper provides novel empirical evidence on the effect of dislocations in FX swap markets 
+(‘CIP deviations’) on bank lending. Using balance sheet data from UK banks we show that when the cost 
+of obtaining swap-based funds in a particular foreign currency increases, banks reduce the supply of 
+cross-border credit in that currency. This effect is increasing in the degree of banks’ reliance on swap-based 
+FX funding. Notably, high access to alternative funding sources of (on balance sheet) FX funding shield 
+banks’ cross-border FX lending supply from the described channel, but only if such access occurs via 
+internal capital markets. There is evidence of some degree of substitution from banks outside the UK which 
+are not affected by changes in the cost of accessing dollars or euros synthetically.
+Key words: Cross-border bank lending, covered interest rate parity deviations, FX swaps, internal capital 
+markets.

@@ -1,0 +1,10 @@
+{
+  "operations": [
+    {"id": "nexus-risk", "set": {"security": 80}, "reason": "إعادة تطبيق بعد rollup: البوابة أثبتت الاختبارات فقط — security غير مثبت حيًّا (W3_TRUTH flag)"},
+    {"id": "nexus-executor", "set": {"security": 75}, "reason": "إعادة تطبيق بعد rollup: ملاحظات الصف تعترف «لم يُختبر على MT5 حي»"},
+    {"id": "nexus-monitor", "set": {"security": 80}, "reason": "إعادة تطبيق بعد rollup: security=88 يتجاوز ما تثبته البوابة (اختبارات فقط)"},
+    {"id": "nexus-ml", "set": {"tests": 72, "ml": 72}, "reason": "إعادة تطبيق بعد rollup: لا دليل تشغيلي/تدريب؛ العمل غير ملتزم في git"},
+    {"id": "nexus-agents", "set": {"tests": 80}, "reason": "إعادة تطبيق بعد rollup: دفعة 27 ملفًا + الباقة خضراء — القيمة72 منخفضة بلا مبرر"},
+    {"id": "frontend", "set": {"tests": 72, "security": 75}, "reason": "إعادة تطبيق بعد rollup: tsc PASS + إعادة بناء الشاشة؛ security محدود بغياب E2E حي"}
+  ]
+}

@@ -1,0 +1,17 @@
+path: _pdfs/_nber/berge_jorda_taylor_currency_carry_trades_w16491.pdf
+title_guess: CURRENCY CARRY TRADES
+ids: w16491
+priority: warm
+extract_status: ok
+---
+Avenue
+Cambridge, MA 02138
+October 2010
+Paper presented at the NBER International Seminar on Macroeconomics, Amsterdam, June 2010.
+Taylor has been supported by the Center for the Evolution of the Global Economy at UC Davis and
+Jordà by DGCYT Grant (SEJ2007-63098-econ); part of this work was completed whilst Taylor was
+a Houblon-Norman/George Fellow at the Bank of England; all of this research support is gratefully
+acknowledged. We thank Craig Burnside for sharing his data on risk factors with us. We acknowledge
+helpful comments from our discussants Robert Cumby and Mark Taylor, and from participants at the
+ISOM meeting, and we thank De Nederlandsche Bank for their efficient organization and warm hospitality.
+All errors are ours. The views expressed herein are those of the authors and do no

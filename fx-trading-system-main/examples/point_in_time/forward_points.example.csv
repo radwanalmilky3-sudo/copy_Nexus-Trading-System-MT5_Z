@@ -1,0 +1,7 @@
+observation_time,available_time,symbol,forward_points_1m,forward_points_3m,spot_reference,source,provenance,quote_quality
+2025-01-31T16:00:00Z,2025-01-31T16:00:01Z,EURUSD,0.00165,0.00492,1.0390,example_only,illustrative_not_market_data,unknown_unverified
+2025-01-31T16:00:00Z,2025-01-31T16:00:01Z,GBPUSD,0.00008,0.00025,1.2400,example_only,illustrative_not_market_data,unknown_unverified
+2025-01-31T16:00:00Z,2025-01-31T16:00:01Z,USDJPY,-0.52000,-1.55000,154.20,example_only,illustrative_not_market_data,unknown_unverified
+2025-03-31T16:00:00Z,2025-03-31T16:00:01Z,EURUSD,0.00172,0.00510,1.0810,example_only,illustrative_not_market_data,unknown_unverified
+2025-03-31T16:00:00Z,2025-03-31T16:00:01Z,GBPUSD,0.00012,0.00035,1.2920,example_only,illustrative_not_market_data,unknown_unverified
+2025-03-31T16:00:00Z,2025-03-31T16:00:01Z,USDJPY,-0.49000,-1.47000,149.80,example_only,illustrative_not_market_data,unknown_unverified

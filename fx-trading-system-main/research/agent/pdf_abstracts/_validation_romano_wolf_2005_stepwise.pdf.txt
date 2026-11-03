@@ -1,0 +1,21 @@
+path: _pdfs/_validation/romano_wolf_2005_stepwise.pdf
+title_guess: Stepwise Multiple Testing as Formalized Data Snooping
+ids: 
+priority: warm
+extract_status: ok
+---
+It is common in econometric applications that several hypot hesis tests are carried out at the
+same time. The problem then becomes how to decide which hypot heses to reject, accounting
+for the multitude of tests. This paper suggests a stepwise mu ltiple testing procedure which
+asymptotically controls the familywise error rate at a desi red level. Compared to related single-
+step methods, the procedure is more powerful in the sense tha t it often will reject more false
+hypotheses. In addition, we advocate the use of studentizat ion when it is feasible. Unlike some
+stepwise methods, the method implicitly captures the joint dependence structure of the test
+statistics, which results in increased ability to detect al ternative hypotheses. We prove asymptotic
+control of the familywise error rate under minimal assumpti ons. The methodology is presented in
+the context of comparing several strategies to a common benc hmark and deciding which strategies
+actually beat the benchmark. However, our ideas can easily b e extended and/or modiﬁed to
+other contexts, such as making inference for the individual regression coeﬃcients in a multiple
+regression framework. Some simulation studies show the imp rovements of our methods over
+previous proposals. We also provide an application to a set o f real data.
+KEY WORDS: Bootstrap, data snooping, familywise error, mul tiple testing, stepwise method.

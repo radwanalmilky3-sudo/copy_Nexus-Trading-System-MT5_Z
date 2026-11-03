@@ -1,0 +1,23 @@
+path: _pdfs/_arxiv/order_flow_dl_rl_fx_2311.02088.pdf
+title_guess: COMBINING DEEP LEARNING ON ORDER BOOKS WITH
+ids: 
+priority: warm
+extract_status: ok
+---
+High-frequency trading is prevalent, where automated decisions must be made quickly to
+take advantage of price imbalances and patterns in price action that forecast near-future
+movements. While many algorithms have been explored and tested, analytical methods fail
+to harness the whole nature of the market environment by focusing on a limited domain.
+With the evergrowing machine learning field, many large-scale end-to-end studies on
+raw data have been successfully employed to increase the domain scope for profitable
+trading but are very difficult to replicate. Combining deep learning on the order books with
+reinforcement learning is one way of breaking down large-scale end-to-end learning into
+more manageable and lightweight components for reproducibility , suitable for retail trading.
+The following work focuses on forecasting returns across multiple horizons using order
+flow imbalance and training three temporal-difference learning models for five financial
+instruments to provide trading signals. The instruments used are two foreign exchange pairs
+(GBPUSD and EURUSD), two indices (DE40 and FTSE100), and one commodity (XAUUSD).
+The performances of these 15 agents are evaluated through backtesting simulation, and
+successful models proceed through to forward testing on a retail trading platform. The
+results prove potential but require further minimal modifications for consistently profitable
+trading to fully handle retail trading costs, slippage, and spread fluctuation.

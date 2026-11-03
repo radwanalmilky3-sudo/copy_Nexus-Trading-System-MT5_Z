@@ -1,0 +1,33 @@
+path: _pdfs/_arxiv/uip_carry_segmented_2512.09687.pdf
+title_guess: Unconsciously Forget: Mitigating Memorization
+ids: 
+priority: warm
+extract_status: ok
+---
+Recent advances in generative models have demonstrated an
+exceptional ability to produce highly realistic images. How-
+ever, previous studies show that generated images often re-
+semble the training data, and this problem becomes more se-
+vere as the model size increases. Memorizing training data
+can lead to legal challenges, including copyright infringe-
+ment, violations of portrait rights, and trademark violations.
+Existing approaches to mitigating memorization mainly fo-
+cus on manipulating the denoising sampling process to steer
+image embeddings away from the memorized embedding
+space or employ unlearning methods that require training
+on datasets containing specific sets of memorized concepts.
+However, existing methods often incur substantial computa-
+tional overhead during sampling, or focus narrowly on re-
+moving one or more groups of target concepts, imposing a
+significant limitation on their scalability. To understand and
+mitigate these problems, our work,UniF orget, offers a new
+perspective on understanding the root cause of memorization.
+Our work demonstrates that specific parts of the model are
+responsible for copyrighted content generation. By applying
+model pruning, we can effectively suppress the probability
+of generating copyrighted content without targeting specific
+concepts while preserving the general generative capabilities
+of the model. Additionally, we show that our approach is both
+orthogonal and complementary to existing unlearning meth-
+ods, thereby highlighting its potential to improve current un-
+learning and de-memorization techniques.

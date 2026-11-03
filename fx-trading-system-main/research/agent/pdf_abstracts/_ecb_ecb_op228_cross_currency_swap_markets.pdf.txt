@@ -1,0 +1,8 @@
+path: _pdfs/_ecb/ecb_op228_cross_currency_swap_markets.pdf
+title_guess: Occasional Paper Series
+ids: 
+priority: warm
+extract_status: ok
+---
+2 
+Executive summary 3

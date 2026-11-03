@@ -1,0 +1,56 @@
+path: _pdfs/_fed/ifdp1253_us_equity_tail_currency_premia.pdf
+title_guess: US Equity Tail Risk and Currency Risk Premia
+ids: ifdp1253
+priority: warm
+extract_status: ok
+---
+Number 1253 
+July 2019 
+Please cite paper as: 
+Fan, Zhenzhen, Juan M. Londono, and Xiao Xiao (2019). US 
+Equity Tail Risk and Currency Risk Premia. International 
+Finance Discussion Papers 1253. 
+ 
+https://doi.org/10.17016/IFDP.2019.1253 
+ 
+ 
+ 
+ 
+ 
+Board of Governors of the Federal Reserve System 
+ 
+International Finance Discussion Papers 
+ 
+Number 1253 
+ 
+July 2019 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+US Equity Tail Risk and Currency Risk Premia 
+ 
+Zhenzhen Fan, Juan M. Londono, and Xiao Xiao 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+NOTE: International Finance Discussion Papers are preliminary materials circulated to stimulate 
+discussion and critical comment. References to International Finance Discussion Papers (other 
+than an acknowledgment that the writer has had access to unpublished material) should be 
+cleared 

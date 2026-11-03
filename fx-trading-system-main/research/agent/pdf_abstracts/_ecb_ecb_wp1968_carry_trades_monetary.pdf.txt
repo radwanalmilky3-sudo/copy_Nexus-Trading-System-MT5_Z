@@ -1,0 +1,16 @@
+path: _pdfs/_ecb/ecb_wp1968_carry_trades_monetary.pdf
+title_guess: Revised December 2021
+ids: 
+priority: hot
+extract_status: ok
+---
+This paper investigates the relation between monetary conditions and the 
+excess returns arising from currency carry trades. The results indicate that 
+carry trade average return, Sharpe ratio and downside risk diﬀer substantially 
+across monetary conditions before the onset of the ﬁnancial crisis in 2008. 
+Speciﬁcally, expansive policy shifts in the US result in a decrease in inter-
+national risk aversion, which in turn leads to a compression in currency risk 
+premia and higher carry trade returns. By contrast, Fed monetary policy is not 
+able to aﬀect international risk aversion and carry trade returns during the 
+crisis and Zero Lower Bound (ZLB) period, when the economic recession 
+reduced the propensity of investors to take on risk exposures.

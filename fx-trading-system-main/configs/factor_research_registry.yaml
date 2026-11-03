@@ -1,0 +1,583 @@
+schema_version: 1
+registry_date: 2026-07-16
+market_history_previously_inspected_through: 2026-07-13
+fresh_forward_required: true
+
+references:
+  - id: currency_risk_factors
+    title: Common Risk Factors in Currency Markets
+    url: https://doi.org/10.1093/rfs/hhr068
+    evidence_role: factor
+  - id: currency_momentum
+    title: Currency Momentum Strategies
+    url: https://doi.org/10.1016/j.jfineco.2012.06.009
+    evidence_role: factor
+  - id: time_series_momentum
+    title: Time Series Momentum
+    url: https://doi.org/10.1016/j.jfineco.2011.11.003
+    evidence_role: factor
+  - id: currency_value
+    title: Currency Value
+    url: https://doi.org/10.1093/rfs/hhw067
+    evidence_role: factor
+  - id: fx_volatility_carry
+    title: Carry Trades and Global Foreign Exchange Volatility
+    url: https://doi.org/10.1111/j.1540-6261.2012.01728.x
+    evidence_role: factor
+  - id: carry_crashes
+    title: Carry Trades and Currency Crashes
+    url: https://doi.org/10.1086/593088
+    evidence_role: factor
+  - id: commodity_carry
+    title: "Commodity Trade and the Carry Trade: A Tale of Two Countries"
+    url: https://doi.org/10.1111/jofi.12546
+    evidence_role: factor
+  - id: oil_fx_forecast
+    title: Can Oil Prices Forecast Exchange Rates?
+    url: https://doi.org/10.1016/j.jimonfin.2015.03.001
+    evidence_role: factor
+  - id: fx_intraday_patterns
+    title: Intraday Patterns in FX Returns and Order Flow
+    url: https://doi.org/10.1111/jmcb.12032
+    evidence_role: market_microstructure
+  - id: fx_fix_returns
+    title: Foreign Exchange Fixings and Returns around the Clock
+    url: https://doi.org/10.1111/jofi.13306
+    evidence_role: market_microstructure
+  - id: london_fix_hedging
+    title: Equity Hedging and Exchange Rates at the London 4 p.m. Fix
+    url: https://doi.org/10.1016/j.finmar.2014.11.001
+    evidence_role: market_microstructure
+  - id: fx_liquidity
+    title: "Liquidity in the Foreign Exchange Market: Measurement, Commonality, and Risk Premiums"
+    url: https://doi.org/10.1111/jofi.12053
+    evidence_role: market_microstructure
+  - id: macro_fx_discovery
+    title: "Micro Effects of Macro Announcements: Real-Time Price Discovery in Foreign Exchange"
+    url: https://doi.org/10.1257/000282803321455151
+    evidence_role: market_microstructure
+  - id: technical_data_snooping
+    title: "Technical Trading-Rule Profitability, Data Snooping, and Reality Check"
+    url: https://doi.org/10.1353/mcb.2007.0006
+    evidence_role: validation
+  - id: fdr_original
+    title: Controlling the False Discovery Rate
+    url: https://doi.org/10.1111/j.2517-6161.1995.tb02031.x
+    evidence_role: validation
+  - id: fdr_dependent
+    title: The Control of the False Discovery Rate in Multiple Testing under Dependency
+    url: https://doi.org/10.1214/aos/1013699998
+    evidence_role: validation
+  - id: stationary_bootstrap
+    title: The Stationary Bootstrap
+    url: https://doi.org/10.1080/01621459.1994.10476870
+    evidence_role: validation
+  - id: empirical_p_values
+    title: Permutation P-values Should Never Be Zero
+    url: https://doi.org/10.2202/1544-6115.1585
+    evidence_role: validation
+  - id: white_reality_check
+    title: A Reality Check for Data Snooping
+    url: https://doi.org/10.1111/1468-0262.00152
+    evidence_role: validation
+  - id: hansen_spa
+    title: A Test for Superior Predictive Ability
+    url: https://doi.org/10.1198/073500105000000063
+    evidence_role: validation
+  - id: deflated_sharpe
+    title: The Deflated Sharpe Ratio
+    url: https://doi.org/10.3905/jpm.2014.40.5.094
+    evidence_role: validation
+  - id: factor_zoo
+    title: "Taming the Factor Zoo: A Test of New Factors"
+    url: https://doi.org/10.1111/jofi.12883
+    evidence_role: validation
+  - id: replication_crisis
+    title: Is There a Replication Crisis in Finance?
+    url: https://doi.org/10.1111/jofi.13249
+    evidence_role: validation
+  - id: world_bank_commodities
+    title: World Bank Commodity Markets and Pink Sheet
+    url: https://www.worldbank.org/en/research/commodity-markets
+    evidence_role: data
+  - id: nyfed_gscpi
+    title: New York Fed Global Supply Chain Pressure Index
+    url: https://www.newyorkfed.org/research/policy/gscpi
+    evidence_role: data
+  - id: phillyfed_rtdsm
+    title: Federal Reserve Bank of Philadelphia Real-Time Data Set for Macroeconomists
+    url: https://www.philadelphiafed.org/surveys-and-data/real-time-data-research
+    evidence_role: data
+  - id: structured_external_interaction_controls
+    title: Structured external interaction validation contract
+    url: https://doi.org/10.1214/aos/1013699998
+    evidence_role: validation
+  - id: global_epu
+    title: Global Economic Policy Uncertainty Index
+    url: https://www.policyuncertainty.com/global_monthly.html
+    evidence_role: data
+  - id: geopolitical_risk
+    title: Caldara-Iacoviello Geopolitical Risk Index
+    url: https://www.matteoiacoviello.com/gpr.htm
+    evidence_role: data
+  - id: cftc_tff
+    title: CFTC Traders in Financial Futures Historical Compressed Data
+    url: https://www.cftc.gov/MarketReports/CommitmentsofTraders/HistoricalCompressed/index.htm
+    evidence_role: data
+
+search_history:
+  - id: daily_barrier_v1
+    track: intraday
+    status: completed
+    method: Elastic-net barrier classifier with four development folds and one viewed holdout
+    data_source: Yahoo daily midpoint
+    inspected_start: 2010-01-01
+    inspected_end: 2026-07-13
+    unique_factor_definitions: 51
+    fold_level_hypothesis_tests: 0
+    factor_outcome_evaluations: 255
+    artifact_path: outputs/factors_daily_final/factor_catalog.csv
+    artifact_sha256: 62a4f9251e501bd60ada5f2de567b125ea6dd73d26e0bdcf515d6e6dfc5b6188
+    inference_result: rejected
+    notes: The viewed holdout was negative; this market history can never become untouched again.
+  - id: daily_paired_fdr_v2
+    track: intraday
+    status: completed
+    method: Paired directional/regime block bootstrap with BH FDR in four folds
+    data_source: Yahoo daily midpoint
+    inspected_start: 2010-01-01
+    inspected_end: 2025-09-14
+    unique_factor_definitions: 63
+    fold_level_hypothesis_tests: 252
+    factor_outcome_evaluations: 252
+    artifact_path: outputs/factors_daily_round2_fdr_dev/oos_factor_statistics_by_fold.csv
+    artifact_sha256: 532b0c5cf49fcc553e1c8b4df0a64833bd8219ebfe20b4d16d8ee39038e609d0
+    inference_result: rejected
+    notes: All four folds had zero FDR-eligible factors.
+  - id: slow_horizon_v1_invalid
+    track: slow
+    status: invalidated
+    method: Daily overlapping labels and mis-scaled bootstrap block; retained as disclosure only
+    data_source: Yahoo daily midpoint plus free external references
+    inspected_start: 2006-06-01
+    inspected_end: 2026-07-13
+    unique_factor_definitions: 35
+    fold_level_hypothesis_tests: 1050
+    factor_outcome_evaluations: 1050
+    artifact_path: outputs/long_horizon_free_validation/manifest.json
+    artifact_sha256: 98c016dad3b0839ad32dcb57ac3e7d03eea97c0b7cc8079da3de6862c0683a52
+    inference_result: invalidated_but_data_inspected
+    notes: Invalid methodology does not erase the fact that outcomes were viewed.
+  - id: slow_horizon_v2_low_resolution
+    track: slow
+    status: invalidated
+    method: 21-day rebalance and corrected block units, but only 1000 bootstrap resamples
+    data_source: Yahoo daily midpoint plus free external references
+    inspected_start: 2006-06-01
+    inspected_end: 2026-07-13
+    unique_factor_definitions: 37
+    fold_level_hypothesis_tests: 555
+    factor_outcome_evaluations: 555
+    artifact_path: outputs/research_history/slow_horizon_v2_1000_bootstrap_summary.json
+    artifact_sha256: 5f623d5cdc62ac48618f077cccbda730772aab115fb3846c60653147b33f2af4
+    inference_result: invalidated_but_data_inspected
+    notes: 1000 resamples cannot resolve the first BH threshold for 111 hypotheses.
+  - id: slow_horizon_v3_resolved
+    track: slow
+    status: completed
+    method: 21-day rebalance, 63-day block, 20000 bootstrap resamples, and BH FDR
+    data_source: Yahoo daily midpoint plus free external references
+    inspected_start: 2006-06-01
+    inspected_end: 2026-07-13
+    unique_factor_definitions: 37
+    fold_level_hypothesis_tests: 555
+    factor_outcome_evaluations: 555
+    artifact_path: outputs/long_horizon_free_screen_v3/screen_summary.json
+    artifact_sha256: 9246ddc64d47a811005c0ab2744efe03e79f5fa16ffee179a6321f57ba426328
+    inference_result: rejected
+    notes: Only two non-directional 63-day risk-state tests selected in fold zero; both reversed sign OOS.
+  - id: slow_horizon_v4_preregistered
+    track: slow
+    status: completed
+    method: 21-day rebalance, 63-day block, 20000 bootstrap resamples, BH FDR, and six preregistered supplemental factors
+    data_source: Yahoo daily midpoint plus free external references and preserved GSCPI vintages
+    inspected_start: 2006-06-01
+    inspected_end: 2026-07-13
+    unique_factor_definitions: 43
+    fold_level_hypothesis_tests: 645
+    factor_outcome_evaluations: 645
+    artifact_path: outputs/long_horizon_free_screen_v4/screen_summary.json
+    artifact_sha256: 204d785e41e39a6e408ba1a61b67815fd02a588a86689a7a96111e3e73dcea5e
+    inference_result: rejected
+    notes: No directional factor selected; the same two fold-zero 63-day risk-state tests selected as v3 and both reversed sign OOS. The new factor outcomes are now viewed and require fresh forward evidence.
+  - id: price_only_round1_20260717
+    track: slow
+    status: invalidated
+    method: time_series_panel_price_only_16f_3h_bh_fdr
+    data_source: dukascopy_bid_ask_eurusd_gbpusd_cache_audit_1794_common_sessions
+    inspected_start: 2016-01-05
+    inspected_end: 2025-09-12
+    unique_factor_definitions: 16
+    fold_level_hypothesis_tests: 192
+    factor_outcome_evaluations: 192
+    artifact_path: outputs/price_only_round1_20260717/screen_summary.json
+    artifact_sha256: 2b1c330a3c4b06e4f92c4fe515d2de9f16d477e2d79d955c11a83a619437cc5c
+    inference_result: invalidated_but_data_inspected
+    notes: "Independent review (2026-07-21) invalidated this round. Three contract violations: (1) label temporal order violated for 2 rows but run did not halt; (2) OOS materialized for whole catalog (192) not only train-selected (11) - freeze contract broken, 181 undisclosed exposures; (3) per-horizon OOS labels cross test_end_exclusive (21d 8 / 42d 16 / 63d 24 spill rows). OOS sample structurally insufficient (~10 rebalance points/fold/symbol) so all OOS IC collapsed to 0.0 = insufficient_valid_oos_evidence, NOT empirical disproof. Contract-fix code applied forward-looking (time-gate halt, OOS-selected-only, per-horizon spill gate); original artifacts retained as invalidated record. approved_strategy=false, trading_approval=false, fresh_forward_required=true."
+  - id: structured_external_interaction_preregistration_20260723
+    track: slow
+    status: completed
+    method: Outcome-blind PIT price-state interaction design with four formal and four matched-shadow hypotheses
+    data_source: structured_external_feature_package_20260723 plus preregistered EURUSD/GBPUSD price anchors
+    inspected_start: 2016-01-01
+    inspected_end: 2026-07-13
+    unique_factor_definitions: 4
+    fold_level_hypothesis_tests: 0
+    factor_outcome_evaluations: 0
+    artifact_path: docs/STRUCTURED_EXTERNAL_INTERACTION_PREREGISTRATION_DRAFT_ZH.md
+    artifact_sha256: f13b66f9557cee1a843514a16fff13a1429943d132f7e3f88ad75dfeb681cffd
+    inference_result: software_only
+    notes: Preparation only. The design, PIT join, ECDF, complete-date mask, purge and 8-hypothesis BH family are registered; return labels remain closed until independent authorization.
+
+amendments:
+  - id: local_paper_contract_correction_20260716
+    hypothesis_id: intraday_local_session_exact
+    amended_at: 2026-07-16T04:21:16+08:00
+    market_data_cutoff: 2026-07-13
+    market_outcomes_inspected_since_registration: false
+    reason: >-
+      Full-text verification of Breedon and Ranaldo was completed before any Dukascopy
+      outcomes were read. Table 2 is a 12-unit pair-session panel, applies an open-to-open
+      endpoint when the later market opens before the first closes, includes holidays when
+      quotes exist, applies pair-specific UTC weekend boundaries, and does not define a
+      six-pair portfolio.
+    changes:
+      - Replace the full-session replica with the paper's fixed 12 pair-session units and its open-to-open overlap rule.
+      - Keep every supplied natural date visible and include holidays with qualifying quotes, but require both unit boundaries to fall inside the paper's pair-specific UTC working week.
+      - For EURUSD, GBPUSD, and USDCHF exclude Saturday 00:00--Sunday 00:00 UTC; for USDJPY, EURJPY, and AUDUSD exclude Saturday 00:00--18:00 UTC.
+      - Use the last prevailing bid and ask at or before each boundary within five seconds; executable bid/ask is primary and midquote is secondary.
+      - Treat the complete six-pair portfolio as a separately labelled project extension with six fixed one-sixth sleeves, all 12 units required, and no missing-leg renormalization.
+      - Use Europe/London as the IANA implementation of the paper's Dublin-equivalent clock and follow the stated base-versus-counter direction rule for EURJPY despite the paper table's sign inconsistency.
+    evidence_reference_ids: [fx_intraday_patterns, fx_liquidity]
+
+hypotheses:
+  - id: slow_external_interaction_momentum_cpi
+    track: slow
+    family: external_interaction
+    directional: true
+    formula: two-sided interaction gamma between momentum_252d_skip_21d and us_cpi_12m_log_inflation for 63d directional return, with main effects and event nuisance controls
+    expected_sign: two_sided_interaction
+    horizons: [63d]
+    data_dependencies: [structured_external_feature_package, dukascopy_price_anchors]
+    reference_ids: [phillyfed_rtdsm, structured_external_interaction_controls]
+    registered_at: 2026-07-23T09:00:00+08:00
+    registration_time_quality: exact_recorded
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: No coefficient sign is predicted; formal family INT-01. Labels are not opened by registration.
+  - id: slow_external_interaction_momentum_ip
+    track: slow
+    family: external_interaction
+    directional: true
+    formula: two-sided interaction gamma between momentum_252d_skip_21d and us_ip_6m_log_growth for 63d directional return, with main effects and event nuisance controls
+    expected_sign: two_sided_interaction
+    horizons: [63d]
+    data_dependencies: [structured_external_feature_package, dukascopy_price_anchors]
+    reference_ids: [phillyfed_rtdsm, structured_external_interaction_controls]
+    registered_at: 2026-07-23T09:00:00+08:00
+    registration_time_quality: exact_recorded
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: No coefficient sign is predicted; formal family INT-02. Labels are not opened by registration.
+  - id: slow_external_interaction_vol_cpi
+    track: slow
+    family: external_interaction
+    directional: false
+    formula: two-sided interaction gamma between vol_ratio_21_126 and us_cpi_12m_log_inflation for 21d absolute return, with main effects and event nuisance controls
+    expected_sign: two_sided_interaction
+    horizons: [21d]
+    data_dependencies: [structured_external_feature_package, dukascopy_price_anchors]
+    reference_ids: [phillyfed_rtdsm, structured_external_interaction_controls]
+    registered_at: 2026-07-23T09:00:00+08:00
+    registration_time_quality: exact_recorded
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Risk-state interaction only; no directional claim and no coefficient sign prediction. Formal family INT-03.
+  - id: slow_external_interaction_vol_ip
+    track: slow
+    family: external_interaction
+    directional: false
+    formula: two-sided interaction gamma between vol_ratio_21_126 and us_ip_6m_log_growth for 21d absolute return, with main effects and event nuisance controls
+    expected_sign: two_sided_interaction
+    horizons: [21d]
+    data_dependencies: [structured_external_feature_package, dukascopy_price_anchors]
+    reference_ids: [phillyfed_rtdsm, structured_external_interaction_controls]
+    registered_at: 2026-07-23T09:00:00+08:00
+    registration_time_quality: exact_recorded
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Risk-state interaction only; no directional claim and no coefficient sign prediction. Formal family INT-04.
+  - id: slow_commodity_currency_alignment
+    track: slow
+    family: commodity
+    directional: true
+    formula: pair_score = commodity_score(base) - commodity_score(quote); CAD=oil_12m_z, AUD=metals_12m_z, NZD=agriculture_12m_z, JPY=-energy_12m_z, other currencies=0
+    expected_sign: positive
+    horizons: [21d, 42d, 63d]
+    data_dependencies: [world_bank_pink_sheet, fx_spot]
+    reference_ids: [commodity_carry, oil_fx_forecast, world_bank_commodities]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Preserve currency-leg antisymmetry; USD-denominated commodity endogeneity is a limitation.
+  - id: slow_value_trend_agreement
+    track: slow
+    family: value_trend
+    directional: true
+    formula: score = 0.5 * (cs_rank(reer_value_60m) + cs_rank(momentum_252d_skip_21d)) when both centered ranks have the same sign, else 0
+    expected_sign: positive
+    horizons: [42d, 63d]
+    data_dependencies: [bis_reer_current_vintage, fx_spot]
+    reference_ids: [currency_value, currency_momentum, time_series_momentum]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Cross-sectional ranks and agreement gate are fitted without outcomes; macro history remains current-vintage.
+  - id: slow_positioning_crowding_reversal
+    track: slow
+    family: positioning
+    directional: true
+    formula: score = -sign(momentum_63d) * abs(cftc_leveraged_z_156) when momentum and leveraged positioning signs agree and abs(z)>=1, else 0
+    expected_sign: positive
+    horizons: [21d, 42d]
+    data_dependencies: [cftc_tff_with_conservative_release, fx_spot]
+    reference_ids: [carry_crashes, cftc_tff]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: The threshold is frozen; approximate release history and the current revised historical archive (not an as-published vintage) both prevent strict promotion.
+  - id: slow_global_policy_uncertainty_risk
+    track: slow
+    family: risk
+    directional: false
+    formula: regime = expanding_zscore(log(GEPU_CURRENT), 60m); predict absolute forward return only
+    expected_sign: risk_state_only
+    horizons: [21d, 42d, 63d]
+    data_dependencies: [global_epu_current_vintage]
+    reference_ids: [global_epu, fx_volatility_carry]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Use only as a risk scaler; current-vintage revisions forbid directional claims.
+  - id: slow_geopolitical_risk_state
+    track: slow
+    family: risk
+    directional: false
+    formula: regime = rolling_zscore(log1p(GPR_GLOBAL), 60m); predict absolute forward return only
+    expected_sign: risk_state_only
+    horizons: [21d, 42d, 63d]
+    data_dependencies: [gpr_current_vintage]
+    reference_ids: [geopolitical_risk, fx_volatility_carry]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Global state is one time-series observation, not twelve independent pair rows.
+  - id: slow_supply_chain_pressure_state
+    track: slow
+    family: risk
+    directional: false
+    formula: regime = GSCPI level plus 6m change; predict absolute forward return only
+    expected_sign: risk_state_only
+    horizons: [21d, 42d]
+    data_dependencies: [nyfed_gscpi_vintages]
+    reference_ids: [nyfed_gscpi, fx_volatility_carry]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: strict_forward_only
+    implementation_notes: Only January 2022 onward has preserved release vintages; earlier history is exploratory.
+  - id: slow_carry_volatility_gate
+    track: slow
+    family: carry
+    directional: true
+    formula: direction = sign(tradable_1m_forward_discount); size = inverse_volatility * indicator(global_fx_vol_innovation_z < 1)
+    expected_sign: positive
+    horizons: [21d, 42d]
+    data_dependencies: [tradable_1m_forward_points, fx_spot_bid_ask]
+    reference_ids: [currency_risk_factors, fx_volatility_carry, carry_crashes]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: deferred_missing_data
+    inference_eligibility: strict_forward_only
+    implementation_notes: Policy and overnight rates are not substitutes; do not implement until real forward data exists.
+  - id: intraday_fix_window_reversal
+    track: intraday
+    family: time_of_day
+    directional: true
+    formula: trade the preregistered post-fix reversal opposite the signed 60m pre-fix move at London 16:00 local; enter after fix window and hold 60m
+    expected_sign: positive
+    horizons: [60m]
+    data_dependencies: [dukascopy_1h_or_ticks, london_timezone_calendar]
+    reference_ids: [fx_fix_returns, fx_intraday_patterns]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: superseded_unevaluated
+    superseded_by: intraday_fix_w_composite
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Apply Europe/London DST and executable bid/ask; the paper overlaps most of 2016-2023.
+  - id: intraday_local_session_depreciation
+    track: intraday
+    family: time_of_day
+    directional: true
+    formula: currency-leg score is negative during that currency's frozen local business session and zero otherwise; pair score is base minus quote
+    expected_sign: positive
+    horizons: [1h, 4h]
+    data_dependencies: [dukascopy_1h, timezone_session_calendar]
+    reference_ids: [fx_intraday_patterns]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: superseded_unevaluated
+    superseded_by: intraday_local_session_exact
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Freeze sessions before evaluation; overlapping sessions and DST are explicit states.
+  - id: intraday_common_liquidity_filter
+    track: intraday
+    family: liquidity
+    directional: false
+    formula: filter = cross-pair median spread zscore plus first principal component of pair spread ranks; block entries above frozen threshold
+    expected_sign: execution_filter_only
+    horizons: [1h, 4h]
+    data_dependencies: [dukascopy_bid_ask, dukascopy_tick_count]
+    reference_ids: [fx_liquidity]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: superseded_unevaluated
+    superseded_by: intraday_entry_spread_filter
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Quote size and tick count are activity proxies, not signed order flow or market-wide volume.
+  - id: intraday_fix_w_composite
+    track: intraday
+    family: time_of_day
+    directional: true
+    formula: R_W = -r(previous 17:00 New_York to 09:55 Tokyo) + r(09:55 Tokyo to 08:00 Berlin) - r(08:00 Berlin to 14:15 Berlin) + r(16:02:30 London to 17:00 New_York); aggregate equal-weight across the frozen G9 USD legs
+    expected_sign: positive
+    horizons: [four_fixed_event_segments]
+    data_dependencies: [dukascopy_ticks_bid_ask, iana_event_calendar, verified_wmr_publication_calendar]
+    reference_ids: [fx_fix_returns, fx_intraday_patterns, fx_liquidity]
+    registered_at: 2026-07-16T02:14:50+08:00
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Gross midquote replication is secondary; the primary verdict uses executable sides and frozen cost scenarios. Every segment opens on the first quote strictly after its boundary within 5 seconds and closes on the last quote at or before its boundary within 5 seconds; this prevents a Friday New York close from using the Sunday reopen.
+  - id: intraday_local_session_exact
+    track: intraday
+    family: time_of_day
+    directional: true
+    formula: >-
+      LOCAL-PAPER contains exactly 12 directed units: EURUSD Europe short and New_York
+      long; USDJPY Tokyo long and New_York short; GBPUSD Europe short and New_York long;
+      EURJPY Europe short and Tokyo long; USDCHF Europe long and New_York short; AUDUSD
+      Sydney short and New_York long. Europe=[07:00,15:00), New_York=[08:00,16:00),
+      Tokyo=[08:00,15:00), Sydney=[10:00,16:00) in IANA local time, except a first session
+      that overlaps the counterpart session closes at the counterpart open (open-to-open).
+      Ordinary crosses exclude Saturday 00:00--Sunday 00:00 UTC; JPY/AUD crosses reopen at
+      Saturday 18:00 UTC. Holidays are not filtered when both boundary quotes exist.
+      LOCAL-PORTFOLIO is a project extension: compound each pair's two executable unit
+      returns inside a fixed one-sixth sleeve, hold cash between its windows, then sum the
+      six sleeve PnLs; all 12 units are required and missing units are never renormalized.
+    expected_sign: positive
+    horizons: [paper_12_unit_panel, six_pair_fixed_sleeve_extension]
+    data_dependencies: [dukascopy_ticks_bid_ask, iana_session_calendar]
+    reference_ids: [fx_intraday_patterns, fx_liquidity]
+    registered_at: 2026-07-16T02:14:50+08:00
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: >-
+      This outcome-free amendment supersedes the original shorthand, not the hypothesis
+      family. Keep all requested dates visible, include holidays with qualifying quotes, and
+      apply the paper's pair-specific UTC weekend boundary before quote selection. Eligible
+      boundaries lacking a last prevailing quote at or before them within five seconds are
+      missing. Primary returns use long=log(exit_bid/entry_ask) and
+      short=log(entry_bid/exit_ask); midquote is replication-only. Europe/London is
+      UTC-equivalent to the paper's Dublin clock for the sample. The paper reports the 12
+      units separately and does not define LOCAL-PORTFOLIO. Evaluate the complete panel and
+      fixed extension before secondary pair tables; never retain only EURUSD. Follow the
+      paper's stated base/counter direction for EURJPY and preserve a sign/reciprocal canary
+      rather than searching the contradictory Table 2 sign.
+  - id: intraday_asia_london_reversal
+    track: intraday
+    family: time_of_day
+    directional: true
+    formula: formation return=[08:00,15:00) Asia/Tokyo; trade the opposite sign from 07:00 to 10:00 Europe/London and test beta(response_on_formation)<0 without a magnitude threshold
+    expected_sign: positive
+    horizons: [london_response_3h]
+    data_dependencies: [dukascopy_ticks_bid_ask, iana_session_calendar, verified_tokyo_london_holidays]
+    reference_ids: [fx_intraday_patterns, fx_liquidity]
+    registered_at: 2026-07-16T02:14:50+08:00
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Formation start/end quotes must be within 5 seconds of their frozen boundaries; at a shared UTC boundary formation uses the last quote strictly before it, while execution uses the first quote strictly after it and within 5 seconds.
+  - id: intraday_wmr_month_end_interaction
+    track: intraday
+    family: time_of_day
+    directional: true
+    formula: regress the frozen WMR fix return profile on an indicator for the last actually published verified WMR event of each calendar month; expected interaction gamma>0
+    expected_sign: positive
+    horizons: [wmr_fix_profile]
+    data_dependencies: [dukascopy_ticks_bid_ask, verified_wmr_publication_calendar]
+    reference_ids: [london_fix_hedging, fx_fix_returns]
+    registered_at: 2026-07-16T02:14:50+08:00
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: Without PIT equity returns and hedge-direction mapping this is only a month-end amplification test, not a replication of the equity-hedging channel.
+  - id: intraday_entry_spread_filter
+    track: intraday
+    family: liquidity
+    directional: false
+    formula: allow entry only when current spread <= the rolling 90th percentile for the same symbol, event, and local 15-minute slot using the previous 60 eligible days; require at least 40 past observations and exclude the first 60 eligible days as warm-up
+    expected_sign: execution_filter_only
+    horizons: [entry_event]
+    data_dependencies: [dukascopy_ticks_bid_ask, iana_event_calendar]
+    reference_ids: [fx_liquidity, fx_fix_returns]
+    registered_at: 2026-07-16T02:14:50+08:00
+    registration_market_data_cutoff: 2026-07-13
+    status: preregistered
+    inference_eligibility: exploratory_reused_history_requires_new_forward
+    implementation_notes: The filter uses entry-time information only. Future exit spread never decides whether an observation remains in the sample; q80, q95, and fixed-pip alternatives are not searched.
+  - id: intraday_macro_release_blackout
+    track: intraday
+    family: event_risk
+    directional: false
+    formula: prohibit new entries from 30m before through 60m after verified actual macro release timestamp
+    expected_sign: execution_filter_only
+    horizons: [event_window]
+    data_dependencies: [verified_historical_release_timestamps]
+    reference_ids: [macro_fx_discovery]
+    registered_at: 2026-07-16T01:02:00+08:00
+    registration_time_quality: reconstructed_from_artifact_order
+    registration_market_data_cutoff: 2026-07-13
+    status: deferred_missing_data
+    inference_eligibility: strict_forward_only
+    implementation_notes: Actual-minus-consensus surprise is forbidden until licensed PIT consensus data exists.

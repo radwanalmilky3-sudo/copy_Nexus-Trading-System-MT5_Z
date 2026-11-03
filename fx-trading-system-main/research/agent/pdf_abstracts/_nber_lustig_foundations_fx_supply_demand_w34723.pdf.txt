@@ -1,0 +1,18 @@
+path: _pdfs/_nber/lustig_foundations_fx_supply_demand_w34723.pdf
+title_guess: MODELING THE LABOR IMPLICATIONS OF THE ENERGY TRANSITION
+ids: w34723
+priority: warm
+extract_status: ok
+---
+ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+January 2026
+We thank the EPA’s National Center for Environmental Economics for funding to support an 
+earlier version of this paper, and thank the NCEE staff (especially Ann Wolverton, Drew Schreiber, 
+Joe Perla, and Dan Kraynak) for helpful comments. Williams also acknowledges support from the 
+USDA National Institute of Food and Agriculture (Hatch project 7006024). The views expressed 
+herein are those of the authors and do not necessarily reflect the views of RFF, the University of 
+Maryland, the NBER, the EPA, or the USDA. The views expressed herein are those of the authors 
+and do not necessarily reflect the views of the National Bureau of Economic Research.
+At least one co-author has disclosed additional relationships o

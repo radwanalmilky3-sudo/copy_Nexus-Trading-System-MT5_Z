@@ -1,0 +1,18 @@
+path: _pdfs/_official/ecb_fx_reference_rates_framework.pdf
+title_guess: Framework for the euro foreign exchange reference rates 1
+ids: 
+priority: warm
+extract_status: ok
+---
+rence rates), 
+the European Central Bank in its capacity as the administrator and the other 
+participants as calculation agents for the rates are not subject to the IOSCO 
+principles on financial benchmarks of July 2013. 
+The participants have therefore designed the non-binding framework below for the 
+euro foreign exchange reference rates in the belief that transparency in governance 
+and the setting methodology is in the public interest and reinforces the credibility of 
+the relevant reference rates. 
+In the context of the euro foreign exchange reference rates, the term “reference rate” 
+is taken to mean an exchange rate that is not intended to be used in any market 
+transactions, whether directly or indirectly (as an underlying benchmark). The rates 
+are intended for information purpose

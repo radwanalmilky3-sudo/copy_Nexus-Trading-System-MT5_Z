@@ -1,0 +1,8 @@
+path: _pdfs/_nber/itskhoki_mukhin_w21933.pdf
+title_guess: OBAMA, KATRINA, AND THE PERSISTENCE OF RACIAL INEQUALITY
+ids: w21933
+priority: warm
+extract_status: ok
+---
+This paper is my presidential address to the Economic History Association. In it, I review and extend
+the economic history of racial differences in per capita income from 1870 to the present. Specifically,

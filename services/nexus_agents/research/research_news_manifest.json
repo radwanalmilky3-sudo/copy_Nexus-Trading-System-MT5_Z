@@ -1,0 +1,30 @@
+{
+  "scope": "research-news",
+  "generated_at": "2026-10-16",
+  "files": [
+    {
+      "path": "services/nexus_agents/research/contracts.py",
+      "sha256": "512ACF72566FA863D3CF7B41EC5640790D992F6F4015079E0FAFC02FE4D613AA"
+    },
+    {
+      "path": "services/nexus_agents/research/adapters.py",
+      "sha256": "6091198C166AC8CB2285B04FD0E02ABA884FE2D28C77FDE5B1461349990DE60D"
+    },
+    {
+      "path": "services/nexus_news/contracts.py",
+      "sha256": "7F4ACD0B7BB33C59E8197C1DDAB3025E84B5A6ACD36B26CBBDED49E8D0DC52C6"
+    },
+    {
+      "path": "services/nexus_news/adapters.py",
+      "sha256": "85FDDD30CAFE57AB96CBCCCC9E9DC41A9D16A8580A101F9D5E236CF455EB208C"
+    }
+  ],
+  "constraints": {
+    "new_files_only": true,
+    "no_tests": true,
+    "no_services": true,
+    "no_data_imports": true,
+    "trading_path_untouched": true,
+    "risk_executor_untouched": true
+  }
+}

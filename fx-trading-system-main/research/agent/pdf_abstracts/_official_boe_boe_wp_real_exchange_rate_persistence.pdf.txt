@@ -1,0 +1,8 @@
+path: _pdfs/_official/boe/boe_wp_real_exchange_rate_persistence.pdf
+title_guess: Real exchange rate persistence and systematic monetary policy behaviour
+ids: 
+priority: warm
+extract_status: ok
+---
+5
+Summary 7

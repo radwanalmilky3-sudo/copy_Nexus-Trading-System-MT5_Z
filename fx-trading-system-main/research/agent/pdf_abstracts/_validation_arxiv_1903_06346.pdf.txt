@@ -1,0 +1,18 @@
+path: _pdfs/_validation/arxiv_1903_06346.pdf
+title_guess: Optimal FX Hedge Tenor with Liquidity Risk
+ids: 
+priority: warm
+extract_status: ok
+---
+We develop an optimal currency hedging strategy for fund managers who own foreign assets to choose the 
+hedge tenors that maximize their FX carry returns within a liquidity risk constraint. The strategy assumes 
+that the offshore assets are fully hedged with FX forwards. The chosen liquidity risk metric is Cash Flow at 
+Risk (CFaR). The strategy involves time-dispersing the total nominal hedge value into future time buckets 
+to maximize (minimize) the expected FX carry benefit (cost), given the constraint that the CFaRs in all the 
+future time buckets do not breach a predetermined liquidity budget. We demonstrate the methodology via 
+an illustrative example where shorter-dated forwards are assumed to deliver higher carry trade returns 
+(motivated by the historical experience wh ere AUD is the domestic currency and USD is the foreign 
+currency). We also introduce a tenor-ranking method which is useful when this assumption fails. We show 
+by Monte Carlo simulation and by backtesting that our hedging strategy successfully operates within the 
+liquidity budget. We provide practical insights on when and why fund managers should choose short-dated 
+or long-dated tenors.

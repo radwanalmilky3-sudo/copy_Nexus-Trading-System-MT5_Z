@@ -1,0 +1,32 @@
+schema_version: 1
+status: blocked_until_alpha_freeze
+provider: dukascopy
+symbols:
+  - EURUSD
+  - GBPUSD
+  - USDJPY
+  - USDCHF
+  - AUDUSD
+  - NZDUSD
+  - USDCAD
+  - EURGBP
+  - EURJPY
+  - GBPJPY
+  - AUDJPY
+  - CADJPY
+  - USDNOK
+  - USDSEK
+historical_batch_end_exclusive: 2026-01-01T00:00:00Z
+market_history_previously_inspected_through: 2026-07-13
+alpha_freeze_time: null
+forward_eligibility_operator: ">"
+append_only: true
+historical_database_mutation_allowed: false
+generation_manifest_required: true
+minimum_collecting_days: 90
+minimum_review_days: 180
+paths:
+  root: data/forward/dukascopy
+  immutable_generations: data/forward/dukascopy/generations
+  accepted_manifests: data/forward/dukascopy/accepted_manifests
+  quarantine: data/forward/dukascopy/quarantine

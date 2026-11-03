@@ -1,0 +1,21 @@
+path: _pdfs/_official/boe/boe_wp_time_varying_rer_svar.pdf
+title_guess: Time-varying dynamics of the real
+ids: 
+priority: warm
+extract_status: ok
+---
+The aim of this paper is to explore the evolution of real exchange rate dynamics over time. We use a
+time-varying structural vector autoregression to investigate the role of demand, supply and nominal
+shocks and consider their impact on, and contribution to fluctuations in, the real exchange rate, output
+growth and inflation in four major economies over the past four decades. Our analysis therefore extends
+recent empirical research on evolving macroeconomic dynamics which has primarily focused on
+inflation and output and the time-varying impact of monetary policy on these variables. In addition we
+generalise recent V AR studies on exchange rate dynamics where the analysis is limited to a 
+time-invariant setting. Our main results are as follows. The transmission of demand, supply and
+nominal shocks to the real exchange rate, output and inflation has changed substantially over time.
+Demand shocks have a larger impact on the real exchange rate after the mid-1980s for the 
+United Kingdom, euro area and Japan and after the mid-1990s for Canada. Nominal shocks had a 
+larger impact on output and inflation during the 1970s relative to the recent past. The forecast error
+variance of the real exchange rate is explained mainly by demand shocks with a smaller role for
+nominal shocks.
+Key words: Real exchange rate, time-varying V AR, sign restrictions, Bayesian estimation.

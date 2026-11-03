@@ -1,0 +1,17 @@
+path: _pdfs/_validation/romano_shaikh_formalized_data_snooping.pdf
+title_guess: FORMALIZED DATA SNOOPING
+ids: 
+priority: warm
+extract_status: ok
+---
+niversity of Zurich
+It is common in econometric applications that several hypothesis tests are carried
+out simultaneously+The problem then becomes how to decide which hypotheses
+to reject,accounting for the multitude of tests+The classical approach is to con-
+trol the familywise error rate ~FWE!,which is the probability of one or more
+false rejections+But when the number of hypotheses under consideration is large,
+control of the FWE can become too demanding+As a result,the number of false
+hypotheses rejected may be small or even zero+This suggests replacing control of
+the FWE by a more liberal measure+To this end,we review a number of recent
+proposals from the statistical literature+We briefly discuss how these procedures
+apply to the general problem of model selection+A simulation study a

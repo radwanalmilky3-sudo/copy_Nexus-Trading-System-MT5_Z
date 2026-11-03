@@ -1,0 +1,20 @@
+path: _pdfs/_nber/itskhoki_mukhin_what_drives_fx_w32008.pdf
+title_guess: WHAT DRIVES THE EXCHANGE RATE?
+ids: w32008
+priority: warm
+extract_status: ok
+---
+e
+Cambridge, MA 02138
+December 2023
+Prepared for the IMF 24th Jacques Polak Annual Research Conference. We thank Harald Hau for 
+an insightful discussion and Mark Aguiar, Andy Atkeson, Gita Gopinath, Pierre-Olivier 
+Gourinchas, Maury Obstfeld, Kenneth Rogoff, Jón Steinsson, Adrien Verdelhan and seminar/
+conference participants for helpful comments, and Haonan Zhou for outstanding research 
+assistance. The views expressed herein are those of the authors and do not necessarily reflect the 
+views of the National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been 
+peer-reviewed or been subject to the review by the NBER Board of Directors that accompanies 
+official 
+NBER publications.
+© 2023 by Oleg Itskhoki and Dmitry Mukhin.

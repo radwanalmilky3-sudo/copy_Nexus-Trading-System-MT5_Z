@@ -1,0 +1,16 @@
+path: _pdfs/_micro/king_osler_rime_microstructure_brandeis.pdf
+title_guess: W orking Paper Series
+ids: 
+priority: warm
+extract_status: ok
+---
+Research on foreign exchange (FX) market micr ostructure stresses the importance of order flow, 
+heterogeneity among agents, and private information as crucial determinants of short-run 
+exchange rate dynamics. Microstr ucture researchers have produ ced empirically-driven models 
+that fit the data surprisingly well. But currency markets are evolving rapidly in response to new 
+electronic trading technologies. Transparency has risen, trading costs have tumbled, and 
+transaction speed has accelerated as new player s have entered the market and existing players 
+have modified their behavior. These changes will have profound effects on exchange rate 
+dynamics. Looking forward, we highlight fundamental yet unanswered questions on the nature of 
+private information, the impact on market liquidi ty, and the changing process of price discovery. 
+We also outline potential microstructure explanations for long-standing exchange rate puzzles.

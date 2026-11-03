@@ -1,0 +1,17 @@
+path: _pdfs/_official/boe_monetary_fx_theory_2019.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+We study exchange rate determination in a 2-country model where domestic banks create each economy’s 
+supply of domestic and foreign currency. The model combines the UIP-based and monetary theories of 
+exchange rate determination, but the latter with a focus on private rather than public money creation. The 
+model features an endogenous monetary spread or excess return in the UIP condition. This spread 
+experiences sizeable changes when shocks affect the relative supplies (of bank loans) or demands (for bank 
+deposits) of the two currencies. Under such shocks, monetary effects dominate traditional UIP effects in 
+the determination of exchange rates and allocations, and this becomes stronger as domestic and foreign 
+currencies become more imperfect substitutes. With these shocks, the model successfully addresses the 
+UIP puzzle, and it is also consistent with the Meese-Rogoff and PPP puzzles.
+Key words: Bank lending, money creation, money demand, endogenous money, uncovered interest parity, 
+exchange rate determination, international capital flows, gross capital flows.

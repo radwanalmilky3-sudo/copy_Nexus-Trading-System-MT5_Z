@@ -1,0 +1,31 @@
+path: _pdfs/_fed/ifdp1262.pdf
+title_guess: Dealer Leverage and Exchange Rates: Heterogeneity
+ids: ifdp1262
+priority: hot
+extract_status: ok
+---
+System 
+Number 1262 
+November 2019 
+Please cite paper as: 
+Correa, Ricardo, and Laurie P. DeMarco (2019). Dealer 
+Leverage and Exchange Rates: Heterogeneity Across 
+Intermediaries. International Finance Discussion Papers 1262. 
+ht
+tps://doi.org/10.17016/IFDP.2019.1262 
+B
+oard of Governors of the Federal Reserve System 
+I
+nternational Finance Discussion Papers 
+N
+umber 1262 
+N
+ovember 2019 
+Dealer Leverage and Exchange Rates: Heterogeneity Across Intermediaries 
+R
+icardo Correa and Laurie P. DeMarco 
+NOT
+E: International Finance Discussion Papers (IFDPs) are preliminary materials circulated to 
+stimulate discussion and critical comment. The analysis and conclusions set forth are those of the 
+authors and do not indicate concurrence by other members of the research staff or the Board of 
+Gov

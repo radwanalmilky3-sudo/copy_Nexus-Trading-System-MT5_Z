@@ -1,0 +1,14 @@
+path: _pdfs/_ecb/ecb_wp2151_exchange_rate_forecasting_napkin.pdf
+title_guess: Exchange rate forecasting on a napkin Michele Ca' Zorzi, Michał Rubaszek
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper shows that there are two regularities in foreign exchange markets in advanced
+countries with ﬂexible regimes. First, real exchange rates are mean-reverting, as implied
+by the Purchasing Power Parity model. Second, the adjustment takes place via nominal
+exchange rates. These features of the data can be exploited, even on the back of a napkin, to
+generate nominal exchange rate forecasts that outperform the random walk. The secret is to
+avoid estimating the pace of mean reversion and assume that relative prices are unchanged.
+Direct forecasting or panel data techniques are better than the random walk but fail to beat
+this simple calibrated model.

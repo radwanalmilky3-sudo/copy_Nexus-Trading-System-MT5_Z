@@ -1,0 +1,15 @@
+path: _pdfs/_fed/feds2024061_quantities_cip.pdf
+title_guess: Finance and Economics Discussion Series
+ids: 
+priority: warm
+extract_status: ok
+---
+Studies of intermediated arbitrage argue that bank balance sheets are an important
+consideration, yet little evidence exists on banks’ positioning in this context. Using
+conﬁdential supervisory data (covering $25 trillion in daily notional exposures) we
+examine banks’ positions in connection with covered-interest parity (CIP) deviations.
+Exploiting cross-sectional variation in CIP deviations that have largely challenged
+existing theories, we document three novel forces that drive bases: 1) foreign safe asset
+scarcity, 2) market power and segmentation of banks specializing in diﬀerent markets,
+and 3) concentration of demand. Our ﬁndings shed empirical light on the interplay of
+frictions inﬂuencing banks’ provision of dollar funding.

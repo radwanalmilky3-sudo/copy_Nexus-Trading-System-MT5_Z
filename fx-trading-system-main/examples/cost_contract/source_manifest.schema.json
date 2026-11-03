@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "dataset_kind": "broker_financing_schedule OR tradable_forward_quotes",
+  "csv_sha256": "SHA256_OF_EXACT_CSV_BYTES",
+  "source_catalog": [
+    {
+      "source": "BROKER_OR_VENDOR_EXPORT_NAME",
+      "provenance": "SUPPORT_TICKET_OR_ARCHIVE_IDENTIFIER",
+      "quote_quality": "SEE_DOCS_FOR_ALLOWED_VALUE",
+      "version": "EXPORT_VERSION",
+      "broker_entity": "FULL_LEGAL_ENTITY",
+      "account_currency": "REQUIRED_FOR_FINANCING_ONLY"
+    }
+  ]
+}

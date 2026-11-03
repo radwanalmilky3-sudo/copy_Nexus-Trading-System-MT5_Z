@@ -1,0 +1,18 @@
+path: _pdfs/_nber/lustig_stathopoulos_verdelhan_term_structure_carry_risk_premia_w19623.pdf
+title_guess: THE TERM STRUCTURE OF CURRENCY CARRY TRADE RISK PREMIA
+ids: w19623
+priority: hot
+extract_status: ok
+---
+U OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+November 2013, Revised November 2018
+Many thanks to Robert Barro, Mikhail Chernov, Riccardo Colacito, Ian Dew-Becker, Emmanuel 
+Farhi, Stefano Giglio, Gita Gopinath, Lars Hansen, Espen Henriksen, Urban Jermann, Leonid 
+Kogan, Karen Lewis, Matteo Maggiori, Ian Martin, Stefan Nagel, Jonathan Parker, Tarun 
+Ramadorai, Robert Ready, Jose Scheinkman, Andrea Vedolin, seminar participants at the Federal 
+Reserve Board, Georgetown University, Harvard, LSE, LBS, MIT, UC3 in Madrid, UC Davis, 
+the Said School at Oxford, Cass at City University London, Syracuse University, University of 
+Bristol, UBC, University of Exeter, University of Lausanne, University of Massachusetts, 
+University of Michigan, University of Rochester, USC, and

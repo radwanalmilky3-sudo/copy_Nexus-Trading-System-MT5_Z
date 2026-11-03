@@ -1,0 +1,18 @@
+path: _pdfs/_nber/currency_related_w30887.pdf
+title_guess: INTERNATIONAL CAPITAL FLOW PRESSURES AND GLOBAL FACTORS
+ids: w30887
+priority: warm
+extract_status: ok
+---
+SEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+January 2023
+The views in this paper are solely the responsibility of the authors and do not necessarily reflect 
+the views of the Federal Reserve Bank of New York, the Federal Reserve System, Danmarks 
+Nationalbank, or the National Bureau of Economic Research. The authors thank Pierre-Olivier 
+Gourinchas for careful suggestions on features of the exchange market pressure specification; 
+participants at the NBER ISOM 2022 meeting, especially Anusha Chari, Kristen Forbes, and Luc 
+Laeven, for thoughtful feedback; Karlye Dilts-Stedman for help with RORO index construction, 
+Luciana Juvenal for help with financial exchange rate construction, and Nastasija Loncar for help 
+with foreign exchange intervention data. We thank and generations of 

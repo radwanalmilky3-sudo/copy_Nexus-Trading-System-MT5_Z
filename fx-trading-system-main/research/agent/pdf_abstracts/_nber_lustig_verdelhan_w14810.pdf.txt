@@ -1,0 +1,18 @@
+path: _pdfs/_nber/lustig_verdelhan_w14810.pdf
+title_guess: LEARNING ABOUT ACADEMIC ABILITY AND THE COLLEGE DROP-OUT
+ids: w14810
+priority: warm
+extract_status: ok
+---
+EAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+March 2009
+□We appreciate comments from seminar participants at New York University, Rochester, Yale, Syracuse,
+Simon Fraser, NBER, The winter meetings of the Econometric Society, and The Analytical Labor
+Conference at the University of Chicago. We are grateful for support from The Mellon Foundation,
+The Spencer Foundation, The National Science Foundation, SSHRC, and Berea College. This work
+would not have been possible without the extraordinary work of Lori Scafidi and the assistance of
+Diana Stinebrickner, Pam Thomas, and Albert Conley. The views expressed herein are those of the
+author(s) and do not necessarily reflect the views of the National Bureau of Economic Research.
+NBER working papers are circulated for discu

@@ -1,0 +1,20 @@
+path: _pdfs/_nber/verdelhan_w22263.pdf
+title_guess: INEQUALITY BEFORE BIRTH:
+ids: w22263
+priority: warm
+extract_status: ok
+---
+2263
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+May 2016
+We are grateful for the helpful comments received by Anjali Adukia, Edith Chen, Jonathan 
+Guryan, Jennifer Heissel, Kirabo Jackson, Andy Rotherham, Diane Schanzenbach, and seminar 
+and conference participants at AEFP, APPAM, CALDER, Dartmouth, Indiana, NBER, 
+Northwestern, Stanford, SUNY-Albany, Syracuse, Virginia, and Wisconsin. Persico 
+acknowledges support from the Society, Biology and Health Cluster Fellowship and Dissertation 
+Year fellowship at Northwestern University. Figlio and Roth acknowledge support from the 
+National Science Foundation and the Institute for Education Sciences (CALDER grant), and 
+Figlio acknowledges support from the National Institute of Child Health and Human 
+Deve

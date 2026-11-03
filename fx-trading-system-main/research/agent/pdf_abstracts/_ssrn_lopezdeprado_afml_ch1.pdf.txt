@@ -1,0 +1,9 @@
+path: _pdfs/_ssrn/lopezdeprado_afml_ch1.pdf
+title_guess: Electronic copy available at: https://ssrn.com/abstract=3104847
+ids: 
+priority: warm
+extract_status: ok
+---
+Electronic copy available at: https://ssrn.com/abstract=3104847 
+
+ Electronic copy available at: https://ssrn.com/abstract=3104847

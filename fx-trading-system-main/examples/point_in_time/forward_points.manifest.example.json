@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "dataset_kind": "forward_points",
+  "csv_sha256": "REPLACE_WITH_SHA256_OF_EXACT_CSV_BYTES",
+  "source_catalog": [
+    {
+      "source": "example_only",
+      "provenance": "illustrative_not_market_data",
+      "quote_quality": "unknown_unverified"
+    }
+  ]
+}

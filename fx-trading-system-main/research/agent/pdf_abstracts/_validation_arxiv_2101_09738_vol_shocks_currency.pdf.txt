@@ -1,0 +1,16 @@
+path: _pdfs/_validation/arxiv_2101_09738_vol_shocks_currency.pdf
+title_guess: Volatility Shocks and Currency Returns*
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper examines how shocks to currency volatilities predict exchange rates.
+Using option-implied volatilities, we construct a dynamic, directed network of volatil-
+ity connections. Currencies that transmit more volatility shocks, which control for
+common correlation, earn lower excess returns. Buying the weakest and selling the
+strongest transmitters delivers high risk-adjusted performance, driven by spot exchange
+rate movements and not explained by standard factors. A general equilibrium model
+shows that volatility transmission related to idiosyncratic shocks proxies for priced
+country-specific risk. Assuming a monotonic amplification of domestic idiosyncratic
+risk, volatility transmission forecasts negatively future excess returns, consistent with
+the empirical evidence.

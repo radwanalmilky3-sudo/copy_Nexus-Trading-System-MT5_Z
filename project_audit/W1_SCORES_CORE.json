@@ -1,0 +1,9 @@
+{
+  "operations": [
+    {
+      "id": "nexus-data",
+      "set": { "database": 75 },
+      "reason": "قفل asyncio عام على DuckDB يُبطئ /auth/me إلى 1-10 ثوانٍ والاختناق لم يُعالج بعد، لذا تُخفض database من 82 إلى 75."
+    }
+  ]
+}

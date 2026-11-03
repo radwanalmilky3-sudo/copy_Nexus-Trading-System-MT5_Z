@@ -1,0 +1,23 @@
+path: _pdfs/_validation/bailey_dsr_qwafafew.pdf
+title_guess: Electronic copy available at: http://ssrn.com/abstract=2150879
+ids: 
+priority: warm
+extract_status: ok
+---
+pany 
+Lawrence Berkeley National Laboratory 
+
+Electronic copy available at: http://ssrn.com/abstract=2150879
+Key Points 
+2 
+• Because the Sharpe ratio only takes into account the 
+first two moments, it wrongly “translates” skewness 
+and excess kurtosis into standard deviation. 
+• As a result, 
+– It deflates the skill measured on “well-behaved” 
+investments (positive skewness, negative excess kurtosis). 
+– It inflates the skill measure on “badly-behaved” 
+investments (negative skewness, positive excess kurtosis). 
+• Sharpe ratio estimates need to account for Higher 
+Moments, even if you assume that investors only 
+care about two moments (Markowitz framework)!

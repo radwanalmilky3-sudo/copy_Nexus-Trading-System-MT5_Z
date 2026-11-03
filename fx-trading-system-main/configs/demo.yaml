@@ -1,0 +1,45 @@
+data:
+  provider: synthetic
+  directory: data
+  symbols: [EURUSD, GBPUSD, USDJPY, USDCHF, AUDUSD, NZDUSD, USDCAD]
+  interval: 4h
+  start: "2020-01-01"
+  seed: 42
+  synthetic_bars: 3000
+
+costs:
+  default_spread_pips: 1.0
+  spread_pips: {EURUSD: 0.7, GBPUSD: 0.9, USDJPY: 0.8, AUDUSD: 0.9, NZDUSD: 1.2}
+  slippage_pips: 0.2
+  commission_per_million: 35.0
+
+risk:
+  initial_equity: 100000
+  risk_per_trade: 0.003
+  max_portfolio_risk: 0.015
+  max_open_positions: 5
+  max_gross_leverage: 3.0
+  max_currency_exposure: 1.5
+  max_correlated_positions: 2
+  correlation_threshold: 0.80
+  correlation_lookback: 120
+  max_drawdown: 0.12
+  daily_loss_limit: 0.025
+  max_reward_risk: 0.85
+  max_holding_hours: 168
+  unit_step: 1000
+  min_units: 1000
+  close_before_weekend: true
+
+strategies:
+  - {name: regime_mean_reversion, weight: 1.2, params: {}}
+  - {name: trend_pullback, weight: 1.0, params: {}}
+  - {name: session_breakout, weight: 0.85, params: {}}
+  - {name: false_breakout_reversal, weight: 1.0, params: {}}
+  - {name: currency_strength_reversion, weight: 1.15, params: {}}
+  - name: cointegration_spread
+    weight: 0.8
+    params: {pairs: [[EURUSD, GBPUSD], [AUDUSD, NZDUSD]], lookback: 180}
+
+ensemble: {minimum_vote: 0.50, minimum_confidence: 0.50, disagreement_penalty: 0.25}
+output: {directory: outputs/demo, save_signals: true}

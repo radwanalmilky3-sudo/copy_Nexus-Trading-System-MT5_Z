@@ -1,0 +1,17 @@
+path: _pdfs/_validation/arxiv_1910_01438_related.pdf
+title_guess: arXiv:1910.01438v2 [q-fin.PM] 7 Oct 2019
+ids: 
+priority: warm
+extract_status: ok
+---
+We study a dynamic portfolio optimization problem related t o convergence
+trading, which is an investment strategy that exploits temp orary mispricing by simultane-
+ously buying relatively underpriced assets and selling sho rt relatively overpriced ones with
+the expectation that their prices converge in the future. We build on the model of Liu and
+Timmermann [22] and extend it by incorporating unobservabl e Markov-modulated pricing
+errors into the price dynamics of two co-integrated assets. We characterize the optimal
+portfolio strategies in full and partial information setti ngs both under the assumption of
+unrestricted and beta-neutral strategies. By using the inn ovations approach, we provide
+the ﬁltering equation that is essential for solving the opti mization problem under partial
+information. Finally, in order to illustrate the model capa bilities, we provide an example
+with a two-state Markov chain.

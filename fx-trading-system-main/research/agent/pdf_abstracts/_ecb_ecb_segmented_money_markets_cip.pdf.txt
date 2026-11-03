@@ -1,0 +1,21 @@
+path: _pdfs/_ecb/ecb_segmented_money_markets_cip.pdf
+title_guess: interest parity arbitrage
+ids: 
+priority: warm
+extract_status: ok
+---
+BIS Working Papers
+No 651 
+ 
+ Segmented money 
+markets and covered 
+interest parity arbitrage 
+by Dagfinn Rime, Andreas Schrimpf and Olav Syrstad 
+ 
+Monetary and Economic Department 
+July 2017 
+ 
+ JEL classification: E43, F31, G15 
+Keywords: Covered Interest Parity; Money Market 
+Segmentation; Funding Liquidity Premia; FX Swap 
+Market; U.S. Dollar Funding

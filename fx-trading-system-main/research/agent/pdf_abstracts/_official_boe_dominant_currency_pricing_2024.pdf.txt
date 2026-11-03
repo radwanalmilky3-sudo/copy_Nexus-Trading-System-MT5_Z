@@ -1,0 +1,25 @@
+path: _pdfs/_official/boe_dominant_currency_pricing_2024.pdf
+title_guess: Staff Working Paper No. 1,074
+ids: 
+priority: warm
+extract_status: ok
+---
+We study a unique episode of aggregate transition to dominant currency pricing: the 
+dollarisation of UK exports in the aftermath of the 2016 Brexit referendum. Following the 
+2016 depreciation of the pound, the share of non‑EU UK exports invoiced in the UK domestic 
+currency decreased sharply by more than 20 percentage points. This was mirrored by an 
+increase of similar magnitude in the share of US dollar invoicing, which by 2019 overtook the 
+pound as the main non‑EU export invoicing currency. Relying on transaction‑level data on 
+the universe of UK trade and employing shift‑share and event‑study identification strategies, 
+we show that large foreign‑exchange movements can generate an aggregate transition 
+in invoicing choices. This is driven by firms with low levels of operational hedging, that is 
+whose exports are not denominated in the same currency as their import. We find that this 
+currency‑mismatch valuation channel accounts for most of the transition to dollar pricing, 
+above and beyond effects from strategic complementarities and market power. Finally
+ , we 
+show that such a shift in export pricing has important aggregate consequences for export 
+pass‑through and the allocative effects of price rigidities: a US$ appreciation depresses 
+demand for UK exports by twice as much than before this ‘dominant currency pricing 
+transition’.
+Key words: Invoicing currency of trade, dominant currency pricing, foreign‑exchange 
+mismatch, firm‑level data, exchange‑rate pass‑through, Brexit.

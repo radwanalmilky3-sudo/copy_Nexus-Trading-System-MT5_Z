@@ -1,0 +1,4 @@
+center,session_date,session_type,source,source_url,retrieved_at_utc,notes
+Tokyo,2025-01-01T00:00:00Z,closed,example_only,https://example.invalid/tokyo,2026-07-16T00:00:00Z,illustrative new year
+London,2025-01-01T00:00:00Z,closed,example_only,https://example.invalid/london,2026-07-16T00:00:00Z,illustrative new year
+London,2025-12-24T00:00:00Z,half_day,example_only,https://example.invalid/london,2026-07-16T00:00:00Z,illustrative half day

@@ -1,0 +1,36 @@
+path: _pdfs/02_factor/menkhoff_sarno_schmeling_schrimpf_carry_fx_vol_jf2012.pdf
+title_guess: THE JOURNAL OF FINANCE • VOL. LXVII, NO. 2 • APRIL 2012
+ids: 
+priority: warm
+extract_status: ok
+---
+We investigate the relation between global foreign exchange (FX) volatility risk and
+the cross section of excess returns arising from popular strategies that borrow in
+low interest rate currencies and invest in high interest rate currencies, so-called
+“carry trades.” We ﬁnd that high interest rate currencies are negatively related to
+innovations in global FX volatility, and thus deliver low returns in times of unexpected
+high volatility, when low interest rate currencies provide a hedge by yielding positive
+returns. Furthermore, we show that volatility risk dominates liquidity risk and our
+volatility risk proxy also performs well for pricing returns of other portfolios.
+THIS PAPER STUDIES THE risk-return proﬁle of a popular trading strategy that
+borrows in currencies with low interest rates and invests in currencies with
+high interest rates. This trading strategy is called “carry trade.” According to
+uncovered interest parity (UIP), if investors are risk neutral and form expecta-
+tions rationally, exchange rate changes will eliminate any gain arising from the
+differential in interest rates across countries. A number of empirical studies
+show, however, that exchange rate changes do not compensate for the inter-
+est rate differential. Instead, the opposite holds true empirically: high interest
+rate currencies tend to appreciate, while low interest rate currencies tend to
+∗Menkhoff and Schmeling are with Leibniz Universit ¨at Hannover, Sarno is with Cass
+Business School, City University London, and the Centre for Economic Policy Research (CEPR),
+and Schrimpf is with the Bank for International Settlements. The authors would like to thank
+Campbell Harvey (the Editor), an anonymous Associate Editor, two anonymous referees,
+Alessandro Beber, Nicole Branger, Francis Breedon, Craig Burnside, Joe Chen, Magnus Dahlquist,
+Marcel Fratzscher, Mathias Hoffmann, Søren Hvidkjær, Ravi Jagannathan, Ralph Koijen, Hanno
+Lustig, Pascal Maenhout, Ian Marsh, Tarun Ramadorai, Jesper Rangvid, Nick Roussanov, Carsten
+Sørensen, and Adrien Verdelhan, as well as participants at the Fifth Amsterdam Asset Pricing
+Retreat (2009), the Institute of Finance Workshop on International Asset Pricing in Leicester
+(2010), the European Finance Association 2009 Meetings in Bergen, and the German Economic
+Association Annual Conference 2009, and seminar participants at the Bank for International Set-
+tlements, Bank of England, Deutsche Bundesbank, European Central Bank, New York Federal
+Reserve Bank,

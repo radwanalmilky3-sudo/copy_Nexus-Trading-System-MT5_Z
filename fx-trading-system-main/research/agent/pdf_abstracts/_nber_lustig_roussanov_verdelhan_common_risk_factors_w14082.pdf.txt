@@ -1,0 +1,19 @@
+path: _pdfs/_nber/lustig_roussanov_verdelhan_common_risk_factors_w14082.pdf
+title_guess: COMMON RISK FACTORS IN CURRENCY MARKETS
+ids: w14082
+priority: hot
+extract_status: ok
+---
+ARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+June 2008
+The authors thank Andy Atkeson, Alessandro Beber, Frederico Belo, Michael Brennan, Alain Chaboud,
+John Cochrane, Pierre Collin-Dufresne, Magnus Dahlquist, Kent Daniel, Darrell Duffie, Xavier Gabaix,
+John Heaton, Urban Jermann, Don Keim, Leonid Kogan, Olivier Jeanne, Karen Lewis, Fang Li, Francis
+Longstaff, Pascal Maenhout, Rob Martin, Anna Pavlova, Monika Piazzesi, Richard Roll, Geert Rouwenhorst,
+Clemens Sialm, Rob Stambaugh, Rene Stulz, Jessica Wachter, Amir Yaron, Hongjun Yan, Moto Yogo
+and seminar participants at many institutions and conferences for helpful comments. The views expressed
+herein are those of the author(s) and do not necessarily reflect the views of the National Bureau of
+Economic Research.
+NBER working papers 

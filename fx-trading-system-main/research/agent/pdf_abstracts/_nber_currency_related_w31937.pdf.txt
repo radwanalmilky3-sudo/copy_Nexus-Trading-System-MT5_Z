@@ -1,0 +1,21 @@
+path: _pdfs/_nber/currency_related_w31937.pdf
+title_guess: DOLLAR SHORTAGES, CIP DEVIATIONS, AND
+ids: w31937
+priority: warm
+extract_status: ok
+---
+937
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+December 2023
+We gratefully acknowledge financial support from the Bankard Fund for Political Economy and 
+the Swiss National Science Foundation. This paper represents the views of the authors, which are 
+not necessarily the views of the Federal Reserve Bank of Dallas, the Federal Reserve System, or 
+the National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been 
+peer-reviewed or been subject to the review by the NBER Board of Directors that accompanies 
+official 
+NBER publications.
+© 2023 by Philippe Bacchetta, J. Scott Davis, and Eric van Wincoop. All rights reserved. Short 
+sections of text, not to exceed two paragraphs, may be quot

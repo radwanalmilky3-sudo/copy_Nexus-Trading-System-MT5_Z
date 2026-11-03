@@ -1,0 +1,1322 @@
+{
+  "name": "fx-trading-system/research",
+  "purpose": "Agent-facing FX quant research knowledge base (notes-first, OA PDFs secondary)",
+  "updated": "2026-07-17",
+  "write_boundary": "research/ only; rest of repo read-only for research agents unless user says otherwise",
+  "pdf_count_snapshot": 341,
+  "notes_count": 87,
+  "hubs": {
+    "entry": "README.md",
+    "agent_protocol": "AGENTS.md",
+    "human_index": "INDEX.md",
+    "notes_index": "NOTES_INDEX_ZH.md",
+    "study_closure": "STUDY_CLOSURE_ZH.md",
+    "reading_stack": "notes/READING_STACK_ZH.md",
+    "deep_study_path": "09_deep_study_path/DEEP_STUDY_PATH_ZH.md",
+    "gaps": "notes/GAPS.md",
+    "errata": "notes/ERRATA.md",
+    "mislabel": "_pdfs/MISLABEL_LOG.md",
+    "pdf_inventory": "_pdfs/INVENTORY.md",
+    "methods_map": "04_validation_methods/METHODS_MAP.md",
+    "replication_checklist": "02_factor_literature/replication_checklist.md",
+    "citation_graph": "02_factor_literature/CITATION_GRAPH.md",
+    "intraday_map": "03_microstructure_intraday/INTRADAY_SOURCE_MAP.md",
+    "datasets": "08_datasets_catalog/DATASETS.md",
+    "pdf_l3_index": "agent/pdf_index.jsonl",
+    "pdf_l3_stats": "agent/pdf_l3_stats.md"
+  },
+  "rules": [
+    "Read notes before PDFs; never bulk-load the PDF tree into context (post-purge ~341 files)",
+    "Always check MISLABEL_LOG / PDF first page title before citing a file path",
+    "cost_incomplete => no formal net PnL claims",
+    "midquote premium != implementable retail+financing net",
+    "No approved trading strategy as of library snapshot",
+    "New factor candidates require WP9 charter; do not expand search registry from reading alone",
+    "Prefer fail_closed over optimistic extension",
+    "PDF discovery: filter agent/pdf_index.jsonl then abstract_file; never dump all abstracts",
+    "PDF policy: index-first; extract on demand only (one PDF); do not bulk-write study-L3 notes for all PDFs"
+  ],
+  "routes": [
+    {
+      "intent": "carry",
+      "keywords": [
+        "carry",
+        "HML_FX",
+        "forward discount",
+        "利差",
+        "高息货币"
+      ],
+      "read_first": [
+        "02_factor_literature/notes/lustig_rfs_2011.md",
+        "02_factor_literature/notes/menkhoff_jf_2012_carry.md",
+        "02_factor_literature/notes/brunnermeier_nagel_pedersen.md",
+        "06_broker_costs/CIP_CONTRACT_CHECKLIST.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G1",
+        "G2"
+      ],
+      "do_not": [
+        "用政策利率声称真实 carry 复制",
+        "用 mid 回测写净收益"
+      ]
+    },
+    {
+      "intent": "cip_basis",
+      "keywords": [
+        "CIP",
+        "cross-currency basis",
+        "covered interest",
+        "远期点",
+        "basis"
+      ],
+      "read_first": [
+        "06_broker_costs/CIP_CONTRACT_CHECKLIST.md",
+        "06_broker_costs/notes/du_tepper_verdelhan_cip.md",
+        "06_broker_costs/notes/borio_bis_basis.md",
+        "02_factor_literature/notes/avdjiev_du_koch_shin_cip_dollar.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G2",
+        "C2",
+        "C3"
+      ],
+      "do_not": [
+        "用 F_hat 顶替可交易 forward",
+        "用误标 avdjiev_*_w24555 PDF"
+      ]
+    },
+    {
+      "intent": "momentum",
+      "keywords": [
+        "momentum",
+        "TSMOM",
+        "动量",
+        "趋势"
+      ],
+      "read_first": [
+        "02_factor_literature/notes/menkhoff_jfe_2012_mom.md",
+        "02_factor_literature/notes/moskowitz_ooi_pedersen.md",
+        "02_factor_literature/notes/asness_moskowitz_pedersen.md",
+        "04_validation_methods/notes/harvey_liu_zhu_factor_zoo.md"
+      ],
+      "fail_closed_if": [],
+      "do_not": [
+        "忽略搜索账本中已有形成期网格",
+        "把 OOS 翻号当可交易"
+      ]
+    },
+    {
+      "intent": "value_reer",
+      "keywords": [
+        "value",
+        "REER",
+        "PPP",
+        "价值"
+      ],
+      "read_first": [
+        "02_factor_literature/notes/menkhoff_rfs_value.md",
+        "08_datasets_catalog/notes/bis_reer_gli_lbs.md",
+        "05_data_contracts/PIT_AND_VINTAGE_GUIDE.md"
+      ],
+      "fail_closed_if": [
+        "G5"
+      ],
+      "do_not": [
+        "把 current-vintage REER 当 strict PIT 方向 alpha"
+      ]
+    },
+    {
+      "intent": "validation_fdr_dsr_pbo_spa",
+      "keywords": [
+        "FDR",
+        "DSR",
+        "PBO",
+        "SPA",
+        "多重检验",
+        "过拟合",
+        "bootstrap"
+      ],
+      "read_first": [
+        "04_validation_methods/METHODS_MAP.md",
+        "04_validation_methods/notes/harvey_liu_zhu_factor_zoo.md",
+        "04_validation_methods/notes/bailey_2014_deflated_sharpe.md",
+        "04_validation_methods/notes/bailey_pbo_cscv.md",
+        "04_validation_methods/notes/hansen_2005_spa.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "V1",
+        "V3",
+        "V6"
+      ],
+      "do_not": [
+        "盲信 arch SPA studentize",
+        "用 finalists 代替完整 trial count"
+      ]
+    },
+    {
+      "intent": "intraday_fix_local",
+      "keywords": [
+        "FIX-W",
+        "WMR",
+        "定盘",
+        "LOCAL-PAPER",
+        "intraday",
+        "fixing"
+      ],
+      "read_first": [
+        "03_microstructure_intraday/INTRADAY_SOURCE_MAP.md",
+        "03_microstructure_intraday/notes/krohn_mueller_whelan.md",
+        "03_microstructure_intraday/notes/breedon_ranaldo.md",
+        "03_microstructure_intraday/notes/lseg_wmr_methodology.md",
+        "01_foundations/notes/wmr_ecb_tokyo_fix_comparison.md"
+      ],
+      "fail_closed_if": [
+        "G8",
+        "G10"
+      ],
+      "do_not": [
+        "用 1h bar 声称验证 5 秒边界",
+        "用未来平仓 spread 过滤"
+      ]
+    },
+    {
+      "intent": "macro_surprise",
+      "keywords": [
+        "surprise",
+        "NFP",
+        "CPI",
+        "公告",
+        "consensus"
+      ],
+      "read_first": [
+        "03_microstructure_intraday/notes/faust_et_al.md",
+        "03_microstructure_intraday/notes/andersen_et_al_aer.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G4"
+      ],
+      "do_not": [
+        "无 consensus 时构造方向 surprise"
+      ]
+    },
+    {
+      "intent": "liquidity_vrp_options",
+      "keywords": [
+        "liquidity risk",
+        "VRP",
+        "risk reversal",
+        "期权",
+        "Cboe",
+        "EVZ"
+      ],
+      "read_first": [
+        "02_factor_literature/notes/soderlind_somogyi_2024.md",
+        "02_factor_literature/notes/della_corte_vrp.md",
+        "08_datasets_catalog/notes/cboe_fx_vol_indices.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G2",
+        "R1",
+        "R2"
+      ],
+      "do_not": [
+        "Cboe 30D 冒充 1Y OTC VRP",
+        "spot 22d 收益冒充 forward excess"
+      ]
+    },
+    {
+      "intent": "costs_swap_financing",
+      "keywords": [
+        "swap",
+        "rollover",
+        "financing",
+        "点差",
+        "成本",
+        "OANDA"
+      ],
+      "read_first": [
+        "06_broker_costs/SWAP_FORWARD_SOURCES.md",
+        "06_broker_costs/notes/oanda_financing_docs.md",
+        "01_foundations/notes/rollover_swap_mechanics.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "G1",
+        "C1",
+        "C4"
+      ],
+      "do_not": [
+        "公开 1y financing 外推 2016-2025 净收益"
+      ]
+    },
+    {
+      "intent": "pit_vintage_data",
+      "keywords": [
+        "PIT",
+        "vintage",
+        "as-published",
+        "available_time",
+        "ALFRED",
+        "RTDSM",
+        "CFTC"
+      ],
+      "read_first": [
+        "05_data_contracts/PIT_AND_VINTAGE_GUIDE.md",
+        "05_data_contracts/notes/alfred_and_rtdsm_pit.md",
+        "05_data_contracts/notes/cftc_release_and_revision_boundaries.md",
+        "08_datasets_catalog/DATASETS.md"
+      ],
+      "fail_closed_if": [
+        "G5",
+        "G6",
+        "G7"
+      ],
+      "do_not": [
+        "CFTC current archive 当 as-published vintage"
+      ]
+    },
+    {
+      "intent": "project_status_v4",
+      "keywords": [
+        "v4",
+        "空模型",
+        "是否有盈利因子",
+        "hand-off",
+        "WP"
+      ],
+      "read_first": [
+        "STUDY_CLOSURE_ZH.md",
+        "notes/GAPS.md"
+      ],
+      "external_readonly": [
+        "docs/LONG_HORIZON_FACTOR_RESEARCH_ZH.md",
+        "docs/PROJECT_HANDOFF_SUMMARY_ZH.md",
+        "docs/FX_FACTOR_LITERATURE_MAP_ZH.md"
+      ],
+      "fail_closed_if": [],
+      "do_not": [
+        "声称已有批准策略",
+        "把探索结果写成可交易"
+      ]
+    },
+    {
+      "intent": "order_flow",
+      "keywords": [
+        "order flow",
+        "订单流",
+        "Evans",
+        "Lyons"
+      ],
+      "read_first": [
+        "03_microstructure_intraday/notes/evans_lyons.md",
+        "02_factor_literature/notes/breedon_rime_vitale_carry_order_flow.md",
+        "notes/GAPS.md"
+      ],
+      "fail_closed_if": [
+        "R4",
+        "R16"
+      ],
+      "do_not": [
+        "用 CFTC 或 tick count 冒充 signed OF"
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "id": "fx_execution_and_quotes",
+      "path": "01_foundations/notes/fx_execution_and_quotes.md",
+      "title": "FX 执行与报价基础（研究级笔记）",
+      "bucket": "01_foundations",
+      "level": "L2–L3",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "retail_vs_interbank_execution",
+      "path": "01_foundations/notes/retail_vs_interbank_execution.md",
+      "title": "Retail vs Interbank FX Execution（研究级）",
+      "bucket": "01_foundations",
+      "level": "L2–L3",
+      "role": "",
+      "replication": "extension_only",
+      "project_map": "Dukascopy/broker 可实现性；禁止 mid 利润宣传",
+      "doi": "监管披露（NFA/ESMA 类成本与执行报告）、银行间微观结构文献、零售平台公开执行说明"
+    },
+    {
+      "id": "rollover_swap_mechanics",
+      "path": "01_foundations/notes/rollover_swap_mechanics.md",
+      "title": "FX Rollover / Swap Mechanics（研究级）",
+      "bucket": "01_foundations",
+      "level": "L2–L3",
+      "role": "",
+      "replication": "extension_only（缺历史账户 swap → 净收益 fail closed）",
+      "project_map": "账户 swap 账本、carry 可实现性、`06_broker_costs`",
+      "doi": "主经纪/零售 financing 文档、CIP 文献（Du–Tepper–Verdelhan 等）、BIS basis 讨论"
+    },
+    {
+      "id": "settlement_t1_t2_calendars",
+      "path": "01_foundations/notes/settlement_t1_t2_calendars.md",
+      "title": "FX Settlement T+1 / T+2 Calendars（研究级）",
+      "bucket": "01_foundations",
+      "level": "L2",
+      "role": "",
+      "replication": "extension_only（完整 holiday calendar 需官方/vendor 表）",
+      "project_map": "远期/spot 日界、carry settlement 对齐、事件研究日历",
+      "doi": "综合 ISDA FX 市场惯例、CLS 结算实践、ECB/央行公开说明（非零售入门文）"
+    },
+    {
+      "id": "wmr_ecb_tokyo_fix_comparison",
+      "path": "01_foundations/notes/wmr_ecb_tokyo_fix_comparison.md",
+      "title": "WMR vs ECB vs Tokyo Fix — 对照表（研究级）",
+      "bucket": "01_foundations",
+      "level": "L2–L3",
+      "role": "",
+      "replication": "extension_only（无官方 WMR 许可序列则不可声称“官方 WMR 复制”）",
+      "project_map": "日界、事件窗、value 因子定盘对齐",
+      "doi": ""
+    },
+    {
+      "id": "asness_moskowitz_pedersen",
+      "path": "02_factor_literature/notes/asness_moskowitz_pedersen.md",
+      "title": "[Asness, Moskowitz & Pedersen 2013] Value and Momentum Everywhere",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "replication（跨资产统一 value/mom；FX 子结果）",
+      "replication": "extension_only（CPI vintage、持有期、成本；FX 子集可探索）",
+      "project_map": "FX **5y PPP value** + **12-1 momentum** 统一权重合同；与 menkhoff_rfs_value / menkhoff_jfe_2012_mom 对照",
+      "doi": "https://doi.org/10.1111/jofi.12021"
+    },
+    {
+      "id": "avdjiev_du_koch_shin_cip_dollar",
+      "path": "02_factor_literature/notes/avdjiev_du_koch_shin_cip_dollar.md",
+      "title": "[Avdjiev, Du, Koch & Shin 2016/2019] The Dollar, Bank Leverage and CIP Deviations",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "boundary / data_contract（美元–银行杠杆–CIP 三角）",
+      "replication": "fail_closed_missing_data（同步 basis + 跨境贷款 + 结算日历）",
+      "project_map": "CIP / 美元融资状态；**非** spot 方向策略；与 `06_broker_costs` 合同交叉",
+      "doi": "BIS WP 592；AER: Insights 2019 线；NBER 编号常与 w24555 混淆"
+    },
+    {
+      "id": "bis_pap81_currency_carry_latam",
+      "path": "02_factor_literature/notes/bis_pap81_currency_carry_latam.md",
+      "title": "[BIS Papers No 81] Currency Carry Trades in Latin America",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "boundary / data_contract（政策视角下 EM carry 与金融稳定）",
+      "replication": "extension_only（政策研究报告；非标准学术因子表）",
+      "project_map": "EM/拉美 carry 的政策与市场微观约束；G9 主宇宙外的 **否决/情景** 参考",
+      "doi": "https://www.bis.org/publ/bppdf/bispap81.htm"
+    },
+    {
+      "id": "breedon_rime_vitale_carry_order_flow",
+      "path": "02_factor_literature/notes/breedon_rime_vitale_carry_order_flow.md",
+      "title": "[Breedon, Rime & Vitale 2015] Carry Trades, Order Flow and the Forward Bias Puzzle",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational microstructure（订单流分解 forward bias）",
+      "replication": "fail_closed_missing_data（EBS 成交订单流 + Reuters 个体调查）",
+      "project_map": "**机制参考 only**——订单流解释 Fama β；不可无 EBS 数据做方向因子",
+      "doi": "QMUL WP 761 / SSRN 2643531；相关 NY Fed 2010 版本"
+    },
+    {
+      "id": "brunnermeier_nagel_pedersen",
+      "path": "02_factor_literature/notes/brunnermeier_nagel_pedersen.md",
+      "title": "[Brunnermeier, Nagel & Pedersen 2008/2009] Carry Trades and Currency Crashes",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational（crash / funding）",
+      "replication": "extension_only（gate）；完整期货持仓+期权 RR 为数据扩展",
+      "project_map": "carry crash 风险门控；**非**新方向因子",
+      "doi": "https://doi.org/10.1086/593088 ；NBER WP 14473"
+    },
+    {
+      "id": "burnside_cerrato_zhang_order_flow_risk_factor_w27199",
+      "path": "02_factor_literature/notes/burnside_cerrato_zhang_order_flow_risk_factor_w27199.md",
+      "title": "[Burnside, Cerrato & Zhang 2020/2022] Foreign Exchange Order Flow as a Risk Factor",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational boundary（微观结构 × SDF 定价因子）",
+      "replication": "fail_closed_missing_data（银行客户订单流）",
+      "project_map": "订单流**不能**当零售方向信号；若有分段客户流，可作 crash/拥挤**诊断因子**",
+      "doi": "NBER w27199 https://www.nber.org/papers/w27199"
+    },
+    {
+      "id": "burnside_peso_carry_w14054",
+      "path": "02_factor_literature/notes/burnside_peso_carry_w14054.md",
+      "title": "[Burnside, Eichenbaum, Kleshchelski & Rebelo 2011] Do Peso Problems Explain the Returns to the Carry Trade?",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational / critique（传统风险因子失败 → peso/期权隐含 SDF）",
+      "replication": "fail_closed_missing_data（1M forward + CME/OTC 期权）",
+      "project_map": "carry 左尾/灾难定价边界；**非**方向信号；期权对冲 carry 用于识别而非交易 alpha",
+      "doi": "RFS 2011；NBER w14054 https://www.nber.org/papers/w14054"
+    },
+    {
+      "id": "burnside_returns_currency_speculation_w12489",
+      "path": "02_factor_literature/notes/burnside_returns_currency_speculation_w12489.md",
+      "title": "[Burnside, Eichenbaum, Kleshchelski & Rebelo 2006/2008] The Returns to Currency Speculation",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational（carry 支付性质 + 交易成本/价格压力边界）",
+      "replication": "fail_closed_missing_data（1M forward bid/ask 全样本）/ extension_only（spot+利率近似）",
+      "project_map": "carry 毛收益对照；**平均 Sharpe ≠ 边际可实现**；点差随规模上升 + order-flow 价格压力",
+      "doi": "NBER w12489 https://www.nber.org/papers/w12489 ；后续大幅修订为 RFS 2011 的 peso 文（w14054）"
+    },
+    {
+      "id": "chernov_dahlquist_lochstoer_anatomy_w32900",
+      "path": "02_factor_literature/notes/chernov_dahlquist_lochstoer_anatomy_w32900.md",
+      "title": "[Chernov, Dahlquist & Lochstoer 2024] Anatomy of Currency Risk Premia",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational / critique（新兴市场 + 未定价风险对冲抬升策略 SR）",
+      "replication": "fail_closed_missing_data（宽货币宇宙 forward）/ extension_only（仅 G10 spot 子集）",
+      "project_map": "G10-only vs G10+EM 边界；风格策略（dollar/carry 等）的**可对冲未定价风险**；OOS 均值-方差有效基准",
+      "doi": "NBER w32900 https://www.nber.org/papers/w32900"
+    },
+    {
+      "id": "della_corte_imbalance",
+      "path": "02_factor_literature/notes/della_corte_imbalance.md",
+      "title": "[Della Corte, Riddiough & Sarno 2016] Currency Premia and Global Imbalances",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational",
+      "replication": "fail_closed_missing_data（Lane–Milesi-Ferretti NFA + 负债币种结构 + 1M forward）",
+      "project_map": "**外部失衡 IMB 因子**（NFA × 负债本币份额）；非当前可交易主线",
+      "doi": "https://doi.org/10.1093/rfs/hhw038"
+    },
+    {
+      "id": "della_corte_vrp",
+      "path": "02_factor_literature/notes/della_corte_vrp.md",
+      "title": "[Della Corte, Ramadorai & Sarno 2016] Volatility Risk Premia and Exchange Rate Predictability",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational",
+      "replication": "fail_closed_missing_data（OTC 一年期 smile）",
+      "project_map": "横截面 VRP / 10Δ RR；Cboe 30D IV **不能**冒充",
+      "doi": "https://doi.org/10.1016/j.jfineco.2016.02.015"
+    },
+    {
+      "id": "du_tepper_verdelhan",
+      "path": "02_factor_literature/notes/du_tepper_verdelhan.md",
+      "title": "[Du, Tepper & Verdelhan 2018] Deviations from Covered Interest Rate Parity",
+      "bucket": "02_factor_literature",
+      "level": "L4",
+      "role": "boundary / data_contract",
+      "replication": "fail_closed_missing_data（同步 spot、forward、OIS/repo）",
+      "project_map": "CIP/basis **合同约束**，不是方向 alpha",
+      "doi": "https://doi.org/10.1111/jofi.12620 ；NBER WP 23170"
+    },
+    {
+      "id": "ecb_wp1968_carry_monetary_conditions",
+      "path": "02_factor_literature/notes/ecb_wp1968_carry_monetary_conditions.md",
+      "title": "[Falconio 2016/rev.2021] Carry Trades and Monetary Conditions（ECB WP 1968）",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "extension（**美国货币条件 × carry 状态依赖**）",
+      "replication": "extension_only（货币条件指标定义）",
+      "project_map": "carry 的**体制/门控**文献；非新横截面因子",
+      "doi": "ECB WP 1968 https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp1968.en.pdf"
+    },
+    {
+      "id": "ecb_wp2149_carry_to_curvy_trades",
+      "path": "02_factor_literature/notes/ecb_wp2149_carry_to_curvy_trades.md",
+      "title": "[Dreher, Gräb & Kostka 2018] From Carry Trades to Curvy Trades（ECB WP 2149）",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "extension / critique（用收益率曲线曲率替代短端利差）",
+      "replication": "fail_closed_missing_data（多国 Nelson–Siegel 全曲线）/ extension_only（短端近似）",
+      "project_map": "曲线因子 carry 变体；需完整国债曲线，非仅政策利率",
+      "doi": "ECB WP 2149 https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp2149.en.pdf"
+    },
+    {
+      "id": "ecb_wp2731_boosting_carry_eer",
+      "path": "02_factor_literature/notes/ecb_wp2731_boosting_carry_eer.md",
+      "title": "[Rubaszek, Beckmann, Ca' Zorzi & Kwas 2022] Boosting Carry with Equilibrium Exchange Rate Estimates（ECB WP 2731）",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational extension（**value/EER 慢收敛 × carry**）",
+      "replication": "extension_only（均衡汇率定义与修订）/ fail_closed 若无 PIT 宏观",
+      "project_map": "最接近项目 **currency value + carry 混合**；REER/PPP/BEER **vintage** 关键",
+      "doi": "ECB WP 2731 https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp2731.en.pdf"
+    },
+    {
+      "id": "fang_ifdp_2019",
+      "path": "02_factor_literature/notes/fang_ifdp_2019.md",
+      "title": "[Correa & DeMarco 2019 IFDP 1262] Dealer Leverage and Exchange Rates",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "boundary / negative_control",
+      "replication": "negative_control",
+      "project_map": "2016–2025 **负对照** / dealer-capacity 状态；**非**方向 alpha",
+      "doi": "https://doi.org/10.17016/IFDP.2019.1262"
+    },
+    {
+      "id": "farhi_gabaix_rare_disasters_w13805",
+      "path": "02_factor_literature/notes/farhi_gabaix_rare_disasters_w13805.md",
+      "title": "[Farhi & Gabaix 2008/2016] Rare Disasters and Exchange Rates",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational theory（灾难风险 → 远期升水谜题）",
+      "replication": "extension_only（理论校准）/ fail_closed_missing_data（跨国期权曲面）",
+      "project_map": "carry / UIP 的**灾难风险**理论边界；期权 skew 作为潜在状态变量动机",
+      "doi": "NBER w13805；后续 QJE 2016 修订线"
+    },
+    {
+      "id": "farhi_maggiori_ims_w22295",
+      "path": "02_factor_literature/notes/farhi_maggiori_ims_w22295.md",
+      "title": "[Farhi & Maggiori 2018] A Model of the International Monetary System",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational theory（储备货币层级 / Triffin 现代版）",
+      "replication": "extension_only（理论）",
+      "project_map": "美元便利/储备需求作为 **长期风险溢价与安全资产**边界；非短线因子",
+      "doi": "QJE 2018；NBER w22295 https://www.nber.org/papers/w22295"
+    },
+    {
+      "id": "ferraro_rogoff_rossi",
+      "path": "02_factor_literature/notes/ferraro_rogoff_rossi.md",
+      "title": "[Ferraro, Rogoff & Rossi 2015] Can Oil Prices Forecast Exchange Rates?",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "replication / boundary（商品价格→汇率；**日度短记忆**）",
+      "replication": "extension_only（日度油价+CAD 等可探索；月度 OOS 原文已弱）",
+      "project_map": "商品货币**日度**油价联动；**非**慢周期月度因子主候选",
+      "doi": "https://doi.org/10.1016/j.jimonfin.2015.03.001 ；NBER WP 17998"
+    },
+    {
+      "id": "gabaix_maggiori_international_liquidity_w19854",
+      "path": "02_factor_literature/notes/gabaix_maggiori_international_liquidity_w19854.md",
+      "title": "[Gabaix & Maggiori 2015] International Liquidity and Exchange Rate Dynamics",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational theory（金融中介摩擦 → UIP/disconnect）",
+      "replication": "extension_only（理论）",
+      "project_map": "carry 的**中介风险溢价**叙事；资金流/全球流动性状态变量动机；**非**可交易因子配方",
+      "doi": "QJE 2015；NBER w19854 https://www.nber.org/papers/w19854"
+    },
+    {
+      "id": "hassan_mano",
+      "path": "02_factor_literature/notes/hassan_mano.md",
+      "title": "[Hassan & Mano 2019] Forward and Spot Exchange Rates in a Multi-Currency World",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "critique（carry 质量 / 来源分解）",
+      "replication": "fail_closed_missing_data（多币 1M forward 全历史）+ 概念上 extension_only（分解诊断）",
+      "project_map": "区分 **静态横截面 carry** vs **动态/FPP/美元交易**；否决“Fama 回归即 carry”",
+      "doi": "https://doi.org/10.1093/qje/qjy016 ；NBER WP 20294 https://doi.org/10.3386/w20294"
+    },
+    {
+      "id": "huang_macdonald_position_unwinding_risk",
+      "path": "02_factor_literature/notes/huang_macdonald_position_unwinding_risk.md",
+      "title": "[Huang & MacDonald 2013] Currency Carry Trades, Position-Unwinding Risk, and Sovereign Credit Premia",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "replication / critique（期权隐含平仓风险 + 主权 CDS 定价 carry）",
+      "replication": "fail_closed_missing_data（FX 期权截面 + 主权 CDS 全宇宙）",
+      "project_map": "carry 风险因子分解——**主权信用 + 平仓似然**；非默认方向信号",
+      "doi": "MPRA 51207 https://mpra.ub.uni-muenchen.de/51207/ ；SSRN 2287287"
+    },
+    {
+      "id": "itskhoki_mukhin_disconnect_w23401",
+      "path": "02_factor_literature/notes/itskhoki_mukhin_disconnect_w23401.md",
+      "title": "[Itskhoki & Mukhin 2017] Exchange Rate Disconnect in General Equilibrium",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational theory / boundary（宏观 disconnect 与 UIP 统一框架）",
+      "replication": "extension_only（理论/校准模型；无交易策略表）",
+      "project_map": "解释边界——基本面弱相关 ≠ 可交易 alpha；金融/资产需求冲击主导汇率时，因子应偏风险溢价/中介而非短窗 PPP",
+      "doi": "NBER w23401 https://www.nber.org/papers/w23401 ；发表线 AER 2021"
+    },
+    {
+      "id": "itskhoki_real_exchange_disconnect_map",
+      "path": "02_factor_literature/notes/itskhoki_real_exchange_disconnect_map.md",
+      "title": "[Itskhoki 2021] The Story of the Real Exchange Rate（+ disconnect 映射）",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational theory survey / boundary（汇率 disconnect 与 UIP）",
+      "replication": "extension_only（理论综述）",
+      "project_map": "解释边界——宏观基本面弱预测 ≠ 可交易 alpha；金融冲击主导汇率波动时因子应偏风险/中介而非 PPP 口号",
+      "doi": "NBER w28225 https://www.nber.org/papers/w28225"
+    },
+    {
+      "id": "jurek_crash_neutral_currency_carry",
+      "path": "02_factor_literature/notes/jurek_crash_neutral_currency_carry.md",
+      "title": "[Jurek 2009/2014 线] Crash-Neutral Currency Carry Trades",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational / critique（用期权把 crash 从 carry 中“对冲掉”）",
+      "replication": "fail_closed_missing_data（OTC FX 期权曲面 + 对冲执行）",
+      "project_map": "carry 左尾/期权对冲成本上界；**非**零售可交易 RR 因子",
+      "doi": "SSRN abstract_id=1262934；后续 RFS 发表线 *Crash-Neutral Currency Carry Trades*"
+    },
+    {
+      "id": "jylha_suominen_arbitrage_capital_carry",
+      "path": "02_factor_literature/notes/jylha_suominen_arbitrage_capital_carry.md",
+      "title": "[Jylhä & Suominen] Arbitrage Capital and Currency Carry Trade Returns",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "boundary（套利资本/拥挤与 carry 收益）",
+      "replication": "extension_only（精确套利资本度量常不可得；可用代理）",
+      "project_map": "carry 收益的 **套利资本/投机者约束** 渠道；拥挤代理预注册",
+      "doi": "SSRN 1107797；Aalto 镜像"
+    },
+    {
+      "id": "koijen_moskowitz_pedersen_vrugt_carry_w19325",
+      "path": "02_factor_literature/notes/koijen_moskowitz_pedersen_vrugt_carry_w19325.md",
+      "title": "[Koijen, Moskowitz, Pedersen & Vrugt 2018] Carry",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational（跨资产 carry 统一；含 FX 专节）",
+      "replication": "fail_closed_missing_data（1M forward）/ extension_only（利率近似）",
+      "project_map": "FX carry 信号定义的**跨资产对照**；全局 carry 拥挤/周期暴露；**非**零售净收益证明",
+      "doi": "JFE 2018；NBER w19325 https://www.nber.org/papers/w19325"
+    },
+    {
+      "id": "lettau_maggiori_weber_dr_capm_w18844",
+      "path": "02_factor_literature/notes/lettau_maggiori_weber_dr_capm_w18844.md",
+      "title": "[Lettau, Maggiori & Weber 2014] Conditional Risk Premia in Currency Markets and Other Asset Classes",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational / critique（下行风险 CAPM 统一定价 carry 等）",
+      "replication": "extension_only（需市场组合+多资产测试组合）/ fail_closed_missing_data（完整货币 forward 面板）",
+      "project_map": "carry 的**风险定价**对照（DR-CAPM）；解释“无条件 CAPM 失败”但条件 beta 成功",
+      "doi": "JFE 2014；NBER w18844 https://www.nber.org/papers/w18844"
+    },
+    {
+      "id": "lustig_rfs_2011",
+      "path": "02_factor_literature/notes/lustig_rfs_2011.md",
+      "title": "[Lustig, Roussanov & Verdelhan 2011] Common Risk Factors in Currency Markets",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational",
+      "replication": "fail_closed_missing_data（缺当时可交易 1M forward points / 账户 swap）",
+      "project_map": "slow carry / HML_FX 合同；forward discount 排序",
+      "doi": "https://doi.org/10.1093/rfs/hhr068 ；NBER WP 14082: https://www.nber.org/papers/w14082"
+    },
+    {
+      "id": "lustig_stathopoulos_verdelhan_term_structure_w19623",
+      "path": "02_factor_literature/notes/lustig_stathopoulos_verdelhan_term_structure_w19623.md",
+      "title": "[Lustig, Stathopoulos & Verdelhan] The Term Structure of Currency Carry Trade Risk Premia",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational / critique（短端 carry vs 长端债券 carry）",
+      "replication": "fail_closed_missing_data（多国零息/国债全收益曲线）",
+      "project_map": "**禁止**把“短端 HML_FX 溢价”外推到长债/长持有无条件成立；长端需本地期限溢价对冲叙事",
+      "doi": "NBER w19623 https://www.nber.org/papers/w19623 ；AER 2019 线"
+    },
+    {
+      "id": "menkhoff_jf_2012_carry",
+      "path": "02_factor_literature/notes/menkhoff_jf_2012_carry.md",
+      "title": "[Menkhoff, Sarno, Schmeling & Schrimpf 2012] Carry Trades and Global FX Volatility",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational",
+      "replication": "fail_closed_missing_data（1M forward bid/ask + 全宇宙日度 |Δs|）",
+      "project_map": "carry 的 **全球 FX 波动风险**解释；VOL 因子 / vol-gate 动机（与 Moreira–Muir own-RV 不同）",
+      "doi": "https://doi.org/10.1111/j.1540-6261.2012.01728.x"
+    },
+    {
+      "id": "menkhoff_jfe_2012_mom",
+      "path": "02_factor_literature/notes/menkhoff_jfe_2012_mom.md",
+      "title": "[Menkhoff, Sarno, Schmeling & Schrimpf 2012] Currency Momentum Strategies",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational",
+      "replication": "extension_only（成本与持有期）；精确 6 分位+1M forward 需数据",
+      "project_map": "横截面 currency momentum；21/63/126/252 与 skip-21 搜索账本",
+      "doi": "https://doi.org/10.1016/j.jfineco.2012.06.009"
+    },
+    {
+      "id": "menkhoff_rfs_value",
+      "path": "02_factor_literature/notes/menkhoff_rfs_value.md",
+      "title": "[Menkhoff, Sarno, Schmeling & Schrimpf 2017] Currency Value",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational",
+      "replication": "extension_only（REER vintage / 宏观 fundamentals）",
+      "project_map": "REER/价值偏离；BIS REER current-vintage 边界",
+      "doi": "https://doi.org/10.1093/rfs/hhw067"
+    },
+    {
+      "id": "moreira_muir",
+      "path": "02_factor_literature/notes/moreira_muir.md",
+      "title": "[Moreira & Muir 2017] Volatility-Managed Portfolios",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "boundary（仓位管理，非新方向）",
+      "replication": "extension_only（依赖可交易 carry 因子序列）",
+      "project_map": "own-factor inverse-variance sizing；**区分** global-vol 阈值门控",
+      "doi": "https://doi.org/10.1111/jofi.12513 ；NBER WP 22208"
+    },
+    {
+      "id": "moskowitz_ooi_pedersen",
+      "path": "02_factor_literature/notes/moskowitz_ooi_pedersen.md",
+      "title": "[Moskowitz, Ooi & Pedersen 2012] Time Series Momentum",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational",
+      "replication": "extension_only（期货收益、vol 目标、重叠持有）",
+      "project_map": "单资产 TS momentum；与横截面 MOM 区分",
+      "doi": "https://doi.org/10.1016/j.jfineco.2011.11.003"
+    },
+    {
+      "id": "ready_roussanov_ward",
+      "path": "02_factor_literature/notes/ready_roussanov_ward.md",
+      "title": "[Ready, Roussanov & Ward 2017] Commodity Trade and the Carry Trade",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational（商品货币 / 无条件 carry 微观基础）",
+      "replication": "extension_only（贸易数据低频 + 缺 forward 时仅机制）",
+      "project_map": "**商品出口结构**排序的无条件 carry（IMX）；与利差 carry 重叠诊断",
+      "doi": "https://doi.org/10.1111/jofi.12546 ；NBER WP 19371"
+    },
+    {
+      "id": "soderlind_somogyi_2024",
+      "path": "02_factor_literature/notes/soderlind_somogyi_2024.md",
+      "title": "[Söderlind & Somogyi 2024] Currency Liquidity Risk Premia",
+      "bucket": "02_factor_literature",
+      "level": "L3",
+      "role": "foundational",
+      "replication": "fail_closed_missing_data（逐日 1M forward + 15 USD 腿）",
+      "project_map": "流动性**风险暴露**排序，非 spread 水平过滤",
+      "doi": "https://doi.org/10.1287/mnsc.2023.01031"
+    },
+    {
+      "id": "andersen_et_al_aer",
+      "path": "03_microstructure_intraday/notes/andersen_et_al_aer.md",
+      "title": "[Andersen, Bollerslev, Diebold & Vega 2003] Micro Effects of Macro Announcements",
+      "bucket": "03_microstructure_intraday",
+      "level": "L3",
+      "role": "foundational（公告微观结构）",
+      "replication": "fail_closed_missing_data（对方向 surprise）；blackout 扩展可用",
+      "project_map": "**blackout**（仅实际发布时间）；禁止无 consensus 的方向 surprise",
+      "doi": "https://doi.org/10.1257/000282803321455151 ；作者 PDF http://public.econ.duke.edu/~boller/Published_Papers/aer_03.pdf"
+    },
+    {
+      "id": "breedon_ranaldo",
+      "path": "03_microstructure_intraday/notes/breedon_ranaldo.md",
+      "title": "[Breedon & Ranaldo 2013] Intraday Patterns in FX Returns and Order Flow",
+      "bucket": "03_microstructure_intraday",
+      "level": "L4",
+      "role": "foundational",
+      "replication": "extension_only（零售 bid/ask + 无授权 EBS 订单流）；精确 EBS 复制 fail_closed_missing_data",
+      "project_map": "`LOCAL-PAPER` 12 单元面板；`LOCAL-PORTFOLIO` 为项目扩展（固定 1/6 sleeves）",
+      "doi": "https://doi.org/10.1111/jmcb.12032 ；SNB WP 2011-4 PDF（合法工作论文）"
+    },
+    {
+      "id": "evans_lyons",
+      "path": "03_microstructure_intraday/notes/evans_lyons.md",
+      "title": "[Evans & Lyons 2008/机制稿] How Is Macro News Transmitted to Exchange Rates?",
+      "bucket": "03_microstructure_intraday",
+      "level": "L3",
+      "role": "foundational（机制 only）",
+      "replication": "fail_closed_missing_data / negative_control 边界",
+      "project_map": "**机制参考 only**；无授权签名订单流前不实现方向规则",
+      "doi": "项目地图指向 https://doi.org/10.1016/j.jinteco.2009.03.005 ；作者稿 “How Is Macro News Transmitted to Exchange Rates?”"
+    },
+    {
+      "id": "faust_et_al",
+      "path": "03_microstructure_intraday/notes/faust_et_al.md",
+      "title": "[Faust, Rogers, Wang & Wright 2007] High-Frequency Response of Exchange Rates and Interest Rates to Macro Announcements",
+      "bucket": "03_microstructure_intraday",
+      "level": "L3",
+      "role": "replication / boundary",
+      "replication": "fail_closed_missing_data",
+      "project_map": "surprise **合同**（actual − MMS median；20 分钟窗）；无 consensus 则 fail closed",
+      "doi": "https://doi.org/10.1016/j.jmoneco.2006.05.015 ；会议/工作论文 PDF"
+    },
+    {
+      "id": "krohn_mueller_whelan",
+      "path": "03_microstructure_intraday/notes/krohn_mueller_whelan.md",
+      "title": "[Krohn, Mueller & Whelan 2024] Foreign Exchange Fixings and Returns around the Clock",
+      "bucket": "03_microstructure_intraday",
+      "level": "L4",
+      "role": "foundational",
+      "replication": "extension_only（G9 美元腿冻结组合 + 可成交 bid/ask + 官方发布日历）；midquote 毛收益不足以免否决",
+      "project_map": "`FIX-W` 四段组合（`-preTokyo + postTokyo - preECB + postWMR`）",
+      "doi": "https://doi.org/10.1111/jofi.13306 ；作者接受稿 https://wrap.warwick.ac.uk/id/eprint/177333/ ；SSRN abstract_id=3521370"
+    },
+    {
+      "id": "lseg_wmr_methodology",
+      "path": "03_microstructure_intraday/notes/lseg_wmr_methodology.md",
+      "title": "LSEG WMR FX Benchmarks Methodology（L2 官方合同）",
+      "bucket": "03_microstructure_intraday",
+      "level": "L2（官方 methodology；允许作附录与日历合同）",
+      "role": "data_contract",
+      "replication": "官方规则已部分接入 `PublicationCalendar`；半日例外仍依赖人工转录 + hash 审计",
+      "project_map": "Tokyo / WMR 事件时刻、五分钟窗、半日/停服例外表、月末实际发布日",
+      "doi": "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/wmr-fx-methodology.pdf （v30, January 2026）"
+    },
+    {
+      "id": "mancini_ranaldo_wrampelmeyer",
+      "path": "03_microstructure_intraday/notes/mancini_ranaldo_wrampelmeyer.md",
+      "title": "[Mancini, Ranaldo & Wrampelmeyer 2013] Liquidity in the Foreign Exchange Market",
+      "bucket": "03_microstructure_intraday",
+      "level": "L3",
+      "role": "foundational（流动性度量）/ boundary（对本项目的过滤用途）",
+      "replication": "extension_only",
+      "project_map": "FIX-W **过去 60 事件日 spread q90** 入场过滤（项目执行合同，非全文复制）",
+      "doi": "https://doi.org/10.1111/jofi.12053 ；SFI RP 09-44 / 作者页数据"
+    },
+    {
+      "id": "melvin_prins",
+      "path": "03_microstructure_intraday/notes/melvin_prins.md",
+      "title": "[Melvin & Prins 2015] Equity Hedging and Exchange Rates at the London 4pm Fix",
+      "bucket": "03_microstructure_intraday",
+      "level": "L3",
+      "role": "boundary",
+      "replication": "fail_closed_missing_data（缺 PIT 股票收益与对冲映射时只能叫月末放大）",
+      "project_map": "WMR **月末交互项**（单一预注册放大），非独立方向因子",
+      "doi": "https://doi.org/10.1016/j.finmar.2014.11.001 ；ECB 研讨会稿 PDF"
+    },
+    {
+      "id": "bailey_2014_deflated_sharpe",
+      "path": "04_validation_methods/notes/bailey_2014_deflated_sharpe.md",
+      "title": "[Bailey & López de Prado 2014] The Deflated Sharpe Ratio",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "foundational",
+      "replication": "exact_possible（日尺度 PSR/DSR 诊断）",
+      "project_map": "`deflated_sharpe_ratio`；完整试验次数 fail-closed",
+      "doi": "https://doi.org/10.3905/jpm.2014.40.5.094"
+    },
+    {
+      "id": "bailey_pbo_cscv",
+      "path": "04_validation_methods/notes/bailey_pbo_cscv.md",
+      "title": "[Bailey, Borwein, López de Prado & Zhu] Probability of Backtest Overfitting (CSCV)",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "foundational",
+      "replication": "exact_possible（16-block CSCV）",
+      "project_map": "`cscv_probability_of_backtest_overfitting`；固定 16 块",
+      "doi": "https://doi.org/10.21314/JCF.2016.322 ；SSRN abstract_id=2326253"
+    },
+    {
+      "id": "benjamini_hochberg_1995",
+      "path": "04_validation_methods/notes/benjamini_hochberg_1995.md",
+      "title": "[Benjamini & Hochberg 1995] Controlling the False Discovery Rate",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "foundational",
+      "replication": "exact_possible（对给定 p 向量）",
+      "project_map": "`benjamini_hochberg`；每折主 FDR 门槛",
+      "doi": "https://doi.org/10.1111/j.2517-6161.1995.tb02031.x"
+    },
+    {
+      "id": "benjamini_yekutieli_2001",
+      "path": "04_validation_methods/notes/benjamini_yekutieli_2001.md",
+      "title": "[Benjamini & Yekutieli 2001] The Control of the False Discovery Rate under Dependency",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "foundational",
+      "replication": "exact_possible",
+      "project_map": "`benjamini_yekutieli`；任意相关敏感性，不替代主假设注册",
+      "doi": "https://doi.org/10.1214/aos/1013699998"
+    },
+    {
+      "id": "hansen_2005_spa",
+      "path": "04_validation_methods/notes/hansen_2005_spa.md",
+      "title": "[Hansen 2005] A Test for Superior Predictive Ability",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "foundational",
+      "replication": "exact_possible（内部核心）；extension_only（端到端生产 runner）",
+      "project_map": "`hansen_spa_test`（真正 studentized + plus-one p）；**正式 runner 尚未调用**",
+      "doi": "https://doi.org/10.1198/073500105000000063"
+    },
+    {
+      "id": "hansen_lunde_nason_mcs",
+      "path": "04_validation_methods/notes/hansen_lunde_nason_mcs.md",
+      "title": "[Hansen, Lunde & Nason 2011] The Model Confidence Set",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "critique / sensitivity",
+      "replication": "extension_only",
+      "project_map": "计划中敏感性；**无生产实现符号**",
+      "doi": "https://doi.org/10.3982/ECTA5771"
+    },
+    {
+      "id": "harvey_liu_zhu_factor_zoo",
+      "path": "04_validation_methods/notes/harvey_liu_zhu_factor_zoo.md",
+      "title": "[Harvey, Liu & Zhu 2016] … and the Cross-Section of Expected Returns",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "foundational / boundary",
+      "replication": "extension_only（门槛哲学与披露；非股票因子动物园复刻）",
+      "project_map": "搜索账本 + 提高新因子证据门槛；非单一函数",
+      "doi": "https://doi.org/10.1111/jofi.12883 ；RFS 2016；NBER w20592"
+    },
+    {
+      "id": "phipson_smyth_2010_empirical_p",
+      "path": "04_validation_methods/notes/phipson_smyth_2010_empirical_p.md",
+      "title": "[Phipson & Smyth 2010] Permutation P-values Should Never Be Zero",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "foundational",
+      "replication": "exact_possible",
+      "project_map": "plus-one p 贯穿 bootstrap / SPA",
+      "doi": "https://doi.org/10.2202/1544-6115.1585"
+    },
+    {
+      "id": "politis_romano_1994_stationary_bootstrap",
+      "path": "04_validation_methods/notes/politis_romano_1994_stationary_bootstrap.md",
+      "title": "[Politis & Romano 1994] The Stationary Bootstrap",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "foundational",
+      "replication": "exact_possible（算法级）",
+      "project_map": "`joint_stationary_bootstrap_indices`；SPA 内 `_stationary_bootstrap_indices`",
+      "doi": "https://doi.org/10.1080/01621459.1994.10476870"
+    },
+    {
+      "id": "romano_wolf_2005",
+      "path": "04_validation_methods/notes/romano_wolf_2005.md",
+      "title": "[Romano & Wolf 2005] Stepwise Multiple Testing",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "boundary",
+      "replication": "extension_only",
+      "project_map": "多策略 FWER 备选；**无生产实现**",
+      "doi": "https://doi.org/10.1111/j.1468-0262.2005.00615"
+    },
+    {
+      "id": "white_2000_reality_check",
+      "path": "04_validation_methods/notes/white_2000_reality_check.md",
+      "title": "[White 2000] A Reality Check for Data Snooping",
+      "bucket": "04_validation_methods",
+      "level": "L5",
+      "role": "foundational",
+      "replication": "extension_only（项目未单独实现 White RC 函数）",
+      "project_map": "Reality Check 思想；正式实现优先 Hansen SPA（studentized）",
+      "doi": "https://doi.org/10.1111/1468-0262.00152"
+    },
+    {
+      "id": "alfred_and_rtdsm_pit",
+      "path": "05_data_contracts/notes/alfred_and_rtdsm_pit.md",
+      "title": "[ALFRED + RTDSM] 宏观 Vintage 与严格 PIT",
+      "bucket": "05_data_contracts",
+      "level": "L4",
+      "role": "data_contract",
+      "replication": "RTDSM CPI/IP exact_possible（已下载校验）；ALFRED conditional",
+      "project_map": "day-level 宏观状态；**非** surprise",
+      "doi": ""
+    },
+    {
+      "id": "bis_low_frequency_pit_bans",
+      "path": "05_data_contracts/notes/bis_low_frequency_pit_bans.md",
+      "title": "[BIS GLI / LBS / OTC / Triennial] 低频统计：允许与禁止",
+      "bucket": "05_data_contracts",
+      "level": "L3–L4",
+      "role": "data_contract",
+      "replication": "机制 only；strict_pit_eligible=false（无 full as-published 链）",
+      "project_map": "发布后低频风险状态 / 结构校准；**永不**作 G9 日方向",
+      "doi": ""
+    },
+    {
+      "id": "cftc_release_and_revision_boundaries",
+      "path": "05_data_contracts/notes/cftc_release_and_revision_boundaries.md",
+      "title": "[CFTC COT/TFF] 发布、修订与订单流边界",
+      "bucket": "05_data_contracts",
+      "level": "L4",
+      "role": "data_contract / boundary",
+      "replication": "extension_only / strict 晋级 fail closed",
+      "project_map": "货币期货拥挤/仓位特征；`availability_lag_days=60` 默认",
+      "doi": ""
+    },
+    {
+      "id": "avdjiev_cip_dollar_contract",
+      "path": "06_broker_costs/notes/avdjiev_cip_dollar_contract.md",
+      "title": "[Avdjiev–Du–Koch–Shin] CIP 合同短注（06）",
+      "bucket": "06_broker_costs",
+      "level": "L3（合同）",
+      "role": "data_contract",
+      "replication": "fail_closed_missing_data",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "borio_bis_basis",
+      "path": "06_broker_costs/notes/borio_bis_basis.md",
+      "title": "[Borio et al. 2016 / 2022] Cross-currency basis 与表外美元义务",
+      "bucket": "06_broker_costs",
+      "level": "L4",
+      "role": "data_contract / boundary",
+      "replication": "extension_only（机制/状态）；fail_closed_missing_data（日度 basis 交易）",
+      "project_map": "CIP/资金压力合同；**不是** G9 日度方向因子",
+      "doi": ""
+    },
+    {
+      "id": "du_tepper_verdelhan_cip",
+      "path": "06_broker_costs/notes/du_tepper_verdelhan_cip.md",
+      "title": "[Du, Tepper & Verdelhan 2018] Deviations from Covered Interest Rate Parity",
+      "bucket": "06_broker_costs",
+      "level": "L5",
+      "role": "foundational / data_contract",
+      "replication": "fail_closed_missing_data（缺同步 forward+OIS+结算）",
+      "project_map": "CIP 字段合同；`QendW`/`QendM`；**非** spot 方向策略",
+      "doi": "https://doi.org/10.1111/jofi.12620"
+    },
+    {
+      "id": "oanda_financing_docs",
+      "path": "06_broker_costs/notes/oanda_financing_docs.md",
+      "title": "[OANDA] Financing / Swap 官方文档与导出边界",
+      "bucket": "06_broker_costs",
+      "level": "L4",
+      "role": "data_contract",
+      "replication": "extension_only（条款理解 + 近年公开表）；fail_closed_missing_data（目标账户长史）",
+      "project_map": "`scripts/download_oanda_financing_history.py`；**不可**单独打开 formal net",
+      "doi": "见下表官方链"
+    },
+    {
+      "id": "alfred_stlouisfed",
+      "path": "08_datasets_catalog/notes/alfred_stlouisfed.md",
+      "title": "ALFRED (Archival FRED) — St. Louis Fed",
+      "bucket": "08_datasets_catalog",
+      "level": "L2",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "bis_reer_gli_lbs",
+      "path": "08_datasets_catalog/notes/bis_reer_gli_lbs.md",
+      "title": "BIS REER / GLI / LBS",
+      "bucket": "08_datasets_catalog",
+      "level": "L2",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "cboe_fx_vol_indices",
+      "path": "08_datasets_catalog/notes/cboe_fx_vol_indices.md",
+      "title": "Cboe FX / Currency Volatility Indices (EVZ, EUVIX, JYVIX, BPVIX)",
+      "bucket": "08_datasets_catalog",
+      "level": "L2",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "cftc_cot",
+      "path": "08_datasets_catalog/notes/cftc_cot.md",
+      "title": "CFTC Commitments of Traders (COT) / TFF",
+      "bucket": "08_datasets_catalog",
+      "level": "L2",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "ecb_ciss",
+      "path": "08_datasets_catalog/notes/ecb_ciss.md",
+      "title": "ECB CISS (Composite Indicator of Systemic Stress)",
+      "bucket": "08_datasets_catalog",
+      "level": "L2",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "nyfed_markets_api",
+      "path": "08_datasets_catalog/notes/nyfed_markets_api.md",
+      "title": "NY Fed Markets Data APIs",
+      "bucket": "08_datasets_catalog",
+      "level": "L2",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "ofr_fsi",
+      "path": "08_datasets_catalog/notes/ofr_fsi.md",
+      "title": "OFR Financial Stress Index (FSI)",
+      "bucket": "08_datasets_catalog",
+      "level": "L2",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "philly_fed_rtdsm",
+      "path": "08_datasets_catalog/notes/philly_fed_rtdsm.md",
+      "title": "Philadelphia Fed Real-Time Data Set for Macroeconomists (RTDSM)",
+      "bucket": "08_datasets_catalog",
+      "level": "L2",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "worldbank_pink_sheet",
+      "path": "08_datasets_catalog/notes/worldbank_pink_sheet.md",
+      "title": "World Bank Commodity Markets (“Pink Sheet”)",
+      "bucket": "08_datasets_catalog",
+      "level": "L2",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "TEXTBOOKS_AND_SURVEYS",
+      "path": "10_surveys_handbooks/notes/TEXTBOOKS_AND_SURVEYS.md",
+      "title": "Surveys & handbooks — short list (links / bibliographic only)",
+      "bucket": "10_surveys_handbooks",
+      "level": "",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "bis_triennial_2022_fx",
+      "path": "10_surveys_handbooks/notes/bis_triennial_2022_fx.md",
+      "title": "[BIS 2022] Triennial Central Bank Survey — OTC FX Turnover（解释性笔记）",
+      "bucket": "10_surveys_handbooks",
+      "level": "L2 官方 + L3 解释（**结构校准 only**）",
+      "role": "data_contract / boundary",
+      "replication": "negative_control for alpha；extension_only for universe design",
+      "project_map": "币种宇宙、工具结构、对手方与地理集中度；**禁止**作日/月方向或拥挤度时间序列",
+      "doi": "https://www.bis.org/statistics/rpfx22.htm"
+    },
+    {
+      "id": "burnside_arfe_2011",
+      "path": "10_surveys_handbooks/notes/burnside_arfe_2011.md",
+      "title": "[Burnside, Eichenbaum & Rebelo 2011] Carry Trade and Momentum in Currency Markets（ARFE survey）",
+      "bucket": "10_surveys_handbooks",
+      "level": "L3",
+      "role": "foundational survey",
+      "replication": "extension_only（组合定义可对照） / fail_closed_missing_data（1M forward + 成本）",
+      "project_map": "carry / momentum 解释谱系；**不是**零售可实现净收益证明",
+      "doi": "https://doi.org/10.1146/annurev-financial-102710-144913 ；NBER WP 16942"
+    },
+    {
+      "id": "burnside_graveline_asset_market_view",
+      "path": "10_surveys_handbooks/notes/burnside_graveline_asset_market_view.md",
+      "title": "[Burnside & Graveline 2012/2018] On the Asset Market View of Exchange Rates",
+      "bucket": "10_surveys_handbooks",
+      "level": "L3（理论边界；非交易信号）",
+      "role": "boundary / critique",
+      "replication": "negative_control / theory only（无直接策略复制）",
+      "project_map": "防止把“汇率变动 = 两国 IMRS 之差”误读为**可交易风险溢价差异**的识别捷径",
+      "doi": "NBER WP 18646（2012；修订 2018）"
+    },
+    {
+      "id": "burnside_handbook_2012",
+      "path": "10_surveys_handbooks/notes/burnside_handbook_2012.md",
+      "title": "[Burnside 2011/2012] Carry Trades and Risk — 短卡指针",
+      "bucket": "10_surveys_handbooks",
+      "level": "",
+      "role": "",
+      "replication": "",
+      "project_map": "",
+      "doi": ""
+    },
+    {
+      "id": "burnside_handbook_carry_risk",
+      "path": "10_surveys_handbooks/notes/burnside_handbook_carry_risk.md",
+      "title": "[Burnside 2011] Carry Trades and Risk（Handbook of Exchange Rates 章 / NBER w17278）",
+      "bucket": "10_surveys_handbooks",
+      "level": "L3",
+      "role": "foundational handbook / risk taxonomy",
+      "replication": "extension_only / fail_closed_missing_data（forward）",
+      "project_map": "carry 风险解释清单；EW vs HML 杠杆差异；货币因子无法统一定价股票",
+      "doi": "NBER WP 17278；*Handbook of Exchange Rates*（James, Marsh & Sarno eds., Wiley）"
+    },
+    {
+      "id": "evans_lyons_order_flow_bis_classic",
+      "path": "10_surveys_handbooks/notes/evans_lyons_order_flow_bis_classic.md",
+      "title": "[Evans & Lyons，BIS Papers 线] Order Flow and Exchange Rate Dynamics（经典微观结构）",
+      "bucket": "10_surveys_handbooks",
+      "level": "L3",
+      "role": "foundational（订单流决定汇率的经验基石）",
+      "replication": "fail_closed_missing_data（全市场签名订单流）",
+      "project_map": "**机制 only**；无授权 OF 不做方向系统",
+      "doi": "JPE 2002 发表线；BIS Papers 转载/会议版"
+    },
+    {
+      "id": "fx_microstructure_survey_map",
+      "path": "10_surveys_handbooks/notes/fx_microstructure_survey_map.md",
+      "title": "FX 微观结构综述地图（survey map → 03 深读）",
+      "bucket": "10_surveys_handbooks",
+      "level": "L3（地图；单篇精读在 03）",
+      "role": "foundational map",
+      "replication": "分条见 03 CATALOG",
+      "project_map": "FIX-W / LOCAL-PAPER / spread 过滤 / blackout；**无签名 OF 则机制 only**",
+      "doi": "见下表；本文件不替代单篇 DOI"
+    },
+    {
+      "id": "hassan_zhang_economics_currency_risk_w27847",
+      "path": "10_surveys_handbooks/notes/hassan_zhang_economics_currency_risk_w27847.md",
+      "title": "[Hassan & Zhang 2020] The Economics of Currency Risk（综述卡）",
+      "bucket": "10_surveys_handbooks",
+      "level": "L3",
+      "role": "foundational survey（货币风险溢价经济学）",
+      "replication": "extension_only（综述）",
+      "project_map": "货币风险理论地图；连接 carry、国家规模、贸易网络、中介约束",
+      "doi": "NBER w27847 https://www.nber.org/papers/w27847"
+    },
+    {
+      "id": "lustig_verdelhan_handbook_2012",
+      "path": "10_surveys_handbooks/notes/lustig_verdelhan_handbook_2012.md",
+      "title": "[Lustig & Verdelhan 系] Exchange Rates in an SDF Framework — 短卡 + PDF 警告",
+      "bucket": "10_surveys_handbooks",
+      "level": "L3（框架短卡）",
+      "role": "survey map",
+      "replication": "extension_only（框架）；实证 fail_closed_missing_data（forward）",
+      "project_map": "SDF/欧拉语言；**实证复制**走 `02_factor_literature/notes/lustig_rfs_2011.md`",
+      "doi": "*Handbook of Exchange Rates* 章路线；实证以 LRV 论文为准"
+    }
+  ],
+  "pdf_purge": {
+    "bulk_deleted": 7973,
+    "kept_after_bulk": 418,
+    "ef_deleted": 77,
+    "kept_now": 341,
+    "summaries": [
+      "_pdfs/_PURGE_SUMMARY_ZH.md",
+      "_pdfs/_PURGE2_EF_SUMMARY_ZH.md"
+    ]
+  },
+  "pdf_l3": {
+    "updated": "2026-07-17",
+    "index": "agent/pdf_index.json",
+    "index_jsonl": "agent/pdf_index.jsonl",
+    "abstracts_dir": "agent/pdf_abstracts/",
+    "stats": "agent/pdf_l3_stats.md",
+    "builder": "scripts/build_pdf_l3_index.py",
+    "policy": "first_2_pages_title_abstract; no embeddings",
+    "priority_counts": {
+      "hot": 55,
+      "warm": 278,
+      "cold": 8
+    },
+    "pdf_count": 341,
+    "abstracts_ok": 338,
+    "thin_or_scan": 3
+  },
+  "pdf_policy": {
+    "mode": "index_first_extract_on_demand",
+    "index": "agent/pdf_index.jsonl",
+    "no_bulk_study_notes_for_all_pdfs": true,
+    "on_demand": "open at most one PDF / re-extract first pages when formula check needed"
+  }
+}

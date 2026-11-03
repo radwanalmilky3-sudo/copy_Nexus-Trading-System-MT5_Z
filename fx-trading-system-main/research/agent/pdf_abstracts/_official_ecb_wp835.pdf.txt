@@ -1,0 +1,21 @@
+path: _pdfs/_official/ecb_wp835.pdf
+title_guess: WO RKING PA PER SERIES
+ids: wp835
+priority: warm
+extract_status: ok
+---
+a motif 
+taken from the 
+20 banknote.
+US SHOCKS AND GLOBAL 
+EXCHANGE RATE 
+CONFIGURATIONS 1
+by Marcel Fratzscher 2
+This paper can be downloaded without charge from
+http://www.ecb.europa.eu or from the Social Science Research Network
+electronic library at http://ssrn.com/abstract_id=1030209.
+1 Paper prepared for the 46th Panel of Economic Policy. I would like to thank the editor, Philippe Martin, and an anonymous r eferee for 
+comments. I am also grateful for comments and discussions to Geert Bekaert, Thierry Bracke, Matthieu Bussiere, Menzie Chinn, 
+Michael Ehrmann, Charles Engel, Jon Faust, Michael Fidora, Steve Kamin, Nelson Mark, Frank Moss, Chiara Osbat, 
+Georges Pineau, Roberto Rigobon, Michael Sager, Lucio Sarno, Bernd Schnatz, Jay Shambaugh, Martin Skala, 
+Frank Smets, Roland Straub

@@ -1,0 +1,18 @@
+path: _pdfs/_nber/maggiori_neiman_schreger_international_currencies_w24673.pdf
+title_guess: INTERNATIONAL CURRENCIES AND CAPITAL ALLOCATION
+ids: w24673
+priority: cold
+extract_status: ok
+---
+RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+May 2018, Revised April 2019
+We are grateful to Laura Alfaro, Andy Atkeson, Luigi Bocola, Alberto Cavallo, Riccardo 
+Colacito, Massimiliano Croce,Wenxin Du, Emmanuel Farhi, Gita Gopinath, Tarek Hassan, 
+Arvind Krishnamurthy, Hanno Lustig, Gian Maria Milesi-Ferretti, Toby Moskowitz, Emi 
+Nakamura, Jonathan Ostry, Monika Piazzesi, Diego Perez, Robert Ready, Kenneth Rogoff, 
+Stephanie Schmitt-Grohe, Martin Schneider, Jeremy Stein, Jón Steinsson, Andrew Tilton, Harald 
+Uhlig, Martin Uribe, Adrien Verdelhan, Frank Warnock, and Eric Van Wincoop for their 
+comments, and we offer particular thanks to Steve Kaplan for his generous help with the project. 
+Bob Freeman, Clark Hyde, Sara Lux, Christine Rivera, Ravi Wadhwani, and Matt Weiss offered 

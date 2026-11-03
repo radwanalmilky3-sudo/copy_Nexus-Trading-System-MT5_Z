@@ -1,0 +1,17 @@
+path: _pdfs/_nber/burnside_carry_w15212.pdf
+title_guess: BANK CEO INCENTIVES AND THE CREDIT CRISIS
+ids: w15212
+priority: hot
+extract_status: ok
+---
+ssachusetts Avenue
+Cambridge, MA 02138
+August 2009
+Fahlenbrach is Swiss Finance Institute Assistant Professor at Ecole Polytechnique Fédérale de Lausanne.
+Stulz is the Everett D. Reese Chair of Banking and Monetary Economics, Fisher College of Business,
+Ohio State University, and affiliated with NBER and ECGI. Fahlenbrach acknowledges financial
+support from the Dice Center for Research in Financial Economics. Address correspondence to René
+M. Stulz, Fisher College of Business, The Ohio State University, 806 Fisher Hall, Columbus, OH 43210,
+stulz@cob.osu.edu. The views expressed herein are those of the author(s) and do not necessarily reflect
+the views of the National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been peer

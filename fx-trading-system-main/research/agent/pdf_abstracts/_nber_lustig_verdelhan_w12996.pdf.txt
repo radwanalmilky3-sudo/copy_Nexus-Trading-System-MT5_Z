@@ -1,0 +1,19 @@
+path: _pdfs/_nber/lustig_verdelhan_w12996.pdf
+title_guess: DEFINING AND MEASURING THE LOCATION OF FDI OUTPUT
+ids: w12996
+priority: warm
+extract_status: ok
+---
+ts Avenue
+Cambridge, MA 02138
+March 2007
+An earlier version of this paper, under the title, The Measurement of FDI, was presented at the 
+2006 Biennial Conference of the International Association for Research in Income and Wealth
+in Joensuu, Finland. I am indebted to Jing Sun, assisted by Julie Hersh, for research and statistical
+assistance, and to conference participants for comments and suggestions. The views expressed herein
+are those of the author(s) and do not necessarily reflect the views of the National Bureau of Economic
+Research.
+© 2007 by Robert E. Lipsey. All rights reserved. Short sections of text, not to exceed two paragraphs,
+may be quoted without explicit permission provided that full credit, including © notice, is given to
+the source.
+Defining and Measuring the Location o

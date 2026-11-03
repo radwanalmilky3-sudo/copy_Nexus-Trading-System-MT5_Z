@@ -1,0 +1,18 @@
+path: _pdfs/_nber/lustig_richmond_trachtenberg_country_spreads_w24527.pdf
+title_guess: ESCAPING IMPORT COMPETITION IN CHINA
+ids: w24527
+priority: warm
+extract_status: ok
+---
+etts Avenue
+Cambridge, MA 02138
+April 2018, Revised January 2020
+Previously circulated as "Escaping Import Competition and Downstream Tariffs." We are 
+especially grateful to Jonathan Eaton for his readings of previous drafts. We thank Matilde 
+Bombardini, Teresa Fort, Elisa Giannone, Beata Javorcik, and Esteban Rossi-Hansberg for their 
+suggestions. The research for this paper was conducted in part while Fieler was visiting the 
+Economics Department at Princeton University. We thank them for their hospitality. The views 
+expressed herein are those of the authors and do not necessarily reflect the views of the National 
+Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been 
+peer-reviewed or been subject to the review by the 

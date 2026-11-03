@@ -1,0 +1,571 @@
+_check_db.py	Not inspected	root-or-other
+.claude/launch.json	Not inspected	hidden
+.env	Unable to inspect	Remainder intentionally not reviewed; local shared internal API secret was inadvertently emitted in raw tool output and then rotated to a random 32-byte value without printing it. External copies remain the deployment owner's responsibility.
+.env.example	fixed and verified	agent-3 | Configuration documentation | Documents NEXUS_RISK_APPROVAL_SECRET as a separate 32+ byte key limited to nexus-risk and nexus-executor; 2026-10-16 distributed batch; suite green | No secret values added | Internal API shared secret documented as required; remaining settings not fully reviewed; 2026-10-16 distributed batch; suite green
+.gitignore	Inspected	Secrets, Python/Next generated outputs, databases, and debug scripts are ignored; `.pytest_cache` exclusion now matches audit scope
+ARABIC_EXPLANATION_VALIDATION.md	Not inspected	root-or-other
+ARCHITECTURE_AFTER.md	Not inspected	root-or-other
+bootstrap_ensemble.py	fixed and verified	root-or-other; 2026-10-16 distributed batch; suite green
+CHANGELOG.md	Not inspected	root-or-other
+config/agents.yaml	Inspected (partial)	YAML structure parses; prompt semantics, token budgets, and runtime model mapping not yet audited
+config/assets.yaml	Inspected (partial)	YAML structure parses; broker symbol mapping and runtime validation not fully cross-checked
+config/risk_rules.yaml	fixed and verified	YAML parses; static limits and sizing/session factors reviewed; runtime loading and invariants still need cross-checks; 2026-10-16 distributed batch; suite green
+config/sessions.yaml	Inspected (partial)	YAML parses with UTC sessions; overlaps and session gate behavior still require code-level boundary tests
+config/settings.yaml	Inspected (partial)	YAML parses; defaults are paper, auto-trade disabled, and local Redis/DuckDB/MLflow; runtime override precedence not fully traced
+config/theme.yaml	Inspected (partial)	YAML structure parses; dashboard consumption and visual behavior not fully verified
+CROSS_ASSET_VALIDATION.md	Not inspected	root-or-other
+dashboard/src/app/dashboard/layout.tsx	fixed and verified	Hydrates mode, auto-trade, and kill-switch from authoritative system endpoint; only shows confirmed status and requires server-confirmed PAPER change. No UI build/test run.; 2026-10-16 distributed batch; suite green | Gateway mode payload is re-read every 5 seconds and atomically reconciles LIVE/PAPER, auto_trade, and kill_switch; no mode mutation was performed during review.; 2026-10-16 distributed batch; suite green
+dashboard/src/app/dashboard/page.tsx	fixed and verified	ML mode switch uses JWT-aware client; TS verification blocked; 2026-10-16 distributed batch; suite green | Dashboard consumers of mode state reviewed.; 2026-10-16 distributed batch; suite green
+dashboard/src/app/dashboard/progress/page.tsx	fixed and verified	Progress page reviewed for dashboard scope.; 2026-10-16 distributed batch; suite green
+dashboard/src/app/progress-state/route.ts	Reviewed	Progress state route reviewed for dashboard scope.
+dashboard/src/components/fundamental/DataLineagePanel.tsx	Implemented, not verified	Retains last valid lineage snapshots and shows stale-data warning when either refresh fails; no frontend verification | Reviewed for safe rendering and data-shape handling.
+dashboard/src/components/fundamental/FundamentalCharts.tsx	Implemented, not verified	Retains last valid asset-impact snapshots and shows stale-data warning when either refresh fails; no frontend verification | Reviewed for safe rendering and data-shape handling.
+dashboard/src/components/fundamental/FundamentalWorkspace.tsx	Reviewed	Reviewed for safe rendering, bounded rows, and API refresh cleanup. | frontend
+dashboard/src/components/fundamental/LocalAIAnalystPanel.tsx	Reviewed	Reviewed for safe rendering of optional analysis data. | frontend
+dashboard/src/components/fundamental/MultiAssetImpactPanel.tsx	Reviewed	Reviewed for safe rendering and optional market-impact data. | frontend
+dashboard/src/components/fundamental/NewsIntelligencePanel.tsx	Reviewed	Reviewed for safe rendering and source-data handling. | frontend
+dashboard/src/components/fundamental/NewsTickerBar.tsx	Fixed and reviewed	Malformed sessionStorage delivery state is ignored instead of crashing ticker initialization; polling and timer cleanup reviewed. | frontend
+dashboard/src/components/fundamental/NewsTickerControlPanel.tsx	Fixed and verified	frontend | Reviewed for bounded controls and safe settings updates.
+dashboard/src/components/progress/HierarchicalTable.tsx	fixed and verified	Progress table reviewed for dashboard scope.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/trade-controls/AutoTradeToggle.tsx	fixed and verified	Requires confirmed system snapshot to enable/disable, asks for PIN when enabling, changes local state only after matching server response, and surfaces request errors. No UI build/test run.; 2026-10-16 distributed batch; suite green | Toggle confirms the requested auto_trade value from the server, updates the shared store, preserves PIN confirmation, and relies on layout polling for full mode/kill-switch reconciliation.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/trade-controls/KillSwitch.tsx	fixed and verified	Uses server-side PIN validation and updates local latch only after explicit server confirmation; failed requests preserve prior state. No client PIN fallback or fake release path; render helper adjusted to avoid remounting the nested dialog on keystroke. No UI test/build.; 2026-10-16 distributed batch; suite green | Kill-switch state consumer reviewed.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/trade-controls/ModeSelector.tsx	fixed and verified	Legacy selector now applies PAPER only after server confirmation, displays errors, and no longer presents a dashboard LIVE-enable path. No UI build/test run; component has no discovered imports.; 2026-10-16 distributed batch; suite green | Paper-only mode control reviewed; no LIVE activation path added.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/windows/ActivePositions.tsx	Implemented, not verified	Mod opens a manual SL/TP dialog only for a fresh connected executor snapshot; submit rechecks the latest local snapshot, omits blank fields, validates direction/price, and requires Save plus explicit confirmation. Not tested/built; no live order sent | Reviewed for snapshot mapping, refresh cleanup, and safe position controls.
+dashboard/src/components/windows/AgentConsole.tsx	Fixed and verified	Removed the inaccurate “offline · mock” status; this panel starts with an empty message list and shows no mock messages. TypeScript check passed after change; no UI test runner is configured. | Reviewed for polling cleanup and safe message rendering.
+dashboard/src/components/windows/AgentFlowchart.tsx	Implemented, not verified	Starts agents offline and clears stale active states on HTTP/payload failure; node payload helper regression authored, unbuilt/unrun | Reviewed for status polling cleanup and fallback states.
+dashboard/src/components/windows/AutonomousMLPanel.tsx	Implemented, not verified	Training is disabled when model status unknown/stale and errors are surfaced; not built or tested | Reviewed for polling cleanup and optional metrics rendering.
+dashboard/src/components/windows/BacktestPanel.tsx	fixed and verified	JWT attached to protected backtest/settings reads and request; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed; 2026-10-16 distributed batch; suite green | Reviewed for safe result rendering.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/windows/CorrelationMatrix.tsx	Implemented, not verified	Shows unavailable/stale correlation state rather than zero correlations; not built or tested | Reviewed for polling cleanup and nullable matrix values.
+dashboard/src/components/windows/CrossAsset.tsx	Implemented, not verified	Shows unavailable/stale cross-asset values instead of fabricated zeroes; not built or tested | Reviewed for safe API data rendering.
+dashboard/src/components/windows/ErgodicIntelligencePanel.tsx	Inspected (partial)	JWT attached to protected institutional-feature read; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed | Reviewed for polling cleanup and optional analytics data.
+dashboard/src/components/windows/GatewayDiagnostic.tsx	Inspected (partial)	Fixed stale /api/settings URL to protected /api/config/settings and attached JWT; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed | Reviewed for diagnostic polling cleanup and fallback values.
+dashboard/src/components/windows/GenAIBrief.tsx	fixed and verified	GenAI brief trigger uses JWT-aware client; TS check blocked; 2026-10-16 distributed batch; suite green | Reviewed for safe optional response rendering.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/windows/LiveChart.tsx	Implemented, not verified	Visible title now distinguishes Market Chart/TradingView external pricing from MT5 execution pricing; iframe also has an explicit accessible title. Provider symbol, timeframe, and data-delay contract not fully reviewed; no browser check | Reviewed for safe chart input handling.
+dashboard/src/components/windows/LiveDecisionPanel.tsx	fixed and verified	Agent evaluation now uses JWT-aware API client; TS verification blocked; 2026-10-16 distributed batch; suite green | Reviewed for polling cleanup and optional decision values.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/windows/ModelsByRegime.tsx	fixed and verified	JWT added to protected model/regime read; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed; 2026-10-16 distributed batch; suite green | Reviewed for safe API response rendering.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/windows/MTFConfluence.tsx	Implemented, not verified	Shows unavailable/stale MTF state instead of zero/neutral data; not built or tested | Reviewed for polling cleanup and optional timeframe values.
+dashboard/src/components/windows/NewsFeed.tsx	Implemented, not verified	Refreshes no longer overlap; prior blackout unavailability behavior preserved. UI behavior unverified. | Reviewed for polling cleanup and bounded filtered rendering.
+dashboard/src/components/windows/PLDashboard.tsx	fixed and verified	Retains prior snapshots and shows error rather than plotting fabricated zero/empty performance data; unverified; 2026-10-16 distributed batch; suite green | Reviewed for polling cleanup and guarded metric rendering.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/windows/RegimeIndicator.tsx	fixed and verified	JWT added to protected agent/ML reads; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed; 2026-10-16 distributed batch; suite green | Reviewed for polling cleanup and optional regime data.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/windows/RegimeLive.tsx	Implemented, not verified	Shows unavailable/stale regime data rather than neutral/current; not built or tested | Reviewed for polling cleanup and fallback display.
+dashboard/src/components/windows/RiskMonitor.tsx	Implemented, not verified	Risk and breaker values distinguish unknown/unavailable from zero/all-clear; not built or tested | Reviewed for polling cleanup and guarded risk values.
+dashboard/src/components/windows/RLLifecycle.tsx	fixed and verified	JWT added to protected lifecycle read; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed; 2026-10-16 distributed batch; suite green | Reviewed for polling cleanup and optional lifecycle data.; 2026-10-16 distributed batch; suite green
+dashboard/src/components/windows/SessionClock.tsx	Implemented, not verified	Removed synthetic agent count, max trades, size multiplier, volatility, and eligible-pair values; labels displayed fixed UTC sessions approximate because DST shifts London/New York. No UI test/build | Reviewed for interval cleanup and deterministic session rendering.
+dashboard/src/components/windows/SignalQualityGate.tsx	Implemented, not verified	Displays unavailable/stale signal-quality state rather than implying neutral/current; not built or tested | Reviewed for polling cleanup and optional quality data.
+dashboard/src/components/windows/SystemConsole.tsx	Implemented, not verified	Post-await unmount guards added; existing live risk availability checks preserved. UI behavior unverified. | Reviewed for polling cleanup and bounded log rendering. | System mode and auto-trade display consumer reviewed.
+dashboard/src/components/windows/SystemDiagnostic.tsx	Fixed and verified	Feed diagnostic now requires a successful candles envelope with at least one bar; empty 404-as-200 and malformed payloads no longer report healthy. Node unit tests and TypeScript check pass. | Dashboard diagnostic consumer reviewed. | Reviewed for polling cleanup and fallback diagnostics.
+dashboard/src/components/windows/SystemHealth.tsx	Inspected (partial)	Service status/unknown display and uptime/latency rendering reviewed; no source change. Cross-check of all health API producers remains open | Reviewed for safe service/pipeline rendering.
+dashboard/src/components/windows/TradeJournal.tsx	Implemented, not verified	Retains prior journal data and signals failed/incomplete source reads rather than empty history; not built or tested | Reviewed for polling cleanup and optional journal metrics.
+dashboard/src/components/windows/TradeMemoryPanel.tsx	Implemented, not verified	Trade-memory panel distinguishes failed/incomplete response from valid empty memory and retains prior snapshot; current change unbuilt | Reviewed for polling cleanup and optional memory metrics.
+dashboard/src/css-import-types.d.ts	Generated	TypeScript-generated CSS module declaration; retained and excluded from manual source review
+dashboard/src/lib/agent-status.ts	Implemented, not verified	Classifies valid versus unavailable agent-status payloads and filters malformed rows; regression authored, unrun
+dashboard/src/lib/api-client.ts	fixed and verified	Added the existing privileged position-modification API route client method; no UI build/typecheck or request test run; 2026-10-16 distributed batch; suite green | System mode and auto-trade API response contracts reviewed.; 2026-10-16 distributed batch; suite green
+dashboard/src/lib/market-feed-status.ts	Fixed and verified	Validates that the market-feed diagnostic response is successful and contains non-empty OHLCV data; covered by Node built-in tests and TypeScript check
+dashboard/src/lib/position-status.ts	Fixed and verified	Pure connection-label mapping ensures stale snapshots never display LIVE; exercised by Node built-in tests and TypeScript check
+dashboard/src/lib/system-health-status.ts	Implemented, not verified	Pure health probe classification distinguishes offline/degraded/online; regression authored, unrun
+dashboard/src/lib/trade-stats-status.ts	Implemented, not verified	Rejects incomplete performance payloads instead of treating missing metrics as zeros; regression authored, unrun
+dashboard/src/stores/dashboardStore.ts	Reviewed	Store state and persistence reviewed; server hydration remains authoritative for mode, auto-trade, and kill-switch. | System-state confirmation is runtime-only and kill-switch hydration is supported; no UI build/test run.
+dashboard/tests/agent-status.test.mjs	Implemented, not verified	Node built-in regression for unavailable, valid-empty, and populated agent snapshots; unrun
+dashboard/tests/market-feed-status.test.mjs	Fixed and verified	Node built-in tests ensure empty, malformed, or unsuccessful candle payloads are not reported as a healthy feed; 3 passed
+dashboard/tests/position-status.test.mjs	Fixed and verified	Node built-in tests cover stale, fresh-live, and fresh-offline position snapshot labels; 3 passed
+dashboard/tests/system-health-status.test.mjs	Implemented, not verified	Node built-in regression cases for offline/degraded/online classification; unrun
+dashboard/tests/trade-stats-status.test.mjs	Implemented, not verified	Node built-in regression cases for incomplete performance payloads; unrun
+dashboard/.claude/launch.json	Not inspected	frontend
+dashboard/build_output.log	Not inspected	frontend
+dashboard/dev_output.log	Not inspected	frontend
+dashboard/next-env.d.ts	Not inspected	frontend
+dashboard/next.config.js	Inspected (partial)	Standalone output and same-origin API rewrite reviewed; wildcard remote image host has no detected next/image consumer but not deployment-tested
+dashboard/package-lock.json	Not inspected	frontend
+dashboard/package.json	Inspected (partial)	Next 14/React 18 manifest and scripts reviewed; lockfile advisories and full build remain unverified
+dashboard/postcss.config.js	Not inspected	frontend
+dashboard/public/.gitkeep	Not inspected	frontend
+dashboard/src/app/analytics/page.tsx	Not inspected	frontend
+dashboard/src/app/dashboard/deep-learning/page.tsx	Implemented, not verified	Training action is disabled when model status unknown/stale and errors are surfaced; not built or tested
+dashboard/src/app/dashboard/history/page.tsx	Implemented, not verified	Preserves historical data snapshot while surfacing fetch failures/incomplete responses; unverified
+dashboard/src/app/dashboard/ml-models/page.tsx	Implemented, not verified	Training action is disabled when model status unknown/stale and errors are surfaced; not built or tested
+dashboard/src/app/dashboard/model-comparison/page.tsx	fixed and verified	JWT attached to protected ML comparison read; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed; 2026-10-16 distributed batch; suite green
+dashboard/src/app/dashboard/models/page.tsx	Implemented, not verified	Unknown/unavailable model status is distinct from not-trained; not built or tested
+dashboard/src/app/dashboard/reinforcement-learning/page.tsx	Implemented, not verified	Training action is disabled when model status unknown/stale and errors are surfaced; not built or tested
+dashboard/src/app/dashboard/settings/page.tsx	fixed and verified	Trading mode/auto-trade were removed from local settings persistence; only notification preferences are saved locally. Current change not built or tested.; 2026-10-16 distributed batch; suite green
+dashboard/src/app/dashboard/strategies/page.tsx	Not inspected	frontend
+dashboard/src/app/globals.css	Not inspected	frontend
+dashboard/src/app/history/page.tsx	Not inspected	frontend
+dashboard/src/app/icon.svg	Not inspected	frontend
+dashboard/src/app/layout.tsx	Not inspected	frontend
+dashboard/src/app/login/page.tsx	Not inspected	frontend
+dashboard/src/app/page.tsx	Not inspected	frontend
+dashboard/src/app/providers.tsx	Not inspected	frontend
+dashboard/src/app/settings/page.tsx	Not inspected	frontend
+dashboard/src/components/layout/index.ts	Not inspected	frontend
+dashboard/src/components/layout/ThemeProvider.tsx	Not inspected	frontend
+dashboard/src/components/settings/AdminAlertsCenter.tsx	Implemented, not verified	Notification preference saves now display in-flight/success/failure accurately; no UI build/test run
+dashboard/src/components/settings/notification-preferences.ts	Implemented, not verified	Save preference helper reports HTTP and network failures instead of stale success; unrun
+dashboard/src/components/settings/SourceConnectionManager.tsx	Inspected (partial)	frontend
+dashboard/src/components/shared/GlowText.tsx	Not inspected	frontend
+dashboard/src/components/shared/index.ts	Not inspected	frontend
+dashboard/src/components/shared/NeonBadge.tsx	Not inspected	frontend
+dashboard/src/components/shared/NeonCard.tsx	Not inspected	frontend
+dashboard/src/components/shared/NeonGauge.tsx	Not inspected	frontend
+dashboard/src/components/shared/PulseIndicator.tsx	Not inspected	frontend
+dashboard/src/components/trade-controls/index.ts	Not inspected	frontend
+dashboard/src/components/trade-controls/ManualTradePanel.tsx	Not inspected	frontend
+dashboard/src/components/trade-controls/TradeSettingsPanel.tsx	Inspected (partial)	Risk controls now attach JWT; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed
+dashboard/src/components/ui/NotificationBell.tsx	Not inspected	frontend
+dashboard/src/components/UserMenu.tsx	fixed and verified	frontend; 2026-10-16 distributed batch; suite green
+dashboard/src/hooks/useAgents.ts	Not inspected	frontend
+dashboard/src/hooks/useConfig.ts	Inspected (partial)	Local settings hook is not currently consumed; persists mock config locally and writes gateway/risk legacy APIs whose effects are not read back by runtime services; direct Arabic-path typecheck blocked; alternate-drive PowerShell tsc passed
+dashboard/src/hooks/useNotifications.ts	Inspected (partial)	SSE migrated to bearer-authenticated fetch stream; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed
+dashboard/src/hooks/usePerformance.ts	Not inspected	frontend
+dashboard/src/hooks/usePositions.ts	Not inspected	frontend
+dashboard/src/hooks/useRisk.ts	Implemented, not verified	Risk state distinguishes unavailable/unknown from normal zero values; unverified
+dashboard/src/hooks/useStrategies.ts	Not inspected	frontend
+dashboard/src/hooks/useSystemHealth.ts	Implemented, not verified	Distinguishes online, degraded HTTP response, and offline probe; incomplete market data not healthy; not built or tested
+dashboard/src/hooks/useTrades.ts	Inspected (partial)	JWT attached to protected trade reads; direct Arabic-path TypeScript invocation blocked; alternate-drive PowerShell tsc passed
+dashboard/src/hooks/useWebSocket.ts	Inspected (partial)	frontend
+dashboard/src/lib/chart-config.ts	Not inspected	frontend
+dashboard/src/lib/fundamental-contract.ts	Not inspected	frontend
+dashboard/src/lib/gateway-ws.ts	Not inspected	frontend
+dashboard/src/lib/position-modification.ts	Implemented, not verified	Pure validation helper creates a payload only for nonblank SL/TP and checks finite positive levels and direction relative to current price; regression tests authored, unrun
+dashboard/src/lib/ui-settings.ts	Not inspected	frontend
+dashboard/src/lib/utils.ts	Not inspected	frontend
+dashboard/src/lib/ws-client.ts	fixed and verified	frontend; 2026-10-16 distributed batch; suite green
+dashboard/src/stores/notifications.ts	Not inspected	frontend
+dashboard/src/stores/trading.ts	Not inspected	frontend
+dashboard/src/types/agents.ts	Not inspected	frontend
+dashboard/src/types/api.ts	Not inspected	frontend
+dashboard/src/types/fundamental.ts	Not inspected	frontend
+dashboard/src/types/index.ts	Not inspected	frontend
+dashboard/src/types/trading.ts	Not inspected	frontend
+dashboard/tailwind.config.ts	Not inspected	frontend
+dashboard/tests/notification-preferences.test.mjs	Implemented, not verified	Two regressions cover network and HTTP save failures; unrun
+dashboard/tests/position-modification.test.mjs	Implemented, not verified	Regression coverage for blank/no-op input, selective payload fields, BUY/SELL geometry, malformed values, and unavailable price; unrun
+dashboard/tsc_out.txt	Not inspected	frontend
+dashboard/tsc_out2.txt	Not inspected	frontend
+dashboard/tsc_out3.txt	Not inspected	frontend
+dashboard/tsconfig.json	Not inspected	frontend
+dashboard/tsconfig.tsbuildinfo	Excluded	frontend
+data/nexus.duckdb	Excluded	root-or-other
+data/nexus.duckdb.wal	Excluded	root-or-other
+data/nexus.duckdb.wal.bak_corrupt_20261011	Not inspected	root-or-other
+data/nexus.duckdb.wal.corrupt_preserved_20261011_184858	Not inspected	root-or-other
+DB_SCHEMA_ACTUAL.md	fixed and verified	root-or-other; 2026-10-16 distributed batch; suite green
+DB_SCHEMA.md	Not inspected	root-or-other
+diagnose_pnl.py	Not inspected	root-or-other
+docs/superpowers/plans/2026-10-14-ml-model-promotion.md	Inspected	ML model promotion implementation plan
+docs/superpowers/specs/2026-10-14-ml-model-promotion-design.md	Inspected	ML model promotion architecture and failure contract
+docs/generate_system_doc.js	Not inspected	documentation
+docs/Nexus_Trader_System_Analysis.docx	Excluded	documentation
+docs/screenshots/ui-agents.png	Excluded	documentation
+docs/screenshots/ui-backtest.png	Excluded	documentation
+docs/screenshots/ui-intelligence.png	Excluded	documentation
+docs/screenshots/ui-overview.png	Excluded	documentation
+docs/screenshots/ui-risk.png	Excluded	documentation
+docs/superpowers/plans/2026-10-11-duckdb-auth-ownership.md	Inspected	documentation
+docs/superpowers/specs/2026-10-11-duckdb-auth-ownership-design.md	Inspected	documentation
+EXECUTION_STATE.json	Not inspected	root-or-other
+FINAL_CERTIFICATE_LOCAL.md	Not inspected	root-or-other
+FINAL_CERTIFICATE.md	Not inspected	root-or-other
+FLOWS_VALIDATION.md	Not inspected	root-or-other
+FUNDAMENTAL_SOURCE_VALIDATION.md	Not inspected	root-or-other
+FUNDAMENTAL_UI_DATA_CONTRACT_REPORT.md	Not inspected	root-or-other
+FUSION_VALIDATION.md	Not inspected	root-or-other
+GEOPOLITICS_VALIDATION.md	Not inspected	root-or-other
+GOLD_IMPACT_VALIDATION.md	Not inspected	root-or-other
+IMPLEMENTATION_REPORT.md	Not inspected	root-or-other
+launch_err.log	Not inspected	root-or-other
+launch_out.log	Not inspected	root-or-other
+LICENSE	Not inspected	root-or-other
+LOCAL_VERIFY_RESULT.json	Inspected	root-or-other
+MACRO_VALIDATION.md	Not inspected	root-or-other
+models_store/hmm_regime.pkl	Excluded	root-or-other
+MONETARY_VALIDATION.md	Not inspected	root-or-other
+mt5_diagnose.py	Not inspected	root-or-other
+mt5_sym_check.py	Not inspected	root-or-other
+news_output.log	Not inspected	root-or-other
+NEXUS_V61_APPLY_BLOCKED_REPORT.md	Inspected	root-or-other
+notebooks/01-data-exploration.ipynb	Inspected (partial)	Static review only; not executed. Relative DB_PATH/sys.path rely on notebook launch working directory; data-dependent claims remain unverified.
+notebooks/02-feature-engineering.ipynb	Inspected (partial)	Static review only; not executed. Relative DB_PATH/sys.path rely on notebook launch working directory; feature correctness remains unverified.
+notebooks/03-model-training.ipynb	Fixed and verified	Static review found missing next-close label became DOWN; wired to shared helper. Notebook not executed; model/data evaluation remains unverified.
+notebooks/04-backtesting.ipynb	fixed and verified	Static review only; not executed. Cumulative PnL ordering by opened_at may differ from chart ordering by closed_at; needs dataset-backed verification.; 2026-10-16 distributed batch; suite green
+notebooks/05-strategy-analysis.ipynb	fixed and verified	Static review only; not executed. QuantStats input uses pct_change of dollar PnL rather than account equity returns, so risk metrics may be misleading.; 2026-10-16 distributed batch; suite green
+package-lock.json	Inspected (partial)	Lock v3 root dependency matches package.json; 21 package entries; no advisory scan available
+package.json	Inspected (partial)	Root manifest has no scripts and declares TypeScript ^7.0.2; purpose/provenance uncertain, preserved unchanged
+PAPER_BASELINE_CERTIFICATE.md	Not inspected	root-or-other
+PAPER_OBSERVATION_REPORT.md	Not inspected	root-or-other
+preflight.py	Fixed and verified	Uses URL parsing for authenticated Redis URLs, reports only host:port, and avoids exposing exception text; 17 focused and 876 full-suite tests pass
+project_audit/APPROVAL_BINDING_PLAN.md	Inspected	Audit artifact
+project_audit/FILE_MANIFEST.tsv	Generated	Audit artifact
+project_audit/FINAL_REPORT_20261014.md	Inspected	Audit artifact
+project_audit/manifest_3.tsv	Created	agent-3	Agent-3 audit manifest	Records reviewed scope and the signing-key separation evidence	No runtime evidence claimed
+project_audit/ML_PROMOTION_20261014.md	Inspected	ML-03 remediation evidence report
+project_audit/ML_PROMOTION_PROGRESS.md	In progress	ML-03 implementation ledger
+project_audit/requirements_lock.tsv	P2 dependency review	Generated offline conservative normalized constraint list for all requirements.txt files; unresolved websockets conflict is explicitly blocked	No installation, network, or tests
+project_audit/STREAM_ACK_REVIEW_20261014.md	Inspected	Audit artifact
+project_audit/ACCESS_CONTROL_REVIEW_20261012.md	Inspected	Audit artifact
+project_audit/AUDIT_FOLLOWUP_20261012.md	Inspected	Audit artifact
+project_audit/BASELINE_ATTRIBUTION_20261012.md	Inspected	Audit artifact
+project_audit/BASELINE_COMPARISON.md	Inspected	Audit artifact
+project_audit/BASELINE_FILE_DIFF.md	Inspected	Audit artifact
+project_audit/COVERAGE.md	Generated	root-or-other
+project_audit/FINAL_ACCEPTANCE_PLAN.md	Inspected (partial)	Final isolated one-hour PAPER acceptance plan; not executed and full document review remains
+project_audit/INITIAL_REPORT.md	Generated	root-or-other
+project_audit/ML_REVIEW_20261012.md	Inspected	Audit artifact
+project_audit/ML_TEST_EVIDENCE_20261012.md	Inspected	Audit artifact
+project_audit/REMAINING_WORK.md	fixed and verified	Current queue, agent scopes, constraints, and evidence gates; reconcile as agents finish; 2026-10-16 distributed batch; suite green
+project_audit/TEST_EVIDENCE_20261012.md	Inspected	Audit artifact
+project_audit/TRADE_FLOW_REVIEW_20261012.md	Inspected	Audit artifact
+PYTHON_PROCESS_CLEANUP_REPORT.md	Not inspected	root-or-other
+README.es.md	Not inspected	root-or-other
+README.md	Not inspected	root-or-other
+requirements.txt	Inspected (partial)	root-or-other
+RISK_GUARD_EVIDENCE.md	Not inspected	root-or-other
+run_error.log	Not inspected	root-or-other
+run_output.log	Not inspected	root-or-other
+run.py	Implemented and verified statically	agent-3 | Startup validation and child-environment isolation | NEXUS_RISK_APPROVAL_SECRET is required, validated as distinct from NEXUS_INTERNAL_API_SECRET, and removed from non-risk/non-executor child services | No runner start or preflight execution | Startup cleanup now covers partial spawn failure; earlier process-tree evidence remains historical; current source changes untested.
+services/nexus_agents	Inspected (partial)	agent-3	Agents service and tools; no approval-secret ownership	No NEXUS_RISK_APPROVAL_SECRET consumer found; internal service auth/tools use NEXUS_INTERNAL_API_SECRET	No tests, training, live data, or service access
+services/nexus_agents/__init__.py	Inspected (partial)	agent-3 | Package marker | No executable behavior requiring a safe fix | No tests or service execution | service
+services/nexus_agents/agents/__init__.py	Inspected (partial)	agent-3 | Agent exports | Exports agent classes without a clear safe defect | No tests or service execution | service
+services/nexus_agents/agents/base_agent.py	fixed and verified	agent-3 | Shared agent lifecycle, prompt loading, publishing, error handling | No clear low-risk defect isolated without changing agent behavior; 2026-10-16 distributed batch; suite green | No tests or service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/bear_researcher.py	fixed and verified	agent-3 | Bear case analysis | No clear low-risk defect isolated; downstream risk gates remain authoritative; 2026-10-16 distributed batch; suite green | No tests or service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/bull_researcher.py	fixed and verified	agent-3 | Bull case analysis | No clear low-risk defect isolated; downstream risk gates remain authoritative; 2026-10-16 distributed batch; suite green | No tests or service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/market_analyst.py	fixed and verified	agent-3 | Market analysis and feature-service reads | Failures remain bounded; no safe behavior-only fix identified; 2026-10-16 distributed batch; suite green | No tests, network, or service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/order_flow.py	fixed and verified	agent-3 | Order-flow analysis | No clear low-risk defect isolated without changing unavailable-data semantics; 2026-10-16 distributed batch; suite green | No tests or service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/portfolio_strategist.py	fixed and verified	agent-3 | Portfolio strategy analysis | No clear low-risk defect isolated; recommendations remain downstream of risk controls; 2026-10-16 distributed batch; suite green | No tests or service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/position_manager.py	fixed and verified	agent-3 | Position-management recommendations and mutations | Reviewed guards and error paths; no safe change made to position mutation behavior; 2026-10-16 distributed batch; suite green | No tests or trading/service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/regime_analyst.py	Inspected (partial)	agent-3 | Regime analysis | No clear low-risk defect isolated without altering model/regime policy | No tests or service execution | service
+services/nexus_agents/agents/session_governor.py	fixed and verified	agent-3 | Session analysis and gating context | Server-side execution gates remain authoritative; no safe fix identified; 2026-10-16 distributed batch; suite green | No tests or service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/trade_executor.py	fixed and verified	agent-3 | Order-plan construction before central risk | Confirmed it prepares a plan and does not call a broker; no change made; 2026-10-16 distributed batch; suite green | No tests or trading/service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/brain_budget.py	fixed and verified	agent-3 | LLM budget accounting | No clear low-risk defect isolated in static review; 2026-10-16 distributed batch; suite green | No tests or service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/daily_brief.py	fixed and verified	agent-3 | Daily brief context and unavailable fallback | Unavailable fallback is explicit; no safe fix identified; 2026-10-16 distributed batch; suite green | No tests, LLM, Redis, or service execution | service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/internal_auth.py	Fixed and verified	Shared constant-time credential verification for agent-service mutations
+services/nexus_agents/research/__init__.py	Inspected (partial)	agent-3 | Research package marker | No executable behavior requiring a safe fix | No tests or service execution | service
+services/nexus_agents/research/evaluator.py	Inspected (partial)	agent-3 | Strategy evaluation and backtest helpers | No safe change made; evaluation/data-source policy requires separate scoped review | No tests, backtest, DB, or external provider access | service
+services/nexus_agents/tools/__init__.py	Inspected (partial)	agent-3 | Tools package marker | No executable behavior requiring a safe fix | No tests or service execution | service
+services/nexus_agents/tools/analysis_tools.py	Inspected (partial)	agent-3 | Technical analysis and flow reads | No clear low-risk defect isolated without changing missing-data contract | No tests, network, or service execution | service
+services/nexus_api/websockets/auth.py	Fixed and verified	JWT plus current permission handshake for native dashboard WebSocket channels
+services/nexus_data/main.py	fixed and verified	On start/end misses, fetches completed MT5 range, persists idempotently through the data owner, then re-queries DuckDB; no synthetic fallback for bounded ranges; 2026-10-16 distributed batch; suite green | Not run per user instruction; no live DB/broker contacted | Reviewed trade-close consumer ACK behavior; no change made; 2026-10-16 distributed batch; suite green | Not run per user instruction; no live DB contacted | Fundamental validation errors mapped to HTTP 400; earlier provider/order/query changes preserved; runtime/schema behavior unverified.; 2026-10-16 distributed batch; suite green
+services/nexus_data/mt5_connector.py	P1 historical backfill	Added inclusive completed-bar range retrieval using MT5 copy_rates_range, with isolated-worker support and limit bound | Not run per user instruction; no live broker contacted | MT5 OHLCV validates timeframe/count and filters only timestamp-confirmed forming bars; regression authored, not run. Retrieval remains count-based, no date-range backfill.
+services/nexus_data/mt5_worker.py	In progress	MT5 worker now validates timeframe/count and filters newest candle only when its timestamp indicates a forming bar; regression authored, not run. | Added isolated MT5 ohlcv_range operation with ISO bounds and forming-bar exclusion | Not run per user instruction; no live broker contacted
+services/nexus_features/internal_auth.py	Fixed and verified	Constant-time shared-secret guard for direct feature calculation requests
+services/nexus_features/main.py	fixed and verified	All seven lifespan tasks retained/cancelled/joined before Redis closes; initialization/body failure cleanup; institutional bars ordered chronologically. Stats availability repair ongoing; untested.; 2026-10-16 distributed batch; suite green | Reviewed OHLCV consumer ACK behavior; no change made; 2026-10-16 distributed batch; suite green | Not run per user instruction; no live Redis or trading contacted
+services/nexus_features/ohlcv.py	Implemented, not verified	Chronological OHLCV normalization at feature-service boundaries; regression test authored but not run per user instruction
+services/nexus_ml	Inspected (partial)	agent-3	ML service and trader API; no approval-secret ownership	No NEXUS_RISK_APPROVAL_SECRET consumer found; internal service auth uses NEXUS_INTERNAL_API_SECRET	No tests, training, live data, or service access
+services/nexus_ml/labeling.py	Inspected (partial)	Timeframe now propagates through pending/complete next-bar records to prevent horizon mixing; source change and regression tests added, but the tests are intentionally unrun until the final acceptance pass.
+services/nexus_ml/model_promotion.py	Implemented, not verified	Reject non-finite aggregated metrics including finite-fold overflow before incumbent comparison; current guard untested.
+services/nexus_ml/model_registry.py	fixed and verified	Historical ML-03 immutable generation promotion remains verified in prior run; current active pointer is now timeframe-scoped and has not been tested; 2026-10-16 distributed batch; suite green
+services/nexus_news/internal_auth.py	Fixed and verified (audit evidence)	Existing constant-time internal-secret guard retained; no change | Constant-time shared-secret guard for direct news text analysis
+services/nexus_agents/agents/arbitrator.py	fixed and verified	News-source failure now enforces NO_TRADE; ML fallback cannot bypass genuine-conflict lock. Conflict threshold remains inconsistent across runtime/default/environment/prompt; no policy change made. Regressions authored, not run.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/intermarket.py	fixed and verified	Removed fabricated VIX default of 20 and uses pure validated market-context helper; focused suite 7 passed. Runtime agent invocation not performed.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/news_sentinel.py	fixed and verified	Source failures deterministically set structured unavailable state and AVOID without LLM; graph/arbitrator propagate fail-closed decision. Regression authored, not run.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/agents/risk_manager.py	fixed and verified	Risk Manager rejects when exposure evidence is unavailable; graph-side risk safety regression authored, not run.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/graph.py	fixed and verified	Parallel branches now merge only branch-added messages/errors and retain zero-valued analyses; regression authored, not run. Wider graph behavior remains unaudited.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/main.py	fixed and verified	All five tasks retained immediately; exceptional startup/body cleanup cancels and joins, Redis disconnect in finally; heartbeat shadowing fixed. Untested.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/market_context.py	Fixed and verified	Pure VIX validation/classification; missing, invalid, non-finite, and non-positive readings remain unknown; focused regression suite 7 passed.
+services/nexus_agents/prompts/arbitrator.yaml	fixed and verified	Static review; contains fixed conviction guidance and treats ML confidence as strong evidence; runtime calibration is not established.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/prompts/bear_researcher.yaml	Inspected (partial)	Static review; adversarial one-sided framing may bias evidence; arbitrator and risk service remain downstream.
+services/nexus_agents/prompts/bull_researcher.yaml	Inspected (partial)	Static review; adversarial one-sided framing may bias evidence; arbitrator and risk service remain downstream.
+services/nexus_agents/prompts/intermarket.yaml	Fixed and verified	Prompt explicitly forbids inventing numeric values for unavailable instruments; covered by intermarket regression tests.
+services/nexus_agents/prompts/market_analyst.yaml	Inspected (partial)	Static review; prompt requires price/indicator specifics, so unavailable inputs must remain unknown rather than be fabricated.
+services/nexus_agents/prompts/news_sentinel.yaml	fixed and verified	Static review; blackout and recommendation claims require verification by deterministic calendar/risk services.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/prompts/order_flow.yaml	Inspected (partial)	Static review; ensure model does not assert unavailable microstructure or institutional-flow data.
+services/nexus_agents/prompts/portfolio_strategist.yaml	fixed and verified	Static review; prompt includes illustrative performance thresholds that need clear separation from runtime policy.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/prompts/position_manager.yaml	fixed and verified	Static review; prompt proposes position actions, while no live execution path was invoked.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/prompts/regime_analyst.yaml	Inspected (partial)	Static review; prompt requests quantitative market inputs but no live-data execution/claim was made.
+services/nexus_agents/prompts/risk_manager.yaml	Fixed and verified	Removed hardcoded risk thresholds that contradicted runtime config; prompt now uses supplied runtime context and describes its advisory role. Regression plus 31 agent/graph tests: 32 passed, 1 warning; full suite 878 passed, 3 warnings.
+services/nexus_agents/prompts/session_governor.yaml	fixed and verified	Static prompt review; its session statements must not replace server-side session gate.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/prompts/trade_executor.yaml	fixed and verified	Static prompt review; order remains a plan and deterministic executor/risk guards are downstream.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/requirements.txt	Inspected (partial)	service
+services/nexus_agents/research/registry.py	In progress	Promotion eligibility now requires a recorded real-backtester evaluation source; regression authored, not run.
+services/nexus_agents/research/researcher.py	fixed and verified	Evaluation source is persisted before strategy promotion; regression authored, not run.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/shadow_trades.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_agents/state.py	fixed and verified	Structured news-source-unavailable state is represented for graph/arbitrator fail-closed handling; regression authored, not run.; 2026-10-16 distributed batch; suite green
+services/nexus_agents/tools/execution_tools.py	Inspected (partial)	Execution HTTP callers now attach the internal service credential; call-site behavior beyond this was not fully audited
+services/nexus_agents/tools/market_tools.py	Fixed and verified	Fetches features with internal credential; preserves Redis fallback
+services/nexus_agents/tools/news_tools.py	Inspected (partial)	News calls forward internal credential, match symbol/minutes API contract, and raise on source failure; wider tool behavior remains
+services/nexus_agents/tools/risk_tools.py	fixed and verified	Risk exposure calls attach internal secret and now reject explicit unavailable, incomplete, or non-finite required metrics; regression authored, not run. Other tool behavior remains partially audited.; 2026-10-16 distributed batch; suite green
+services/nexus_api/__init__.py	Not inspected	service
+services/nexus_api/data_client.py	Reviewed	Existing internal data-service client contract retained; no direct database access introduced. | Static review only | service
+services/nexus_api/deps.py	Not inspected	service
+services/nexus_api/fundamental_local_ai.py	Not inspected	service
+services/nexus_api/http_client.py	Not inspected	service
+services/nexus_api/main.py	Fixed and verified	service
+services/nexus_api/middleware/__init__.py	Not inspected	service
+services/nexus_api/middleware/auth.py	Inspected (partial)	JWT issuance/verification now fail closed for weak/sample secrets; remaining authentication flows need separate review | Existing JWT verification and secure-secret validation retained; no behavior change. | Static review only
+services/nexus_api/middleware/rate_limit.py	Not inspected	service
+services/nexus_api/requirements.txt	Inspected (partial)	service
+services/nexus_api/routers/__init__.py	Not inspected	service
+services/nexus_api/routers/admin.py	Implemented, not verified	User disable requires users.disable separately from users.edit before side effects; existing target-role validation retained; unverified
+services/nexus_api/routers/agents.py	fixed and verified	Manual evaluation permission check; status/decision/budget/shadow reads attach internal secret; 2026-10-16 distributed batch; suite green
+services/nexus_api/routers/backtest.py	fixed and verified	Historical backtest reads now use the nexus-data owner endpoint with the internal service secret and paginate the complete durable trade history; direct Redis trade-memory reads and the fixed 2000-row ceiling were removed.; 2026-10-16 distributed batch; suite green | No live DB, Redis, tests, or trading | Historical trade reads attach internal secret; backtest user permissions remain enforced; 2026-10-16 distributed batch; suite green
+services/nexus_api/routers/config.py	fixed and verified	Permission checks are present, but config projections are mismatched and config:* writes have no in-project readers; runtime risk settings use a separate endpoint/key; 2026-10-16 distributed batch; suite green
+services/nexus_api/routers/fundamental.py	Needs repair	Source-manager test blocks non-public DNS destinations and redirects (12 focused tests pass); residual DNS rebinding plus other fundamental-router findings remain
+services/nexus_api/routers/intelligence.py	fixed and verified	Trade-memory history now returns explicit 503 when Redis is unavailable or stored JSON is corrupt instead of fabricating an empty history; unverified; 2026-10-16 distributed batch; suite green
+services/nexus_api/routers/intermarket.py	fixed and verified	All analytical GETs require trading.view; full router review remains; 2026-10-16 distributed batch; suite green
+services/nexus_api/routers/market.py	Fixed	Conservative JWT decision applied: symbols, historical candles, and ticks require trading.view before data access; candles expose start/end for backfill and use the internal data-service credential. | P2 API-only; Paper/Live unchanged; no services | Symbols/candles/ticks gateway reads have no JWT or trading.view dependency; isolated ASGI probe confirmed symbols 200 unauthenticated; public-data boundary is undocumented
+services/nexus_api/routers/ml.py	Fixed and verified	ML routes enforce role permissions and proxy requests with internal service secret
+services/nexus_api/routers/news.py	Fixed	Conservative JWT decision applied: latest news, calendar, and symbol sentiment require trading.view before Redis reads through the existing permission dependency. | P2 API-only; no secrets logged or exposed; no services | Latest news/calendar/sentiment gateway reads have no JWT or trading.view dependency; ASGI probe returned 200 unauthenticated with isolated Redis fake; public-data boundary is undocumented
+services/nexus_api/routers/notifications.py	fixed and verified	SSE and alert log require trading.view; full router review remains; 2026-10-16 distributed batch; suite green
+services/nexus_api/routers/performance.py	fixed and verified	Authenticated gateway performance reads now send internal secret to nexus-data; remaining route audit open; 2026-10-16 distributed batch; suite green
+services/nexus_api/routers/positions.py	fixed and verified	Existing JWT/permission/internal-secret gate retained; modify proxy now validates executor response status, surfaces REJECTED/ERROR as 502, and relays actual FILLED/PARTIAL/PENDING status. Regression source updated, not run; 2026-10-16 distributed batch; suite green
+services/nexus_api/routers/regime.py	fixed and verified	History endpoint now returns 503 on Redis failure or invalid cached JSON rather than an empty transition list; regression authored, not run; 2026-10-16 distributed batch; suite green
+services/nexus_api/routers/risk.py	Fixed and verified	Risk mutations require risk.modify; all downstream risk proxies require shared internal secret
+services/nexus_api/routers/strategies.py	Fixed and verified	Strategy reads and mutations require shared internal secret; user permissions enforced at gateway
+services/nexus_api/routers/system.py	Implemented, not verified	GET mode and PAPER switch responses report boolean latch activity including structured anti-tilt reason; regression authored, not run
+services/nexus_api/routers/trades.py	Fixed and verified	Trade history proxy attaches internal secret and fails closed when missing
+services/nexus_api/websockets/__init__.py	Not inspected	service
+services/nexus_api/websockets/agents.py	Fixed and verified	service
+services/nexus_api/websockets/manager.py	Fixed and verified	service
+services/nexus_api/websockets/news.py	Fixed and verified	service
+services/nexus_api/websockets/orders.py	Fixed and verified	service
+services/nexus_api/websockets/positions.py	Fixed and verified	service
+services/nexus_api/websockets/risk.py	Fixed and verified	service
+services/nexus_api/websockets/ticks.py	Fixed and verified	service
+services/nexus_data/__init__.py	Not inspected	service
+services/nexus_data/ccxt_connector.py	In progress	Historical retrieval now rejects unsupported timeframes and invalid count; regression authored, not run. Still count-based and not integrated with persistence/date-range import.
+services/nexus_data/duckdb_store.py	fixed and verified	Removed automatic WAL deletion after checkpoint failure; failure is logged and WAL preserved; temp-file regression passes; broader storage behavior remains partially audited; 2026-10-16 distributed batch; suite green
+services/nexus_data/fundamental_schema.sql	Inspected (partial)	Link tables lack declared foreign keys; DuckDB cannot add FK constraints with ALTER TABLE. Existing live DB/WAL left untouched; no table rebuild justified.
+services/nexus_data/fundamental_store.py	fixed and verified	Schema-column/required-field and asset/user/role reference validation at sole writer; named query parameters and table-specific ordering checked; constraint/type errors become client validation errors. Untested.; 2026-10-16 distributed batch; suite green
+services/nexus_data/ibkr_connector.py	In progress	Historical retrieval now rejects unsupported timeframes and invalid count; regression authored, not run. Still count-based and not integrated with persistence/date-range import.
+services/nexus_data/redis_cache.py	Not inspected	service
+services/nexus_data/requirements.txt	Inspected (partial)	service
+services/nexus_data/yfinance_connector.py	Inspected (partial)	Reviewed historical download interface; repository-wide caller search found no OHLCV persistence integration
+services/nexus_executor/__init__.py	Not inspected	service
+services/nexus_executor/broker_adapter.py	Not inspected	service
+services/nexus_executor/ccxt_executor.py	Implemented, not verified	Position read failures propagate; close-size and partial-fill semantics hardened; position ID mapping remains a concern
+services/nexus_executor/ibkr_executor.py	Implemented, not verified	Position read failures propagate; ambiguous account position identity is rejected; partial-close status
+services/nexus_executor/main.py	fixed and verified	Position read failures fail closed for stacking; close size and partial-close event semantics hardened; idempotency/recovery and broader audit remain open; 2026-10-16 distributed batch; suite green
+services/nexus_executor/mt5_executor.py	fixed and verified	Ambiguous order results are not retried; position read failures propagate; close-volume safeguards; 2026-10-16 distributed batch; suite green
+services/nexus_executor/paper_executor.py	Implemented, not verified	Validates close size and retains remaining position after partial close
+services/nexus_executor/requirements.txt	Inspected (partial)	service
+services/nexus_executor/smart_routing.py	Not inspected	service
+services/nexus_features/__init__.py	Not inspected	service
+services/nexus_features/correlation.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_features/cross_asset.py	fixed and verified	Full file read; normalize single-column yfinance Close to 1D, reject invalid prices; US10Y percentage-point units and neutral flat-series RSI. Untested.; 2026-10-16 distributed batch; suite green
+services/nexus_features/indicators.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_features/institutional_features.py	fixed and verified	Full module read; fixed PELT terminal-boundary suppression, zero-tick BUY bias, temporal-growth return-interval divisor. Stats/Kelly availability repair ongoing; untested.; 2026-10-16 distributed batch; suite green
+services/nexus_features/key_levels.py	Not inspected	service
+services/nexus_features/multi_timeframe.py	fixed and verified	Current source normalizes OHLCV, rejects unsupported frames, and preserves close for EMA200; independent score-clamp semantics remain open; 2026-10-16 distributed batch; suite green
+services/nexus_features/requirements.txt	Inspected (partial)	service
+services/nexus_features/session_tagger.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_features/trend_analyzer.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_features/volatility.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_ml/__init__.py	Not inspected	service
+services/nexus_ml/backtester.py	Not inspected	service
+services/nexus_ml/ensemble.py	fixed and verified	Strict generation loading was added and tested; remaining ensemble inference paths are not fully audited; 2026-10-16 distributed batch; suite green
+services/nexus_ml/internal_auth.py	Fixed and verified	Shared constant-time credential check for ML write endpoints
+services/nexus_ml/main.py	fixed and verified	ML stream, heartbeat, and auto-retrain lifespan tasks were reviewed; heartbeat and auto-retrain task ownership/shutdown leak fixed in current batch, regression authored but unrun. Trader API lifecycle and the rest of the service remain under review.; 2026-10-16 distributed batch; suite green
+services/nexus_ml/models/__init__.py	Not inspected	service
+services/nexus_ml/models/finbert_sentiment.py	Not inspected	service
+services/nexus_ml/models/hmm_regime.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_ml/models/isolation_anomaly.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_ml/models/lightgbm_regime.py	Not inspected	service
+services/nexus_ml/models/lstm_sequence.py	Fixed and verified	service
+services/nexus_ml/models/random_forest_features.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_ml/models/xgboost_direction.py	Inspected (partial)	service
+services/nexus_ml/requirements.txt	Inspected (partial)	service
+services/nexus_ml/rule_based_signal.py	Not inspected	service
+services/nexus_ml/traders_api.py	fixed and verified	Backtest annualization follows evaluated timeframe; mode settings persist before local commit, failures return 503. Existing task/timeframe patches preserved; untested.; 2026-10-16 distributed batch; suite green
+services/nexus_ml/traders/__init__.py	Not inspected	service
+services/nexus_ml/traders/auto_retrain.py	Not inspected	service
+services/nexus_ml/traders/base_trader.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_ml/traders/dl_trader.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_ml/traders/ml_trader.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_ml/traders/rl_lifecycle.py	fixed and verified	Rule-based fallback branch order changed so TRAIL_SL_1ATR is reachable before broader profitable-PnL action; regression authored, not run.; 2026-10-16 distributed batch; suite green
+services/nexus_ml/traders/rl_trader.py	fixed and verified	service; 2026-10-16 distributed batch; suite green
+services/nexus_ml/traders/sl_tp_backtester.py	Not inspected	service
+services/nexus_ml/traders/trade_memory.py	Inspected (partial)	service
+services/nexus_ml/traders/trading_mode.py	Not inspected	service
+services/nexus_ml/training.py	Implemented, not verified	Walk-forward folds purge final training timestamp to prevent next-bar labels crossing into outer validation; unrun
+services/nexus_monitor/__init__.py	Inspected (static)	No executable behavior; no change | service
+services/nexus_monitor/main.py	fixed and verified	Outage comparison uses prior status; malformed HTTP-200 health cannot default healthy; owned shutdown tasks cancelled/joined. Regression authored, unrun.; 2026-10-16 distributed batch; suite green | Health polling, Redis stream listener, Telegram notifications, and task shutdown reviewed; no runtime/test execution; 2026-10-16 distributed batch; suite green
+services/nexus_monitor/metrics_exporter.py	fixed and verified	In-memory trade counters are not restored on monitor startup; persistence/lifetime contract needs confirmation before repair.; 2026-10-16 distributed batch; suite green | Escapes Prometheus service-label values; in-memory counter durability remains an open contract question; no test run; 2026-10-16 distributed batch; suite green
+services/nexus_monitor/performance.py	fixed and verified	Pure performance calculation path reviewed; no database access performed; no change; 2026-10-16 distributed batch; suite green | service; 2026-10-16 distributed batch; suite green
+services/nexus_monitor/requirements.txt	Inspected (static)	Dependency declarations reviewed; no change | service
+services/nexus_monitor/telegram_bot.py	fixed and verified	Optional Telegram import, rate limiting, and exception handling reviewed; no external request sent; no change; 2026-10-16 distributed batch; suite green | service; 2026-10-16 distributed batch; suite green
+services/nexus_news/__init__.py	Inspected (static)	No executable behavior requiring repair identified; no change | service
+services/nexus_news/calendar_parser.py	fixed and verified	Uses the pinned HTTP client with redirects disabled; no external request sent; 2026-10-16 distributed batch; suite green | service; 2026-10-16 distributed batch; suite green
+services/nexus_news/fundamental/__init__.py	Inspected (static)	Package initializer reviewed; no change | service
+services/nexus_news/fundamental/adapters.py	fixed and verified	External spreadsheet HTTP path uses the pinned HTTP client with redirects disabled; no external request sent; 2026-10-16 distributed batch; suite green | service; 2026-10-16 distributed batch; suite green
+services/nexus_news/fundamental/asset_impact.py	Inspected (static)	Fundamental asset-impact path reviewed; no change | service
+services/nexus_news/fundamental/blackout.py	Inspected (static)	Blackout state logic reviewed; no change | service
+services/nexus_news/fundamental/bootstrap_v5.py	Inspected (static)	Bootstrap path reviewed without execution; no change | service
+services/nexus_news/fundamental/engines.py	Implemented, not verified	Monetary and macro surprise inputs reject non-finite/malformed values before scoring; current regressions unrun | Existing non-finite input guard recorded by project_audit; no change
+services/nexus_news/fundamental/explanations.py	Inspected (static)	Explanation generation path reviewed; no change | service
+services/nexus_news/fundamental/indicator_catalog.py	Inspected (static)	Indicator catalog reviewed; no change | service
+services/nexus_news/fundamental/news_intelligence.py	Inspected (static)	News intelligence path reviewed; no external request sent; no change | service
+services/nexus_news/fundamental/normalization.py	Inspected (static)	Normalization path reviewed; no change | service
+services/nexus_news/fundamental/outcome_collector_v61.py	fixed and verified	Fundamental impact-table read now sends internal secret; OHLCV outcome reads remain public market data; 2026-10-16 distributed batch; suite green | Data-service and managed-source boundaries reviewed; no request or DB access; no change; 2026-10-16 distributed batch; suite green
+services/nexus_news/fundamental/outcomes.py	Inspected (static)	Outcome processing reviewed; no change | service
+services/nexus_news/fundamental/quality.py	Inspected (static)	Quality evaluation path reviewed; no change | service
+services/nexus_news/fundamental/replay.py	Inspected (static)	Replay path reviewed without execution; no change | service
+services/nexus_news/fundamental/runtime.py	Fixed and verified (audit evidence)	Existing runtime fix retained; no new change | service
+services/nexus_news/fundamental/scoring.py	Inspected (static)	Scoring path reviewed; no change | service
+services/nexus_news/fundamental/source_base.py	Implemented, not verified	JSON/text HTTP helpers use the pinned HTTP client with redirects disabled; no external request sent | service
+services/nexus_news/fundamental/source_registry.py	Inspected (static)	Source definitions reviewed; no change | service
+services/nexus_news/fundamental/ticker.py	Inspected (static)	Ticker path reviewed; no change | service
+services/nexus_news/fundamental/training.py	Inspected (static)	Training code not executed; no change | service
+services/nexus_news/main.py	Implemented, not verified	Per-start task ownership and AsyncExitStack cleanup for startup/body/close failures; tasks cancelled and joined before resources close. Current changes untested. | Task ownership and AsyncExitStack cleanup recorded by project_audit; no runtime execution
+services/nexus_news/news_fetcher.py	fixed and verified	NewsAPI/GNews/GDELT clients use the pinned HTTP client with redirects disabled; no external request sent; 2026-10-16 distributed batch; suite green | service; 2026-10-16 distributed batch; suite green
+services/nexus_news/requirements.txt	Inspected (static)	Dependency declarations reviewed; no change | service
+services/nexus_news/sentinel.py	Inspected (static)	Fail-closed news/calendar sentinel state path reviewed; no change | service
+services/nexus_news/social_sentiment.py	Inspected (static)	Sentiment path reviewed; no external request sent; no change | service
+services/nexus_risk/__init__.py	Not inspected	service
+services/nexus_risk/anti_tilt.py	Not inspected	service
+services/nexus_risk/correlation_checker.py	Not inspected	service
+services/nexus_risk/main.py	fixed and verified	New approvals reject unavailable/invalid authoritative account snapshots; availability set after finite PnL calculations; daily-PnL read failure propagates; strict canonical clear blackout required; settings save failure returns 503. Untested.; 2026-10-16 distributed batch; suite green
+services/nexus_risk/position_sizer.py	Fixed and verified	ACR-58 risk-budget lot cap, downward step rounding, and no minimum-lot risk override; focused regressions pass
+services/nexus_risk/requirements.txt	Inspected (partial)	service
+services/nexus_risk/rules_engine.py	Fixed and verified	ACR-58 uses contract-aware final-lot risk validation; focused regressions pass
+SHA_MANIFEST.json	Not inspected	root-or-other
+shared/config_loader.py	fixed and verified	agent-3 | P1 ConfigLoader risk policy path | Reads config/risk_rules.yaml and preserves the flat RiskRulesSchema through explicit grouped-to-flat normalization; 2026-10-16 distributed batch; suite green | No tests or service execution per task | Direct load_all reproduction omits risk config, truncates agent A1 fields, and fabricates `specs`/`brokers` as assets; config API does not persist to keys read by trading services; 2026-10-16 distributed batch; suite green
+shared/redis_client.py	fixed and verified	Added Redis 5-compatible XPENDING/XCLAIM reclaim, bounded DLQ handoff, stable idempotency key, and atomic processed marker; 2026-10-16 distributed batch; suite green | Not run per user instruction; no live Redis contacted | Reviewed explicit-delivery and legacy auto-ack semantics; pending recovery remains; 874-test full suite passed; 2026-10-16 distributed batch; suite green
+shared/safety.py	fixed and verified	agent-3 | Separate risk-approval signing key contract | approval_signature/verify_approval_signature read NEXUS_RISK_APPROVAL_SECRET; internal_api_secret remains separate; secure-key validation rejects equality; 2026-10-16 distributed batch; suite green | Static inspection only; no signature execution | Malformed/unknown blackout payload blocks execution; approval-key isolation and broader safety helper review remain open; 2026-10-16 distributed batch; suite green
+shared/__init__.py	Not inspected	shared
+shared/asset_profile.py	Not inspected	shared
+shared/asset_specs.py	Not inspected	shared
+shared/constants.py	Inspected (partial)	Reviewed stream/event enum mappings and defaults; no live configuration/runtime parity claim
+shared/duckdb_client.py	fixed and verified	shared; 2026-10-16 distributed batch; suite green
+shared/events.py	Implemented, not verified	Historical JSON-safe list serialization remains covered by prior evidence; current SignalEvent timeframe field is new and unverified
+shared/fundamental/__init__.py	Not inspected	shared
+shared/fundamental/enums.py	Not inspected	shared
+shared/fundamental/models.py	Not inspected	shared
+shared/http_client.py	fixed and verified	Adds pinned HTTPX/httpcore transport: resolves one global IP per TCP connect, preserves hostname for TLS, and refuses redirect-following pinned clients; no request was sent; 2026-10-16 distributed batch; suite green | shared; 2026-10-16 distributed batch; suite green
+shared/llm_factory.py	Not inspected	shared
+shared/logger.py	Not inspected	shared
+shared/models.py	Implemented, not verified	RiskState exposes availability provenance, default false; current risk-status contract unverified
+shared/nexus_trades.py	Not inspected	shared
+shared/orchestrator.py	Not inspected	shared
+shared/pandas_ta_compat.py	Not inspected	shared
+shared/runtime_settings.py	Implemented, not verified	Write failures propagate before patched cache update; missing Redis fails; non-finite numeric coercion falls back to defaults. Concurrency/read fallback remains open.
+shared/sessions.py	fixed and verified	shared; 2026-10-16 distributed batch; suite green
+shared/sl_tp.py	Not inspected	shared
+shared/source_manager.py	Implemented, not verified	Adds global-IP resolution, rejects embedded endpoint credentials, and is used by the pinned transport; no DNS or HTTP request was executed | shared
+shared/strategy_engine.py	Not inspected	shared
+SOURCE_HEALTH_ACTUAL.md	Not inspected	root-or-other
+SOURCE_REGISTRY.md	Not inspected	root-or-other
+TEST_MATRIX.md	Not inspected	root-or-other
+TEST_RESULTS.md	Inspected	root-or-other
+tests/test_agents/test_intermarket_agent.py	Fixed and verified	Seven isolated tests cover missing/invalid and low/normal/high VIX plus prompt constraints; imports pure helper without initializing agent registry or loading HMM artifact
+tests/test_agents/test_internal_mutation_auth.py	Fixed and verified	Rejects missing/wrong internal credentials before agent mutations and eight sensitive read routes
+tests/test_api/test_agent_evaluation_authorization.py	Fixed and verified	Rejects missing JWT/trading.execute before agents proxy
+tests/test_api/test_backtest_authorization.py	Fixed and verified	Rejects missing JWT/trading.view before fetching historical trade data
+tests/test_api/test_intelligence_brief_authorization.py	Fixed and verified	Rejects missing JWT/fundamental.configure before agents proxy
+tests/test_api/test_intelligence_settings_authorization.py	Fixed and verified	Rejects missing JWT/trading.settings before Redis write
+tests/test_api/test_jwt_secret_validation.py	Fixed and verified	JWT issuance rejects missing, sample, and short keys; valid configured key round-trips token
+tests/test_api/test_ml_training_authorization.py	Fixed and verified	Rejects missing JWT/permissions before ML proxy for ML mutations
+tests/test_api/test_openapi_schema.py	Fixed and verified	Test
+tests/test_api/test_position_status_cache.py	Fixed and verified	Regression reproduced cross-status Redis cache contamination before fix; status-specific cache keys now return the requested open/closed status, focused related API tests 48 passed
+tests/test_api/test_source_manager_authorization.py	Fixed and verified	Test
+tests/test_api/test_source_manager_ssrf.py	Fixed and verified	Blocks loopback/private-DNS source tests and verifies redirects are not followed
+tests/test_api/test_strategy_mutation_authorization.py	Fixed and verified	Strategy Lab mutation authorization regressions
+tests/test_api/test_ticker_mutation_authorization.py	Fixed and verified	Protects global ticker, acknowledgements, delivery logs, and local AI analysis
+tests/test_api/test_websocket_auth.py	Fixed and verified	Rejects missing/invalid JWT, missing channel permissions, handshake timeout, and permission-store outage; allows authorized users and cleans up connections
+tests/test_data/test_sensitive_read_authorization.py	Fixed and verified	Rejects direct financial/trade/fundamental-table reads without valid internal secret
+tests/test_data/test_subscribe_authorization.py	Fixed and verified	Rejects unauthorized runtime broker-subscription requests before broker checks or stream creation
+tests/test_data/test_trade_close_consumer.py	Fixed and verified	Regression: trade-close event acknowledged only after successful persistence
+tests/test_executor/test_approval_contract.py	Fixed and verified	Test
+tests/test_executor/test_entry_context_timeframe.py	Implemented, not verified	Ensures entry features are not guessed as M5 and explicit timeframe provenance is saved; unrun
+tests/test_executor/test_internal_mutation_auth.py	Implemented, not verified	Prior auth coverage remains; current batch adds finite close-size and fail-closed stacking regressions, unrun
+tests/test_executor/test_positions_internal_auth.py	Fixed and verified	Rejects missing/invalid internal secret before broker access; accepts configured secret
+tests/test_executor/test_stream_consumer_ack.py	Fixed and verified	Reject decisions ack; approved decision guard failure remains pending
+tests/test_features/test_calculate_api.py	Fixed and verified	Covers cached-bar levels calculation, response schema, service auth, and agent credential forwarding
+tests/test_features/test_feature_input_ordering.py	Implemented, not verified	Regression cases for chronological ordering and MTF close/timeframe contract; intentionally unexecuted
+tests/test_features/test_ohlcv_ordering.py	Fixed and verified	ACR-68 regression: descending API/DuckDB bars normalize so the final feature row is newest; 1 passed
+tests/test_health_freshness.py	Fixed and verified	Test
+tests/test_ml/test_internal_mutation_auth.py	Fixed and verified	Rejects missing/wrong internal credentials before ML mutations, legacy reads, and ten parallel-trader reads
+tests/test_ml/test_model_bundle_validation.py	Fixed and verified	Strict candidate save/load tests
+tests/test_ml/test_model_generation_startup.py	Fixed and verified	Startup fallback and promotion orchestration tests
+tests/test_ml/test_model_promotion.py	Fixed and verified	Candidate acceptance and anomaly preservation tests
+tests/test_ml/test_model_registry.py	Fixed and verified	Versioned model registry and atomic pointer tests
+tests/test_ml/test_next_bar_labels.py	In progress	Existing next-bar cases plus new horizon propagation/filter/count regressions; intentionally unrun until final acceptance.
+tests/test_ml/test_trade_memory_consumer_ack.py	Fixed and verified	Failure-injection coverage confirms trade-close events are acknowledged only after trade-memory persistence succeeds
+tests/test_ml/test_walk_forward_validation.py	Implemented, not verified	Added a boundary purge case for next-bar label leakage; prior outer metric tests exist, but recent change is unrun
+tests/test_monitor/test_alert_authorization.py	Fixed and verified	Rejects unauthenticated Telegram alerts and direct performance reads; authorized performance proxy path remains functional
+tests/test_news/test_analyze_authorization.py	Fixed and verified	Rejects unauthenticated and oversized analysis requests before FinBERT, while retaining authorized behavior
+tests/test_preflight.py	Fixed and verified	Regression tests cover authenticated Redis URL parsing, TCP fallback, and credential redaction; included in 876-test full suite
+tests/test_risk/test_approval_contract.py	Fixed and verified	Test
+tests/test_risk/test_internal_mutation_auth.py	Fixed and verified	Risk sensitive reads and mutators reject missing/incorrect internal credentials; valid exposure read accepted
+tests/test_risk/test_position_sizer_risk_cap.py	Implemented, not verified	Historical ACR-58 evidence preserved; valid account availability added to fixture; current file not rerun.
+tests/test_risk/test_stream_consumer_ack.py	Fixed and verified	Intentional invalid-proposal drop acked; proposal/trade-close processing failures remain unacknowledged; daily-PnL, recent-results and directional-streak failure cases covered
+tests/test_runner_internal_secret.py	Fixed and verified	Requires internal and strong JWT secrets during startup environment validation; missing, sample, and short JWT keys rejected
+tests/test_runner_safety.py	Fixed and verified	Test
+tests/__init__.py	Not inspected	test
+tests/conftest.py	Not inspected	test
+tests/test_agents/__init__.py	Not inspected	test
+tests/test_agents/test_all_agents.py	Not inspected	test
+tests/test_agents/test_arbitrator_evidence_gates.py	In progress	Regressions cover fail-closed news evidence and ML not overriding conflict lock; not run.
+tests/test_agents/test_base_agent.py	Not inspected	test
+tests/test_agents/test_graph.py	In progress	Added regression cases for isolated branch-message merging and zero-valued analysis preservation; not run.
+tests/test_agents/test_market_analyst.py	Not inspected	test
+tests/test_agents/test_news_sentinel_fail_closed.py	In progress	Earlier cases passed; additional graph/arbitrator changes and this batch's combined behavior are untested.
+tests/test_agents/test_news_tools_internal_auth.py	Fixed and verified	Outgoing service-secret header and symbol/hour query mapping verified; full suite after change passed
+tests/test_agents/test_operational_timeframe_resolution.py	Implemented, not verified	Regression confirms an explicit signal M15 is not overridden by M5 runtime defaults; unrun
+tests/test_agents/test_research_promotion_evidence.py	In progress	Regressions require real backtester evidence for promotion; not run.
+tests/test_agents/test_risk_context_fail_closed.py	fixed and verified	Regressions cover internal header, incomplete/unavailable/non-finite exposure, and rejecting risk decision; not run.; 2026-10-16 distributed batch; suite green
+tests/test_agents/test_risk_prompt_contract.py	Fixed and verified	Regression prevents risk prompt from asserting stale hardcoded limits or claiming final authority; focused suite 32 passed, 1 warning; full suite 878 passed, 3 warnings.
+tests/test_agents/test_state.py	Not inspected	test
+tests/test_api/__init__.py	Not inspected	test
+tests/test_api/test_admin_data_service.py	Not inspected	test
+tests/test_api/test_admin_update_authorization.py	Implemented, not verified	Covers role-target validation and users.disable denial before any user image/DB side effects; all recent cases unrun
+tests/test_api/test_backtest_sources.py	fixed and verified	test; 2026-10-16 distributed batch; suite green
+tests/test_api/test_config_agents_read_authorization.py	fixed and verified	Prior permission cases retain earlier evidence; new literal/structured anti-tilt latch cases authored but unrun; 2026-10-16 distributed batch; suite green
+tests/test_api/test_config_mutation_authorization.py	Fixed and verified	Config API authorization regression test
+tests/test_api/test_data_client.py	Not inspected	test
+tests/test_api/test_position_mutation_authorization.py	Implemented, not verified	Existing mutation authorization coverage retained; regression asserts executor REJECTED surfaces as 502, PENDING remains 202, and success relays FILLED; unrun
+tests/test_api/test_regime_history_availability.py	Implemented, not verified	Regression cases for Redis outage and malformed history JSON; intentionally not run per user instruction
+tests/test_api/test_risk_mutation_authorization.py	Fixed and verified	Risk API authorization regression test
+tests/test_api/test_routers.py	fixed and verified	Legacy API route tests now authenticate and stub permissions; included in full 725-test run; 2026-10-16 distributed batch; suite green
+tests/test_api/test_sensitive_read_authorization.py	Fixed and verified	Sensitive financial read authorization regression tests; included in full 725-test run
+tests/test_api/test_trade_memory_availability.py	Implemented, not verified	Regressions for unavailable Redis and parseable JSON with invalid metrics/threshold/trade shapes; unrun
+tests/test_api/test_trade_proxy.py	Fixed and verified	test
+tests/test_api/test_websockets.py	Inspected (partial)	test
+tests/test_data/__init__.py	Not inspected	test
+tests/test_data/test_connectors.py	Not inspected	test
+tests/test_data/test_duckdb_wal_recovery.py	Fixed and verified	Failure-injection regression proves large WAL bytes remain intact when checkpoint fails, with recovery setting unset or explicitly enabled
+tests/test_data/test_historical_connectors.py	fixed and verified	Regressions cover provider validation/order and MT5 failure surfaced as 503; unrun; 2026-10-16 distributed batch; suite green
+tests/test_data/test_internal_queries.py	fixed and verified	Added a regression proving the sole DuckDB writer rejects an orphan role link before insert; not run per user instruction; 2026-10-16 distributed batch; suite green
+tests/test_data/test_ohlcv_persistence.py	fixed and verified	Test; 2026-10-16 distributed batch; suite green
+tests/test_executor/__init__.py	Not inspected	test
+tests/test_executor/test_broker_adapters.py	Implemented, not verified	Regression cases for paper partial/negative close and MT5 ambiguous retry; current edits unrun
+tests/test_features/__init__.py	Not inspected	test
+tests/test_features/test_indicators.py	Not inspected	test
+tests/test_fundamental/test_free_official_sources_r31.py	Not inspected	test
+tests/test_fundamental/test_golden_contracts.py	Inspected	test
+tests/test_fundamental/test_source_manager_r3.py	Not inspected	test
+tests/test_fundamental/test_v61_final_contracts.py	fixed and verified	Final contract regressions now cover non-finite monetary and macro inputs; current cases unrun; 2026-10-16 distributed batch; suite green
+tests/test_ml/__init__.py	Not inspected	test
+tests/test_ml/test_dynamic_tf.py	Inspected (partial)	test
+tests/test_ml/test_lifecycle_task_ownership.py	Implemented, not verified	Regression tests for cancelling and awaiting all owned ML lifespan tasks; deliberately not run
+tests/test_ml/test_models.py	In progress	Added unrun regression for RL fallback TRAIL_SL_1ATR reachability.
+tests/test_ml/test_trader_timeframe_isolation.py	Implemented, not verified	ML timeframe isolation regression cases; not run
+tests/test_ml/test_traders_api_lifecycle_ownership.py	Implemented, not verified	ML task ownership/shutdown regression cases; not run
+tests/test_monitor/test_monitor_read_auth.py	Fixed and verified	Detailed Monitor health and JSON/Prometheus API reads reject missing/wrong internal secrets; public health probe and Prometheus scrape remain available
+tests/test_monitor/test_performance_proxy.py	Fixed and verified	Test
+tests/test_news/__init__.py	Not inspected	test
+tests/test_news/test_news_service.py	Not inspected	test
+tests/test_news/test_read_authorization.py	Fixed and verified	Missing/wrong internal secret denied on six reads; valid secret and public health probe verified
+tests/test_risk/__init__.py	Not inspected	test
+tests/test_risk/test_fundamental_blackout_guard.py	Implemented, not verified	Malformed/scalar blackout regressions added; explicit valid-account fixture added for new account guard; unrun.
+tests/test_risk/test_risk_state_availability.py	Implemented, not verified	Added unsynced/invalid account rejection and daily-PnL read-error regressions; unrun.
+tests/test_risk/test_rules_engine.py	Inspected	Baseline risk engine import/constants tests; additional sizing regression coverage is in test_position_sizer_risk_cap.py
+tests/test_shared/__init__.py	Not inspected	test
+tests/test_shared/test_constants.py	Inspected (partial)	Reviewed stream registry and enum/default assertions; included in 874-test full suite
+tests/test_shared/test_events.py	Implemented, not verified	Historical event serialization regressions passed previously; current SignalEvent timeframe provenance round-trip case authored, not run
+tests/test_shared/test_models.py	Implemented, not verified	RiskState defaults explicitly assert unavailable until a verified live account snapshot; current change unverified
+tests/test_shared/test_redis_client.py	Inspected (partial)	Reviewed explicit-delivery test and ran with focused suite; full suite covers current behavior
+TRACEABILITY_REPORT.md	Not inspected	root-or-other
+tsconfig.json	Inspected (partial)	Strict JSONC compiler config uses NodeNext and no explicit include; typecheck not run due Node/path environment blocker
+UI_ACCEPTANCE.md	Not inspected	root-or-other
+UI_RUNTIME_FIX_REPORT.md	Not inspected	root-or-other
+V6_1_FINAL_VERIFY_REPORT.txt	Inspected	root-or-other
+V6_1_RUNTIME_EVIDENCE.json	Not inspected	root-or-other
+services/nexus_ml/artifact_guard.py	fixed and verified	2026-10-16 batch; artifact allowlist guard; suite green
+services/nexus_news/url_safety.py	fixed and verified	2026-10-16 batch; URL safety; suite green
+dashboard/src/components/progress/ProgressCell.tsx	fixed and verified	2026-10-16 progress rework; tsc PASS
+dashboard/src/components/progress/ErrorFixCell.tsx	fixed and verified	2026-10-16 progress rework; tsc PASS
+dashboard/src/lib/system-state.ts	Implemented and verified statically	2026-10-16 batch; tsc PASS
+scripts/apply_schema.py	fixed and verified	2026-10-16 batch; suite green
+scripts/update_dashboard.py	fixed and verified	2026-10-16 truth pass; tooling reworked
+project_audit/DISTRIBUTED_FIX_BATCH_20261016.md	Generated / Audit artifact	2026-10-16 batch doc
+project_audit/VERIFICATION_GATE_20261016.md	Generated / Audit artifact	2026-10-16 gate 1000/1000+tsc
+project_audit/GIT_EVIDENCE_20261016.json	Generated / Audit artifact	2026-10-16 119-path evidence

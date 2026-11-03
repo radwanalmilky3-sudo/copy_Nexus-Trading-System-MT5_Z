@@ -1,0 +1,30 @@
+path: _pdfs/_official/ecb_wp528.pdf
+title_guess: NO . 528 / SEPTEMBER 2005
+ids: wp528
+priority: warm
+extract_status: ok
+---
+l ECB 
+publications 
+will feature 
+a motif taken 
+from the 
+€50 banknote.
+WORKING PAPER SERIES
+NO. 528 / SEPTEMBER 2005
+This paper can be downloaded without charge from 
+http://www.ecb.int or from the Social Science Research Network 
+electronic library at http://ssrn.com/abstract_id=804466.
+HOW SUCCESSFUL ARE
+EXCHANGE RATE 
+COMMUNICATION AND
+INTERVENTIONS?
+EVIDENCE FROM 
+TIME-SERIES AND 
+EVENT-STUDY
+APPROACHES 1
+by Marcel Fratzscher 2
+1 I would like to thank Terhi Jokipii for excellent research assistance. The views expressed in this paper are those of the author and
+do not necessarily reflect those of the European Central Bank.
+2 European Central Bank, Kaiserstrasse 29, 60311 Frankfurt am Main, Germany; e-mail: Marcel.Fratzscher@ecb.int;
+Tel.: +49 69 13 44-68 71, Fax.: +49 69 13 44-63 53

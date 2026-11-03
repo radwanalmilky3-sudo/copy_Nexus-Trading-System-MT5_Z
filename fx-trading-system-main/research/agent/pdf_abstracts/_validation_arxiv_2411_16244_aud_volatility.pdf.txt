@@ -1,0 +1,21 @@
+path: _pdfs/_validation/arxiv_2411_16244_aud_volatility.pdf
+title_guess: What events matter for exchange rate volatility?
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper expands on stochastic volatility models by proposing a data-driven method to select the macroeco-
+nomic events most likely to impact volatility. The paper identifies and quantifies the effects of macroeconomic events
+across multiple countries on exchange rate volatility using high-frequency currency returns, while accounting for
+persistent stochastic volatility effects and seasonal components capturing time-of-day patterns. Given the hundreds
+of macroeconomic announcements and their lags, we rely on sparsity-based methods to select relevant events for the
+model. We contribute to the exchange rate literature in four ways: First, we identify the macroeconomic events that
+drive currency volatility, estimate their effects and connect them to macroeconomic fundamentals. Second, we find
+a link between intraday seasonality, trading volume, and the opening hours of major markets across the globe. We
+provide a simple labor-based explanation for this observed pattern. Third, we show that including macroeconomic
+events and seasonal components is crucial for forecasting exchange rate volatility. Fourth, our proposed model
+yields the lowest volatility and highest Sharpe ratio in portfolio allocations when compared to standard SV and
+GARCH models.
+Key words: Stochastic Volatility; Macroeconomic Announcements; Sparsity; Seasonality.
+∗ ¨Orebro University. igor.ferreira-batista-martins@oru.se
+†Insper. hedibertfl@insper.edu.br

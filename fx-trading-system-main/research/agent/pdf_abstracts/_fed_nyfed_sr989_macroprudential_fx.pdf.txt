@@ -1,0 +1,76 @@
+path: _pdfs/_fed/nyfed_sr989_macroprudential_fx.pdf
+title_guess: Real Consequences of
+ids: 
+priority: warm
+extract_status: ok
+---
+Real Consequences of 
+Shocks to Intermediaries 
+Supplying Corporate 
+Hedging Instruments 
+Hyeyoon Jung 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+N O . 989 
+O C T O B E R 2 0 2 1 
+ 
+R E V I S E D 
+J U L Y 202 4 
+Real Consequences of Shocks to Intermediaries Supplying Corporate Hedging Instruments 
+Hyeyoon Jung 
+Federal Reserve Bank of New York Staff Reports, no. 989 
+October 2021; revised July 2024 
+JEL classification: E44, F31, G15, G28, G32 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Abstract 
+I show that shocks to financial intermediaries that supply hedging instruments to corporations 
+have real effects. I exploit a quasi-natural experiment in South Korea in 2010, where regulations required 
+banks to hold enough capital for taking positions in foreign exchange derivatives (FXD). Using the 
+variation in exposure to this regulation across banks, I find that the regulation caused a reduction in the 
+supply of FXD, leading to a significant decline in exports for firms that held derivatives contracts with 
+more exposed banks. These results indicate the crucial role of intermediaries in allocating risks through 
+the provision of derivatives and establish a causal relationship between financial hedging and real 
+economic outcomes. 
+ 
+Key words: real effects, macroprudential policy, international finance, derivatives hedging, FX risk 
+management 
+ 
+ 
+ 
+ 
+_________________ 
+ 
+Jung: Federal Reserve Bank of New York (email: hyeyoon.jung@ny.frb.org). The author thanks Stefano 
+Giglio (editor) and two anonymous referees for their insightful comments. She is grateful to her advisors, 
+Robert Engle, Philipp Schnabl, Ralph Koijen, Alexi Savov, and Joel Hasbrouck, for their unwavering 
+support and guidance. She thanks Jaehoon Jung, Viral Acharya, Wenxin Du, Laura Alfaro, Nina 
+Boyarchenko, Matthew Plosser, Pasquale Della Corte, Marcin Kacperczyk, Tarun Ramadorai, Richard 
+Levich, Nicola Cetorelli, Shan Ge, Julian di Giovanni, Richard Crump, and discussants and participants 
+at the American Economic Association meeting, NBER International Finance and Macroeconomics 
+meeting, IMF Macro-Financial Research Conference, HEC Paris-CEPR Conference, Yale SOM, 
+Vanderbilt Owen, University of South Carolina Darla Moore, NYU Stern, Imperial College London, 
+Warwick Business School, Oxford Said, Stockholm School of Economics, Hong Kong University, Hong 
+Kong University of Science and Technology, Korea University, Federal Reserve Bank of New York, 
+Federal Reserve Board, Federal Reserve Bank of Chicago, Bank of Korea

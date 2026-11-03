@@ -1,0 +1,18 @@
+path: _pdfs/_validation/harvey_liu_zhu_w20592.pdf
+title_guess: . . . AND THE CROSS-SECTION OF EXPECTED RETURNS
+ids: w20592
+priority: hot
+extract_status: ok
+---
+CH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+October 2014
+We appreciate the comments of Viral Acharya, Jawad Addoum, Tobias Adrian, Andrew Ang, Ravi
+Bansal, Mehmet Beceren, Itzhak Ben-David, Bernard Black, Jules van Binsbergen, Oliver Boguth,
+Tim Bollerslev, Alon Brav, Ian Dew-Becker, Robert Dittmar, Jennifer Conrad, Michael Cooper, Andres
+Donangelo, Wayne Ferson, Simon Gervais, Bing Han, John Hand, Andrew Karolyi, Abby Yeon Kyeong
+Kim, Lars-Alexander Kuehn, Sophia Li, Harry Markowitz, Kyle Matoba, David McLean, Marcelo
+Ochoa, Peter Park, Lubos Pastor, Andrew Patton, Lasse Heje Pedersen, Tapio Pekkala, Jeff Pontiff,
+Ryan Pratt, Alexandru Rosoiu, Tim Simin, Avanidhar Subrahmanyam, Ivo Welch, Basil Williams,
+Yuhang Xing, Josef Zechner and Xiaofei Zhao as well as seminar participants at t

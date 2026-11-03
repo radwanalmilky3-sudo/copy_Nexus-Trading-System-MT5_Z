@@ -1,0 +1,6 @@
+path	status	finding_or_change	constraints
+services\nexus_api\routers\backtest.py	Fixed	Historical backtest reads now use the nexus-data owner endpoint with the internal service secret and paginate the complete durable trade history; direct Redis trade-memory reads and the fixed 2000-row ceiling were removed.	No live DB, Redis, tests, or trading
+services\nexus_api\routers\market.py	Fixed	Conservative JWT decision applied: symbols, historical candles, and ticks require trading.view before data access; candles expose start/end for backfill and use the internal data-service credential.	P2 API-only; Paper/Live unchanged; no services
+services\nexus_api\routers\news.py	Fixed	Conservative JWT decision applied: latest news, calendar, and symbol sentiment require trading.view before Redis reads through the existing permission dependency.	P2 API-only; no secrets logged or exposed; no services
+services\nexus_api\middleware\auth.py	Reviewed	Existing JWT verification and secure-secret validation retained; no behavior change.	Static review only
+services\nexus_api\data_client.py	Reviewed	Existing internal data-service client contract retained; no direct database access introduced.	Static review only

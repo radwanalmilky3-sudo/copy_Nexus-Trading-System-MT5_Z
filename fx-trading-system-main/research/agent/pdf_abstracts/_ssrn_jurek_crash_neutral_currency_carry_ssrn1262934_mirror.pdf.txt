@@ -1,0 +1,17 @@
+path: _pdfs/_ssrn/jurek_crash_neutral_currency_carry_ssrn1262934_mirror.pdf
+title_guess: Electronic copy available at: http://ssrn.com/abstract=1262934
+ids: 
+priority: hot
+extract_status: ok
+---
+y in G10 currencies
+have historically delivered signiﬁcant excess returns with annualized Sharpe ratios nearly twice
+that of the U.S. equity market (1990-2008). Using data on foreign exchange options, this paper
+investigates whether these returns represent compensation for exposure to currency crashes. After
+eliminating net dollar exposure and hedging crash risk, excess returns to crash-neutral currency
+carry trades are statistically indistinguishable from zero; returns to non-dollar-neutral portfolios
+remain positive, but are only weakly signiﬁcant. The choice of option maturity has a signiﬁcant
+impact on the realized excess returns, with quarterly hedging producing annualized returns that
+are 1-2% higher than those obtained from monthly hedging.
+First draft: October 2007
+This draft: Apri

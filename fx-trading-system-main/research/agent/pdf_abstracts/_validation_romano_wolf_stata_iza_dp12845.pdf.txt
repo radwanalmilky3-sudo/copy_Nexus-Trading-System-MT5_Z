@@ -1,0 +1,14 @@
+path: _pdfs/_validation/romano_wolf_stata_iza_dp12845.pdf
+title_guess: The Romano-Wolf Multiple Hypothesis
+ids: 
+priority: warm
+extract_status: ok
+---
+se of the author(s) and not those of IZA. Research published in this series may 
+include views on policy, but IZA takes no institutional policy positions. The IZA research network is committed to the IZA 
+Guiding Principles of Research Integrity.
+The IZA Institute of Labor Economics is an independent economic research institute that conducts research in labor economics 
+and offers evidence-based policy advice on labor market issues. Supported by the Deutsche Post Foundation, IZA runs the 
+world’s largest network of economists, whose research aims to provide answers to the global labor market challenges of our 
+time. Our key objective is to build bridges between academic research, policymakers and society.
+IZA Discussion Papers often represent preliminary work and are circulated to encourag

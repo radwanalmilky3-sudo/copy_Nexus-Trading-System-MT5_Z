@@ -1,0 +1,36 @@
+path: _pdfs/_official/boe/boe_wp_using_copulas_fx_distributions.pdf
+title_guess: Using copulas to construct bivariate foreign
+ids: 
+priority: warm
+extract_status: ok
+---
+mon and Christoph Schleicher
+ 
+ 
+ 
+Using copulas to construct bivariate foreign exchange distributions with an 
+application to the sterling exchange rate index 
+ 
+ 
+ 
+Matthew Hurd* 
+Mark Salmon** 
+and 
+Christoph Schleicher§ 
+ 
+ 
+Working Paper no. 334 
+ 
+ 
+* Foreign Exchange Division, Bank of England. 
+Email: matthewhurd@cantab.net. 
+** Financial Econometrics Research Centre, Warwick Business School. 
+Email: mark.salmon@wbs.ac.uk. 
+§ Monetary Instruments and Markets Division, Bank of England. 
+Email: christoph@iam.ubc.ca (corresponding author). 
+ 
+ 
+ 
+The views expressed in this paper are those of the authors, and not necessarily those of the 
+Bank of England. We would like to thank Michael Bennett, Andrew Patton, Alessio Sancetta and 
+Petra Wikström, as well as seminar participants at the 

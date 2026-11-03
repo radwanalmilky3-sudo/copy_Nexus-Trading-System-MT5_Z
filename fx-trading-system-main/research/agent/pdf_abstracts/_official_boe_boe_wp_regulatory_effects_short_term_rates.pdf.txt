@@ -1,0 +1,14 @@
+path: _pdfs/_official/boe/boe_wp_regulatory_effects_short_term_rates.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+We analyse the effects of EMIR and Basel III regulations on short-term interest rates. EMIR requires 
+central clearing houses (CCP) to continually acquire safe assets, thus expanding the lending supply of 
+repurchase agreements (repo). Basel III, in contrast, disincentivises the borrowing demand by tightening 
+banks’ balance sheet constraints. Using unique datasets of repo transactions and CCP activity, we find 
+compelling evidence for both supply and demand channels. The overall effects are decreasing short-term 
+rates and increasing market imbalances in various forms, all of which entail unintended consequences 
+originated from the new regulatory framework.
+Key words: Repo, central clearing, financial infrastructure, leverage ratio, EMIR, regulatory effects.

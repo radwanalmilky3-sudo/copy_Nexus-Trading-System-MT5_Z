@@ -1,0 +1,15 @@
+path: _pdfs/_official/itskhoki_disconnect_revisited_princeton.pdf
+title_guess: Exchange Rate Disconnect Revisited ∗
+ids: 
+priority: warm
+extract_status: ok
+---
+We find that variation in expected US productivity explains over half of US dollar/G7
+exchange rate fluctuations. These fluctuations reflect both partly-anticipated changes
+in productivity and noise that affects beliefs without affecting realized productivity.
+This “noisy news” is primarily related to medium-to-long-run TFP growth, and causes
+significant deviations from uncovered interest parity. Together, these disturbances gen-
+erate several well-known exchange rate puzzles, including predictable excess returns,
+low Backus-Smith correlations, and excess volatility. We examine leading classes of
+open-economy models and find that the incomplete markets framework best matches
+the qualitative patterns we identify in the data.

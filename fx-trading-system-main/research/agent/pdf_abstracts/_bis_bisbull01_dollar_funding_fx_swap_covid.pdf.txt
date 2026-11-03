@@ -1,0 +1,31 @@
+path: _pdfs/_bis/bisbull01_dollar_funding_fx_swap_covid.pdf
+title_guess: Dollar funding costs during the Covid-19
+ids: 
+priority: warm
+extract_status: ok
+---
+BIS Bulletins are written by staff members of the Bank for International Settlements, and from time to time 
+by other economists, and are published by the Bank. The papers are on subjects of topical interest and are 
+technical in character. The views expressed in them are those of their authors and not necessarily the views 
+of the BIS. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+This publication is available on the BIS website (www.bis.org). 
+ 
+ 
+© Bank for International Settlements 2020. All rights reserved. Brief excerpts may be reproduced or 
+translated provided the source is stated. 
+ 
+ 
+ 
+ 
+ISSN: 2708-0420 (online) 
+ISBN 92-9197-355-1 (online)

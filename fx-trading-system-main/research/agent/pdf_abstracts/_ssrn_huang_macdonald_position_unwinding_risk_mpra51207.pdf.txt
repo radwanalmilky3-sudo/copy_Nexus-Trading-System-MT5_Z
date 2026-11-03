@@ -1,0 +1,23 @@
+path: _pdfs/_ssrn/huang_macdonald_position_unwinding_risk_mpra51207.pdf
+title_guess: Munich Personal RePEc Archive
+ids: 
+priority: hot
+extract_status: ok
+---
+This is the ﬁrst study that employs option pricing model to measur e
+the position-unwinding risk of currency carry trade portfolios, whi ch
+well covers the moment information. We show that high interest-
+rate currencies are exposed to higher position-unwinding risk than
+low interest-rate currencies. We also investigate the sovereign CDS
+spreads as the proxy for countries’ credit conditions and ﬁnd that high
+interest-rate currencies load up positively on sovereign default r isk
+while low interest-rate currencies provide a hedge against it. So vereign
+credit premia as the dominant economic fundamental risk, together
+with position-unwinding likelihood indicator as the market risk ( non-
+neutrality) sentiment, captures over 90% cross-sectional variations of
+carry trade excess returns. We identify sovereign credit risk as the
+impulsive country-speciﬁc risk that drives market volatility, an d also
+its global contagion channels. Then We propose an alternative car-
+ry trade strategy immunized from crash risk, and a composite story
+of sovereign credit premia, global liquidity imbalances and liquidit y
+reversal/spiral for explaining the forward premium puzzle.

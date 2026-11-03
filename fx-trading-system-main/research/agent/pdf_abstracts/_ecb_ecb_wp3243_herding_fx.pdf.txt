@@ -1,0 +1,22 @@
+path: _pdfs/_ecb/ecb_wp3243_herding_fx.pdf
+title_guess: Herding in the foreign exchange
+ids: 
+priority: warm
+extract_status: ok
+---
+Using a recent
+and comprehensive data set covering nine of the most actively traded currencies
+on a monthly basis from 1995 to 2024, this paper explores the presence and potential drivers of
+herding behaviour in foreign exchange rate forecasts. The dataset features an average of 40–50
+forecasters per currency, representing a broader range of currencies, a longer time frame, and a
+larger cross section of forecasters than is commonly found in the FX herding literature. Our results
+provide mixed evidence on herding, where the balance tends towards anti-herding conclusions.
+While some revision-based tests suggest herding when current consensus forecasts are used, this
+evidence weakens considerably when lagged information is employed. In contrast, forecast-error
+based tests, Bernhardt et al. statistics, and over-reaction regressions more often point to anti-
+herding, particularly at longer horizons. Overall, we interpret the findings as suggesting that
+differences among forecasters are largely attributable to heterogeneous views, noise, or idiosyncratic
+error rather than systematic convergence toward the consensus. When alternative explanations for
+expectation formation or revisions are considered, the main findings remain unchanged across a
+wide range of measures, including different types of uncertainty and FX predictors such as the
+forward premium, the real exchange rate, and the depreciation rate.

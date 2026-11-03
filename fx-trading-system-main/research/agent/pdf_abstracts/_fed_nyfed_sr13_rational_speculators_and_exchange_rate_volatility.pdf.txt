@@ -1,0 +1,27 @@
+path: _pdfs/_fed/nyfed_sr13_rational_speculators_and_exchange_rate_volatility.pdf
+title_guess: RATIONAL SPECULATORS AND EXCHANGE RATE VOLATILITY
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper suggests a plausible microstructural connection between rational
+speculative activity and exchange rate volatility. When Friedman (1953) claimed that
+rational speculators must smooth exchange rates, he excluded interest rate differentials
+from his interpretation of speculator behavior. Informed, rational speculators who
+consider interest differentials will magnify the exchange rate effects of interest shocks and
+could increase overall exchange rate volatility. This connection between speculators and
+volatility, which does not rely on asymmetric information, is structural because speculators
+affect the exchange rate’s generating process. Rational speculation is stabilizing at low
+levels of speculative activity and destabilizing at high levels. (J.E.L. codes F31, G12. 
+Key Words: Exchange Rate, Exchange Rate Volatility, Rational Speculation, Noise
+Traders)
+John A. Carlson C. L. Osler
+Krannert School of Management Federal Reserve Bank of New York
+Purdue University
+First Draft: May 1994
+Revised: February 1998
+The views expressed in this paper are those of the authors and do not necessarily reflect those of the Federal
+Reserve Bank of New York or the Federal Reserve System. Please address correspondence to: Carol Osler,
+Federal Reserve Bank of New York, 33 Liberty Street, New York, NY 10045. Telephone: (212) 720-1717. 
+Fax: (212) 720-6831. E-Mail: Carol.Osler@ny.frb.org. 
+Rational Speculators and Exchange Rate Volatility

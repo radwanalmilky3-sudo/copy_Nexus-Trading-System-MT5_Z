@@ -1,0 +1,817 @@
+{
+  "generated_at_utc": "2026-10-10T09:59:32.724573+00:00",
+  "project_root": "C:\\نسخه البرنامج الاصل\\Nexus-Trading-System-MT5-main",
+  "golden_pack_root": "C:\\نسخه البرنامج الاصل\\NEXUS-FUNDAMENTAL-GOLDEN-PACK",
+  "source_manifest": "manifest.json (Golden Reference Pack)",
+  "pack_manifest_sha256": "ec10f2073e07d842b1ba2ac5ed026df11f4b4e19fb3e751e4631c7b19eb6c382",
+  "total_entries": 100,
+  "summary": {
+    "MATCH_AFTER (expected post-APPLY state)": 99,
+    "MATCH_BEFORE (pre-APPLY state, not applied)": 0,
+    "MISSING": 0,
+    "DIVERGED": 1
+  },
+  "verdict": "CHECK - see summary",
+  "files": [
+    {
+      "path": ".env.example",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "6b77e17e30e0d6d48206833a91b4da241a10a9c2d4f978ebf8d491e107a03f40",
+      "expected_before_sha256": "62c4d8e6fc5d03a5b4e38bbfae4c9d00d961ec61541a28d4b8a931d6a8d30701",
+      "current_sha256": "6b77e17e30e0d6d48206833a91b4da241a10a9c2d4f978ebf8d491e107a03f40"
+    },
+    {
+      "path": ".gitignore",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "ef98f19663f2076bb7402a27f949e5ac852b7eb2691dfb208e6936f365f520ef",
+      "expected_before_sha256": "c42dd4088b9be4fb637de1ec62d03a55af1ae37693b63ea997df10a82bc61aaa",
+      "current_sha256": "ef98f19663f2076bb7402a27f949e5ac852b7eb2691dfb208e6936f365f520ef"
+    },
+    {
+      "path": "ARCHITECTURE_AFTER.md",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "3d2b2c36cdf618779a76384ed8969c25248b4cb566aa1a4d5597772e56ddd901",
+      "expected_before_sha256": null,
+      "current_sha256": "3d2b2c36cdf618779a76384ed8969c25248b4cb566aa1a4d5597772e56ddd901"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "ab504b20eeeb52d9f2e98d2c78f9f405efd3a19868e33a0af1bfe5d1c5cfd553",
+      "expected_before_sha256": null,
+      "current_sha256": "ab504b20eeeb52d9f2e98d2c78f9f405efd3a19868e33a0af1bfe5d1c5cfd553"
+    },
+    {
+      "path": "DB_SCHEMA.md",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "f8a8fe9bcb093535f3d25d813b369088bc840c88a3f5d41899ef550020c68fa7",
+      "expected_before_sha256": null,
+      "current_sha256": "f8a8fe9bcb093535f3d25d813b369088bc840c88a3f5d41899ef550020c68fa7"
+    },
+    {
+      "path": "EXECUTION_STATE.json",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "7f70927ffdf23f69570a65db1d13881798956915eff0995839b77fea7066631a",
+      "expected_before_sha256": null,
+      "current_sha256": "7f70927ffdf23f69570a65db1d13881798956915eff0995839b77fea7066631a"
+    },
+    {
+      "path": "FINAL_CERTIFICATE.md",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "d6c09de02ee7c24a423ea2b4c0b6afb0425e9a29fcbaa6ed204497a2b88e2ae8",
+      "expected_before_sha256": null,
+      "current_sha256": "d6c09de02ee7c24a423ea2b4c0b6afb0425e9a29fcbaa6ed204497a2b88e2ae8"
+    },
+    {
+      "path": "README.es.md",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "e870b575c4bf008aa771f62d667197d9a1c2d7d976b103cd01384682106ada7f",
+      "expected_before_sha256": "aba108d264a86272c0cdbfe4240ea0ec0e9e59c42f0362f689991e5d3219e35c",
+      "current_sha256": "e870b575c4bf008aa771f62d667197d9a1c2d7d976b103cd01384682106ada7f"
+    },
+    {
+      "path": "README.md",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "7975c51111f7b0f52a69761c86db8560d173c4295e73f3f1d0b099ad9e8ffb1d",
+      "expected_before_sha256": "7ffa8b6b5b7437fe7411a0e9329fed4f561983a2da9cbc82f9780d9124935f72",
+      "current_sha256": "7975c51111f7b0f52a69761c86db8560d173c4295e73f3f1d0b099ad9e8ffb1d"
+    },
+    {
+      "path": "SOURCE_REGISTRY.md",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "d7c06aa75558b48370ad8f411a379712744358e31dfd3e13106d27d5b9fda552",
+      "expected_before_sha256": null,
+      "current_sha256": "d7c06aa75558b48370ad8f411a379712744358e31dfd3e13106d27d5b9fda552"
+    },
+    {
+      "path": "TEST_MATRIX.md",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "af043216abbac3214c8f69776f960f99bdc82907dfec4c9e52d0da229c1d4a4c",
+      "expected_before_sha256": null,
+      "current_sha256": "af043216abbac3214c8f69776f960f99bdc82907dfec4c9e52d0da229c1d4a4c"
+    },
+    {
+      "path": "config\\agents.yaml",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "3982483e3279d73fcd491828a4c494dce4ec2a492b92c31802ecb3642b7b5d12",
+      "expected_before_sha256": "8b9a3879b4d128cae8e39042201289d737d69c905a91ca7b4330d324f9cca89a",
+      "current_sha256": "3982483e3279d73fcd491828a4c494dce4ec2a492b92c31802ecb3642b7b5d12"
+    },
+    {
+      "path": "config\\settings.yaml",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "ce7205dcd8c5bb3183f02c13801fdb24bd16b37f925b5461da27b57a97ab3f43",
+      "expected_before_sha256": "e1e691d2e4308fd6365ef12dda7fbd497694fe9cf878b4431caa8ec451d1987e",
+      "current_sha256": "ce7205dcd8c5bb3183f02c13801fdb24bd16b37f925b5461da27b57a97ab3f43"
+    },
+    {
+      "path": "dashboard\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "b93e744a393e9bf2e88981e38dc8c094b211ddb03c1f5ba1132bf2f076706230",
+      "current_sha256": null
+    },
+    {
+      "path": "dashboard\\src\\app\\dashboard\\page.tsx",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "15c38b6acb2177b4be3702825a212192bd20f03d000f205722fc4c558a52d5b4",
+      "expected_before_sha256": "954871e5a2a15a53211f2df647868001a775c1dfdfc966d8084a1964eac6899f",
+      "current_sha256": "15c38b6acb2177b4be3702825a212192bd20f03d000f205722fc4c558a52d5b4"
+    },
+    {
+      "path": "dashboard\\src\\app\\dashboard\\settings\\page.tsx",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "d632f56373fe1a4fb4fa8933f772eac5ef54d98872daa6bfb5c0f4ba09f11158",
+      "expected_before_sha256": "d241efff068463ce528117b23d5ce8c3e882d0ad64454a2f0b4a70c472c26708",
+      "current_sha256": "d632f56373fe1a4fb4fa8933f772eac5ef54d98872daa6bfb5c0f4ba09f11158"
+    },
+    {
+      "path": "dashboard\\src\\components\\fundamental\\FundamentalWorkspace.tsx",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "3c3b66976bf2f9a82826484135b147d121b0f5d099cf9d16415290e2385e683d",
+      "expected_before_sha256": null,
+      "current_sha256": "3c3b66976bf2f9a82826484135b147d121b0f5d099cf9d16415290e2385e683d"
+    },
+    {
+      "path": "dashboard\\src\\components\\trade-controls\\TradeSettingsPanel.tsx",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "2964e39636f9f1f11d4ec5af5c9e1b0da4e64b6559055c74c5ce40255bae6532",
+      "expected_before_sha256": "da992455e51e50ef72c945a939a9302cb105f20e657afa6d721a3f395086cafa",
+      "current_sha256": "2964e39636f9f1f11d4ec5af5c9e1b0da4e64b6559055c74c5ce40255bae6532"
+    },
+    {
+      "path": "dashboard\\src\\components\\windows\\AgentFlowchart.tsx",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "30f1f109998006ab406f311f846c7bf9a4683fff3d7ccdb79091c9f8c9bcfb3a",
+      "expected_before_sha256": "302e25917cfabd7ee207a22d9e8ef8f19168bbcad6a7a32278f044baff8f5264",
+      "current_sha256": "30f1f109998006ab406f311f846c7bf9a4683fff3d7ccdb79091c9f8c9bcfb3a"
+    },
+    {
+      "path": "dashboard\\src\\components\\windows\\NewsFeed.tsx",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "16f7f1900c4bb56408ae04fb10c89ee39fce22e6da5148af2d79958d46b2072f",
+      "expected_before_sha256": "dcd4cfacfa96bdf0e45b465a3401ed7f765f9e45df3fa77e40e532d4fe54f787",
+      "current_sha256": "16f7f1900c4bb56408ae04fb10c89ee39fce22e6da5148af2d79958d46b2072f"
+    },
+    {
+      "path": "dashboard\\src\\components\\windows\\SystemConsole.tsx",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "098245e4b801f7758b958e323f3831c357784595a140400f5f91d9c9313b835a",
+      "expected_before_sha256": "9be9508e7a0ecb55840f895bc416f7d86c84567153aa8422ca088e27f5b1fe2b",
+      "current_sha256": "098245e4b801f7758b958e323f3831c357784595a140400f5f91d9c9313b835a"
+    },
+    {
+      "path": "dashboard\\src\\hooks\\usePerformance.ts",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "832c140f8c551db9833cf5e5fb63ee3966f222d1edad8464ed2407b850224579",
+      "expected_before_sha256": "29d2b380681a5cf97a7f224c56bca7f1b97e9f4d87dd8ee2080204c01661831b",
+      "current_sha256": "832c140f8c551db9833cf5e5fb63ee3966f222d1edad8464ed2407b850224579"
+    },
+    {
+      "path": "dashboard\\src\\lib\\api-client.ts",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "f63bfcf3565dd122040b9e019d148e13632a483c84655322e0ee2cda0afcbe3b",
+      "expected_before_sha256": "17af071fdb56e0fc3df679b6857c4dd099c1301e50f96a183e9954ec76086381",
+      "current_sha256": "f63bfcf3565dd122040b9e019d148e13632a483c84655322e0ee2cda0afcbe3b"
+    },
+    {
+      "path": "dashboard\\src\\types\\fundamental.ts",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "ef5b94613c31b5a456b89ca9e90f3cc9f2aafd230efa095556829463a4f00bc8",
+      "expected_before_sha256": null,
+      "current_sha256": "ef5b94613c31b5a456b89ca9e90f3cc9f2aafd230efa095556829463a4f00bc8"
+    },
+    {
+      "path": "dashboard\\src\\types\\trading.ts",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "47b1399e780431d9344fe1d3a24d39d64e083b7a0b04233a0be6a392b6ae49d5",
+      "expected_before_sha256": "5f71774910c9732dbd4bb7a79386cd9479a30b52f9d37c7af23d458b276b2541",
+      "current_sha256": "47b1399e780431d9344fe1d3a24d39d64e083b7a0b04233a0be6a392b6ae49d5"
+    },
+    {
+      "path": "docker-compose.yml",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "0072a7572f47c1dad093da3ebb87f3f51755035940d1407fa7945310dbe6fdaf",
+      "current_sha256": null
+    },
+    {
+      "path": "docs\\generate_system_doc.js",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "f801268c0a02e59f4f8f108a01e1246d0dbf2a9b911a46f476a1083f1a06aa98",
+      "expected_before_sha256": "28eeeb80b83f59bb17619b7e380cce3d2ef2115a292ca0ba4b69f195ff66d3ad",
+      "current_sha256": "f801268c0a02e59f4f8f108a01e1246d0dbf2a9b911a46f476a1083f1a06aa98"
+    },
+    {
+      "path": "preflight.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "3e4f8c3564e661cbece46fe412918f6f208e26dab289d113f1bf7732f598c310",
+      "expected_before_sha256": "315fd0d06c537172668278feaf3f7c58513c48fe39b8e43c4ac4955871ab605a",
+      "current_sha256": "3e4f8c3564e661cbece46fe412918f6f208e26dab289d113f1bf7732f598c310"
+    },
+    {
+      "path": "requirements.txt",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "4c150ca06ed2b997692a0e6ea8be751deacbf6ed60d616a524c93c36515c22e0",
+      "expected_before_sha256": "a1739723e3b5fd960209a039dd627d186332cfa595f3c9ab6161e8ff1231fb9f",
+      "current_sha256": "4c150ca06ed2b997692a0e6ea8be751deacbf6ed60d616a524c93c36515c22e0"
+    },
+    {
+      "path": "run.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "e6d633f0933db271431ec2b19b28eaceea03442034ed704183791997792235fc",
+      "expected_before_sha256": "765bb93099af4f9f7668915ae20446354c75f74d5357ebbfb76a911464760216",
+      "current_sha256": "e6d633f0933db271431ec2b19b28eaceea03442034ed704183791997792235fc"
+    },
+    {
+      "path": "services\\nexus_agents\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "4fbc9fb5bc6f44714d42bdbbc4d0c296787ef137e0a6a4aa526de708ba9de478",
+      "current_sha256": null
+    },
+    {
+      "path": "services\\nexus_agents\\agents\\base_agent.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "26e2bf1a1716985b3d01540aef725788c91bcb804bfa4ac442b8346e227f2fbb",
+      "expected_before_sha256": "c1ba7ef099d35b407fc08e23c684794261be6b835dd19a80ef021ba863b2ea9f",
+      "current_sha256": "26e2bf1a1716985b3d01540aef725788c91bcb804bfa4ac442b8346e227f2fbb"
+    },
+    {
+      "path": "services\\nexus_agents\\agents\\market_analyst.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "815c9b6c9df12a1388c0cfaea84f071e16e1b9a17635f83a386d8010021cf6e2",
+      "expected_before_sha256": "10b16c36db635ef8062df8d8819bed3a4712d62f2e7f7a011a9f97e99f14379d",
+      "current_sha256": "815c9b6c9df12a1388c0cfaea84f071e16e1b9a17635f83a386d8010021cf6e2"
+    },
+    {
+      "path": "services\\nexus_agents\\agents\\regime_analyst.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "19de91fcb80e71a159e2844361265f9873c0c1b3cdde7f576ea159a553f66e18",
+      "expected_before_sha256": "4e02248c4fc0e76aa8c3cad2a4a98a218b55ffd7d212f238c8ce9a69ec267421",
+      "current_sha256": "19de91fcb80e71a159e2844361265f9873c0c1b3cdde7f576ea159a553f66e18"
+    },
+    {
+      "path": "services\\nexus_agents\\agents\\trade_executor.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "f9a234a937cd3748bb833d474b199896b74c8170dea575867e94c5c3df99f1d7",
+      "expected_before_sha256": "56c7a7f4e4486b73d9712deae888e458657287562e8b79270a3941276141403c",
+      "current_sha256": "f9a234a937cd3748bb833d474b199896b74c8170dea575867e94c5c3df99f1d7"
+    },
+    {
+      "path": "services\\nexus_agents\\brain_budget.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "82224d4545aeb6ff9e89293f05cc37d44b345dbf77eca754f5337d9a95cee09d",
+      "expected_before_sha256": "2f3560bb08da4a0c4bbe46ae579bd268c36ae12e6364452b2dc329439b54262c",
+      "current_sha256": "82224d4545aeb6ff9e89293f05cc37d44b345dbf77eca754f5337d9a95cee09d"
+    },
+    {
+      "path": "services\\nexus_agents\\daily_brief.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "2448debd027df1b7c4ed26c5bd8b5e128fcf55228c341af7804ae1cf4f93c28b",
+      "expected_before_sha256": "55e8f9ec291cf2d74387b3953d844663984b21b3b135059f076f2c023f1c74c4",
+      "current_sha256": "2448debd027df1b7c4ed26c5bd8b5e128fcf55228c341af7804ae1cf4f93c28b"
+    },
+    {
+      "path": "services\\nexus_agents\\main.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "a5412ca6dbaffcb6e0e95422a16f202fa074a1be7efac70ad328ff4d668b9da9",
+      "expected_before_sha256": "9a9d4bfc6ad59d200b624fb8c942fa6adb60865f6ff23f0018c0e1521c860895",
+      "current_sha256": "a5412ca6dbaffcb6e0e95422a16f202fa074a1be7efac70ad328ff4d668b9da9"
+    },
+    {
+      "path": "services\\nexus_agents\\research\\researcher.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "b5d1c2c5283ec802f0e539813db141f9c87c0e18687dea7cc04f9f05bf36ff0c",
+      "expected_before_sha256": "41bd7a1390438b9d4062839da8472602635b35a20f3e0c189c406fca882b2573",
+      "current_sha256": "b5d1c2c5283ec802f0e539813db141f9c87c0e18687dea7cc04f9f05bf36ff0c"
+    },
+    {
+      "path": "services\\nexus_agents\\tools\\analysis_tools.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "7ab284607bc909d741347655ae9e1926a95789a2b202a81cc128b264dbf745c8",
+      "expected_before_sha256": "ddc7fc751c6c32db6301e7349584216765d847b12d11cd1a0bd3addacd729b3a",
+      "current_sha256": "7ab284607bc909d741347655ae9e1926a95789a2b202a81cc128b264dbf745c8"
+    },
+    {
+      "path": "services\\nexus_agents\\tools\\execution_tools.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "c7178400d42b6883cca929092bb1d05d71746dbd4c4bd6ca763ae9811bcf3b20",
+      "expected_before_sha256": "140ece6ea7f4ca64f5eca9ab4dea65ec55ce0c438bbb73b1b4c6a16163bf72a7",
+      "current_sha256": "c7178400d42b6883cca929092bb1d05d71746dbd4c4bd6ca763ae9811bcf3b20"
+    },
+    {
+      "path": "services\\nexus_agents\\tools\\market_tools.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "0803286daf2948c7594d7818e1d43c2a159b9bad81dd5437fbd54bc6a2dd96eb",
+      "expected_before_sha256": "620af7b6da2c9aece60734a51eedb61cd40c7d9f1614f45a5fc4d14847e949de",
+      "current_sha256": "0803286daf2948c7594d7818e1d43c2a159b9bad81dd5437fbd54bc6a2dd96eb"
+    },
+    {
+      "path": "services\\nexus_agents\\tools\\news_tools.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "52f6a7dc4d34f91a8bab2fa4026cc05e2f669d00147ecfd3cb029db12dddc956",
+      "expected_before_sha256": "bc33dd110787d9ac8586af2a1635cb4a5edf70634e88bfb49b47838206441a98",
+      "current_sha256": "52f6a7dc4d34f91a8bab2fa4026cc05e2f669d00147ecfd3cb029db12dddc956"
+    },
+    {
+      "path": "services\\nexus_agents\\tools\\risk_tools.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "ca36c864ff4e2627caa248b879ab704cee77c3fa920cbdc4a4855c7faeffb72f",
+      "expected_before_sha256": "62b5f4b30826eb752885d8a7a3e435951032f83ecb440c5ad94781656aa77281",
+      "current_sha256": "ca36c864ff4e2627caa248b879ab704cee77c3fa920cbdc4a4855c7faeffb72f"
+    },
+    {
+      "path": "services\\nexus_api\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "ba3d6eac00c33ee3d9a321eccf0ab51021ff5051e44eb46f784974655ea7d6a7",
+      "current_sha256": null
+    },
+    {
+      "path": "services\\nexus_api\\main.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "89e53f56150c3b090bcc1a12d17f5795c9fe1bc89de52144549f3ae9a5b7c641",
+      "expected_before_sha256": "6bd33851d1047fbfa6884a527e3a3d2ec650850dd2186c2e0efe19224ace44b6",
+      "current_sha256": "89e53f56150c3b090bcc1a12d17f5795c9fe1bc89de52144549f3ae9a5b7c641"
+    },
+    {
+      "path": "services\\nexus_api\\middleware\\auth.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "63081cdf5030f73d30b9bdda3a0702a55552ee3117521154a1135f63aedd19e6",
+      "expected_before_sha256": "86994ca7f835731cde72586dfebbac22c74566678afae23ea3af4da6007955cd",
+      "current_sha256": "63081cdf5030f73d30b9bdda3a0702a55552ee3117521154a1135f63aedd19e6"
+    },
+    {
+      "path": "services\\nexus_api\\routers\\backtest.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "f7458a649b2762328336a72375d5a5762bca78ecf2d4500531ccc95767699b10",
+      "expected_before_sha256": "7d5ab5a9ffa6592186a3284471a5c10c282bb237275adebf21814c4f980c6bf0",
+      "current_sha256": "f7458a649b2762328336a72375d5a5762bca78ecf2d4500531ccc95767699b10"
+    },
+    {
+      "path": "services\\nexus_api\\routers\\fundamental.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "ade6649629e936c7a5dcde1b8698a12b9b0c8f01a15da00a5c2c96f12222e1c5",
+      "expected_before_sha256": null,
+      "current_sha256": "ade6649629e936c7a5dcde1b8698a12b9b0c8f01a15da00a5c2c96f12222e1c5"
+    },
+    {
+      "path": "services\\nexus_api\\routers\\intelligence.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "9f0fd13461026a50d8a2dbe163bb9885992a80a8bd930c66b14f56ef805e2872",
+      "expected_before_sha256": "ec624fd9eefddf010be10d6473f0dcb60fb40116a2475bb8f3e45a6e831cc2c0",
+      "current_sha256": "9f0fd13461026a50d8a2dbe163bb9885992a80a8bd930c66b14f56ef805e2872"
+    },
+    {
+      "path": "services\\nexus_api\\routers\\news.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "5534f06ad7e485782db1662dbbd3529163e521d957a9478295304884d95f4e2d",
+      "expected_before_sha256": "00a776b291e6f3d933a2a5ca32e5ed6d144272491fcbebb2ac01ae4b219a0c8b",
+      "current_sha256": "5534f06ad7e485782db1662dbbd3529163e521d957a9478295304884d95f4e2d"
+    },
+    {
+      "path": "services\\nexus_api\\routers\\performance.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "b69b27634d6fd50036df5a0d5f433ce0a6d726697ce9326f340f5d9b2e70a776",
+      "expected_before_sha256": "d7332983dfbed0a6c13c2c932e489b84aac4bec2a21e5a75a34aef1b0d51ab8f",
+      "current_sha256": "b69b27634d6fd50036df5a0d5f433ce0a6d726697ce9326f340f5d9b2e70a776"
+    },
+    {
+      "path": "services\\nexus_api\\routers\\system.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "139514e68ac9af06bfbec87c9544f8674859921381358c3cbe063f42fb4b8eaf",
+      "expected_before_sha256": "500afd062faca346d3e17343473c40a3a0d2afe8dc27b7fbb34ed72a5d913893",
+      "current_sha256": "139514e68ac9af06bfbec87c9544f8674859921381358c3cbe063f42fb4b8eaf"
+    },
+    {
+      "path": "services\\nexus_api\\routers\\trades.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "78747f91e9f4b098410aceb9b7d4fb56949a7b935b00717f19a4dec7f3c1f2d7",
+      "expected_before_sha256": "494752389dfc1ef7c1a7f93069705356468cd03f7e7d516a953239ee21e56860",
+      "current_sha256": "78747f91e9f4b098410aceb9b7d4fb56949a7b935b00717f19a4dec7f3c1f2d7"
+    },
+    {
+      "path": "services\\nexus_data\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "2b3167bad352dfe0c628a186fe87ce6d493c23425a549a4f05cfc3aafd44e3a0",
+      "current_sha256": null
+    },
+    {
+      "path": "services\\nexus_data\\duckdb_store.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "3e8a3330071d73b8e9a66041cb8a05988466e437dc2a6c8164bacec9873a5fac",
+      "expected_before_sha256": "3bc87aad10c55d5fe6d1051b8d75540d43431a7d241a53e05c87701652f1fa58",
+      "current_sha256": "3e8a3330071d73b8e9a66041cb8a05988466e437dc2a6c8164bacec9873a5fac"
+    },
+    {
+      "path": "services\\nexus_data\\fundamental_schema.sql",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "cf57db74286217b01fcb10304890356526f6b3bcd7bb890dbf5be5af304aba4a",
+      "expected_before_sha256": null,
+      "current_sha256": "cf57db74286217b01fcb10304890356526f6b3bcd7bb890dbf5be5af304aba4a"
+    },
+    {
+      "path": "services\\nexus_data\\fundamental_store.py",
+      "action": "create",
+      "status": "DIVERGED",
+      "expected_after_sha256": "e5e434e22135de5d5fed912859cf4c6be1ec5d93712ff006628c08c40cc52f8d",
+      "expected_before_sha256": null,
+      "current_sha256": "5a63618c6a62e36f16c46549b049a08e3a6a3a8fe5dcfdf2ddb18d86798251a3"
+    },
+    {
+      "path": "services\\nexus_data\\main.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "49cb5f08d30569379302c3bfb35262da52f756dfe2115cdb232ad02a9a75ec8e",
+      "expected_before_sha256": "8a897b23d9b2b3ee25ec4ed0a9e599f4f26aea02425008caf403ddad9196dec9",
+      "current_sha256": "49cb5f08d30569379302c3bfb35262da52f756dfe2115cdb232ad02a9a75ec8e"
+    },
+    {
+      "path": "services\\nexus_executor\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "b14b1b8c5c695b3daab9699224d71c4ba863301b6f37d6ba0698e0626c489368",
+      "current_sha256": null
+    },
+    {
+      "path": "services\\nexus_executor\\main.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "5326d483fbb317045e5ce3fd11c9001760e793f816497e8f9a1f4487e8d23e92",
+      "expected_before_sha256": "10d8865df0ccee0ade9ad6e25ae8d6905cbff601ca84d961245d33598bec750a",
+      "current_sha256": "5326d483fbb317045e5ce3fd11c9001760e793f816497e8f9a1f4487e8d23e92"
+    },
+    {
+      "path": "services\\nexus_executor\\paper_executor.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "2411b623d6de91da11e64a846b4fa368e64f897b93372777698ef57c73ba7638",
+      "expected_before_sha256": null,
+      "current_sha256": "2411b623d6de91da11e64a846b4fa368e64f897b93372777698ef57c73ba7638"
+    },
+    {
+      "path": "services\\nexus_features\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "d53fe0e6ea31fe0f6b4e1947d991dff90282c216e3de8fd48fa62d6b1253d446",
+      "current_sha256": null
+    },
+    {
+      "path": "services\\nexus_features\\cross_asset.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "dd64135477899e7fcba86035ba92d75a61bbd5008e61d0cfa9fabff2fecde9fd",
+      "expected_before_sha256": "ba4873695be625ebac115ab715eb04c6bf6b80f85b2a2a634a6bc574f24389f7",
+      "current_sha256": "dd64135477899e7fcba86035ba92d75a61bbd5008e61d0cfa9fabff2fecde9fd"
+    },
+    {
+      "path": "services\\nexus_features\\main.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "6a576fbd9a11b50dc3ac1cc2e44be6cfd251640e6645a48e0762768d4b13a707",
+      "expected_before_sha256": "36cacc9a12af2c3f5f4b1336b486ca90598fcdd192b6766a03c43cb36a82c390",
+      "current_sha256": "6a576fbd9a11b50dc3ac1cc2e44be6cfd251640e6645a48e0762768d4b13a707"
+    },
+    {
+      "path": "services\\nexus_ml\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "47d0707c357512518f110ae0284830bbe438195448bbdeabe8ca534159c1136e",
+      "current_sha256": null
+    },
+    {
+      "path": "services\\nexus_ml\\main.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "a9a4cf9cdb80432effa2fd36016103f13c12d1026a98af4b3edaa58f6376b781",
+      "expected_before_sha256": "cbd3c4ec77c054b85a75619ea9da629551f5e1da0f092bc636191935118006a2",
+      "current_sha256": "a9a4cf9cdb80432effa2fd36016103f13c12d1026a98af4b3edaa58f6376b781"
+    },
+    {
+      "path": "services\\nexus_ml\\traders_api.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "0ec640ef2f2f35343a1c18fc972ee00d7e6bcce0d8d3d62bea3c4c6efa154d38",
+      "expected_before_sha256": "7b860bbdc243306f9427bee8df6a12cfe19aa36f16c078f544d93e6f9c94fcf0",
+      "current_sha256": "0ec640ef2f2f35343a1c18fc972ee00d7e6bcce0d8d3d62bea3c4c6efa154d38"
+    },
+    {
+      "path": "services\\nexus_monitor\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "5afc1e708aa641852c9b77f4cba5aaa16ee5d3e36ed124835ae7f8c7ce611c4a",
+      "current_sha256": null
+    },
+    {
+      "path": "services\\nexus_monitor\\main.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "68d5fb8cf892dc698a80cae785921636a8b2283e3ffdadbee44a2b3444276191",
+      "expected_before_sha256": "4f4ff34b9d0bfe624fbdb04125b72ffd28b794f41d8c6160dc3454f1b565b7e8",
+      "current_sha256": "68d5fb8cf892dc698a80cae785921636a8b2283e3ffdadbee44a2b3444276191"
+    },
+    {
+      "path": "services\\nexus_news\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "ad022f04107d37965c2b739d47b6b2f45b62b66ce4dec57c4318a01c90c5cc48",
+      "current_sha256": null
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\__init__.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "a42271eba8b5485594aa3245f8a767c7b3c5c15d2e15725c49f519a1a03365cc",
+      "expected_before_sha256": null,
+      "current_sha256": "a42271eba8b5485594aa3245f8a767c7b3c5c15d2e15725c49f519a1a03365cc"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\adapters.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "523351de7ee1ef8e950b00372bbb7a08c0aba8242de605522163ec717381da1d",
+      "expected_before_sha256": null,
+      "current_sha256": "523351de7ee1ef8e950b00372bbb7a08c0aba8242de605522163ec717381da1d"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\blackout.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "cbf8516bae2e4f32883fce2d040700b072289b4ef3b63c48217656d965492270",
+      "expected_before_sha256": null,
+      "current_sha256": "cbf8516bae2e4f32883fce2d040700b072289b4ef3b63c48217656d965492270"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\engines.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "3f7df6515080edb3a81468bb89242d8cc6973c57e0ff318e62375d3979b442f3",
+      "expected_before_sha256": null,
+      "current_sha256": "3f7df6515080edb3a81468bb89242d8cc6973c57e0ff318e62375d3979b442f3"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\explanations.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "a75133ea1137d1294e12c264dfea1fdc727fb465ea1ca0d5f2e6e55efd1eb30c",
+      "expected_before_sha256": null,
+      "current_sha256": "a75133ea1137d1294e12c264dfea1fdc727fb465ea1ca0d5f2e6e55efd1eb30c"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\indicator_catalog.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "742690fe59f976fc4b6ed1efc57e5cfab90062b3742b36ca54d654f2e24e4505",
+      "expected_before_sha256": null,
+      "current_sha256": "742690fe59f976fc4b6ed1efc57e5cfab90062b3742b36ca54d654f2e24e4505"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\normalization.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "1ed5a27546ac4553c597650a4a994fce952bc791c795219f99462629953c4892",
+      "expected_before_sha256": null,
+      "current_sha256": "1ed5a27546ac4553c597650a4a994fce952bc791c795219f99462629953c4892"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\outcomes.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "941afe429dcb88605f6a46b86788dc33006735b9f36a18aeaceb57b5c316c64a",
+      "expected_before_sha256": null,
+      "current_sha256": "941afe429dcb88605f6a46b86788dc33006735b9f36a18aeaceb57b5c316c64a"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\quality.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "6547848e0dfd4dfadd74f37526c139b00a9d1fa734a75437de9b89f6b44b8c79",
+      "expected_before_sha256": null,
+      "current_sha256": "6547848e0dfd4dfadd74f37526c139b00a9d1fa734a75437de9b89f6b44b8c79"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\replay.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "eda185aeda477a4b649fa68dae9da2be14944a4a097fec2f0e6fa82f7cfefc2f",
+      "expected_before_sha256": null,
+      "current_sha256": "eda185aeda477a4b649fa68dae9da2be14944a4a097fec2f0e6fa82f7cfefc2f"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\runtime.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "a31114289216c2947ad05e3090239126575059f565376c0af367db97a3b929d4",
+      "expected_before_sha256": null,
+      "current_sha256": "a31114289216c2947ad05e3090239126575059f565376c0af367db97a3b929d4"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\scoring.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "4034e4ab6cd2982313518104d9f18fe86ad79dfe3c7392324c85a972f923d65b",
+      "expected_before_sha256": null,
+      "current_sha256": "4034e4ab6cd2982313518104d9f18fe86ad79dfe3c7392324c85a972f923d65b"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\source_base.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "c6bd5d3098709c66a10987ae6ca79b1a265bf8fc380c43e7ecbbccf4559e3af7",
+      "expected_before_sha256": null,
+      "current_sha256": "c6bd5d3098709c66a10987ae6ca79b1a265bf8fc380c43e7ecbbccf4559e3af7"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\source_registry.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "15118524786942a7b1b773cf7175a29a4d0e029176f0bccacdd6ab0254ce3c62",
+      "expected_before_sha256": null,
+      "current_sha256": "15118524786942a7b1b773cf7175a29a4d0e029176f0bccacdd6ab0254ce3c62"
+    },
+    {
+      "path": "services\\nexus_news\\fundamental\\training.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "6c21eae21b16d93a4297fc25895b3fdc236ad5ab3600d0c8e29542b190bc1b34",
+      "expected_before_sha256": null,
+      "current_sha256": "6c21eae21b16d93a4297fc25895b3fdc236ad5ab3600d0c8e29542b190bc1b34"
+    },
+    {
+      "path": "services\\nexus_news\\main.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "6cdab9bfaf9de1ccb8a5c001ce8fc57039c3f2b915f2a3d4614e42d2698b406d",
+      "expected_before_sha256": "bb4e408a690b30c5519054089730fea3d660527ef334016ffebfd8e4dc973055",
+      "current_sha256": "6cdab9bfaf9de1ccb8a5c001ce8fc57039c3f2b915f2a3d4614e42d2698b406d"
+    },
+    {
+      "path": "services\\nexus_news\\sentinel.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "47bf82ac9610310fcbbd44a0588ce45e039ef1cb5e9f1783e5f8798775a91a67",
+      "expected_before_sha256": "6efcafa8f8d72b235cbc97308d7756e24c22a77c8b74cd355e0d7d04b33b40b8",
+      "current_sha256": "47bf82ac9610310fcbbd44a0588ce45e039ef1cb5e9f1783e5f8798775a91a67"
+    },
+    {
+      "path": "services\\nexus_risk\\Dockerfile",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "ac20a8c2bb3b30cc9b6188897c7406efeb9003567a9d7b2e9498cb883aa2d52f",
+      "current_sha256": null
+    },
+    {
+      "path": "services\\nexus_risk\\main.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "6bbd0c32606f7562bd24765f3a4c5a8ae5a22564d6866ff63b7b219f79de1639",
+      "expected_before_sha256": "067eed51f66480c5249ea0702159ee4e85eaaf7ae5678ee2a27cd049f0c781d5",
+      "current_sha256": "6bbd0c32606f7562bd24765f3a4c5a8ae5a22564d6866ff63b7b219f79de1639"
+    },
+    {
+      "path": "shared\\__init__.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "089dd0ae9e381dc9141d9f02882483e2d5f3d5f54c8de98c81c21133faf30296",
+      "expected_before_sha256": "dc29348dfde889217f46c77673750772a322eefd9e5b80ac427376698f7ddbff",
+      "current_sha256": "089dd0ae9e381dc9141d9f02882483e2d5f3d5f54c8de98c81c21133faf30296"
+    },
+    {
+      "path": "shared\\fuelix_client.py",
+      "action": "delete",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": null,
+      "expected_before_sha256": "3165931a6173c501fd5638ee667304c59948095cf8f9ae4c463355c62c00d3c3",
+      "current_sha256": null
+    },
+    {
+      "path": "shared\\fundamental\\__init__.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "98e6b11974244d7a6684143f02b3e1ea843179de461c621ac917fd5458f87e6f",
+      "expected_before_sha256": null,
+      "current_sha256": "98e6b11974244d7a6684143f02b3e1ea843179de461c621ac917fd5458f87e6f"
+    },
+    {
+      "path": "shared\\fundamental\\enums.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "8964dd11f169d353aa66bcc6f571d19fb9e747e93d8fa2a1a38b6786f315d0dd",
+      "expected_before_sha256": null,
+      "current_sha256": "8964dd11f169d353aa66bcc6f571d19fb9e747e93d8fa2a1a38b6786f315d0dd"
+    },
+    {
+      "path": "shared\\fundamental\\models.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "f3471e8c7cd15ac7b7bd1dda27b604ddf98198520b2ad55ce94084d8e42bf5f5",
+      "expected_before_sha256": null,
+      "current_sha256": "f3471e8c7cd15ac7b7bd1dda27b604ddf98198520b2ad55ce94084d8e42bf5f5"
+    },
+    {
+      "path": "shared\\llm_factory.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "ceb4408a440b50226c688ec8d85e31d1d3e5d3af17cf0e15ac57161d979b140b",
+      "expected_before_sha256": "7c5cca4227fa0aa57bed9381eca1bc2ef860904fabb2272cfc19853da89b7ad3",
+      "current_sha256": "ceb4408a440b50226c688ec8d85e31d1d3e5d3af17cf0e15ac57161d979b140b"
+    },
+    {
+      "path": "shared\\runtime_settings.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "a93c36bd4f00bf8452d8bceca1ca91ae8522204ef7de3cdd612cbf807d714653",
+      "expected_before_sha256": "a900bdc0f78aa920361436a38332b3e6e56f5fb754545a37c64ca957ef9fa8b2",
+      "current_sha256": "a93c36bd4f00bf8452d8bceca1ca91ae8522204ef7de3cdd612cbf807d714653"
+    },
+    {
+      "path": "shared\\safety.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "db39cce25bbf81bdc5cb33fed6570a584b6da5ad01ea9b886a4236be919cf1e8",
+      "expected_before_sha256": null,
+      "current_sha256": "db39cce25bbf81bdc5cb33fed6570a584b6da5ad01ea9b886a4236be919cf1e8"
+    },
+    {
+      "path": "tests\\test_features\\test_indicators.py",
+      "action": "modify",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "bf50df4816f6bf9534c57d1984dfde7741d7d2980bb4b60c01338523f37da4a4",
+      "expected_before_sha256": "87c0ea11fdddc42dcf1bf87cfec800475837aa2a875e1d53ac0d1f5cb74e0574",
+      "current_sha256": "bf50df4816f6bf9534c57d1984dfde7741d7d2980bb4b60c01338523f37da4a4"
+    },
+    {
+      "path": "tests\\test_fundamental\\test_golden_contracts.py",
+      "action": "create",
+      "status": "MATCH_AFTER",
+      "expected_after_sha256": "ecfc1436e00e1e439bce29c3fa23e387540bbb3ca2bed3515ef2bc0abb17a85d",
+      "expected_before_sha256": null,
+      "current_sha256": "ecfc1436e00e1e439bce29c3fa23e387540bbb3ca2bed3515ef2bc0abb17a85d"
+    }
+  ]
+}

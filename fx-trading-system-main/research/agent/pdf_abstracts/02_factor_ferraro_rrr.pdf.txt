@@ -1,0 +1,20 @@
+path: _pdfs/02_factor/ferraro_rrr.pdf
+title_guess: CAN OIL PRICES FORECAST EXCHANGE RATES?
+ids: 
+priority: warm
+extract_status: ok
+---
+EARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+April 2012
+We would like to thank K. Sheppard and D. Wang for providing data related to this project, as well
+as R. Alquist, H. Guay, A. Herrera, M. Chinn, L. Kilian, M. Obstfeld, J. Wright and participants at
+the 2011 Bank of Canada-ECB conference on “Exchange Rates and Macroeconomic Adjustment”,
+the 2012 American Economic Association Meetings and the Paris School of Economics for comments.
+The views expressed herein are those of the authors and do not necessarily reflect the views of the
+National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been peer-
+reviewed or been subject to the review by the NBER Board of Directors that accompanies official
+NBER publications.
+© 2

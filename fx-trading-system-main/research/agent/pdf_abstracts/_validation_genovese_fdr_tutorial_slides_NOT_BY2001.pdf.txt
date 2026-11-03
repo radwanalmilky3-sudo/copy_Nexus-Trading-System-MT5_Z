@@ -1,0 +1,17 @@
+path: _pdfs/_validation/genovese_fdr_tutorial_slides_NOT_BY2001.pdf
+title_guess: FalseDiscoveryControl
+ids: 
+priority: warm
+extract_status: ok
+---
+1NS047493-01.
+OneTest,OneThreshold
+Withasinglehypothesistest,wechoosearejection
+thresholdtocontroltheTypeIerrorrate,
+Threshold
+TypeI
+ErrorRate
+TypeII
+ErrorRate
+whileachievingadesirableTypeIIerrorratefor
+relevantalternatives.

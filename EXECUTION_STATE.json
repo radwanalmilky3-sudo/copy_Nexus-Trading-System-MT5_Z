@@ -1,0 +1,40 @@
+{
+  "generated_at": "2026-10-10T02:45:00+03:00",
+  "pack_version": "1.0.0-reference",
+  "baseline_zip_sha256": "378373d960432f9fbcf3ed5944e35d72e742c25014524ad506dfe04a60f818e1",
+  "baseline_github_head": "c9349108cc10a3c55db5b7580f97c073d932036e",
+  "reference_status": "CERTIFIED_FOR_APPLY_AND_LOCAL_VERIFICATION",
+  "paper_local_status": "NOT_YET_CERTIFIED_REQUIRES_LOCAL_E2E",
+  "live_status": "NOT_CERTIFIED",
+  "verified_in_sandbox": {
+    "python_compileall": "PASS",
+    "golden_contract_tests": {
+      "status": "PASS",
+      "count": 21
+    },
+    "docker_artifacts_removed": "PASS",
+    "local_ai_only_static": "PASS",
+    "paper_executor_unit": "PASS",
+    "frontend_build": "BLOCKED_ENV_NODE_MODULES_UNAVAILABLE",
+    "duckdb_migration": "BLOCKED_ENV_DUCKDB_PACKAGE_UNAVAILABLE",
+    "redis_integration": "BLOCKED_ENV_REDIS_PACKAGE_SERVER_UNAVAILABLE"
+  },
+  "required_local_gates": [
+    "dependency_install",
+    "duckdb_migration",
+    "redis_integration",
+    "local_ai_health",
+    "frontend_typecheck_build",
+    "backend_tests",
+    "service_health_9000_9008",
+    "paper_e2e",
+    "blackout_zero_broker_calls"
+  ],
+  "safety": {
+    "default_mode": "paper",
+    "auto_trade_default": false,
+    "live_dashboard_switch": false,
+    "executor_final_guard": true,
+    "central_risk_signed_approval": true
+  }
+}

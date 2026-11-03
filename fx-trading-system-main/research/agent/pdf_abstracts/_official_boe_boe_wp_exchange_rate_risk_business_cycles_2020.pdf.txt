@@ -1,0 +1,17 @@
+path: _pdfs/_official/boe/boe_wp_exchange_rate_risk_business_cycles_2020.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+We show that currencies with a steeper yield curve tend to depreciate at business cycle horizons, in 
+violation of uncovered interest parity. The yield curve adds no explanatory power over and above spot 
+yield differentials in explaining exchange rates at longer horizons. Analysing bond holding period returns, 
+we identify a tent-shaped relationship between the exchange rate risk premium and the relative slope 
+across horizons. We derive this relationship analytically within an asset pricing framework and show it is 
+driven by differences in transitory innovations to investors’ stochastic discount factor, captured by the 
+relative yield curve slope and consistent with business cycle risk. Our mechanism is robust to the inclusion 
+of liquidity yields, which instead contribute to explaining cross-sectional differences across currencies and 
+reflect permanent innovations to investors’ stochastic discount factor.
+Key words: Business cycle risk, exchange rates, risk premia, stochastic discount factor, 
+uncovered interest parity, yield curves.

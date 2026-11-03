@@ -1,0 +1,18 @@
+path: _pdfs/_official/boe/boe_wp_macroprudential_fx_regulations.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+Can macroprudential foreign exchange (FX) regulations on banks reduce the financial and macroeconomic 
+vulnerabilities created by borrowing in foreign currency? To evaluate the effectiveness and unintended 
+consequences of macroprudential FX regulations, we develop a parsimonious model of bank and market 
+lending in domestic and foreign currency and derive four predictions. We confirm these predictions using a 
+rich dataset of macroprudential FX regulations. These empirical tests show that FX regulations: (1) are 
+effective in terms of reducing borrowing in foreign currency by banks; (2) have the unintended 
+consequence of simultaneously causing firms to increase FX debt issuance; (3) reduce the sensitivity of 
+banks to exchange rate movements, but (4) are less effective at reducing the sensitivity of corporates and 
+the broader financial market to exchange rate movements. As a result, FX regulations on banks appear to 
+be successful in mitigating the vulnerability of banks to exchange rate movements and the global financial 
+cycle, but partially shift the snowbank of FX vulnerability to other sectors.
+Key words: Macroprudential policies, FX regulations, banking flows, international debt issuance.

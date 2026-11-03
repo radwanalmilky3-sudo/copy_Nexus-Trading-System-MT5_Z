@@ -1,0 +1,17 @@
+path: _pdfs/_arxiv/good_carry_bad_carry_1706.08014.pdf
+title_guess: ON THE GEVREY ULTRADIFFERENTIABILITY
+ids: 
+priority: warm
+extract_status: ok
+---
+Found are conditions on a scalar type spectral operator A in a
+complex Banach space necessary and suﬃcient for all weak solutions of the
+evolution equation
+y′(t) =Ay(t), t≥ 0,
+to be strongly Gevrey ultradiﬀerentiable of order β≥ 1, in particular analytic
+or entire, on [0 ,∞). Certain inherent smoothness improvement eﬀects are
+analyzed.
+It is impossible to be a
+mathematician without being a poet
+in soul.
+Soﬁa Kovalevskaya

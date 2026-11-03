@@ -1,0 +1,57 @@
+path: _pdfs/_official/boe/boe_wp_fx_regimes_current_account.pdf
+title_guess: boe wp fx regimes current account
+ids: 
+priority: warm
+extract_status: ok
+---
+CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+C CO C CO CO 
+ CO C CO COD 
+Staff W orking Paper N o. 544 
+Exchange rate regim es and current account 
+adjustm ent: an em pirical investigation 
+Fernando Eguren-M artín 
+A ugust 2015 
+Staff W orking 

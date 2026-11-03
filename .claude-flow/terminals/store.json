@@ -1,0 +1,368 @@
+{
+  "sessions": {
+    "term-1792843645215-hks8w7": {
+      "id": "term-1792843645215-hks8w7",
+      "name": "nexus-db-recovery",
+      "status": "active",
+      "createdAt": "2026-10-24T12:07:25.215Z",
+      "lastActivity": "2026-10-24T12:49:30.972Z",
+      "workingDir": "D:\\Nexus-Trading-System-MT5",
+      "history": [
+        {
+          "command": "Get-Location; $PSVersionTable.PSVersion.ToString(); Test-Path .venv\\Scripts\\python.exe; Get-Item data\\nexus.duckdb,data\\nexus.duckdb.wal -ErrorAction SilentlyContinue | Select-Object Name,Length,LastWriteTime | Format-Table -AutoSize",
+          "output": "\n[stderr] 'Get-Location' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n",
+          "timestamp": "2026-10-24T12:07:30.606Z",
+          "exitCode": 255
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && echo CWD:%CD% && if exist .venv\\Scripts\\python.exe (echo VENV_PYTHON:yes) else (echo VENV_PYTHON:no) && if exist data\\nexus.duckdb (for %I in (data\\nexus.duckdb) do @echo DB_BYTES:%~zI) else (echo DB_MISSING) && if exist data\\nexus.duckdb.wal (for %I in (data\\nexus.duckdb.wal) do @echo WAL_BYTES:%~zI) else (echo WAL_MISSING) && tasklist /FI \"IMAGENAME eq python.exe\" /FO TABLE",
+          "output": "CWD:D:\\Nexus-Trading-System-MT5 \r\nVENV_PYTHON:yes\r\n",
+          "timestamp": "2026-10-24T12:07:37.833Z",
+          "exitCode": 0
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && dir data\\nexus.duckdb data\\nexus.duckdb.wal && tasklist /FI \"IMAGENAME eq python.exe\" /FO TABLE",
+          "output": " Volume in drive D is DATA\r\n Volume Serial Number is D2EF-B478\r\n\r\n Directory of D:\\Nexus-Trading-System-MT5\\data\r\n\r\n10/24/2026  02:47 PM       299,118,592 nexus.duckdb\r\n\r\n Directory of D:\\Nexus-Trading-System-MT5\\data\r\n\r\n               1 File(s)    299,118,592 bytes\r\n               0 Dir(s)  112,446,349,312 bytes free\r\n\r\nImage Name                     PID Session Name        Session#    Mem Usage\r\n========================= ======== ================ =========== ============\r\npython.exe                   10088 Console                    1     23,584 K\r\npython.exe                    8336 Console                    1     24,196 K\r\n",
+          "timestamp": "2026-10-24T12:07:45.267Z",
+          "exitCode": 0
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-CimInstance Win32_Process -Filter 'ProcessId=10088 OR ProcessId=8336' | Select-Object ProcessId,ExecutablePath,CommandLine | Format-List; Get-ChildItem data -Filter '*nexus*' | Select-Object Name,Length,LastWriteTime | Format-Table -AutoSize\"",
+          "output": "\r\n\r\nProcessId      : 10088\r\nExecutablePath : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\r\nCommandLine    : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\" \r\n\r\nProcessId      : 8336\r\nExecutablePath : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\r\nCommandLine    : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\" \r\n\r\n\r\n\r\n\r\nName                                                  Length LastWriteTime         \r\n----                                                  ------ -------------         \r\nnexus-agents.err.log                                   30515 10/18/2026 12:46:50 AM\r\nnexus-agents.out.log                                   20270 10/18/2026 12:47:01 AM\r\nnexus-api.err.log                                        552 10/17/2026 5:38:12 PM \r\nnexus-api.log                                            853 10/17/2026 5:43:39 PM \r\nnexus-api.out.log                                          0 10/17/2026 5:38:03 PM \r\nnexus-data.err.log                                     28209 10/17/2026 5:37:11 PM \r\nnexus-data.log                                           853 10/17/2026 5:43:39 PM \r\nnexus-data.out.log                                       118 10/17/2026 5:34:18 PM \r\nnexus-features.err.log                                   791 10/17/2026 5:39:03 PM \r\nnexus-features.log                                       853 10/17/2026 5:43:39 PM \r\nnexus-features.out.log                                     0 10/17/2026 5:38:03 PM \r\nnexus-ml.err.log                                           0 10/17/2026 5:38:03 PM \r\nnexus-ml.log                                             853 10/17/2026 5:43:39 PM \r\nnexus-ml.out.log                                           0 10/17/2026 5:38:03 PM \r\nnexus.duckdb                                       299118592 10/24/2026 2:47:00 PM \r\nnexus.duckdb.corrupted                             164376576 10/19/2026 2:08:30 PM \r\nnexus.duckdb.old                                      274432 10/19/2026 2:12:07 PM \r\nnexus.duckdb.superseded_20261023_005002            115093504 10/23/2026 12:50:09 AM\r\nnexus.duckdb.wal.bak                                   62914 10/18/2026 1:49:43 PM \r\nnexus.duckdb.wal.bak.1                                 62914 10/18/2026 4:36:20 PM \r\nnexus.duckdb.wal.bak.2                                 16648 10/18/2026 5:23:37 PM \r\nnexus.duckdb.wal.bak.3                                 16648 10/18/2026 5:54:46 PM \r\nnexus.duckdb.wal.bak_corrupt_20261011                1183735 10/11/2026 3:18:20 AM \r\nnexus.duckdb.wal.bak_corrupt_20261018                  62914 10/18/2026 8:04:20 AM \r\nnexus.duckdb.wal.corrupted                            190353 10/19/2026 1:38:37 PM \r\nnexus.duckdb.wal.corrupted2                            16648 10/18/2026 5:37:28 PM \r\nnexus.duckdb.wal.corrupt_preserved_20261011_184858    168337 10/11/2026 6:43:05 AM \r\nnexus.duckdb.wal.old                                 3217790 10/19/2026 2:36:51 PM \r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:08:08.091Z",
+          "exitCode": 0
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && .venv\\Scripts\\python.exe scripts\\rebuild_database.py --db data\\nexus.duckdb --out data\\nexus_rebuilt.duckdb",
+          "output": "",
+          "timestamp": "2026-10-24T12:11:20.638Z",
+          "exitCode": 1
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.Name -match 'python|uvicorn|node|duckdb' } | Select-Object ProcessId,ParentProcessId,Name,CreationDate,CommandLine | Format-Table -Wrap -AutoSize; Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.LocalPort -in 3100,9000,9001,9002,9003,9004,9005,9006,9007,9008 } | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize\"",
+          "output": "\r\nProcessId ParentProcessId Name       CreationDate          CommandLine                                                 \r\n--------- --------------- ----       ------------          -----------                                                 \r\n    10088            9584 python.exe 10/24/2026 1:47:09 PM \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\pytho\r\n                                                           n.exe\"                                                      \r\n     8336            2780 python.exe 10/24/2026 2:48:30 PM \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\pytho\r\n                                                           n.exe\"                                                      \r\n     9664            5352 node.exe   10/24/2026 2:51:35 PM \"C:\\Users\\rd66\\AppData\\Local\\hermes\\node\\\\node.exe\"  \"C:\\Use\r\n                                                           rs\\rd66\\AppData\\Local\\hermes\\node\\node_modules\\npm\\bin\\npx-c\r\n                                                           li.js\" -y ruflo@latest mcp start                            \r\n     4848            2020 node.exe   10/24/2026 3:06:58 PM \"node\"   \"C:\\Users\\rd66\\AppData\\Local\\npm-cache\\_npx\\2ed5689\r\n                                                           0c96f58f7\\node_modules\\.bin\\\\..\\ruflo\\bin\\ruflo.js\" mcp     \r\n                                                           start                                                       \r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:12:12.024Z",
+          "exitCode": 1
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && .venv\\Scripts\\python.exe -u -c \"import sys,duckdb; print(sys.version); print(duckdb.__version__); c=duckdb.connect(':memory:'); print(c.execute('select 1').fetchone()); c.close()\"",
+          "output": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]\r\n1.5.6\r\n(1,)\r\n",
+          "timestamp": "2026-10-24T12:12:14.252Z",
+          "exitCode": 0
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"$ErrorActionPreference='Stop'; $source=(Resolve-Path 'data\\nexus.duckdb').Path; $dir='data\\recovery_backup_20261024_1513'; New-Item -ItemType Directory -Path $dir -Force | Out-Null; $dest=Join-Path $dir 'nexus.duckdb'; Copy-Item -LiteralPath $source -Destination $dest; $wal='data\\nexus.duckdb.wal'; if (Test-Path $wal) { Copy-Item -LiteralPath $wal -Destination (Join-Path $dir 'nexus.duckdb.wal') }; $a=Get-FileHash -Algorithm SHA256 -LiteralPath $source; $b=Get-FileHash -Algorithm SHA256 -LiteralPath $dest; Get-Item $source,$dest | Select-Object FullName,Length,LastWriteTime | Format-Table -AutoSize; Write-Output ('SOURCE_SHA256='+$a.Hash); Write-Output ('BACKUP_SHA256='+$b.Hash); Write-Output ('HASH_MATCH='+($a.Hash -eq $b.Hash)); Write-Output ('WAL_PRESENT='+(Test-Path $wal))\"",
+          "output": "",
+          "timestamp": "2026-10-24T12:15:28.395Z",
+          "exitCode": 1
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && dir data\\recovery_backup_20261024_1513 && dir data\\nexus.duckdb data\\nexus.duckdb.wal",
+          "output": " Volume in drive D is DATA\r\n Volume Serial Number is D2EF-B478\r\n\r\n Directory of D:\\Nexus-Trading-System-MT5\\data\\recovery_backup_20261024_1513\r\n\r\n10/24/2026  03:12 PM    <DIR>          .\r\n10/24/2026  03:12 PM    <DIR>          ..\r\n10/24/2026  02:47 PM       299,118,592 nexus.duckdb\r\n               1 File(s)    299,118,592 bytes\r\n               2 Dir(s)  112,147,210,240 bytes free\r\n Volume in drive D is DATA\r\n Volume Serial Number is D2EF-B478\r\n\r\n Directory of D:\\Nexus-Trading-System-MT5\\data\r\n\r\n10/24/2026  02:47 PM       299,118,592 nexus.duckdb\r\n\r\n Directory of D:\\Nexus-Trading-System-MT5\\data\r\n\r\n               1 File(s)    299,118,592 bytes\r\n               0 Dir(s)  112,147,210,240 bytes free\r\n",
+          "timestamp": "2026-10-24T12:15:38.333Z",
+          "exitCode": 0
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && .venv\\Scripts\\python.exe -u -c \"import hashlib; from pathlib import Path; a=Path('data/nexus.duckdb'); b=Path('data/recovery_backup_20261024_1513/nexus.duckdb'); h=lambda p: hashlib.sha256(p.open('rb').read()).hexdigest(); print('source',a.stat().st_size,h(a)); print('backup',b.stat().st_size,h(b)); print('MATCH',h(a)==h(b))\"",
+          "output": "source 299118592 642e16b922d2c78a291b8bb424ef64b45fc030f3fa50f16777d2a2c39ec8df7a\r\nbackup 299118592 642e16b922d2c78a291b8bb424ef64b45fc030f3fa50f16777d2a2c39ec8df7a\r\nMATCH True\r\n",
+          "timestamp": "2026-10-24T12:16:32.331Z",
+          "exitCode": 0
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && .venv\\Scripts\\python.exe -u -c \"import duckdb; p='data/recovery_backup_20261024_1513/nexus.duckdb'; print('OPEN_READ_ONLY',flush=True); c=duckdb.connect(p,read_only=True); print('OPEN_OK',flush=True); print(c.execute('SELECT COUNT(*) FROM information_schema.tables').fetchone(),flush=True); c.close(); print('CLOSED',flush=True)\"",
+          "output": "OPEN_READ_ONLY\r\nOPEN_OK\r\n\r100% ▕██████████████████████████████████████▏ (00:00:03.98 elapsed)     \r\n(67,)\r\nCLOSED\r\n",
+          "timestamp": "2026-10-24T12:17:53.260Z",
+          "exitCode": 0
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && .venv\\Scripts\\python.exe -u -c \"import subprocess,sys; code=\\\"import duckdb; print('CONNECTING',flush=True); c=duckdb.connect('data/nexus.duckdb',read_only=True); print('CONNECTED',flush=True); print(c.execute('select count(*) from information_schema.tables').fetchone(),flush=True); c.close()\\\"; print('TEST_SOURCE_WITH_30S_LIMIT',flush=True); try_run=subprocess.run([sys.executable,'-u','-c',code],capture_output=True,text=True,timeout=30); print('EXIT',try_run.returncode); print(try_run.stdout); print(try_run.stderr)\"",
+          "output": "TEST_SOURCE_WITH_30S_LIMIT\r\nEXIT 0\r\nCONNECTING\r\nCONNECTED\r\n(67,)\r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:18:13.844Z",
+          "exitCode": 0
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && start \"\" /B .venv\\Scripts\\python.exe -u run.py --skip-preflight --no-frontend --services nexus-data > data\\nexus-data.recovery.log 2>&1",
+          "output": "",
+          "timestamp": "2026-10-24T12:19:27.077Z",
+          "exitCode": 0
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && type data\\nexus-data.recovery.log",
+          "output": "",
+          "timestamp": "2026-10-24T12:19:58.370Z",
+          "exitCode": 0
+        },
+        {
+          "command": "curl.exe -i --max-time 8 http://127.0.0.1:9001/health",
+          "output": "\n[stderr]   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\r\n                                 Dload  Upload   Total   Spent    Left  Speed\r\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\r\ncurl: (7) Failed to connect to 127.0.0.1 port 9001 after 2180 ms: Could not connect to server\r\n",
+          "timestamp": "2026-10-24T12:20:06.465Z",
+          "exitCode": 7
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && dir data\\nexus-data.recovery.log && tasklist /FI \"IMAGENAME eq python.exe\" /FO TABLE && powershell.exe -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*Nexus-Trading-System-MT5*' -or $_.CommandLine -like '*run.py*' -or $_.CommandLine -like '*nexus_data*' } | Select-Object ProcessId,ParentProcessId,CommandLine | Format-List\"",
+          "output": " Volume in drive D is DATA\r\n Volume Serial Number is D2EF-B478\r\n\r\n Directory of D:\\Nexus-Trading-System-MT5\\data\r\n\r\n10/24/2026  03:18 PM                 0 nexus-data.recovery.log\r\n               1 File(s)              0 bytes\r\n               0 Dir(s)  112,147,193,856 bytes free\r\n\r\nImage Name                     PID Session Name        Session#    Mem Usage\r\n========================= ======== ================ =========== ============\r\npython.exe                   10088 Console                    1     23,584 K\r\npython.exe                    8336 Console                    1     24,204 K\r\npython.exe                    4272 Console                    1      3,420 K\r\npython.exe                    6396 Console                    1     42,776 K\r\n\r\n\r\nProcessId       : 4272\r\nParentProcessId : 9308\r\nCommandLine     : .venv\\Scripts\\python.exe  -u run.py --skip-preflight --no-frontend --services nexus-data \r\n\r\nProcessId       : 6396\r\nParentProcessId : 4272\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\" -u run.py --skip-preflight \r\n                  --no-frontend --services nexus-data \r\n\r\nProcessId       : 8364\r\nParentProcessId : 4848\r\nCommandLine     : C:\\WINDOWS\\system32\\cmd.exe /d /s /c \"cd /d D:\\Nexus-Trading-System-MT5 && dir \r\n                  data\\nexus-data.recovery.log && tasklist /FI \"IMAGENAME eq python.exe\" /FO TABLE && powershell.exe \r\n                  -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like \r\n                  '*Nexus-Trading-System-MT5*' -or $_.CommandLine -like '*run.py*' -or $_.CommandLine -like \r\n                  '*nexus_data*' } | Select-Object ProcessId,ParentProcessId,CommandLine | Format-List\"\"\r\n\r\nProcessId       : 4120\r\nParentProcessId : 8364\r\nCommandLine     : powershell.exe  -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.CommandLine \r\n                  -like '*Nexus-Trading-System-MT5*' -or $_.CommandLine -like '*run.py*' -or $_.CommandLine -like \r\n                  '*nexus_data*' } | Select-Object ProcessId,ParentProcessId,CommandLine | Format-List\"\r\n\r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:20:56.882Z",
+          "exitCode": 0
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-Process -Id 4272,6396 -ErrorAction SilentlyContinue | Select-Object Id,ProcessName,StartTime,CPU,WorkingSet64,Responding | Format-Table -AutoSize; Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.LocalPort -ge 9000 -and $_.LocalPort -le 9008 } | Select-Object LocalAddress,LocalPort,OwningProcess | Format-Table -AutoSize\"",
+          "output": "\r\n  Id ProcessName StartTime                  CPU WorkingSet64 Responding\r\n  -- ----------- ---------                  --- ------------ ----------\r\n4272 python      10/24/2026 3:18:57 PM 0.015625      3502080       True\r\n6396 python      10/24/2026 3:18:57 PM   0.8125     51576832       True\r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:22:22.254Z",
+          "exitCode": 1
+        },
+        {
+          "command": "netstat -ano | findstr \":9001\"",
+          "output": "  TCP    127.0.0.1:51904        127.0.0.1:9001         SYN_SENT        6396\r\n",
+          "timestamp": "2026-10-24T12:22:27.019Z",
+          "exitCode": 0
+        },
+        {
+          "command": "taskkill /PID 4272 /T /F",
+          "output": "SUCCESS: The process with PID 6396 (child process of PID 4272) has been terminated.\r\nSUCCESS: The process with PID 4272 (child process of PID 9308) has been terminated.\r\n",
+          "timestamp": "2026-10-24T12:23:20.062Z",
+          "exitCode": 0
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && .venv\\Scripts\\python.exe -u -c \"from pathlib import Path; import run; print('ENV_EXISTS',Path('.env').is_file(),flush=True); print('IMPORT_RUN_OK',flush=True); env=run._ensure_dotenv(Path.cwd()); print('DOTENV_OK',flush=True); run._validate_env(env); print('ENV_VALID',flush=True); from shared.config_contract import validate_config_contract; print('CONFIG_CHECK_BEGIN',flush=True); validate_config_contract(); print('CONFIG_OK',flush=True); print('REDIS_CHECK_BEGIN',flush=True); print('REDIS_OK',run._check_redis(env.get('REDIS_URL','redis://localhost:6379')),flush=True)\"",
+          "output": "ENV_EXISTS True\r\nIMPORT_RUN_OK\r\nDOTENV_OK\r\nENV_VALID\r\nCONFIG_CHECK_BEGIN\r\nCONFIG_OK\r\nREDIS_CHECK_BEGIN\r\nREDIS_OK True\r\n",
+          "timestamp": "2026-10-24T12:23:32.782Z",
+          "exitCode": 0
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"$p=Start-Process -FilePath 'D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe' -ArgumentList @('-u','run.py','--skip-preflight','--no-frontend','--services','nexus-data') -WorkingDirectory 'D:\\Nexus-Trading-System-MT5' -RedirectStandardOutput 'D:\\Nexus-Trading-System-MT5\\data\\nexus-data.recovery.log' -RedirectStandardError 'D:\\Nexus-Trading-System-MT5\\data\\nexus-data.recovery.err.log' -PassThru; Write-Output ('RUNNER_PID='+$p.Id)\"",
+          "output": "RUNNER_PID=1956\r\n",
+          "timestamp": "2026-10-24T12:24:15.687Z",
+          "exitCode": 0
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && type data\\nexus-data.recovery.log && type data\\nexus-data.recovery.err.log",
+          "output": "\r\n\u001b[1m+======================================+\u001b[0m\r\n\u001b[1m|       NEXUS TRADER  -  Dev Runner    |\u001b[0m\r\n\u001b[1m+======================================+\u001b[0m\r\n\r\n\u001b[0m[nexus]\u001b[0m Running prerequisite checks ...\r\n\u001b[32m[nexus]\u001b[0m Redis OK\r\n\u001b[0m[nexus]\u001b[0m Trading mode: PAPER (safe resolved mode)\r\n\u001b[32m[nexus]\u001b[0m No port conflicts\r\n\u001b[0m[nexus]\u001b[0m Starting 1 service(s) ...\r\n\r\n\u001b[0m[nexus]\u001b[0m \u001b[36mnexus-data\u001b[0m started (PID 6708, port 9001)\r\n\u001b[0m[nexus]\u001b[0m Waiting for nexus-data (DuckDB writer) before starting peers …\r\n",
+          "timestamp": "2026-10-24T12:24:29.008Z",
+          "exitCode": 0
+        },
+        {
+          "command": "curl.exe -i --max-time 8 http://127.0.0.1:9001/health",
+          "output": "\n[stderr]   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\r\n                                 Dload  Upload   Total   Spent    Left  Speed\r\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\r\ncurl: (7) Failed to connect to 127.0.0.1 port 9001 after 2030 ms: Could not connect to server\r\n",
+          "timestamp": "2026-10-24T12:24:33.063Z",
+          "exitCode": 7
+        },
+        {
+          "command": "netstat -ano | findstr \":9001\"",
+          "output": "",
+          "timestamp": "2026-10-24T12:24:33.835Z",
+          "exitCode": 1
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && type data\\nexus-data.recovery.log && type data\\nexus-data.recovery.err.log",
+          "output": "\r\n\u001b[1m+======================================+\u001b[0m\r\n\u001b[1m|       NEXUS TRADER  -  Dev Runner    |\u001b[0m\r\n\u001b[1m+======================================+\u001b[0m\r\n\r\n\u001b[0m[nexus]\u001b[0m Running prerequisite checks ...\r\n\u001b[32m[nexus]\u001b[0m Redis OK\r\n\u001b[0m[nexus]\u001b[0m Trading mode: PAPER (safe resolved mode)\r\n\u001b[32m[nexus]\u001b[0m No port conflicts\r\n\u001b[0m[nexus]\u001b[0m Starting 1 service(s) ...\r\n\r\n\u001b[0m[nexus]\u001b[0m \u001b[36mnexus-data\u001b[0m started (PID 6708, port 9001)\r\n\u001b[0m[nexus]\u001b[0m Waiting for nexus-data (DuckDB writer) before starting peers …\r\n",
+          "timestamp": "2026-10-24T12:24:44.586Z",
+          "exitCode": 0
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -in 1956,6708 } | Select-Object ProcessId,ParentProcessId,Name,CommandLine | Format-List; Get-Process -Id 1956,6708 -ErrorAction SilentlyContinue | Select-Object Id,CPU,WorkingSet64,Responding | Format-Table -AutoSize\"",
+          "output": "\r\n\r\nProcessId       : 1956\r\nParentProcessId : 4560\r\nName            : python.exe\r\nCommandLine     : \"D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe\" -u run.py --skip-preflight --no-frontend \r\n                  --services nexus-data \r\n\r\nProcessId       : 6708\r\nParentProcessId : 7820\r\nName            : python.exe\r\nCommandLine     : D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe -m uvicorn services.nexus_data.main:app \r\n                  --app-dir D:\\Nexus-Trading-System-MT5 --host 127.0.0.1 --port 9001 --log-level info\r\n\r\n\r\n\r\n\r\n  Id CPU WorkingSet64 Responding\r\n  -- --- ------------ ----------\r\n1956   0      3510272       True\r\n6708   0      3522560       True\r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:24:50.851Z",
+          "exitCode": 0
+        },
+        {
+          "command": "curl.exe -i --max-time 5 http://127.0.0.1:9001/health",
+          "output": "\n[stderr]   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\r\n                                 Dload  Upload   Total   Spent    Left  Speed\r\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0\r\ncurl: (7) Failed to connect to 127.0.0.1 port 9001 after 2044 ms: Could not connect to server\r\n",
+          "timestamp": "2026-10-24T12:25:04.961Z",
+          "exitCode": 7
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.Name -match 'python' } | Select-Object ProcessId,ParentProcessId,ExecutablePath,CreationDate,CommandLine | Format-List; Get-Process -Id 1956,6708 -ErrorAction SilentlyContinue | Select-Object Id,CPU,WorkingSet64,StartTime | Format-Table -AutoSize; Get-NetTCPConnection -State Listen -LocalPort 9001 -ErrorAction SilentlyContinue | Select-Object LocalAddress,LocalPort,OwningProcess\"",
+          "output": "\r\n\r\nProcessId       : 10088\r\nParentProcessId : 9584\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\r\nCreationDate    : 10/24/2026 1:47:09 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\" \r\n\r\nProcessId       : 8336\r\nParentProcessId : 2780\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\r\nCreationDate    : 10/24/2026 2:48:30 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\" \r\n\r\nProcessId       : 1956\r\nParentProcessId : 4560\r\nExecutablePath  : D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe\r\nCreationDate    : 10/24/2026 3:23:47 PM\r\nCommandLine     : \"D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe\" -u run.py --skip-preflight --no-frontend \r\n                  --services nexus-data \r\n\r\nProcessId       : 7820\r\nParentProcessId : 1956\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\r\nCreationDate    : 10/24/2026 3:23:47 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\" -u run.py --skip-preflight \r\n                  --no-frontend --services nexus-data \r\n\r\nProcessId       : 6708\r\nParentProcessId : 7820\r\nExecutablePath  : D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe\r\nCreationDate    : 10/24/2026 3:23:49 PM\r\nCommandLine     : D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe -m uvicorn services.nexus_data.main:app \r\n                  --app-dir D:\\Nexus-Trading-System-MT5 --host 127.0.0.1 --port 9001 --log-level info\r\n\r\nProcessId       : 3936\r\nParentProcessId : 6708\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\r\nCreationDate    : 10/24/2026 3:23:49 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\" -m uvicorn \r\n                  services.nexus_data.main:app --app-dir D:\\Nexus-Trading-System-MT5 --host 127.0.0.1 --port 9001 \r\n                  --log-level info\r\n\r\n\r\n\r\n\r\n  Id CPU WorkingSet64 StartTime            \r\n  -- --- ------------ ---------            \r\n1956   0      3510272 10/24/2026 3:23:47 PM\r\n6708   0      3522560 10/24/2026 3:23:49 PM\r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:25:08.954Z",
+          "exitCode": 1
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && type data\\nexus-data.recovery.log",
+          "output": "\r\n\u001b[1m+======================================+\u001b[0m\r\n\u001b[1m|       NEXUS TRADER  -  Dev Runner    |\u001b[0m\r\n\u001b[1m+======================================+\u001b[0m\r\n\r\n\u001b[0m[nexus]\u001b[0m Running prerequisite checks ...\r\n\u001b[32m[nexus]\u001b[0m Redis OK\r\n\u001b[0m[nexus]\u001b[0m Trading mode: PAPER (safe resolved mode)\r\n\u001b[32m[nexus]\u001b[0m No port conflicts\r\n\u001b[0m[nexus]\u001b[0m Starting 1 service(s) ...\r\n\r\n\u001b[0m[nexus]\u001b[0m \u001b[36mnexus-data\u001b[0m started (PID 6708, port 9001)\r\n\u001b[0m[nexus]\u001b[0m Waiting for nexus-data (DuckDB writer) before starting peers …\r\n",
+          "timestamp": "2026-10-24T12:25:09.891Z",
+          "exitCode": 0
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-Process -Id 7820,3936 -ErrorAction SilentlyContinue | Select-Object Id,ProcessName,StartTime,CPU,WorkingSet64,Responding,Threads | Format-List; Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -in 6708,3936,7820 } | Select-Object ProcessId,ParentProcessId,ExecutablePath,CommandLine | Format-List\"",
+          "output": "\r\n\r\nId           : 3936\r\nProcessName  : python\r\nStartTime    : 10/24/2026 3:23:49 PM\r\nCPU          : 1.171875\r\nWorkingSet64 : 85950464\r\nResponding   : True\r\nThreads      : {7620, 9916, 7948, 4352...}\r\n\r\nId           : 7820\r\nProcessName  : python\r\nStartTime    : 10/24/2026 3:23:47 PM\r\nCPU          : 0.703125\r\nWorkingSet64 : 51445760\r\nResponding   : True\r\nThreads      : {4340, 6336, 7656}\r\n\r\n\r\n\r\n\r\n\r\nProcessId       : 7820\r\nParentProcessId : 1956\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\" -u run.py --skip-preflight \r\n                  --no-frontend --services nexus-data \r\n\r\nProcessId       : 6708\r\nParentProcessId : 7820\r\nExecutablePath  : D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe\r\nCommandLine     : D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe -m uvicorn services.nexus_data.main:app \r\n                  --app-dir D:\\Nexus-Trading-System-MT5 --host 127.0.0.1 --port 9001 --log-level info\r\n\r\nProcessId       : 3936\r\nParentProcessId : 6708\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\" -m uvicorn \r\n                  services.nexus_data.main:app --app-dir D:\\Nexus-Trading-System-MT5 --host 127.0.0.1 --port 9001 \r\n                  --log-level info\r\n\r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:25:18.554Z",
+          "exitCode": 0
+        },
+        {
+          "command": "curl.exe -sS --max-time 8 http://127.0.0.1:9001/health",
+          "output": "\n[stderr] curl: (7) Failed to connect to 127.0.0.1 port 9001 after 2024 ms: Could not connect to server\r\n",
+          "timestamp": "2026-10-24T12:25:26.404Z",
+          "exitCode": 7
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && type data\\nexus-data.recovery.log && type data\\nexus-data.recovery.err.log",
+          "output": "\r\n\u001b[1m+======================================+\u001b[0m\r\n\u001b[1m|       NEXUS TRADER  -  Dev Runner    |\u001b[0m\r\n\u001b[1m+======================================+\u001b[0m\r\n\r\n\u001b[0m[nexus]\u001b[0m Running prerequisite checks ...\r\n\u001b[32m[nexus]\u001b[0m Redis OK\r\n\u001b[0m[nexus]\u001b[0m Trading mode: PAPER (safe resolved mode)\r\n\u001b[32m[nexus]\u001b[0m No port conflicts\r\n\u001b[0m[nexus]\u001b[0m Starting 1 service(s) ...\r\n\r\n\u001b[0m[nexus]\u001b[0m \u001b[36mnexus-data\u001b[0m started (PID 6708, port 9001)\r\n\u001b[0m[nexus]\u001b[0m Waiting for nexus-data (DuckDB writer) before starting peers …\r\n\u001b[36m[nexus-data]\u001b[0m D:\\Nexus-Trading-System-MT5\\services\\nexus_data\\main.py:761: FastAPIDeprecationWarning: `regex` has been deprecated, please use `pattern` instead\r\n\u001b[36m[nexus-data]\u001b[0m   source: str = Query(default=\"cache\", regex=\"^(cache|db)$\"),\r\n",
+          "timestamp": "2026-10-24T12:25:27.025Z",
+          "exitCode": 0
+        },
+        {
+          "command": "netstat -ano | findstr \":9001\"",
+          "output": "",
+          "timestamp": "2026-10-24T12:25:56.938Z",
+          "exitCode": 1
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && type data\\nexus-data.recovery.log && powershell.exe -NoProfile -Command \"Get-Process -Id 1956,7820,6708,3936 -ErrorAction SilentlyContinue | Select-Object Id,CPU,WorkingSet64,StartTime | Format-Table -AutoSize\"",
+          "output": "\r\n\u001b[1m+======================================+\u001b[0m\r\n\u001b[1m|       NEXUS TRADER  -  Dev Runner    |\u001b[0m\r\n\u001b[1m+======================================+\u001b[0m\r\n\r\n\u001b[0m[nexus]\u001b[0m Running prerequisite checks ...\r\n\u001b[32m[nexus]\u001b[0m Redis OK\r\n\u001b[0m[nexus]\u001b[0m Trading mode: PAPER (safe resolved mode)\r\n\u001b[32m[nexus]\u001b[0m No port conflicts\r\n\u001b[0m[nexus]\u001b[0m Starting 1 service(s) ...\r\n\r\n\u001b[0m[nexus]\u001b[0m \u001b[36mnexus-data\u001b[0m started (PID 6708, port 9001)\r\n\u001b[0m[nexus]\u001b[0m Waiting for nexus-data (DuckDB writer) before starting peers …\r\n\u001b[36m[nexus-data]\u001b[0m D:\\Nexus-Trading-System-MT5\\services\\nexus_data\\main.py:761: FastAPIDeprecationWarning: `regex` has been deprecated, please use `pattern` instead\r\n\u001b[36m[nexus-data]\u001b[0m   source: str = Query(default=\"cache\", regex=\"^(cache|db)$\"),\r\n\u001b[36m[nexus-data]\u001b[0m INFO:     Started server process [3936]\r\n\u001b[36m[nexus-data]\u001b[0m INFO:     Waiting for application startup.\r\n\u001b[36m[nexus-data]\u001b[0m {\"event\": \"startup.begin\", \"service\": \"nexus-data\", \"level\": \"info\", \"logger\": \"nexus_data\", \"timestamp\": \"2026-10-24T12:25:28.809824Z\"}\r\n\u001b[36m[nexus-data]\u001b[0m {\"url\": \"redis://127.0.0.1:6379\", \"event\": \"redis.connected\", \"service\": \"nexus-data\", \"level\": \"info\", \"logger\": \"shared.redis_client\", \"timestamp\": \"2026-10-24T12:25:28.809824Z\"}\r\n\u001b[36m[nexus-data]\u001b[0m {\"event\": \"startup.redis_connected\", \"service\": \"nexus-data\", \"level\": \"info\", \"logger\": \"nexus_data\", \"timestamp\": \"2026-10-24T12:25:28.809824Z\"}\r\n\u001b[31m[nexus]\u001b[0m nexus-data did not become healthy in time — see logs above.\r\n\u001b[33m[nexus]\u001b[0m Shutting down all services ...\r\n\u001b[0m[nexus]\u001b[0m Stopping \u001b[36mnexus-data\u001b[0m (PID 6708)\r\n\u001b[33m[nexus]\u001b[0m Force-killing nexus-data\r\n\u001b[32m[nexus]\u001b[0m All services stopped.\r\n",
+          "timestamp": "2026-10-24T12:26:06.161Z",
+          "exitCode": 1
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -in 10088,8336,9584,2780 } | Select-Object ProcessId,ParentProcessId,Name,ExecutablePath,CreationDate,CommandLine | Format-List; Get-ChildItem data -Filter 'nexus.duckdb*' | Select-Object Name,Length,LastWriteTime | Format-Table -AutoSize\"",
+          "output": "\r\n\r\nProcessId       : 9584\r\nParentProcessId : 7084\r\nName            : py.exe\r\nExecutablePath  : C:\\Program \r\n                  Files\\WindowsApps\\PythonSoftwareFoundation.PythonManager_26.3.240.0_x64__3847v3x7pw1km\\py.exe\r\nCreationDate    : 10/24/2026 1:47:09 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Microsoft\\WindowsApps\\py.exe\"\r\n\r\nProcessId       : 10088\r\nParentProcessId : 9584\r\nName            : python.exe\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\r\nCreationDate    : 10/24/2026 1:47:09 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\" \r\n\r\nProcessId       : 2780\r\nParentProcessId : 9396\r\nName            : py.exe\r\nExecutablePath  : C:\\Program \r\n                  Files\\WindowsApps\\PythonSoftwareFoundation.PythonManager_26.3.240.0_x64__3847v3x7pw1km\\py.exe\r\nCreationDate    : 10/24/2026 2:48:30 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Microsoft\\WindowsApps\\py.exe\"\r\n\r\nProcessId       : 8336\r\nParentProcessId : 2780\r\nName            : python.exe\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\r\nCreationDate    : 10/24/2026 2:48:30 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\" \r\n\r\n\r\n\r\n\r\nName                                                  Length LastWriteTime         \r\n----                                                  ------ -------------         \r\nnexus.duckdb                                       299118592 10/24/2026 2:47:00 PM \r\nnexus.duckdb.corrupted                             164376576 10/19/2026 2:08:30 PM \r\nnexus.duckdb.old                                      274432 10/19/2026 2:12:07 PM \r\nnexus.duckdb.superseded_20261023_005002            115093504 10/23/2026 12:50:09 AM\r\nnexus.duckdb.wal.bak                                   62914 10/18/2026 1:49:43 PM \r\nnexus.duckdb.wal.bak.1                                 62914 10/18/2026 4:36:20 PM \r\nnexus.duckdb.wal.bak.2                                 16648 10/18/2026 5:23:37 PM \r\nnexus.duckdb.wal.bak.3                                 16648 10/18/2026 5:54:46 PM \r\nnexus.duckdb.wal.bak_corrupt_20261011                1183735 10/11/2026 3:18:20 AM \r\nnexus.duckdb.wal.bak_corrupt_20261018                  62914 10/18/2026 8:04:20 AM \r\nnexus.duckdb.wal.corrupted                            190353 10/19/2026 1:38:37 PM \r\nnexus.duckdb.wal.corrupted2                            16648 10/18/2026 5:37:28 PM \r\nnexus.duckdb.wal.corrupt_preserved_20261011_184858    168337 10/11/2026 6:43:05 AM \r\nnexus.duckdb.wal.old                                 3217790 10/19/2026 2:36:51 PM \r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:26:25.274Z",
+          "exitCode": 0
+        },
+        {
+          "command": "where.exe handle.exe; .venv\\Scripts\\python.exe -u -c \"import importlib.util; print('PSUTIL_AVAILABLE',importlib.util.find_spec('psutil') is not None)\"",
+          "output": "",
+          "timestamp": "2026-10-24T12:27:05.352Z",
+          "exitCode": 1
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*Nexus-Trading-System-MT5*' -or $_.CommandLine -like '*run.py*' -or $_.CommandLine -like '*nexus_data*' } | Select-Object ProcessId,ParentProcessId,Name,CommandLine | Format-List; netstat -ano | findstr ':9001'\"",
+          "output": "",
+          "timestamp": "2026-10-24T12:49:30.972Z",
+          "exitCode": 1
+        }
+      ],
+      "env": {}
+    },
+    "term-1792846198450-yo9htc": {
+      "id": "term-1792846198450-yo9htc",
+      "name": "nexus-final-check",
+      "status": "active",
+      "createdAt": "2026-10-24T12:49:58.450Z",
+      "lastActivity": "2026-10-24T13:00:09.725Z",
+      "workingDir": "D:\\Nexus-Trading-System-MT5",
+      "history": [
+        {
+          "command": "tasklist /FI \"IMAGENAME eq python.exe\" /FO TABLE && netstat -ano | findstr \":9001\" && dir data\\recovery_backup_20261024_1513",
+          "output": "\r\nImage Name                     PID Session Name        Session#    Mem Usage\r\n========================= ======== ================ =========== ============\r\npython.exe                   10088 Console                    1     23,584 K\r\npython.exe                    8336 Console                    1     24,212 K\r\n",
+          "timestamp": "2026-10-24T12:50:06.695Z",
+          "exitCode": 1
+        },
+        {
+          "command": ".venv\\Scripts\\python.exe -u -c \"import subprocess,sys; code='import duckdb; print(\\\"CONNECTING_WRITE\\\",flush=True); c=duckdb.connect(r\\\"D:\\\\Nexus-Trading-System-MT5\\\\data\\\\nexus.duckdb\\\"); print(\\\"WRITE_OPEN_OK\\\",flush=True); print(c.execute(\\\"SELECT COUNT(*) FROM information_schema.tables\\\").fetchone(),flush=True); c.close(); print(\\\"CLOSED\\\",flush=True)'; print('WRITE_TEST_BEGIN',flush=True); r=subprocess.run([sys.executable,'-u','-c',code],capture_output=True,text=True,timeout=20); print('CHILD_EXIT',r.returncode); print(r.stdout); print(r.stderr)\"",
+          "output": "WRITE_TEST_BEGIN\r\n",
+          "timestamp": "2026-10-24T12:50:54.024Z",
+          "exitCode": 1
+        },
+        {
+          "command": ".venv\\Scripts\\python.exe -u -c \"import duckdb; print('CONNECTING_WRITE',flush=True); c=duckdb.connect('data/nexus.duckdb'); print('WRITE_OPEN_OK',flush=True); print(c.execute('SELECT COUNT(*) FROM information_schema.tables').fetchone(),flush=True); c.close(); print('CLOSED',flush=True)\"",
+          "output": "CONNECTING_WRITE\r\n",
+          "timestamp": "2026-10-24T12:52:18.033Z",
+          "exitCode": 1
+        },
+        {
+          "command": "tasklist /FI \"IMAGENAME eq python.exe\" /FO TABLE && netstat -ano | findstr \":9001\"",
+          "output": "\r\nImage Name                     PID Session Name        Session#    Mem Usage\r\n========================= ======== ================ =========== ============\r\npython.exe                   10088 Console                    1     23,584 K\r\npython.exe                    8336 Console                    1     24,212 K\r\npython.exe                    3484 Console                    1      3,416 K\r\npython.exe                    9248 Console                    1     31,548 K\r\n",
+          "timestamp": "2026-10-24T12:52:19.000Z",
+          "exitCode": 1
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.Name -match 'python|py.exe' } | Select-Object ProcessId,ParentProcessId,Name,ExecutablePath,CreationDate,CommandLine | Format-List\"",
+          "output": "\r\n\r\nProcessId       : 9584\r\nParentProcessId : 7084\r\nName            : py.exe\r\nExecutablePath  : C:\\Program \r\n                  Files\\WindowsApps\\PythonSoftwareFoundation.PythonManager_26.3.240.0_x64__3847v3x7pw1km\\py.exe\r\nCreationDate    : 10/24/2026 1:47:09 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Microsoft\\WindowsApps\\py.exe\"\r\n\r\nProcessId       : 10088\r\nParentProcessId : 9584\r\nName            : python.exe\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\r\nCreationDate    : 10/24/2026 1:47:09 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\" \r\n\r\nProcessId       : 2780\r\nParentProcessId : 9396\r\nName            : py.exe\r\nExecutablePath  : C:\\Program \r\n                  Files\\WindowsApps\\PythonSoftwareFoundation.PythonManager_26.3.240.0_x64__3847v3x7pw1km\\py.exe\r\nCreationDate    : 10/24/2026 2:48:30 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Microsoft\\WindowsApps\\py.exe\"\r\n\r\nProcessId       : 8336\r\nParentProcessId : 2780\r\nName            : python.exe\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\r\nCreationDate    : 10/24/2026 2:48:30 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe\" \r\n\r\nProcessId       : 3484\r\nParentProcessId : 8452\r\nName            : python.exe\r\nExecutablePath  : D:\\Nexus-Trading-System-MT5\\.venv\\Scripts\\python.exe\r\nCreationDate    : 10/24/2026 3:51:18 PM\r\nCommandLine     : .venv\\Scripts\\python.exe  -u -c \"import duckdb; print('CONNECTING_WRITE',flush=True); \r\n                  c=duckdb.connect('data/nexus.duckdb'); print('WRITE_OPEN_OK',flush=True); print(c.execute('SELECT \r\n                  COUNT(*) FROM information_schema.tables').fetchone(),flush=True); c.close(); \r\n                  print('CLOSED',flush=True)\"\r\n\r\nProcessId       : 9248\r\nParentProcessId : 3484\r\nName            : python.exe\r\nExecutablePath  : C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\r\nCreationDate    : 10/24/2026 3:51:18 PM\r\nCommandLine     : \"C:\\Users\\rd66\\AppData\\Local\\Python\\pythoncore-3.11-64\\python.exe\" -u -c \"import duckdb; \r\n                  print('CONNECTING_WRITE',flush=True); c=duckdb.connect('data/nexus.duckdb'); \r\n                  print('WRITE_OPEN_OK',flush=True); print(c.execute('SELECT COUNT(*) FROM \r\n                  information_schema.tables').fetchone(),flush=True); c.close(); print('CLOSED',flush=True)\"\r\n\r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:52:55.912Z",
+          "exitCode": 0
+        },
+        {
+          "command": "tasklist /FI \"IMAGENAME eq python.exe\" /FO TABLE",
+          "output": "\r\nImage Name                     PID Session Name        Session#    Mem Usage\r\n========================= ======== ================ =========== ============\r\npython.exe                   10088 Console                    1     23,584 K\r\npython.exe                    8336 Console                    1     24,216 K\r\npython.exe                    3484 Console                    1      3,416 K\r\npython.exe                    9248 Console                    1     86,864 K\r\n",
+          "timestamp": "2026-10-24T12:52:56.958Z",
+          "exitCode": 0
+        },
+        {
+          "command": "taskkill /PID 3484 /T /F",
+          "output": "\n[stderr] ERROR: The process \"3484\" not found.\r\n",
+          "timestamp": "2026-10-24T12:53:13.063Z",
+          "exitCode": 128
+        },
+        {
+          "command": "cd /d D:\\Nexus-Trading-System-MT5 && dir /T:W data\\nexus.duckdb data\\nexus.duckdb.wal data\\recovery_backup_20261024_1513\\nexus.duckdb && tasklist /FI \"IMAGENAME eq python.exe\" /FO TABLE && netstat -ano | findstr \":9001\"",
+          "output": " Volume in drive D is DATA\r\n Volume Serial Number is D2EF-B478\r\n\r\n Directory of D:\\Nexus-Trading-System-MT5\\data\r\n\r\n10/24/2026  02:47 PM       299,118,592 nexus.duckdb\r\n\r\n Directory of D:\\Nexus-Trading-System-MT5\\data\r\n\r\n               1 File(s)    299,118,592 bytes\r\n\r\n Directory of D:\\Nexus-Trading-System-MT5\\data\\recovery_backup_20261024_1513\r\n\r\n10/24/2026  02:47 PM       299,118,592 nexus.duckdb\r\n               1 File(s)    299,118,592 bytes\r\n               0 Dir(s)  112,002,842,624 bytes free\r\n\r\nImage Name                     PID Session Name        Session#    Mem Usage\r\n========================= ======== ================ =========== ============\r\npython.exe                   10088 Console                    1     23,584 K\r\npython.exe                    8336 Console                    1     24,216 K\r\n",
+          "timestamp": "2026-10-24T12:53:27.299Z",
+          "exitCode": 1
+        },
+        {
+          "command": ".venv\\Scripts\\python.exe -u -c \"import hashlib; from pathlib import Path; a=Path('data/nexus.duckdb'); b=Path('data/recovery_backup_20261024_1513/nexus.duckdb'); h=lambda p: hashlib.sha256(p.open('rb').read()).hexdigest(); ah=h(a); bh=h(b); print('SOURCE_SHA256',ah); print('BACKUP_SHA256',bh); print('MATCH',ah==bh); print('SOURCE_MTIME_NS',a.stat().st_mtime_ns); print('BACKUP_MTIME_NS',b.stat().st_mtime_ns)\"",
+          "output": "SOURCE_SHA256 642e16b922d2c78a291b8bb424ef64b45fc030f3fa50f16777d2a2c39ec8df7a\r\nBACKUP_SHA256 642e16b922d2c78a291b8bb424ef64b45fc030f3fa50f16777d2a2c39ec8df7a\r\nMATCH True\r\nSOURCE_MTIME_NS 1792842420550050900\r\nBACKUP_MTIME_NS 1792842420550050900\r\n",
+          "timestamp": "2026-10-24T12:53:49.030Z",
+          "exitCode": 0
+        },
+        {
+          "command": "git status --short && git log -1 --format=\"%h %ad %s\" --date=iso-strict -- run.py services/nexus_data/duckdb_store.py services/nexus_data/main.py",
+          "output": " M .claude/helpers/.helpers-version\n M .claude/helpers/helpers.manifest.json\n M .claude/helpers/statusline.cjs\n M config/broker_calendar.local.json\n M dashboard/src/app/dashboard/history/page.tsx\n M dashboard/src/app/dashboard/settings/page.tsx\n M dashboard/src/components/UserMenu.tsx\n M dashboard/src/components/fundamental/LocalAIAnalystPanel.tsx\n M dashboard/src/components/fundamental/NewsIntelligencePanel.tsx\n M dashboard/src/components/settings/broker/AssetDropDown.tsx\n M dashboard/src/components/settings/broker/BrokerSettingsView.tsx\n M dashboard/src/components/settings/broker/controller.ts\n M dashboard/src/components/windows/BacktestPanel.tsx\n M dashboard/src/components/windows/CorrelationMatrix.tsx\n M dashboard/src/components/windows/CrossAsset.tsx\n M dashboard/src/components/windows/NewsFeed.tsx\n M dashboard/src/components/windows/SystemDiagnostic.tsx\n M dashboard/src/components/windows/TradeMemoryPanel.tsx\n M dashboard/src/lib/data-presentation.ts\n M dashboard/src/lib/system-health-status.ts\n M dashboard/src/types/fundamental.ts\n M docs/superpowers/plans/2026-10-21-nexus-audit-remediation.md\n M package-lock.json\n M run.py\n M scripts/start_settings_only.py\n M services/nexus_api/fundamental_local_ai.py\n M services/nexus_api/requirements.txt\n M services/nexus_api/routers/fundamental.py\n M services/nexus_api/routers/intelligence.py\n M services/nexus_api/routers/news.py\n M services/nexus_data/duckdb_store.py\n M services/nexus_data/quality/automation.py\n M services/nexus_data/research_market.py\n M services/nexus_features/correlation.py\n M services/nexus_news/fundamental/runtime.py\n M services/nexus_news/main.py\n M services/nexus_news/news_fetcher.py\n M services/nexus_risk/main.py\n M tests/test_api/test_backtest_sources.py\n M tests/test_api/test_intelligence_settings_authorization.py\n M tests/test_api/test_trade_memory_availability.py\n M tests/test_data/test_broker_settings_route.py\n M tests/test_data/test_broker_settings_store.py\n M tests/test_data/test_mql5_session_enumeration.py\n M tests/test_data/test_quality_gate.py\n M tests/test_data/test_research_market.py\n M tests/test_data/test_session_reader_check.py\n?? .claude-flow/agents/\n?? .claude-flow/graph/\n?? .claude-flow/harness-active-policy.json\n?? .claude-flow/policy/\n?? .claude-flow/terminals/\n?? .claude/.proven-config-version\n?? .claude/proven-config.json\n?? .swarm/model-router-state.json\n?? backups/\n?? dashboard/src/components/fundamental/news-presentation.ts\n?? dashboard/src/components/settings/broker/symbol-table.ts\n?? dashboard/src/lib/correlation-presentation.ts\n?? dashboard/src/lib/local-ai-presentation.ts\n?? dashboard/src/lib/trade-csv.ts\n?? dashboard/src/lib/user-menu-presentation.ts\n?? dashboard/tests/ai-correlation-presentation.test.mjs\n?? dashboard/tests/ai-local-ai-presentation.test.mjs\n?? dashboard/tests/broker-draft-persistence.test.mjs\n?? dashboard/tests/broker-symbol-table.test.mjs\n?? dashboard/tests/history-csv.test.mjs\n?? dashboard/tests/intelligence-availability.test.mjs\n?? dashboard/tests/news-feed-presentation.test.mjs\n?? dashboard/tests/qa-honesty-contracts.test.mjs\n?? dashboard/tests/qa-user-menu.test.mjs\n?? dashboard/tests/system-diagnostic-state.test.mjs\n?? fx-trading-system-main/\n?? project_audit/DEPENDENCY_AUDIT_20261021.md\n?? project_audit/REPAIR_TASK2_20261021.md\n?? project_audit/REPAIR_TASK3_20261021.md\n?? project_audit/remediation-20261021/\n?? scripts/rebuild_database.py\n?? scripts/repair_observations_index.py\n?? scripts/ui_walkthrough.py\n?? tests/test_api/test_auth_flows.py\n?? tests/test_api/test_fundamental_news_contract.py\n?? tests/test_api/test_fundamental_sources_truth.py\n?? tests/test_api/test_fundamental_ticker_settings.py\n?? tests/test_api/test_intelligence_honesty.py\n?? tests/test_api/test_intelligence_local_ai_contract.py\n?? tests/test_api/test_intelligence_ml_contracts.py\n?? tests/test_api/test_local_ai_availability.py\n?? tests/test_api/test_news_feed_truth.py\n?? tests/test_api/test_trade_filter_consistency.py\n?? tests/test_data/test_ohlcv_manifest_reconcile.py\n?? tests/test_data/test_ohlcv_quality_reuse.py\n?? tests/test_data/test_ohlcv_real_data.py\n?? tests/test_data/test_ohlcv_research_api_probes.py\n?? tests/test_data/test_ohlcv_research_inventory.py\n?? tests/test_data/test_ohlcv_source_map.py\n?? tests/test_data/test_ohlcv_task7_acceptance.py\n?? tests/test_data/test_session_dst_transitions.py\n?? tests/test_data/test_session_identity_mismatch.py\n?? tests/test_features/correlation_edge_cases.py\n?? tests/test_features/test_correlation_windows_lag.py\n?? tests/test_qa/\n?? tests/test_settings_only_runner.py\n1551436 2026-10-21T16:09:46+03:00 Audit remediation batch: broker settings isolation, session/UTC evidence, research lab data lineage, UI honesty gates, and runner safety.\n",
+          "timestamp": "2026-10-24T12:55:25.847Z",
+          "exitCode": 0
+        },
+        {
+          "command": "powershell.exe -NoProfile -Command \"Get-Item run.py,services\\nexus_data\\duckdb_store.py,services\\nexus_data\\main.py,data\\nexus.duckdb,data\\nexus-data.err.log,data\\nexus-data.log -ErrorAction SilentlyContinue | Select-Object Name,Length,LastWriteTime | Format-Table -AutoSize; Get-ChildItem data -Filter 'nexus-data*.log' | Sort-Object LastWriteTime -Descending | Select-Object -First 10 Name,LastWriteTime,Length | Format-Table -AutoSize\"",
+          "output": "\r\nName                  Length LastWriteTime        \r\n----                  ------ -------------        \r\nrun.py                 39752 10/21/2026 4:51:53 PM\r\nduckdb_store.py        66082 10/22/2026 4:23:52 PM\r\nmain.py                52405 10/20/2026 4:26:43 PM\r\nnexus.duckdb       299118592 10/24/2026 2:47:00 PM\r\nnexus-data.err.log     28209 10/17/2026 5:37:11 PM\r\nnexus-data.log           853 10/17/2026 5:43:39 PM\r\n\r\n\r\n\r\nName                        LastWriteTime         Length\r\n----                        -------------         ------\r\nnexus-data.recovery.log     10/24/2026 3:26:00 PM   1704\r\nnexus-data.recovery.err.log 10/24/2026 3:23:47 PM      0\r\nnexus-data.log              10/17/2026 5:43:39 PM    853\r\nnexus-data.err.log          10/17/2026 5:37:11 PM  28209\r\nnexus-data.out.log          10/17/2026 5:34:18 PM    118\r\n\r\n\r\n",
+          "timestamp": "2026-10-24T12:55:55.690Z",
+          "exitCode": 0
+        },
+        {
+          "command": "git diff --stat -- run.py services/nexus_data/duckdb_store.py",
+          "output": " run.py                              | 18 ++++------\n services/nexus_data/duckdb_store.py | 70 ++++++++++++++++++++++++++++++++-----\n 2 files changed, 68 insertions(+), 20 deletions(-)\n",
+          "timestamp": "2026-10-24T12:56:47.924Z",
+          "exitCode": 0
+        },
+        {
+          "command": "git diff -U5 -- run.py services/nexus_data/duckdb_store.py",
+          "output": "diff --git a/run.py b/run.py\nindex 88e04e0..a64fedb 100644\n--- a/run.py\n+++ b/run.py\n@@ -623,22 +623,16 @@ class ProcessManager:\n \n     def spawn_dashboard(self, color: str, *, env_override: Optional[dict] = None) -> ManagedProcess:\n         dashboard_dir = self.root / \"dashboard\"\n         cmd = [\"npm\", \"run\", \"dev\", \"--\", \"--port\", str(DASHBOARD_PORT)]\n         if IS_WINDOWS:\n-            # OneDrive + old Next build artifacts can cause EINVAL readlink during\n-            # Next's internal cleanup. Remove `.next` first to start from a clean state.\n-            #\n-            # NOTE: the separator must be `&` (unconditional), not `&&`. In cmd\n-            # batch syntax `&&` binds to the `if exist` clause, so when `.next`\n-            # did NOT exist the npm command was skipped entirely and the process\n-            # exited 0 immediately — the dashboard silently never started.\n-            cmd = [\n-                \"cmd\",\n-                \"/c\",\n-                f\"(if exist .next rmdir /s /q .next) & npm run dev -- --port {DASHBOARD_PORT}\",\n-            ]\n+            # Windows cannot execute npm.cmd directly through CreateProcess\n+            # (PATHEXT is not applied), so wrap it in cmd.  Never delete\n+            # `.next`: the runner contract forbids destroying user/build\n+            # files — a corrupt build must surface as a capped dashboard\n+            # restart failure instead of silently wiping the directory.\n+            cmd = [\"cmd\", \"/c\", f\"npm run dev -- --port {DASHBOARD_PORT}\"]\n \n         env = {**os.environ}\n         if env_override:\n             env.update(env_override)\n         env.pop(\"NEXUS_RISK_APPROVAL_SECRET\", None)\ndiff --git a/services/nexus_data/duckdb_store.py b/services/nexus_data/duckdb_store.py\nindex 6e3c7c9..6422d14 100644\n--- a/services/nexus_data/duckdb_store.py\n+++ b/services/nexus_data/duckdb_store.py\n@@ -46,20 +46,27 @@ DEFAULT_OHLCV_SOURCE = \"mt5\"\n \n # Quality-gate dataset ids (must exist in `datasets` for the quarantine FK).\n QUALITY_DATASET_OHLCV = \"market_ohlcv\"\n QUALITY_DATASET_TICKS = \"market_ticks\"\n \n-# Feature flag: NEXUS_QUALITY_GATE enables validation + quarantine on write\n-# paths. Empty or \"0\" means OFF (default); any other value means ON.\n+# Feature flag: NEXUS_QUALITY_GATE controls validation + quarantine on write\n+# paths. Task 7 (raw -> cleaning -> verification -> trace with raw preservation)\n+# requires gating on ingestion, so it defaults ON; set \"0\"/\"false\"/\"off\" to opt\n+# out explicitly. Unset and empty behave the same (ON).\n QUALITY_GATE_ENV = \"NEXUS_QUALITY_GATE\"\n \n _RESEARCH_LINEAGE_SQL = Path(__file__).resolve().parent / \"migrations\" / \"research_lineage_001.sql\"\n \n \n def quality_gate_enabled() -> bool:\n-    \"\"\"True when the NEXUS_QUALITY_GATE feature flag is enabled (default OFF).\"\"\"\n-    return os.getenv(QUALITY_GATE_ENV, \"\").strip().lower() not in (\"\", \"0\")\n+    \"\"\"True unless NEXUS_QUALITY_GATE explicitly disables the write gate.\n+\n+    The Task 7 plan mandates raw-preserving validation on ingestion, so the\n+    default is ON (unset/empty). Explicit falsy values (\"0\", \"false\", \"off\")\n+    restore the plain revision-aware upsert path for emergencies/debugging.\n+    \"\"\"\n+    return os.getenv(QUALITY_GATE_ENV, \"1\").strip().lower() not in (\"0\", \"false\", \"off\")\n \n \n def _ensure_tz(value: datetime) -> datetime:\n     return value if value.tzinfo is not None else value.replace(tzinfo=timezone.utc)\n \n@@ -566,11 +573,11 @@ class DataStore:\n         ``ohlcv_manifests`` is refreshed on the same locked connection\n         (row_count, canonical content_hash, available_through = MAX(available_at),\n         computed_at = now). ``available_at`` defaults to CURRENT_TIMESTAMP\n         per inserted/updated row when None.\n \n-        Quality gate (NEXUS_QUALITY_GATE, default OFF): when enabled, bars are\n+        Quality gate (NEXUS_QUALITY_GATE, default ON): when enabled, bars are\n         converted to canonical records and validated via ``validate_ohlcv``;\n         ERROR-severity rows (price outliers, duplicates, broken OHLC\n         invariants) are written to the quarantine table and are never\n         inserted. WARNING-only findings (e.g. time gaps) are not corruption:\n         those bars still insert with the caller-provided quality value, so the\n@@ -815,10 +822,44 @@ class DataStore:\n             \"    available_through = excluded.available_through, \"\n             \"    computed_at = excluded.computed_at\",\n             (symbol, timeframe, len(rows), content_hash, available_through),\n         )\n \n+    async def reconcile_ohlcv_manifests(self) -> dict[str, int]:\n+        \"\"\"Recompute ohlcv_manifests rows that disagree with stored ohlcv.\n+\n+        Manifests are declared state (row_count, content_hash,\n+        available_through). If the underlying series is truncated or emptied\n+        outside the write path, the declaration becomes a lie; this scans every\n+        known (symbol, timeframe) — manifests and live pairs alike — and\n+        refreshes only the mismatched ones on the locked connection (a vanished\n+        series is declared honestly as 0 rows, an unmanifested live pair gets\n+        its missing row). Returns checked/stale/refreshed counts. Idempotent.\n+        \"\"\"\n+        rows = await self._fetch(\n+            \"SELECT k.symbol, k.timeframe, m.row_count, \"\n+            \"       COALESCE((SELECT COUNT(*) FROM ohlcv o \"\n+            \"                 WHERE o.symbol = k.symbol AND o.timeframe = k.timeframe), 0) AS actual \"\n+            \"FROM (SELECT symbol, timeframe FROM ohlcv_manifests \"\n+            \"      UNION \"\n+            \"      SELECT DISTINCT symbol, timeframe FROM ohlcv) k \"\n+            \"LEFT JOIN ohlcv_manifests m ON m.symbol = k.symbol AND m.timeframe = k.timeframe\"\n+        )\n+        stale = [\n+            (str(symbol), str(timeframe))\n+            for symbol, timeframe, declared, actual in rows\n+            if declared is None or int(declared) != int(actual)\n+        ]\n+        if stale:\n+            def _refresh() -> None:\n+                assert self._conn is not None\n+                for symbol, timeframe in stale:\n+                    self._refresh_ohlcv_manifest(symbol, timeframe)\n+\n+            await self._execute_locked(_refresh)\n+        return {\"checked\": len(rows), \"stale\": len(stale), \"refreshed\": len(stale)}\n+\n     async def _apply_ohlcv_upsert(\n         self,\n         bars: dict[tuple[str, str, datetime], OHLCV],\n         *,\n         source: str,\n@@ -880,19 +921,32 @@ class DataStore:\n                     seen.add(key)\n                 deduped.append(item)\n             kept = deduped\n         return kept, quarantined\n \n+    def _activate_lineage_schema(self) -> None:\n+        \"\"\"Run the datasets/lineage/quarantine DDL once (sync; holds no lock of its own).\"\"\"\n+        assert self._conn is not None\n+        if not self._lineage_schema_ready:\n+            self._conn.execute(_RESEARCH_LINEAGE_SQL.read_text(encoding=\"utf-8\"))\n+            self._lineage_schema_ready = True\n+\n+    async def ensure_lineage_schema(self) -> None:\n+        \"\"\"Activate the datasets/lineage/quarantine/quality DDL exactly once.\n+\n+        Idempotent; callers that persist lineage or dataset registrations\n+        outside a quarantine write use this first so the FK targets exist.\n+        \"\"\"\n+        await self._execute_locked(self._activate_lineage_schema)\n+\n     async def _write_quarantine(self, records: Sequence[QuarantineRecord]) -> None:\n         \"\"\"Persist quarantine envelopes (additive; activates lineage schema once).\"\"\"\n         if not records:\n             return\n         def _persist() -> None:\n             assert self._conn is not None\n-            if not self._lineage_schema_ready:\n-                self._conn.execute(_RESEARCH_LINEAGE_SQL.read_text(encoding=\"utf-8\"))\n-                self._lineage_schema_ready = True\n+            self._activate_lineage_schema()\n             for dataset_id in sorted({r.dataset_id for r in records}):\n                 self._conn.execute(\n                     \"INSERT INTO datasets (dataset_id, dataset_name) VALUES (?, ?) \"\n                     \"ON CONFLICT (dataset_id) DO NOTHING\",\n                     (dataset_id, dataset_id),\n",
+          "timestamp": "2026-10-24T12:56:49.329Z",
+          "exitCode": 0
+        },
+        {
+          "command": "git diff --unified=0 -- services/nexus_data/duckdb_store.py",
+          "output": "diff --git a/services/nexus_data/duckdb_store.py b/services/nexus_data/duckdb_store.py\nindex 6e3c7c9..6422d14 100644\n--- a/services/nexus_data/duckdb_store.py\n+++ b/services/nexus_data/duckdb_store.py\n@@ -51,2 +51,4 @@ QUALITY_DATASET_TICKS = \"market_ticks\"\n-# Feature flag: NEXUS_QUALITY_GATE enables validation + quarantine on write\n-# paths. Empty or \"0\" means OFF (default); any other value means ON.\n+# Feature flag: NEXUS_QUALITY_GATE controls validation + quarantine on write\n+# paths. Task 7 (raw -> cleaning -> verification -> trace with raw preservation)\n+# requires gating on ingestion, so it defaults ON; set \"0\"/\"false\"/\"off\" to opt\n+# out explicitly. Unset and empty behave the same (ON).\n@@ -59,2 +61,7 @@ def quality_gate_enabled() -> bool:\n-    \"\"\"True when the NEXUS_QUALITY_GATE feature flag is enabled (default OFF).\"\"\"\n-    return os.getenv(QUALITY_GATE_ENV, \"\").strip().lower() not in (\"\", \"0\")\n+    \"\"\"True unless NEXUS_QUALITY_GATE explicitly disables the write gate.\n+\n+    The Task 7 plan mandates raw-preserving validation on ingestion, so the\n+    default is ON (unset/empty). Explicit falsy values (\"0\", \"false\", \"off\")\n+    restore the plain revision-aware upsert path for emergencies/debugging.\n+    \"\"\"\n+    return os.getenv(QUALITY_GATE_ENV, \"1\").strip().lower() not in (\"0\", \"false\", \"off\")\n@@ -571 +578 @@ class DataStore:\n-        Quality gate (NEXUS_QUALITY_GATE, default OFF): when enabled, bars are\n+        Quality gate (NEXUS_QUALITY_GATE, default ON): when enabled, bars are\n@@ -819,0 +827,34 @@ class DataStore:\n+    async def reconcile_ohlcv_manifests(self) -> dict[str, int]:\n+        \"\"\"Recompute ohlcv_manifests rows that disagree with stored ohlcv.\n+\n+        Manifests are declared state (row_count, content_hash,\n+        available_through). If the underlying series is truncated or emptied\n+        outside the write path, the declaration becomes a lie; this scans every\n+        known (symbol, timeframe) — manifests and live pairs alike — and\n+        refreshes only the mismatched ones on the locked connection (a vanished\n+        series is declared honestly as 0 rows, an unmanifested live pair gets\n+        its missing row). Returns checked/stale/refreshed counts. Idempotent.\n+        \"\"\"\n+        rows = await self._fetch(\n+            \"SELECT k.symbol, k.timeframe, m.row_count, \"\n+            \"       COALESCE((SELECT COUNT(*) FROM ohlcv o \"\n+            \"                 WHERE o.symbol = k.symbol AND o.timeframe = k.timeframe), 0) AS actual \"\n+            \"FROM (SELECT symbol, timeframe FROM ohlcv_manifests \"\n+            \"      UNION \"\n+            \"      SELECT DISTINCT symbol, timeframe FROM ohlcv) k \"\n+            \"LEFT JOIN ohlcv_manifests m ON m.symbol = k.symbol AND m.timeframe = k.timeframe\"\n+        )\n+        stale = [\n+            (str(symbol), str(timeframe))\n+            for symbol, timeframe, declared, actual in rows\n+            if declared is None or int(declared) != int(actual)\n+        ]\n+        if stale:\n+            def _refresh() -> None:\n+                assert self._conn is not None\n+                for symbol, timeframe in stale:\n+                    self._refresh_ohlcv_manifest(symbol, timeframe)\n+\n+            await self._execute_locked(_refresh)\n+        return {\"checked\": len(rows), \"stale\": len(stale), \"refreshed\": len(stale)}\n+\n@@ -884,0 +926,15 @@ class DataStore:\n+    def _activate_lineage_schema(self) -> None:\n+        \"\"\"Run the datasets/lineage/quarantine DDL once (sync; holds no lock of its own).\"\"\"\n+        assert self._conn is not None\n+        if not self._lineage_schema_ready:\n+            self._conn.execute(_RESEARCH_LINEAGE_SQL.read_text(encoding=\"utf-8\"))\n+            self._lineage_schema_ready = True\n+\n+    async def ensure_lineage_schema(self) -> None:\n+        \"\"\"Activate the datasets/lineage/quarantine/quality DDL exactly once.\n+\n+        Idempotent; callers that persist lineage or dataset registrations\n+        outside a quarantine write use this first so the FK targets exist.\n+        \"\"\"\n+        await self._execute_locked(self._activate_lineage_schema)\n+\n@@ -891,3 +947 @@ class DataStore:\n-            if not self._lineage_schema_ready:\n-                self._conn.execute(_RESEARCH_LINEAGE_SQL.read_text(encoding=\"utf-8\"))\n-                self._lineage_schema_ready = True\n+            self._activate_lineage_schema()\n",
+          "timestamp": "2026-10-24T12:57:10.480Z",
+          "exitCode": 0
+        },
+        {
+          "command": "git diff --unified=0 -- run.py",
+          "output": "diff --git a/run.py b/run.py\nindex 88e04e0..a64fedb 100644\n--- a/run.py\n+++ b/run.py\n@@ -628,12 +628,6 @@ class ProcessManager:\n-            # OneDrive + old Next build artifacts can cause EINVAL readlink during\n-            # Next's internal cleanup. Remove `.next` first to start from a clean state.\n-            #\n-            # NOTE: the separator must be `&` (unconditional), not `&&`. In cmd\n-            # batch syntax `&&` binds to the `if exist` clause, so when `.next`\n-            # did NOT exist the npm command was skipped entirely and the process\n-            # exited 0 immediately — the dashboard silently never started.\n-            cmd = [\n-                \"cmd\",\n-                \"/c\",\n-                f\"(if exist .next rmdir /s /q .next) & npm run dev -- --port {DASHBOARD_PORT}\",\n-            ]\n+            # Windows cannot execute npm.cmd directly through CreateProcess\n+            # (PATHEXT is not applied), so wrap it in cmd.  Never delete\n+            # `.next`: the runner contract forbids destroying user/build\n+            # files — a corrupt build must surface as a capped dashboard\n+            # restart failure instead of silently wiping the directory.\n+            cmd = [\"cmd\", \"/c\", f\"npm run dev -- --port {DASHBOARD_PORT}\"]\n",
+          "timestamp": "2026-10-24T12:57:11.822Z",
+          "exitCode": 0
+        },
+        {
+          "command": ".venv\\Scripts\\python.exe -u -c \"import duckdb; print('BACKUP_WRITE_OPEN_BEGIN',flush=True); c=duckdb.connect('data/recovery_backup_20261024_1513/nexus.duckdb'); print('BACKUP_WRITE_OPEN_OK',flush=True); print('TABLES',c.execute('SELECT COUNT(*) FROM information_schema.tables').fetchone()[0],flush=True); c.close(); print('CLOSED',flush=True)\"",
+          "output": "",
+          "timestamp": "2026-10-24T13:00:09.725Z",
+          "exitCode": 1
+        }
+      ],
+      "env": {}
+    },
+    "term-1792846837910-tq2z2v": {
+      "id": "term-1792846837910-tq2z2v",
+      "name": "nexus-triage-final",
+      "status": "active",
+      "createdAt": "2026-10-24T13:00:37.910Z",
+      "lastActivity": "2026-10-24T13:01:47.161Z",
+      "workingDir": "D:\\Nexus-Trading-System-MT5",
+      "history": [
+        {
+          "command": "echo CHECK && .venv\\Scripts\\python.exe -u -c \"print('PYTHON_OK')\"",
+          "output": "CHECK \r\nPYTHON_OK\r\n",
+          "timestamp": "2026-10-24T13:00:42.452Z",
+          "exitCode": 0
+        },
+        {
+          "command": ".venv\\Scripts\\python.exe -u -c \"import duckdb; print('BACKUP_WRITE_OPEN_BEGIN',flush=True); c=duckdb.connect('data/recovery_backup_20261024_1513/nexus.duckdb'); print('BACKUP_WRITE_OPEN_OK',flush=True); print('TABLES',c.execute('SELECT COUNT(*) FROM information_schema.tables').fetchone()[0],flush=True); c.close(); print('CLOSED',flush=True)\"",
+          "output": "",
+          "timestamp": "2026-10-24T13:01:47.161Z",
+          "exitCode": 1
+        }
+      ],
+      "env": {}
+    }
+  },
+  "version": "3.0.0"
+}

@@ -1,0 +1,18 @@
+path: _pdfs/_nber/lettau_maggiori_weber_conditional_currency_premia_w18844.pdf
+title_guess: CONDITIONAL RISK PREMIA IN CURRENCY MARKETS AND OTHER ASSET
+ids: w18844
+priority: hot
+extract_status: ok
+---
+BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+February 2013
+We thank George Constantinides, Eugene Fama, Kenneth French, Andrea Frazzini, Jens Jackwerth,
+Yoshio Nozawa, Lasse Pedersen, Alexi Savov, Fan Yang, and Adrien Verdelhan for sharing their
+data. We also thank for their useful comments the editor, Bill Schwert, an anonymous referee, Riccardo
+Colacito (discussant), Harald Hau (discussant), Ralph Koijen (discussant), Toby Moskowitz, Tyler
+Muir, Lasse Pedersen, David Sraer, Adrien Verdelhan (discussant) and seminar participants at UT
+Austin, UC Berkeley, University of Chicago Booth Junior Faculty Symposium, Duke University, University
+of Mannheim, University of Michigan, NBER Asset Pricing meeting, New York University, Princeton
+University, University of Sout

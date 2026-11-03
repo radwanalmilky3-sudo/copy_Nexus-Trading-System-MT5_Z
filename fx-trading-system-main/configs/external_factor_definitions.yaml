@@ -1,0 +1,122 @@
+schema_version: 1
+catalog_date: "2026-07-19"
+factors:
+  - factor_id: gscpi_risk_state_pit
+    family: supply_chain_risk
+    directional: false
+    intended_role: regime_factor
+    source_ids: [nyfed_gscpi_preserved_vintages]
+    horizons_days: [21, 42, 63]
+    formula: latest released GSCPI level and six-vintage change, joined backward by available_time
+    expected_sign: risk_state_only
+    maximum_staleness_days: 75
+
+  - factor_id: us_cpi_12m_log_inflation
+    family: us_macro_state
+    directional: false
+    intended_role: regime_factor
+    source_ids: [phillyfed_rtdsm_verified_rows]
+    horizons_days: [21, 42, 63]
+    formula: 100 * log(CPI_t / CPI_t-12m) using levels from one selected source vintage
+    expected_sign: risk_state_only
+    maximum_staleness_days: 120
+
+  - factor_id: us_ip_6m_log_growth
+    family: us_macro_state
+    directional: false
+    intended_role: regime_factor
+    source_ids: [phillyfed_rtdsm_verified_rows]
+    horizons_days: [21, 42, 63]
+    formula: 100 * log(IP_t / IP_t-6m) using levels from one selected source vintage
+    expected_sign: risk_state_only
+    maximum_staleness_days: 75
+
+  - factor_id: policy_rate_differential_public
+    family: rates
+    directional: true
+    intended_role: directional_factor
+    source_ids: [official_rates_current_archive]
+    horizons_days: [21, 42, 63]
+    formula: latest available base policy rate minus quote policy rate
+    expected_sign: positive
+    maximum_staleness_days: 75
+
+  - factor_id: overnight_rate_differential_public
+    family: rates
+    directional: true
+    intended_role: directional_factor
+    source_ids: [official_rates_current_archive]
+    horizons_days: [21, 42, 63]
+    formula: latest available base overnight reference minus quote overnight reference
+    expected_sign: positive
+    maximum_staleness_days: 75
+
+  - factor_id: cftc_leveraged_net
+    family: positioning
+    directional: true
+    intended_role: directional_factor
+    source_ids: [cftc_tff_positioning_current_revised]
+    horizons_days: [21, 42, 63]
+    formula: base leveraged-money net ratio minus quote leveraged-money net ratio
+    expected_sign: positive
+    maximum_staleness_days: 35
+
+  - factor_id: cftc_positioning_crowding_reversal
+    family: positioning
+    directional: true
+    intended_role: directional_factor
+    source_ids: [cftc_tff_positioning_current_revised]
+    horizons_days: [21, 42]
+    formula: contrarian sign when price trend and leveraged positioning are crowded together
+    expected_sign: positive
+    maximum_staleness_days: 35
+
+  - factor_id: commodity_currency_alignment_12m
+    family: commodity
+    directional: true
+    intended_role: directional_factor
+    source_ids: [supplemental_fx_current_archives]
+    horizons_days: [21, 42, 63]
+    formula: base commodity exposure score minus quote commodity exposure score
+    expected_sign: positive
+    maximum_staleness_days: 120
+
+  - factor_id: global_policy_uncertainty_risk
+    family: global_risk
+    directional: false
+    intended_role: regime_factor
+    source_ids: [supplemental_fx_current_archives]
+    horizons_days: [21, 42, 63]
+    formula: five-year rolling z-score of log global economic policy uncertainty
+    expected_sign: risk_state_only
+    maximum_staleness_days: 120
+
+  - factor_id: global_geopolitical_risk_state
+    family: global_risk
+    directional: false
+    intended_role: regime_factor
+    source_ids: [supplemental_fx_current_archives]
+    horizons_days: [21, 42, 63]
+    formula: five-year rolling z-score of log global geopolitical risk
+    expected_sign: risk_state_only
+    maximum_staleness_days: 120
+
+  - factor_id: benchmark_publication_state
+    family: event_control
+    directional: false
+    intended_role: event_control
+    source_ids: [benchmark_publication_calendar]
+    horizons_days: [1, 21]
+    formula: trailing-24h verified completed-event bitmask; Tokyo=1, ECB=2, WMR=4; component statuses retained in lineage
+    expected_sign: event_control_only
+    maximum_staleness_days: 1
+
+  - factor_id: phillyfed_spf_release_state
+    family: event_control
+    directional: false
+    intended_role: event_control
+    source_ids: [phillyfed_spf_release_calendar]
+    horizons_days: [1, 21]
+    formula: binary trailing-24h impulse when conservative SPF available_time becomes observable; forecast values excluded
+    expected_sign: event_control_only
+    maximum_staleness_days: 1

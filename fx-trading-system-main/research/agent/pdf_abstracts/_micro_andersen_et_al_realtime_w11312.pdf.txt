@@ -1,0 +1,18 @@
+path: _pdfs/_micro/andersen_et_al_realtime_w11312.pdf
+title_guess: REAL-TIME PRICE DISCOVERY IN STOCK,
+ids: w11312
+priority: warm
+extract_status: ok
+---
+papers/w11312
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+May 2005
+This work was supported by the National Science Foundation, the Guggenheim Foundation, and the BSI
+Gamma Foundation. For useful comments we thank seminar participants at the Bank for International
+Settlements, the 2003 BSI Gamma Conference, the 2004 Symposium of the European Central Bank / Center
+for Financial Studies Research Network, the October 2004 meeting of the NBER International Finance and
+Macroeconomics program, and the 2005 American Economic Association Annual Meeting, as well as Rui
+Albuquerque, Annika Alexius, Boragan Aruoba, Anirvan Banerji, Ben Bernanke, Robert Connolly, Jeffrey
+Frankel, Lingfeng Li, Richard Lyons, Marco Pagano, Paolo Pasquariello, and Neng Wang. The view

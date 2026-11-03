@@ -1,0 +1,26 @@
+path: _pdfs/_micro/ecb_wp629_fx_intervention_microstructure.pdf
+title_guess: ISSN 1561081-0
+ids: 
+priority: warm
+extract_status: ok
+---
+a motif taken 
+from the 
+€5 banknote.
+WORKING PAPER SERIES
+NO 629 / MAY 2006
+This paper can be downloaded without charge from 
+http://www.ecb.int or from the Social Science Research Network 
+electronic library at http://ssrn.com/abstract_id=902528
+1 Preliminary and incomplete. I would like to thank Francis Breedon and Ian Marsh for valuable comments and discussions. Hospitality 
+by ECB, where part of this research was undertaken, is kindly acknowledged. Any errors remain my responsibility.
+telephone: +39-085-453-7647; fax: +39-085-453-7639; e-mail: p.vitale@unich.it; webpage: http:/www/unich.it/~vitale.
+A MARKET 
+MICROSTRUCTURE 
+ANALYSIS OF 
+FOREIGN EXCHANGE 
+INTERVENTION
+ 1
+by Paolo Vitale
+ 2
+2 Department of Economics and Land History, Gabriele D‘Annunzio University, Viale Pindaro 42, 651

@@ -1,0 +1,22 @@
+path: _pdfs/_bis/evans_lyons_order_flow_bis.pdf
+title_guess: Order flow and exchange rate dynamics
+ids: 
+priority: hot
+extract_status: ok
+---
+Macroeconomic models of nominal exchange rates perform poorly. In sample, R 2 statistics as high as
+10% are rare. Out of sample, these models are typically out-forecast by a naïve random walk. This
+paper presents a model of a new kind. Instead of relying exclusively on macroeconomic determinants,
+the model includes a determinant from the field of microstructure- order flow. Order flow is the
+proximate determinant of price in all microstructure models. This is a radically different approach to
+exchange rate determination. It is also strikingly successful in accounting for realised rates. Our model
+of daily changes in log exchange rates produces R
+2 statistics above 50%. Out of sample, our model
+produces significantly better short-horizon forecasts than a random walk. For the DM/$ spot market as
+a whole, we find that $1 billion of net dollar purchases increases the DM price of a dollar by about
+0.5%.
+Omitted variables is another possible explanation for the lack of explanatory power
+in asset market models. However, empirical researchers have shown considerable
+imagination in their specification searches, so it is not easy to think of variables that
+have escaped consideration in an exchange rate equation.
+Richard Meese (1990)

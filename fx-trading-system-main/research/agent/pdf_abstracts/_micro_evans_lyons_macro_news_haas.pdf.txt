@@ -1,0 +1,41 @@
+path: _pdfs/_micro/evans_lyons_macro_news_haas.pdf
+title_guess: How Is Macro News Transmitted to Exchange Rates?
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper tests whether macroeconomic news is transmitted to exchange rates 
+via induced transactions, and if so, what share occurs via transactions versus 
+traditional direct adjustment of price. We identify the link between order flow 
+and macro news using a heteroskedasticity-based approach. This involves jointly 
+testing (1) whether macro news flow increases order flow volatility and (2) 
+whether the induced order flow has signed (first moment) effects on the exchange 
+rate. The answer to both questions is yes: in both daily and intra-daily data, order 
+flow is considerably more volatile when macro news is flowing, and these signed 
+orders have the theoretically predicted effects on the exchange rate’s direction. Of 
+news’ total price effect, induced order flow accounts for two-thirds, with direct 
+news effects accounting for one-third. In terms of total exchange rate variation, 
+the order flow channel brings news’ explanatory power up to 30 percent, versus 
+estimates in the 1–5 percent range from existing literature, helping to resolve the 
+puzzle of missing news effects. 
+ 
+ 
+Correspondence 
+Richard K. Lyons 
+Haas School of Business 
+U.C. Berkeley 
+Berkeley, CA 94720-1900 
+Tel: 510-642-1059, Fax: 510-643-1420 
+lyons@haas.berkeley.edu 
+faculty.haas.berkeley.edu/lyons 
+ 
+∗ Respective affiliations are Georgetown University and NBER, and UC Berkeley and NBER. This 
+paper was circulated under the previous title “Why Order Flow Explains Exchange Rates.” We thank 
+the following for helpful comments: Brian Boyer, Anusha Chari, Frank Diebold, Jon Faust, Simon 
+Gervais, Aditya Kaul, Antonio Mello, John Rogers, Andrew Rose, and seminar participants at the 
+Empirical Exchange Rate Models conference (Sept. 2001), the American Finance Association meetings 
+(Jan. 2002), the Yale Market Microstructure conference (June 2002), U.C. Berkeley, Alberta, Michigan, 
+London Business School, the New York Fed, Aix-Marseille, Virginia, Wharton, Insead, LSE, the 
+Norwegian central bank, and the Italian central bank. Both authors thank the National Science 
+Foundation for financial assistance, which includes funding for a web clearinghouse for micro-based 
+research on exchange rates (at faculty.haas.berkeley.edu/lyons).

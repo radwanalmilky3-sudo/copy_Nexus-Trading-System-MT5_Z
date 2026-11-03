@@ -1,0 +1,20 @@
+path: _pdfs/_official/boe/boe_wp_commodity_price_shocks_fx_2026.pdf
+title_guess: Staff Working Paper No. 1,186
+ids: 
+priority: warm
+extract_status: ok
+---
+We show that the optimal monetary policy and exchange rate framework depend critically on 
+the economy’s commodity exposure. We develop a flexible but tractable model economy with 
+commodity exports and imports, in which international financial conditions may vary with the 
+commodity cycle, and we compute the welfare-optimal policy in the presence of price and 
+wage rigidities. Stabilising domestic prices is welfare-optimal for commodity exporters, in line 
+with standard open-economy policy prescriptions. But for economies that use commodities 
+as inputs in production, optimal policy largely ‘looks through’ the direct and indirect effects of 
+commodity shocks on domestic prices; this contrasts with some earlier findings and policy 
+practice (which only ‘looks through’ the direct effect). In emerging and developing economies, 
+where financial conditions are more tied to the commodity cycle, trade-offs are starker and 
+implementing the optimal policy may be challenging, since it requires enough credibility to 
+keep inflation expectations anchored amidst greater volatility in some nominal variables.
+Key words: Monetary policy, exchange rates, inflation targeting, commodity prices, small 
+open economy

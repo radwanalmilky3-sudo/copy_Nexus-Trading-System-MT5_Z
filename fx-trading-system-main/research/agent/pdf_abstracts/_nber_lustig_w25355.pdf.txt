@@ -1,0 +1,19 @@
+path: _pdfs/_nber/lustig_w25355.pdf
+title_guess: RACIAL BIAS AND IN-GROUP BIAS IN JUDICIAL DECISIONS:
+ids: w25355
+priority: warm
+extract_status: ok
+---
+rg/papers/w25355
+NATIONAL BUREAU OF ECONOMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+December 2018, Revised May 2019
+We thank Christine Jolls, Ozkan Eren, Shawn Kantor, Carl Kitchens, Marc Isaac, Bulent Unel, 
+Stefan Voigt, Barton Willage, Richard Boylan and participants of seminars at the University of 
+Iowa, Florida State University, the European Law and Economics Association Meetings in Milan, 
+Italy, and the Economic Consequences of Legal Development Workshop at UCLouvain for 
+helpful comments. Funding from the Faculty of Business Economics of Hasselt University is 
+gratefully acknowledged. We thank Johan Ackaert and Sofie Hennau for allowing us to engage 
+their law students in the study, and to the Office of the District Attorney of Limburg, Belgium 
+and in particular t

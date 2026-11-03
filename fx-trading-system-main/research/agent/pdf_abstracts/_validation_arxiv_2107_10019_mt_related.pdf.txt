@@ -1,0 +1,24 @@
+path: _pdfs/_validation/arxiv_2107_10019_mt_related.pdf
+title_guess: Received: Added at production Revised: Added at production Accepted: Added at production
+ids: 
+priority: warm
+extract_status: ok
+---
+for cluster randomised trials
+Samuel I Watson*1 | Joshua O. Akinyemi2 | Karla Hemming1
+1Institute of Applied Health Research,
+University of Birmingham, Birmingham,
+United Kingdom
+2College of Medicine, University of Ibadan,
+Oyo State, Nigeria
+Correspondence
+*Samuel I Watson, Email:
+s.i.watson@bham.ac.uk
+Summary
+In this article, we derive and compare methods to derivep-values and sets of con-
+ﬁdence intervals with strong control of the family-wise error rates and coverage for
+estimates of treatment eﬀects in cluster randomised trials with multiple outcomes.
+Therearefewmethodsfor p-valuecorrectionsandderivingconﬁdenceintervals,lim-
+iting their application in this setting. We discuss the methods of Bonferroni, Holm,
+and Romano & Wolf (2005) and adapt them to cluster randomised trial inference
+

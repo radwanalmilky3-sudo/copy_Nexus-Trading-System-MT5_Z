@@ -1,0 +1,15 @@
+path: _pdfs/_arxiv/currency_risk_premia_stocks_1811.03947.pdf
+title_guess: arXiv:1811.03947v1 [math.AP] 7 Nov 2018
+ids: 
+priority: warm
+extract_status: ok
+---
+We study global regularity for solutions of quasilinear elliptic equations of the form div A(x, u, ∇u) =
+div F in rough domains Ωin Rn with nonhomogeneous Dirichlet boundary condition. The vec tor ﬁeld
+A is assumed to be continuous in u, and its growth in ∇u is like that of the p-Laplace operator. We
+establish global gradient estimates in weighted Morrey spa ces for weak solutions u to the equation under
+the Reifenberg ﬂat condition for Ω, a small BMO condition in x for A, and an optimal condition for the
+Dirichlet boundary data.
+2010 Mathematics Subject Classiﬁcation. 30H35, 35B45, 35B65, 35J92.
+Key words and phrases. elliptic equations, p-Laplacian, gradient estimates, Calder´ on-Zygmund estimates,
+boundary regularity, weighted Morrey spaces, Muckenhoupt class.

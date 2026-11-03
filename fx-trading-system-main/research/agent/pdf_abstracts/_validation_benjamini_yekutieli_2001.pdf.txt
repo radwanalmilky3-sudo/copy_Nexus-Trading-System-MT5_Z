@@ -1,0 +1,17 @@
+path: _pdfs/_validation/benjamini_yekutieli_2001.pdf
+title_guess: TheAnnalsofStatistics
+ids: 
+priority: warm
+extract_status: ok
+---
+and Hochberg suggest that the false discovery rate may be
+the appropriate error rate to control in many applied multiple testing prob-
+lems. A simple procedure was given there as an FDR controlling procedure
+for independent test statistics and was shown to be much more powerful
+than comparable procedures which control the traditional familywise error
+rate. We prove that this same procedure also controls the false discovery
+rate when the test statistics have positive regression dependency on each of
+the test statistics corresponding to the true null hypotheses. This condition
+for positive dependency is general enough to cover many problems of prac-
+tical interest, including the comparisons of many treatments with a single
+control, multivariate normal test statistics with positive correlatio

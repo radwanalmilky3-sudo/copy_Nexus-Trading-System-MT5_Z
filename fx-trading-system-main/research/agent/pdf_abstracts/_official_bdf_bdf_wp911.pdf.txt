@@ -1,0 +1,21 @@
+path: _pdfs/_official/bdf/bdf_wp911.pdf
+title_guess: Blowing against the Wind? A Narrative
+ids: wp911
+priority: warm
+extract_status: ok
+---
+Most countries in the world use foreign exchange interventions, but measuring the success of the 
+policy is difficult. By using a narrative approach, I identify interventions when the central bank 
+manages to reverse the exchange rate based on pure luck. I separate them from interventions when 
+the central bank actually impacted the exchange rate. Because intervention records are daily 
+aggregates, an intervention might appear to have changed the direction of the exchange rate, when it 
+is more likely to have been caused by market news. This analysis allows to have a better understanding 
+of how successful central bank operations really are. I use new daily data on Bank of England 
+interventions in the 1980s and 1990s. Some studies find that interventions work in up to 80% of 
+cases. Yet, by accounting for intraday market moving news, I find in adverse conditions, the Bank of 
+England managed to influence the exchange rate only in 8% of cases. I use natural language 
+processing to confirm the validity of the narrative approach. Using Lasso and a VAR analysi s, I 
+investigate what makes the Bank of England intervene during that period. I find that only movement 
+on the Deutschmark and not US dollar exchange rate made the Bank intervene. Also, I find that 
+interest rate hikes were mostly a tool for currency manage ment and accompanied by large reserve 
+sales.

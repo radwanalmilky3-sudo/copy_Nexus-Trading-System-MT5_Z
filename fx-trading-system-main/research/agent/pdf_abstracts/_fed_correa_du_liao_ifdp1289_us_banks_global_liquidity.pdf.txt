@@ -1,0 +1,19 @@
+path: _pdfs/_fed/correa_du_liao_ifdp1289_us_banks_global_liquidity.pdf
+title_guess: Board of Governors of the Federal Reserve System
+ids: ifdp1289
+priority: cold
+extract_status: ok
+---
+We characterize how U.S. global systemically important banks (GSIBs) supply short-
+term dollar liquidity in repo and foreign exchange swap markets in the post-Global
+Financial Crisis regulatory environment and serve as the "lenders-of-second-to-last-
+resort". Using daily supervisory bank balance sheet information, we ﬁnd that U.S.
+GSIBs modestly increase their dollar liquidity provision in response to dollar funding
+shortages, particularly at period-ends, when the U.S. Treasury General Account
+balance increases, and during the balance sheet taper of the Federal Reserve. The
+increase in the dollar liquidity provision is mainly ﬁnanced by reducing excess reserve
+balances at the Federal Reserve. Intra-ﬁrm transfers between depository institutions
+and broker-dealer subsidiaries within the same bank holding company are crucial
+to this type of "reserve-draining" intermediation. Finally, we discuss factors that
+contributed to the repo spike in September 2019 and the subsequent response of U.S.
+GSIBs to recent policy interventions by the Federal Reserve.

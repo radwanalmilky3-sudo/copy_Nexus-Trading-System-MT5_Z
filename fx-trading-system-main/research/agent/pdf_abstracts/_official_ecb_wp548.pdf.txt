@@ -1,0 +1,26 @@
+path: _pdfs/_official/ecb_wp548.pdf
+title_guess: NO . 548 / NO VEMBER 2005
+ids: wp548
+priority: warm
+extract_status: ok
+---
+will feature 
+a motif taken 
+from the 
+€50 banknote.
+WORKING PAPER SERIES
+NO. 548 / NOVEMBER 2005
+This paper can be downloaded without charge from 
+http://www.ecb.int or from the Social Science Research Network 
+electronic library at http://ssrn.com/abstract_id=839229.
+THE LINK BETWEEN
+INTEREST RATES AND
+EXCHANGE RATES
+DO CONTRACTIONARY
+DEPRECIATIONS MAKE 
+A DIFFERENCE? 1
+by Marcelo Sánchez2
+1 This paper has benefited from comments received at a presentation at the ECB.The views expressed
+here do not necessarily reflect those of the ECB.All errors are the author’s.
+2 Correspondence to: European Central Bank, Kaiserstrasse 29, D-60311, Frankfurt, Germany;
+Fax: +49 69 1344 6353, Phone: +49 69 1344 6531, e-mail: marcelo.sanchez@ecb.int

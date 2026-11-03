@@ -1,0 +1,61 @@
+data:
+  provider: synthetic
+  symbols: [EURUSD, GBPUSD, USDJPY, EURGBP, EURJPY]
+  interval: 1d
+  price_mode: bid_ask
+  start: "2018-01-01"
+  seed: 402
+  synthetic_bars: 650
+
+costs:
+  default_spread_pips: 0.9
+  slippage_pips: 0.15
+  commission_per_million: 35
+
+risk:
+  initial_equity: 100000
+  risk_per_trade: 0.0025
+  max_portfolio_risk: 0.0125
+  max_open_positions: 5
+  max_gross_leverage: 3
+  max_currency_exposure: 1.5
+  max_correlated_positions: 2
+  correlation_threshold: 0.8
+  correlation_lookback: 120
+  max_drawdown: 0.12
+  daily_loss_limit: 0.025
+  max_reward_risk: 0.85
+  max_holding_hours: 168
+  close_before_weekend: false
+
+point_in_time:
+  enabled: true
+  provider: synthetic
+  synthetic_seed: 402
+  maximum_staleness_days: 45
+
+discovery:
+  enabled: true
+  max_generated_factors: 20
+  max_complexity: 2
+  windows: [5, 20, 60]
+  unary_operators: [delta, ts_zscore, ts_mean, ts_std]
+  primitive_factors:
+    [momentum_1, momentum_12, atr_percent, spread_atr, rate_differential, forward_discount_1m, carry_to_vol_20]
+
+factor:
+  train_bars: 300
+  test_bars: 100
+  step_bars: 100
+  embargo_bars: 5
+  holdout_bars: 0
+  minimum_train_samples: 1800
+  minimum_calibration_samples: 350
+  bootstrap_samples: 200
+  bootstrap_block_bars: 20
+  factor_fdr_level: 0.10
+  require_fdr_significance: false
+  max_features: 16
+  cost_stress_multipliers: [1.0, 1.5, 2.0]
+  promotion_required_stress_multiplier: 1.5
+  output_directory: outputs/factors_carry_synthetic

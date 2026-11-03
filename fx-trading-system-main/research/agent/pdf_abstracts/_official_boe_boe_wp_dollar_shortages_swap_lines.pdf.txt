@@ -1,0 +1,14 @@
+path: _pdfs/_official/boe/boe_wp_dollar_shortages_swap_lines.pdf
+title_guess: CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF PRACTICE 2007 CODE OF
+ids: 
+priority: warm
+extract_status: ok
+---
+We explore the role of ‘dollar shortage’ shocks and central bank swap lines in a two-country 
+New Keynesian model with financial frictions. Domestic banks issue both domestic and foreign currency 
+debt and lend in domestic currency. Foreign currency-specific funding shocks, which are amplified via 
+their effect on the exchange rate given balance sheet mismatches, lead to uncovered interest rate parity 
+deviations, a contraction in lending and have a significant negative effect on macroeconomic variables. 
+We show that central bank swap lines can attenuate these dynamics provided they are large enough.
+Key words: Central bank swap lines, liquidity facilities, dollar shortages, uncovered interest rate parity 
+condition, financial frictions.

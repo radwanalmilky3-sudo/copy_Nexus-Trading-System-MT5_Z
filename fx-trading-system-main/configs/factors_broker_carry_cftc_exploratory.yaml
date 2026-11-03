@@ -1,0 +1,89 @@
+data:
+  provider: csv
+  directory: data/dukascopy_bid_ask
+  swap_directory: data/historical_swaps
+  maximum_swap_staleness_days: 14
+  symbols:
+    [EURUSD, GBPUSD, USDJPY, USDCHF, AUDUSD, NZDUSD, USDCAD, EURGBP, EURJPY, GBPJPY, AUDJPY, CADJPY]
+  interval: 4h
+  price_mode: bid_ask
+  start: "2016-01-01"
+  # The previously inspected Yahoo holdout starts later in September 2025. This development
+  # contract deliberately stops before it; use a genuinely new future period after freezing.
+  end: "2025-09-15"
+
+costs:
+  default_spread_pips: 0.9
+  slippage_pips: 0.15
+  commission_per_million: 35
+
+risk:
+  initial_equity: 100000
+  risk_per_trade: 0.0025
+  max_portfolio_risk: 0.0125
+  max_open_positions: 5
+  max_gross_leverage: 3
+  max_currency_exposure: 1.5
+  max_correlated_positions: 2
+  correlation_threshold: 0.8
+  correlation_lookback: 120
+  max_drawdown: 0.12
+  daily_loss_limit: 0.025
+  max_reward_risk: 0.85
+  max_holding_hours: 168
+  close_before_weekend: false
+
+point_in_time:
+  enabled: true
+  provider: csv
+  directory: data/point_in_time
+  currency_rates_file: currency_rates.csv
+  forward_points_file: forward_points.csv
+  # Preserve old proxy files for exploration only. These rows receive unknown_unverified
+  # quality and can never contribute to historical-market carry coverage or broker readiness.
+  allow_legacy_unverified_carry_rows: true
+  positioning_enabled: true
+  currency_positioning_file: currency_positioning.csv
+  positioning_release_quality: approximate
+  maximum_staleness_days: 45
+  maximum_positioning_staleness_days: 14
+
+discovery:
+  enabled: true
+  max_generated_factors: 40
+  max_complexity: 2
+  windows: [5, 20, 60]
+  unary_operators: [delta, ts_zscore, ts_mean, ts_std]
+  primitive_factors:
+    [momentum_1, momentum_12, return_skew_24, efficiency_24, atr_percent, spread_atr, rate_differential, forward_discount_1m, carry_to_vol_20, cftc_leveraged_net, cftc_asset_manager_net, cftc_leveraged_change_4w]
+
+factor:
+  target_atr: 0.70
+  stop_atr: 1.10
+  max_holding_hours: 120
+  train_bars: 3000
+  test_bars: 780
+  step_bars: 780
+  embargo_bars: 30
+  holdout_bars: 0
+  minimum_train_samples: 20000
+  minimum_expected_net_r: 0.03
+  cost_buffer_r: 0.02
+  minimum_direction_gap: 0.03
+  max_signals_per_timestamp: 3
+  max_features: 32
+  maximum_feature_correlation: 0.90
+  minimum_feature_coverage: 0.80
+  bootstrap_samples: 20000
+  bootstrap_block_bars: 120
+  factor_fdr_level: 0.10
+  require_fdr_significance: true
+  cost_stress_multipliers: [1.0, 1.5, 2.0]
+  promotion_minimum_trades: 100
+  promotion_minimum_positive_fold_fraction: 0.75
+  promotion_minimum_profit_factor: 1.10
+  promotion_required_stress_multiplier: 1.5
+  calibration_fraction: 0.20
+  minimum_calibration_samples: 4000
+  random_state: 42
+  output_directory: outputs/factors_broker_carry_cftc_exploratory

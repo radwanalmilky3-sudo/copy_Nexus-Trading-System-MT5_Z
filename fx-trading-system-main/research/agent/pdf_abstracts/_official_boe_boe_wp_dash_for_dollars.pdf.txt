@@ -1,0 +1,15 @@
+path: _pdfs/_official/boe/boe_wp_dash_for_dollars.pdf
+title_guess: Staff Working Paper No. 932
+ids: 
+priority: warm
+extract_status: ok
+---
+We document a ‘dash for dollars’ in corporate bond markets during the Covid-19 turmoil period. Within-firm 
+variation of corporate bond spreads and transaction volumes reveals that US dollar-denominated bonds 
+experienced larger spread increases and selling pressures relative to non-dollar bonds. To interpret these 
+findings, we quantify the importance of two different hypotheses linked to the dollar’s hegemony in the 
+international financial system, namely its superior liquidity and its dominance as a funding currency. Our 
+results highlight the importance of the funding hypothesis, which suggests that investors sold their 
+dollar-denominated assets to meet immediate dollar obligations.
+Key words: Corporate bonds, heterogeneity, credit spreads, liquidity, dash-for-cash, dollar demand, 
+Covid-19, trading volumes.

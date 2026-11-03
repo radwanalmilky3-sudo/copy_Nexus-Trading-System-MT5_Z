@@ -1,0 +1,8 @@
+path: _pdfs/_official/boe/boe_wp_import_prices_erpt_uk.pdf
+title_guess: Import prices and exchange rate pass-through:
+ids: 
+priority: warm
+extract_status: ok
+---
+5
+Summary 7

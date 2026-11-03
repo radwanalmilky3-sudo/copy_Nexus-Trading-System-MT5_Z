@@ -1,0 +1,20 @@
+path: _pdfs/_nber/caballero_doyle_carry_systemic_risk_w18644.pdf
+title_guess: CARRY TRADE AND SYSTEMIC RISK:
+ids: w18644
+priority: warm
+extract_status: ok
+---
+OMIC RESEARCH
+1050 Massachusetts Avenue
+Cambridge, MA 02138
+December 2012
+We thank the National Science Foundation for financial support. The views expressed herein are those
+of the authors and do not necessarily reflect the views of the National Bureau of Economic Research.
+NBER working papers are circulated for discussion and comment purposes. They have not been peer-
+reviewed or been subject to the review by the NBER Board of Directors that accompanies official
+NBER publications.
+© 2012 by Ricardo J. Caballero and Joseph B. Doyle. All rights reserved. Short sections of text, not
+to exceed two paragraphs, may be quoted without explicit permission provided that full credit, including
+© notice, is given to the source.
+Carry Trade and Systemic Risk: Why are FX Options so Cheap?
+Ricardo J. C

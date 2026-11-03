@@ -1,0 +1,21 @@
+path: _pdfs/_official/boe_how_fixed_fx_2025.pdf
+title_guess: Staff Working Paper No. 1,131
+ids: 
+priority: warm
+extract_status: ok
+---
+We present a new global index indicating how fixed the world’s exchange rates are. Our 
+index measures the probability of two units of GDP, randomly selected anywhere in the 
+world, of being involved in a fixed exchange rate arrangement. This approach is invariant 
+to alternative classifications of the Eurozone and is able to account for both direct and 
+indirect exchange rate linkages between countries. In contrast to the ‘New Consensus’ view
+ , 
+which posits a continuity in exchange rate arrangements from the Bretton Woods era to 
+the present, our index restores the conventional account of international monetary history 
+over the last 70 years. Our findings indicate that global exchange rate regimes are currently 
+nearly three times as flexible as they were prior to the 1971 Nixon shock. Furthermore, our 
+measure partially puts into perspective the view that dollar dominance is now stronger than 
+ever: we find that global anchoring to the US dollar was significantly more prevalent during 
+Bretton Woods, particularly when accounting for indirect links.
+Key words: Fixed exchange rate regimes, Bretton Woods, Nixon Shock, anchor currencies, 
+US dollar dominance.

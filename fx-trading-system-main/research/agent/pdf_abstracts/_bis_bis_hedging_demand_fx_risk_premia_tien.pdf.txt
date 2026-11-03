@@ -1,0 +1,21 @@
+path: _pdfs/_bis/bis_hedging_demand_fx_risk_premia_tien.pdf
+title_guess: Hedging Demand and Foreign Exchange Risk Premia
+ids: 
+priority: warm
+extract_status: ok
+---
+This paper develops and tests a model of unobservable risk premia in the for-
+eign exchange market. Risk premia in our model are driven by non-marketable
+income shocks which risk averse agents attempt to hedge by trading foreign cur-
+rency. We test our model using data on hedging demand in currency futures
+and ﬁnd that our proxy for risk premia explains approximately 45 percent of the
+variation in currency returns at the monthly horizon. We ﬁnd that innovations
+in hedging demand Granger cause changes in speculative ﬂows and that hedgers
+in the currency futures markets appear to be negative feedback traders. We also
+compare hedging demand in the futures market to customer-dealer order ﬂow from
+a major international bank and ﬁnd little relationship between hedging demands
+and aggregate customer order imbalances.
+∗I thank Ash Alankar, John Briginshaw, Mintao Fan, Jacob Sagi, Hayne Leland, Richard Lyons,
+Terry Marsh, Mark Rubinstein, Mark Seasholes as well as seminar participants at UC Berkeley and
+Santa Clara University for helpful comments and suggestions. I am indebted to Mike Rosenberg and
+Bob Lawrie for their insights and access to their data.

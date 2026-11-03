@@ -1,0 +1,19 @@
+path: _pdfs/_validation/bailey_2014_deflated_sharpe.pdf
+title_guess: Electronic copy available at: http://ssrn.com/abstract=2460551
+ids: 
+priority: warm
+extract_status: ok
+---
+With the advent in recent years of large financial data sets , machine learning and high -
+performance computing, analysts can backtest millions (if not billions) of alternative investment 
+strategies. Backtest optimizers search for combinations of parameters that maximize the 
+simulated historical performance of a strategy, leading to backtest overfitting. 
+ 
+The problem of performance inflation extends beyond backtesting. More generally, researchers 
+and investment managers tend to report only positive outcomes , a phenomenon known as 
+selection bias. Not controlling for the number of trials involved in a particular discovery leads to 
+over-optimistic performance expectations. 
+ 
+The Deflated Sharpe Ratio (DSR) corrects for two leading sources of performance inflation: 
+Selection bias under multiple testing and non -Normally distributed returns. In doing so, DSR 
+helps separate legitimate empirical findings from statistical flukes.
