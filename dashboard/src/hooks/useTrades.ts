@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { getAuthHeaders } from '@/lib/api-client';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 export interface Trade {
   id: string;

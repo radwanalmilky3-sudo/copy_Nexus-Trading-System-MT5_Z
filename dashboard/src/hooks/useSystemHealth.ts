@@ -26,7 +26,7 @@ export interface SystemHealthState {
   uptimeSeconds: number;
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
 
 const PROBE_ENDPOINTS: { name: string; url: string }[] = [
   { name: 'nexus-api',      url: '/health' },

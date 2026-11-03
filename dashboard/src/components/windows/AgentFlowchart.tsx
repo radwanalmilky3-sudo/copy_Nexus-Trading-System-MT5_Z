@@ -116,7 +116,7 @@ export default function AgentFlowchart() {
   const [meta, setMeta] = useState<PipelineMeta | null>(null);
 
   useEffect(() => {
-    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
     let cancelled = false;
 
     async function fetchStatuses() {

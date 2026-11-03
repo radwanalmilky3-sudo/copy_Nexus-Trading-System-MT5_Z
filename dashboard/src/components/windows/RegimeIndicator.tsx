@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 import { getAuthHeaders } from '@/lib/api-client';
 
 const POLL_MS = 12_000;
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
 
 // ── Types ───────────────────────────────────────────────────────────────
 

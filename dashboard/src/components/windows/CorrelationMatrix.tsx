@@ -15,7 +15,7 @@ import {
   type LagPairLike,
 } from '@/lib/correlation-presentation';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 interface CorrMatrix { [asset: string]: { [asset: string]: number | null } }
 

@@ -4,7 +4,7 @@ import type { AuditEvidence } from './types';
 
 export async function loadAuditEvidence(signal?: AbortSignal): Promise<AuditEvidence> {
   return withRequestTimeout(async (requestSignal) => {
-    const origin = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+    const origin = process.env.NEXT_PUBLIC_API_URL || '';
     const response = await fetch(`${origin}/api/audit/progress`, {
       cache: 'no-store', headers: getAuthHeaders(), signal: requestSignal,
     });

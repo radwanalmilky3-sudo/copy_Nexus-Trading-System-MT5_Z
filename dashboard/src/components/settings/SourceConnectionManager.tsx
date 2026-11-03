@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 type SourceRow = {
   source_id: string;

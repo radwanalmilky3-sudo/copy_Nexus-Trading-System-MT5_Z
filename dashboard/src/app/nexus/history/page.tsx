@@ -18,7 +18,7 @@ import { getAuthHeaders } from '@/lib/api-client';
 import { hasCompleteTradeStats } from '@/lib/trade-stats-status';
 import { buildTradeCsv } from '@/lib/trade-csv';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 type FilterPeriod = '1d' | '1w' | '1m' | '3m' | 'all';
 

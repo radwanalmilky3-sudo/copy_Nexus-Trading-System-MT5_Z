@@ -1,7 +1,7 @@
 import type { ArtifactRow, BacktestRow, CleaningRow, DataImportRow, NewsRow, ProvenanceRow, ResearchResult, ResearchSource, StrategyRow, ValidationRow } from './types';
 import { withRequestTimeout } from '@/lib/request-timeout';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 type ResearchItem = Record<string, unknown>;
 type ResearchCollection = { items?: unknown; status?: unknown; source?: unknown; total?: unknown };

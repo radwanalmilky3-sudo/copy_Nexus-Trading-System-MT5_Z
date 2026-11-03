@@ -134,7 +134,9 @@ export interface SystemEnvResponse {
 }
 
 /** HTTP gateway (FastAPI). Market routes live under ``/api/v2/market``; everything else under ``/api``. */
-const GATEWAY_ORIGIN = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+// Sandbox deployment: empty origin ⇒ same-origin relative URLs behind the
+// preview gateway (Caddy). Set NEXT_PUBLIC_API_URL to override.
+const GATEWAY_ORIGIN = process.env.NEXT_PUBLIC_API_URL ?? '';
 
 function nowIso(): string {
   return new Date().toISOString();

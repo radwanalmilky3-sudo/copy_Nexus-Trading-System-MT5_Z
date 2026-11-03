@@ -24,6 +24,14 @@ const nextConfig = {
         source: '/api/:path*',
         destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:9000'}/api/:path*`,
       },
+      {
+        source: '/health',
+        destination: 'http://127.0.0.1:9000/health',
+      },
+      {
+        source: '/health/:path*',
+        destination: 'http://127.0.0.1:9000/health/:path*',
+      },
     ];
   },
 };

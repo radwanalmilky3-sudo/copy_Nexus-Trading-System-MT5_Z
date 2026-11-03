@@ -25,7 +25,7 @@ interface InstFeatures {
   recommendation: 'TRADE_FULL' | 'TRADE_REDUCED' | 'WAIT'
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000'
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || ''
 const SYMBOL = process.env.NEXT_PUBLIC_DEFAULT_SYMBOL || 'XAUUSD'
 
 const REC_CONFIG = {
@@ -88,7 +88,10 @@ export default function ErgodicIntelligencePanel() {
     // Also listen on WebSocket for push updates
     let ws: WebSocket | null = null
     try {
-      const wsUrl = (process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:9000/ws').replace(/^http/, 'ws')
+      const wsOrigin = typeof window !== 'undefined'
+        ? `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}`
+        : 'ws://127.0.0.1:9000'
+      const wsUrl = (process.env.NEXT_PUBLIC_WS_URL || `${wsOrigin}/ws?XTransformPort=9000`).replace(/^http/, 'ws')
       ws = new WebSocket(wsUrl)
       ws.onmessage = (e) => {
         try {

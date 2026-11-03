@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { apiClient, getAuthHeaders } from '@/lib/api-client';
 
 const POLL_MS = 8_000;
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
 
 interface AutonomousStats {
   running: boolean;

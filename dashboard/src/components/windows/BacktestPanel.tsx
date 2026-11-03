@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { getAuthHeaders } from '@/lib/api-client';
 import { backtestHasObservations } from '@/lib/data-presentation';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 

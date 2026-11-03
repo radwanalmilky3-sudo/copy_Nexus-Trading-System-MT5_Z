@@ -9,7 +9,7 @@ import {
   TrendingUp, TrendingDown, Minus, Zap,
 } from 'lucide-react';
 
-const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL ?? '';
 
 interface TiltState {
   status: 'NORMAL' | 'WARNING' | 'TILT';

@@ -5,7 +5,7 @@ import { Layers, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getAuthHeaders } from '@/lib/api-client';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 interface TFData {
   bias: 'BULLISH' | 'BEARISH' | 'NEUTRAL';

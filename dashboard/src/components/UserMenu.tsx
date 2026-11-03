@@ -83,7 +83,7 @@ export default function UserMenu() {
           {items.includes('settings') && (
             <button
               role="menuitem"
-              onClick={() => { setOpen(false); router.push('/dashboard/settings'); }}
+              onClick={() => { setOpen(false); router.push('/nexus/settings'); }}
               className="flex w-full items-center gap-2 px-2 py-2 text-[10px] hover:bg-bg-tertiary"
             >
               <Settings className="h-3.5 w-3.5" />إعدادات الحساب والتنبيهات

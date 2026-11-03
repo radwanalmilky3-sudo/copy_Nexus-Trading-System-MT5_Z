@@ -161,7 +161,7 @@ function ScalpingModeToggle() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+  const API = process.env.NEXT_PUBLIC_API_URL || '';
 
   const loadMode = React.useCallback(async () => {
     try {

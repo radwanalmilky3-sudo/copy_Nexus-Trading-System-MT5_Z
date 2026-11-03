@@ -1,7 +1,7 @@
 import { getAuthHeaders } from '@/lib/api-client';
 import { withRequestTimeout } from '@/lib/request-timeout';
 import type { BrokerAPI } from './types';
-const BASE=(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000')+'/api/brokers';
+const BASE=(process.env.NEXT_PUBLIC_API_URL || '')+'/api/brokers';
 function selectionKey():string{
   const token=(getAuthHeaders().Authorization||'').replace(/^Bearer\s+/,'');
   const payload=JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));

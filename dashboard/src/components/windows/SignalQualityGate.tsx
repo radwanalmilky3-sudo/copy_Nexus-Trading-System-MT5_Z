@@ -5,7 +5,7 @@ import { ShieldCheck, ShieldX, CheckCircle2, XCircle, AlertCircle } from 'lucide
 import { cn } from '@/lib/utils';
 import { getAuthHeaders } from '@/lib/api-client';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 interface FilterItem {
   ok: boolean;

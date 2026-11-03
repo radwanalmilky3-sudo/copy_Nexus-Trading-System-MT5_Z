@@ -78,7 +78,7 @@ export default function SystemDiagnostic() {
       (async (): Promise<ServiceStatus> => {
         try {
           const res = await fetchProbe(
-            `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000'}/api/v2/market/candles?symbol=XAUUSD&timeframe=M15&count=1`,
+            `${process.env.NEXT_PUBLIC_API_URL || ''}/api/v2/market/candles?symbol=XAUUSD&timeframe=M15&count=1`,
           );
           const hasBars = res.ok ? hasMarketFeedBars(await res.json().catch(() => null)) : false;
           const probe = classifyCandlesProbe(res.status, hasBars);
@@ -107,7 +107,7 @@ export default function SystemDiagnostic() {
       (async (): Promise<ServiceStatus> => {
         try {
           const res = await fetchProbe(
-            `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000'}/api/ml/traders/status`,
+            `${process.env.NEXT_PUBLIC_API_URL || ''}/api/ml/traders/status`,
           );
           const probe = classifyUpstreamProbe(res.status);
           if (probe.kind === 'ok') {
@@ -129,7 +129,7 @@ export default function SystemDiagnostic() {
       (async (): Promise<ServiceStatus> => {
         try {
           const res = await fetchProbe(
-            `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000'}/api/agents/status`,
+            `${process.env.NEXT_PUBLIC_API_URL || ''}/api/agents/status`,
           );
           const probe = classifyUpstreamProbe(res.status);
           if (probe.kind === 'ok') {

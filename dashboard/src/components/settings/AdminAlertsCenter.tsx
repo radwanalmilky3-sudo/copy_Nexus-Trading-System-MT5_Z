@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { BellRing, Check, ImagePlus, KeyRound, Plus, RefreshCcw, Save, ShieldCheck, Trash2, UserCog, Users, Volume2 } from 'lucide-react';
 import { saveNotificationPreferences } from './notification-preferences';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 const authHeaders = () => ({ 'Content-Type':'application/json', Authorization:`Bearer ${localStorage.getItem('nexus-token') || ''}` });
 
 type UserRow = { user_id:string; username:string; full_name:string; email?:string|null; role_id?:string|null; active:boolean; avatar_url?:string|null; last_login_at?:string|null };

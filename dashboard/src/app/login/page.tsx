@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Shield, UserPlus, Zap } from 'lucide-react';
 import { withRequestTimeout } from '@/lib/request-timeout';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function LoginPage() {
         if (!res.ok) throw new Error(await res.text());
         return res.json();
       });
-      localStorage.setItem('nexus-token', data.token); router.push('/dashboard');
+      localStorage.setItem('nexus-token', data.token); router.push('/nexus');
     } catch (e) { setError(e instanceof Error ? e.message : 'Authentication failed'); } finally { setIsLoading(false); }
   };
   const createFirst = async (e:React.FormEvent) => {

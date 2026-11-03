@@ -18,7 +18,7 @@ import AdminAlertsCenter from '@/components/settings/AdminAlertsCenter';
 import BrokerSettingsTab from '@/components/settings/broker/BrokerSettingsTab';
 import type { SourceHealthDTO } from '@/types/fundamental';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 // ── Section schema ─────────────────────────────────────────────────────────────
 interface SettingField {

@@ -8,7 +8,7 @@ import {
 import { cn } from '@/lib/utils';
 import { apiClient, getAuthHeaders } from '@/lib/api-client';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9000';
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 interface SessionOutlook { LONDON?: string; NEW_YORK?: string }
 

@@ -94,15 +94,15 @@ function GatewaySettingsHydrator() {
 }
 
 const NAV_ITEMS = [
-  { href: '/dashboard',                       label: 'Trading',    icon: LayoutDashboard },
-  { href: '/dashboard/strategies',             label: 'Strategies', icon: BrainCircuit },
-  { href: '/dashboard/models',                 label: 'Models',     icon: Cpu },
-  { href: '/dashboard/model-comparison',       label: 'Compare',    icon: Trophy },
-  { href: '/dashboard/history',                label: 'History',    icon: History },
-  { href: '/dashboard/settings',               label: 'Settings',   icon: Settings },
-  { href: '/dashboard/progress',                label: 'متابعة التطوير', icon: Activity },
-  { href: '/dashboard/research-lab',            label: 'مختبر البحث', icon: BrainCircuit },
-  { href: '/dashboard/audit-progress',          label: 'نتائج التدقيق', icon: Shield },
+  { href: '/nexus',                       label: 'Trading',    icon: LayoutDashboard },
+  { href: '/nexus/strategies',             label: 'Strategies', icon: BrainCircuit },
+  { href: '/nexus/models',                 label: 'Models',     icon: Cpu },
+  { href: '/nexus/model-comparison',       label: 'Compare',    icon: Trophy },
+  { href: '/nexus/history',                label: 'History',    icon: History },
+  { href: '/nexus/settings',               label: 'Settings',   icon: Settings },
+  { href: '/nexus/progress',                label: 'متابعة التطوير', icon: Activity },
+  { href: '/nexus/research-lab',            label: 'مختبر البحث', icon: BrainCircuit },
+  { href: '/nexus/audit-progress',          label: 'نتائج التدقيق', icon: Shield },
 ];
 
 function ModeToggle() {
@@ -334,8 +334,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <nav className="flex items-center gap-0.5 flex-1 overflow-x-auto scrollbar-hide">
           {NAV_ITEMS.map((item) => {
             const isActive =
-              item.href === '/dashboard'
-                ? pathname === '/dashboard'
+              item.href === '/nexus'
+                ? pathname === '/nexus'
                 : pathname.startsWith(item.href);
             const Icon = item.icon;
             return (
