@@ -63,11 +63,12 @@ _agent_statuses: dict[str, dict[str, Any]] = {}
 _cycle_active: bool = False
 
 
-# ── LLM (Ollama) reachability probe ──────────────────────────────────────────
-# /health must reflect real Ollama reachability so the dashboard can show
-# ONLINE/READY vs OFFLINE.  The probe (GET {NEXUS_LOCAL_LLM_URL}/models) is
-# memoised so status polls never hammer the backend, and it never blocks
-# startup — it runs lazily on the first status request.
+# ── LLM reachability probe ───────────────────────────────────────────────
+# /health must reflect real LLM reachability (local Ollama, or Z.ai cloud when
+# NEXUS_LLM_PROVIDER=zai) so the dashboard can show ONLINE/READY vs OFFLINE.
+# The probe (via shared.llm_factory.llm_health) is memoised so status polls
+# never hammer the backend, and it never blocks startup — it runs lazily on
+# the first status request.
 LLM_HEALTH_TTL_SEC = float(os.getenv("NEXUS_LLM_HEALTH_TTL_SEC", "20"))
 LLM_HEALTH_TIMEOUT_SEC = float(os.getenv("NEXUS_LLM_HEALTH_TIMEOUT_SEC", "2"))
 _llm_health_lock = asyncio.Lock()
@@ -75,11 +76,12 @@ _llm_health_cache: dict[str, Any] = {"ts": 0.0, "result": None}
 
 
 async def _get_llm_health() -> dict[str, Any]:
-    """Cached reachability check for the local OpenAI-compatible endpoint.
+    """Cached reachability check for the configured LLM provider.
 
-    Uses shared.llm_factory.local_health (probes NEXUS_LOCAL_LLM_URL/models
-    with a short timeout). Result is cached for LLM_HEALTH_TTL_SEC (~20s).
-    Never raises: an unreachable backend reports ONLINE=False.
+    Uses shared.llm_factory.llm_health (provider-aware: local Ollama models
+    probe, or a 1-token Z.ai completion when NEXUS_LLM_PROVIDER=zai).
+    Result is cached for LLM_HEALTH_TTL_SEC (~20s). Never raises: an
+    unreachable backend reports ONLINE=False.
     """
     cached = _llm_health_cache.get("result")
     if cached is not None and (time.monotonic() - float(_llm_health_cache["ts"])) < LLM_HEALTH_TTL_SEC:
@@ -89,9 +91,9 @@ async def _get_llm_health() -> dict[str, Any]:
         now = time.monotonic()
         if cached is not None and (now - float(_llm_health_cache["ts"])) < LLM_HEALTH_TTL_SEC:
             return cached  # type: ignore[return-value]
-        from shared.llm_factory import local_base_url, local_health, provider_model
+        from shared.llm_factory import llm_health, provider_model
         try:
-            probe = await local_health(timeout=LLM_HEALTH_TIMEOUT_SEC)
+            probe = await llm_health(timeout=max(LLM_HEALTH_TIMEOUT_SEC, 6.0))
         except Exception as exc:
             probe = {"status": "offline", "error": str(exc)}
         online = (
@@ -101,8 +103,8 @@ async def _get_llm_health() -> dict[str, Any]:
         entry = {
             "status": "ONLINE" if online else "OFFLINE",
             "online": online,
-            "url": str(probe.get("endpoint") or local_base_url()),
-            "model": str(probe.get("required_model") or provider_model("local")),
+            "url": str(probe.get("endpoint") or ""),
+            "model": str(probe.get("required_model") or provider_model()),
             "model_available": bool(probe.get("model_available", False)),
             "latency_ms": probe.get("latency_ms"),
             "error": str(probe.get("error", "") or ""),

@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from shared.constants import ServiceName, TradingMode
 from shared.models import SystemHealth
 from shared.redis_client import RedisClient
-from shared.llm_factory import local_health
+from shared.llm_factory import llm_health
 from shared.safety import live_mode_enabled
 
 from ..deps import get_config, get_redis
@@ -151,5 +151,5 @@ async def switch_mode(
 
 @router.get("/local-ai-health", dependencies=[Depends(_trading_view)])
 async def local_ai_health() -> dict[str, Any]:
-    """Live proof that the configured local Ollama/OpenAI-compatible model is reachable."""
-    return await local_health()
+    """Live proof that the configured LLM provider (local Ollama or Z.ai cloud) is reachable."""
+    return await llm_health()

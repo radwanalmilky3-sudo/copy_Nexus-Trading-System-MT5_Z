@@ -73,18 +73,19 @@ class BaseAgent(ABC):
     # ── LLM Factory ───────────────────────────────────────────────────────
 
     def _get_llm(self, *, temperature: float | None = None, max_tokens: int | None = None, fast: bool = False):
-        """Return the local Ollama/OpenAI-compatible model for this agent.
+        """Return the configured LLM client for this agent (local Ollama by
+        default, or Z.ai cloud when NEXUS_LLM_PROVIDER=zai is explicitly set).
 
-        Fail-closed: if the local-only provider is not configured/ready, raise
+        Fail-closed: if the selected provider is not configured/ready, raise
         instead of silently constructing a client that could fall through to a
-        cloud endpoint.
+        different endpoint.
         """
         from shared.llm_factory import make_llm, provider_ready, resolve_provider
 
         temp = temperature or self.config.get("temperature", 0.3)
         tokens = max_tokens or self.config.get("max_tokens", 800)
 
-        resolve_provider()  # validates the local-only contract
+        resolve_provider()  # validates the configured-provider contract
         if not provider_ready():
             raise RuntimeError(
                 "local LLM provider is not ready — refusing to build a model client"
