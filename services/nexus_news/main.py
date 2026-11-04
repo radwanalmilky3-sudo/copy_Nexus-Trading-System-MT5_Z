@@ -21,12 +21,14 @@ from fastapi import Depends, FastAPI, Header, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from shared.constants import (
+    CACHE_HEALTH_PREFIX,
     HEARTBEAT_INTERVAL_SEC,
     RedisStream,
+    ServiceName,
     STREAM_MAX_LEN,
 )
 from shared.events import NewsAlertEvent
-from shared.models import CalendarEvent, NewsItem
+from shared.models import CalendarEvent, NewsItem, SystemHealth
 
 from .calendar_parser import CalendarParser
 from .news_fetcher import NewsFetcher
@@ -438,9 +440,18 @@ async def _heartbeat_loop() -> None:
     while True:
         try:
             if _redis:
+                # P2-2 fix: publish the same SystemHealth dict shape every other
+                # service writes (features/monitor/...). A bare ISO timestamp
+                # string fails the gateway's isinstance(dict) cache check and
+                # made /api/system/health report nexus-news as "unknown".
+                health = SystemHealth(
+                    service_name=ServiceName.NEWS,
+                    status="healthy",
+                    last_heartbeat=datetime.now(timezone.utc),
+                )
                 await _redis.set(
-                    "nexus:health:nexus-news",
-                    datetime.now(timezone.utc).isoformat(),
+                    f"{CACHE_HEALTH_PREFIX}{ServiceName.NEWS}",
+                    health.model_dump_json(),
                     ex=HEARTBEAT_INTERVAL_SEC * 3,
                 )
         except asyncio.CancelledError:

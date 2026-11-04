@@ -141,6 +141,20 @@ async def _check_all_services() -> None:
         total=len(_SERVICES_TO_CHECK),
     )
 
+    # P2-2 fix: self-heartbeat. The monitor writes SystemHealth dicts for every
+    # service it checks but never reported itself, so /api/system/health always
+    # showed nexus-monitor as "unknown" (no cache entry to read).
+    await redis.cache_set(
+        f"{CACHE_HEALTH_PREFIX}{SERVICE_NAME}",
+        SystemHealth(
+            service_name=SERVICE_NAME,
+            status="healthy",
+            last_heartbeat=datetime.now(timezone.utc),
+        ).model_dump(mode="json"),
+        ttl_sec=_HEALTH_CHECK_INTERVAL * 3,
+        prefix=False,
+    )
+
 
 async def _check_service(name: str, port: int) -> dict[str, Any]:
     if _http_client is None:

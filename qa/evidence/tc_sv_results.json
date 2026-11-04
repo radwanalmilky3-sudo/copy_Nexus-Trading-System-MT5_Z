@@ -1,0 +1,93 @@
+{
+ "executed_at_utc": "2026-11-04T16:56:32.336625+00:00",
+ "note": "functional/error paths picked from each service's own live OpenAPI; auth bearer for gateway/executor/monitor/risk",
+ "results": [
+  {
+   "id": "TC-SV-01",
+   "service": "nexus-api",
+   "port": 9000,
+   "health": "200 (2ms)",
+   "health_body": "{\"status\": \"healthy\", \"service\": \"nexus-api\", \"redis\": \"connected\", \"duckdb\": \"connected\", \"ready\": true, \"age_ms\": 2139",
+   "func": "GET /api/admin/audit -> 200 (17ms)",
+   "func_body": "{\"items\":[{\"audit_id\":\"d071d798b037473ea5152548330cb72a\",\"actor_user_id\":\"469087c903cf4029",
+   "err_state": "GET /api/agents/decision/qa-bogus-id -> 404"
+  },
+  {
+   "id": "TC-SV-02",
+   "service": "nexus-data",
+   "port": 9001,
+   "health": "200 (1ms)",
+   "health_body": "{\"service\": \"nexus-data\", \"status\": \"degraded\", \"ready\": true, \"data_mode\": \"REAL_MT5_REQUIRED\", \"synthetic_fallback\": f",
+   "func": "GET /api/data/fundamental/schema -> 200 (267ms)",
+   "func_body": "{\"agent_logs\":[{\"name\":\"agent_id\",\"type\":\"VARCHAR\",\"nullable\":\"NO\"},{\"name\":\"agent_name\",\"",
+   "err_state": "GET /api/data/flow/qa-bogus-id -> 200"
+  },
+  {
+   "id": "TC-SV-03",
+   "service": "nexus-features",
+   "port": 9002,
+   "health": "200 (1ms)",
+   "health_body": "{\"service\": \"nexus-features\", \"status\": \"healthy\", \"redis\": \"connected\", \"timestamp\": \"2026-11-04T16:56:26.258714+00:00\"",
+   "func": "GET /health -> 200 (0ms)",
+   "func_body": "{\"service\":\"nexus-features\",\"status\":\"healthy\",\"redis\":\"connected\",\"timestamp\":\"2026-11-04",
+   "err_state": "GET /api/features/institutional/qa-bogus-id -> 403"
+  },
+  {
+   "id": "TC-SV-04",
+   "service": "nexus-ml",
+   "port": 9003,
+   "health": "200 (1ms)",
+   "health_body": "{\"service\": \"nexus-ml\", \"status\": \"healthy\", \"uptime_seconds\": 9724.0, \"models_loaded\": {\"xgboost\": false, \"lgbm_regime\"",
+   "func": "GET /api/ml/models/status -> 403 (1ms)",
+   "func_body": "{\"detail\":\"invalid internal service credential\"}",
+   "err_state": "GET /api/ml/predict/qa-bogus-id -> 403"
+  },
+  {
+   "id": "TC-SV-05",
+   "service": "nexus-agents",
+   "port": 9004,
+   "health": "503 (6025ms)",
+   "health_body": "{\"service\": \"nexus-agents\", \"status\": \"OFFLINE\", \"timestamp\": \"2026-11-04T16:56:32.293697Z\", \"redis\": true, \"state\": \"OF",
+   "func": "GET /api/agents/brain/budget -> 403 (2ms)",
+   "func_body": "{\"detail\":\"invalid internal service credential\"}",
+   "err_state": "GET /api/agents/decision/qa-bogus-id -> 403"
+  },
+  {
+   "id": "TC-SV-06",
+   "service": "nexus-news",
+   "port": 9005,
+   "health": "200 (2ms)",
+   "health_body": "{\"service\": \"nexus-news\", \"status\": \"healthy\", \"redis\": true, \"news_cache_size\": 0, \"calendar_cache_size\": 115, \"fundame",
+   "func": "GET /api/news/calendar -> 403 (3ms)",
+   "func_body": "{\"detail\":\"invalid internal service credential\"}",
+   "err_state": "GET /api/news/sentiment/qa-bogus-id -> 403"
+  },
+  {
+   "id": "TC-SV-07",
+   "service": "nexus-risk",
+   "port": 9006,
+   "health": "200 (3ms)",
+   "health_body": "{\"service\": \"nexus-risk\", \"status\": \"healthy\", \"redis\": true, \"tilt_status\": \"NORMAL\", \"timestamp\": \"2026-11-04T16:56:32",
+   "func": "GET /api/exposure -> 403 (2ms)",
+   "func_body": "{\"detail\":\"invalid internal service credential\"}"
+  },
+  {
+   "id": "TC-SV-08",
+   "service": "nexus-executor",
+   "port": 9007,
+   "health": "200 (2ms)",
+   "health_body": "{\"service\": \"nexus-executor\", \"status\": \"healthy\", \"redis\": true, \"broker\": \"paper\", \"trading_mode\": \"paper\", \"real_brok",
+   "func": "GET /account -> 200 (1ms)",
+   "func_body": "{\"balance\":10000.0,\"equity\":10000.0,\"margin\":0.0,\"free_margin\":10000.0,\"currency\":\"USD\",\"m"
+  },
+  {
+   "id": "TC-SV-09",
+   "service": "nexus-monitor",
+   "port": 9008,
+   "health": "200 (1ms)",
+   "health_body": "{\"service\": \"nexus-monitor\", \"status\": \"healthy\", \"redis\": true, \"timestamp\": \"2026-11-04T16:56:32.333433+00:00\"}",
+   "func": "GET /api/monitor/health -> 403 (1ms)",
+   "func_body": "{\"detail\":\"invalid internal service credential\"}"
+  }
+ ]
+}
