@@ -9,6 +9,7 @@ import { gatewayWsUrl } from '@/lib/gateway-ws';
 import { getPositionConnectionLabel } from '@/lib/position-status';
 import { positionPresentation } from '@/lib/data-presentation';
 import { preparePositionModification } from '@/lib/position-modification';
+import { cellFlashes, flashClass } from '@/lib/cell-flash';
 
 interface LocalPosition {
   id: string;
@@ -142,6 +143,11 @@ export default function ActivePositions() {
   const [accountBroker, setAccountBroker] = useState<string | null>(null);
   const [nexusCount, setNexusCount] = useState(0);
   const [externalCount, setExternalCount] = useState(0);
+  // M2 — cell flash: positions are bounded (max_simultaneous_positions: 5 in
+  // risk_rules.yaml) so virtualization would add overhead with zero benefit;
+  // the live-feedback value here is flashing the cells that actually change.
+  const [flashes, setFlashes] = useState<Record<string, 'up' | 'down'>>({});
+  const prevSnapshotRef = useRef<Record<string, number> | null>(null);
   const setAccount = useDashboardStore((s) => s.setAccount);
 
   const refresh = useCallback(async () => {
@@ -149,6 +155,14 @@ export default function ActivePositions() {
       const res = await apiClient.getPositionsSnapshot();
       const mapped = (res.data.positions as Record<string, unknown>[]).map(mapGatewayToLocal).filter((p) => p.id);
       setPositions(mapped);
+      const snapshot: Record<string, number> = {};
+      for (const p of mapped) {
+        snapshot[`${p.id}:price`] = p.current_price;
+        snapshot[`${p.id}:pips`] = p.pnl_pips;
+        snapshot[`${p.id}:pnl`] = p.pnl_usd;
+      }
+      setFlashes(cellFlashes(prevSnapshotRef.current, snapshot));
+      prevSnapshotRef.current = snapshot;
       setLiveConnected(Boolean(res.data.live_connected));
       setSnapshotStale(false);
       setSnapshotReceived(true);
@@ -201,6 +215,13 @@ export default function ActivePositions() {
     const id = setInterval(refresh, pollMs);
     return () => clearInterval(id);
   }, [refresh, wsConnected]);
+
+  // Flash lives ~0.9s, then classes drop so the next change re-animates.
+  useEffect(() => {
+    if (Object.keys(flashes).length === 0) return;
+    const t = setTimeout(() => setFlashes({}), 900);
+    return () => clearTimeout(t);
+  }, [flashes]);
 
   const onClose = async (pos: LocalPosition, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -378,11 +399,11 @@ export default function ActivePositions() {
                     <td className="px-2 py-1.5 text-text-primary font-semibold truncate">{pos.symbol}</td>
                     <td className="px-1 py-1.5">{sideBadge(pos.side)}</td>
                     <td className="px-1 py-1.5 text-right text-text-secondary tabular-nums">{pos.entry_price.toFixed(dec)}</td>
-                    <td className="px-1 py-1.5 text-right text-text-primary tabular-nums">{pos.current_price.toFixed(dec)}</td>
-                    <td className={`px-1 py-1.5 text-right font-bold tabular-nums ${pnlColor(pos.pnl_pips)}`}>
+                    <td className={`px-1 py-1.5 text-right text-text-primary tabular-nums ${flashClass(flashes[`${pos.id}:price`])}`}>{pos.current_price.toFixed(dec)}</td>
+                    <td className={`px-1 py-1.5 text-right font-bold tabular-nums ${pnlColor(pos.pnl_pips)} ${flashClass(flashes[`${pos.id}:pips`])}`}>
                       {pos.pnl_pips > 0 ? '+' : ''}{pos.pnl_pips.toFixed(1)}
                     </td>
-                    <td className={`px-1 py-1.5 text-right font-bold tabular-nums ${pnlColor(pos.pnl_usd)}`}>
+                    <td className={`px-1 py-1.5 text-right font-bold tabular-nums ${pnlColor(pos.pnl_usd)} ${flashClass(flashes[`${pos.id}:pnl`])}`}>
                       {pos.pnl_usd > 0 ? '+' : ''}${pos.pnl_usd.toFixed(2)}
                     </td>
                     <td className="px-1 py-1.5 text-right text-neon-red/70 tabular-nums">{pos.sl > 0 ? pos.sl.toFixed(dec) : '—'}</td>

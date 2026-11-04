@@ -9,6 +9,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Cable, Copy, KeyRound, RefreshCw, Trash2, TriangleAlert } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import VirtualTable, { type VirtualColumn } from '@/components/shared/VirtualTable';
 
 interface EaToken {
   token_id: string;
@@ -83,6 +84,38 @@ function parseResult(json: string | null): { detail?: string; ticket?: number; p
     return {};
   }
 }
+
+// M2 — virtualized command-queue columns.
+const COMMAND_COLUMNS: VirtualColumn<EaCommand>[] = [
+  { key: 'time', header: 'الوقت', width: '150px', dir: 'ltr', render: (c) => <span className="text-text-muted">{fmtDate(c.created_at)}</span> },
+  { key: 'symbol', header: 'الرمز', width: '90px', dir: 'ltr', render: (c) => <span className="font-mono">{c.symbol}</span> },
+  { key: 'action', header: 'الإجراء', width: '110px', dir: 'ltr', render: (c) => <span className="font-mono">{c.action}</span> },
+  {
+    key: 'status',
+    header: 'الحالة',
+    width: '90px',
+    render: (c) => (
+      <span className={cn('rounded border px-1.5 py-0.5 text-[10px] font-medium', STATUS_STYLES[c.status] || '')}>
+        {STATUS_LABELS[c.status] || c.status}
+      </span>
+    ),
+  },
+  {
+    key: 'result',
+    header: 'النتيجة',
+    width: '1fr',
+    dir: 'ltr',
+    render: (c) => {
+      const result = parseResult(c.result_json);
+      return (
+        <span className="text-text-secondary">
+          {result.detail || '—'}
+          {result.ticket ? ` #${result.ticket}` : ''}
+        </span>
+      );
+    },
+  },
+];
 
 export default function EaBridgePage() {
   const [tokens, setTokens] = useState<EaToken[]>([]);
@@ -294,47 +327,21 @@ export default function EaBridgePage() {
         </div>
       </section>
 
-      {/* Commands table */}
+      {/* Commands table — M2: virtualized */}
       <section className="rounded-lg border border-border-primary bg-bg-card overflow-hidden">
         <div className="px-3 sm:px-4 py-2.5 border-b border-border-primary">
           <h2 className="text-xs font-semibold text-text-secondary">آخر أوامر الطابور (50)</h2>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-[11px]">
-            <thead>
-              <tr className="text-text-muted border-b border-border-primary/60">
-                <th className="px-3 py-2 text-right font-medium">الوقت</th>
-                <th className="px-3 py-2 text-right font-medium">الرمز</th>
-                <th className="px-3 py-2 text-right font-medium">الإجراء</th>
-                <th className="px-3 py-2 text-right font-medium">الحالة</th>
-                <th className="px-3 py-2 text-right font-medium">النتيجة</th>
-              </tr>
-            </thead>
-            <tbody>
-              {!loading && commands.length === 0 && (
-                <tr><td colSpan={5} className="px-3 py-4 text-center text-text-muted">لا أوامر بعد — تُضاف أوامر تلقائيًا عند كل صفقة ناجحة للنظام.</td></tr>
-              )}
-              {commands.map((c) => {
-                const result = parseResult(c.result_json);
-                return (
-                  <tr key={c.command_id} className="border-b border-border-primary/30 last:border-0">
-                    <td className="px-3 py-2 text-text-muted" dir="ltr">{fmtDate(c.created_at)}</td>
-                    <td className="px-3 py-2 font-mono" dir="ltr">{c.symbol}</td>
-                    <td className="px-3 py-2 font-mono" dir="ltr">{c.action}</td>
-                    <td className="px-3 py-2">
-                      <span className={cn('rounded border px-1.5 py-0.5 text-[10px] font-medium', STATUS_STYLES[c.status] || '')}>
-                        {STATUS_LABELS[c.status] || c.status}
-                      </span>
-                    </td>
-                    <td className="px-3 py-2 text-text-secondary" dir="ltr">
-                      {result.detail || '—'}
-                      {result.ticket ? ` #${result.ticket}` : ''}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+        <div className="px-1 sm:px-2 pb-1">
+          <VirtualTable
+            rows={commands}
+            rowKey={(c) => c.command_id}
+            columns={COMMAND_COLUMNS}
+            rowHeight={32}
+            height="360px"
+            minWidth={760}
+            emptyMessage={loading ? 'جارٍ التحميل…' : 'لا أوامر بعد — تُضاف أوامر تلقائيًا عند كل صفقة ناجحة للنظام.'}
+          />
         </div>
       </section>
 

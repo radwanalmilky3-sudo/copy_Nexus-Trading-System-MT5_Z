@@ -2,19 +2,19 @@
 
 import { useEffect, useRef, useState } from 'react';
 import NeonCard from '../shared/NeonCard';
+import NexusPriceChart from '../chart/NexusPriceChart';
 import type { Timeframe } from '../../types';
 import { useDashboardStore } from '@/stores/dashboardStore';
 
 const TIMEFRAMES: Timeframe[] = ['M1', 'M5', 'M15', 'H1', 'H4'];
 
-// D2 fix: the heavy external TradingView widget can stall the dashboard tab in
-// memory-constrained environments (sandbox: 2 vCPU / ~150MB free). The embed is
-// now (a) toggleable per browser via localStorage, default OFF (safe on fresh
-// sessions — a missing preference must NOT auto-mount the embed; D2 regression
-// found 2026-11-05: 'null !== 0' made fresh sessions default ON and the
-// renderer crashed ~75s in), (b) mounted on a short delay so the first
-// dashboard paint never waits on it, and (c) fully unmounted when OFF so the
-// renderer memory is actually released.
+// D2 fix — history: the heavy external TradingView widget stalled the
+// dashboard tab in memory-constrained environments (2 vCPU / ~150MB free),
+// so the embed was made (a) opt-in per browser via localStorage with default
+// OFF, (b) mounted on a short delay, (c) fully unmounted when OFF.
+// M2: the DEFAULT chart body is now the in-house lightweight-charts v5
+// canvas (NexusPriceChart — light, MT5-bridge pricing). The TradingView
+// embed remains available as a manual toggle with the same D2 guards.
 const TV_ENABLED_KEY = 'nexus_tv_chart_enabled';
 const TV_MOUNT_DELAY_MS = 2500;
 
@@ -145,7 +145,11 @@ export default function LiveChart() {
             {tf}
           </button>
         ))}
-        <span className="ml-auto text-[8px] font-mono text-text-muted">TradingView external · not MT5 execution pricing</span>
+        <span className="ml-auto text-[8px] font-mono text-text-muted">
+          {tvEnabled
+            ? 'TradingView external · not MT5 execution pricing'
+            : 'Nexus v5 canvas · MT5 bridge pricing'}
+        </span>
         <button
           type="button"
           onClick={toggleTv}
@@ -170,19 +174,17 @@ export default function LiveChart() {
             allow="clipboard-write"
             loading="lazy"
           />
-        ) : (
+        ) : tvEnabled ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center">
             <p className="text-xs font-mono text-text-muted">
-              {tvEnabled
-                ? `External chart loading… ${selectedSymbol} · ${activeTimeframe}`
-                : `External chart OFF — ${selectedSymbol} · ${activeTimeframe}`}
+              External chart loading… {selectedSymbol} · {activeTimeframe}
             </p>
             <p className="text-[10px] font-mono text-text-muted/70 max-w-[80%]">
-              {tvEnabled
-                ? 'Mounting the TradingView embed shortly to keep the dashboard responsive.'
-                : 'Press TV ON above to load the TradingView embed. Execution pricing always comes from the MT5 bridge.'}
+              Mounting the TradingView embed shortly to keep the dashboard responsive.
             </p>
           </div>
+        ) : (
+          <NexusPriceChart symbol={selectedSymbol} timeframe={activeTimeframe} />
         )}
       </div>
     </NeonCard>

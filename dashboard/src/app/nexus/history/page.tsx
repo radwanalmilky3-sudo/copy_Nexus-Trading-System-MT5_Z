@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { getAuthHeaders } from '@/lib/api-client';
 import { hasCompleteTradeStats } from '@/lib/trade-stats-status';
 import { buildTradeCsv } from '@/lib/trade-csv';
+import VirtualTable, { type VirtualColumn } from '@/components/shared/VirtualTable';
 
 const API = process.env.NEXT_PUBLIC_API_URL || '';
 
@@ -85,6 +86,78 @@ function formatCurrency(v: number): string {
 function formatPips(v: number): string {
   return v.toFixed(1);
 }
+
+// M2 — virtualized trade table columns (same 11 columns / widths as before).
+const TRADE_COLUMNS: VirtualColumn<TradeRow>[] = [
+  {
+    key: 'time',
+    header: 'الوقت',
+    width: '130px',
+    dir: 'ltr',
+    render: (t) => (
+      <span className="text-[9px] text-text-muted truncate block">
+        {t.closed_at
+          ? new Date(t.closed_at).toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })
+          : t.opened_at
+          ? new Date(t.opened_at).toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })
+          : '—'}
+      </span>
+    ),
+  },
+  {
+    key: 'symbol',
+    header: 'Symbol',
+    width: '72px',
+    dir: 'ltr',
+    render: (t) => <span className="text-[10px] font-semibold text-text-primary">{t.symbol}</span>,
+  },
+  {
+    key: 'side',
+    header: 'الجهة',
+    width: '58px',
+    dir: 'ltr',
+    render: (t) => {
+      const isBuy = (t.side || '').toUpperCase() === 'BUY';
+      return (
+        <span className={cn('inline-flex items-center gap-0.5 text-[9px] font-bold', isBuy ? 'text-neon-green' : 'text-neon-red')}>
+          {isBuy ? <ArrowUpRight className="h-2.5 w-2.5" /> : <ArrowDownRight className="h-2.5 w-2.5" />}
+          {t.side?.toUpperCase()}
+        </span>
+      );
+    },
+  },
+  { key: 'size', header: 'الحجم', width: '52px', dir: 'ltr', align: 'start', render: (t) => <span className="text-[9px] text-text-secondary tabular-nums">{t.size ?? '—'}</span> },
+  { key: 'entry', header: 'الدخول', width: '82px', dir: 'ltr', render: (t) => <span className="text-[9px] text-text-secondary tabular-nums">{t.entry_price?.toFixed(2) ?? '—'}</span> },
+  { key: 'exit', header: 'الخروج', width: '82px', dir: 'ltr', render: (t) => <span className="text-[9px] text-text-secondary tabular-nums">{t.exit_price?.toFixed(2) ?? '—'}</span> },
+  {
+    key: 'pnl',
+    header: 'P&L',
+    width: '80px',
+    dir: 'ltr',
+    render: (t) => {
+      const pnl = t.pnl_usd ?? 0;
+      return (
+        <span className={cn('text-[10px] font-bold tabular-nums', pnl >= 0 ? 'text-neon-green' : 'text-neon-red')}>
+          {formatCurrency(pnl)}
+        </span>
+      );
+    },
+  },
+  { key: 'pips', header: 'Pips', width: '52px', dir: 'ltr', render: (t) => <span className="text-[9px] text-text-secondary tabular-nums">{t.pnl_pips != null ? formatPips(t.pnl_pips) : '—'}</span> },
+  {
+    key: 'rr',
+    header: 'R:R',
+    width: '44px',
+    dir: 'ltr',
+    render: (t) => (
+      <span className={cn('text-[9px] tabular-nums', (t.rr_ratio ?? 0) >= 1 ? 'text-neon-cyan' : 'text-text-muted')}>
+        {t.rr_ratio != null ? t.rr_ratio.toFixed(1) : '—'}
+      </span>
+    ),
+  },
+  { key: 'duration', header: 'المدة', width: '56px', dir: 'ltr', render: (t) => <span className="text-[9px] text-text-muted">{formatDuration(t.duration_s ?? 0)}</span> },
+  { key: 'source', header: 'المصدر', width: '80px', render: (t) => <span className="text-[9px] text-neon-purple truncate">{t.agent_id || t.comment || '—'}</span> },
+];
 
 export default function HistoryPage() {
   const [period, setPeriod] = useState<FilterPeriod>('1w');
@@ -251,118 +324,31 @@ export default function HistoryPage() {
         </div>
       )}
 
-      {/* Trade table */}
+      {/* Trade table — M2: virtualized (renders ~10 rows regardless of page size) */}
       <div className="rounded-xl border border-border-primary/15 bg-bg-primary overflow-hidden">
-        <div className="overflow-x-auto scrollbar-hide">
-          <table className="w-full table-fixed min-w-[900px]">
-            <colgroup>
-              <col className="w-[130px]" />
-              <col className="w-[72px]" />
-              <col className="w-[58px]" />
-              <col className="w-[52px]" />
-              <col className="w-[82px]" />
-              <col className="w-[82px]" />
-              <col className="w-[80px]" />
-              <col className="w-[52px]" />
-              <col className="w-[44px]" />
-              <col className="w-[56px]" />
-              <col className="w-[80px]" />
-            </colgroup>
-            <thead>
-              <tr className="border-b border-border-primary/15">
-                {['الوقت', 'Symbol', 'الجهة', 'الحجم', 'الدخول', 'الخروج', 'P&L', 'Pips', 'R:R', 'المدة', 'المصدر'].map(
-                  (col) => (
-                    <th
-                      key={col}
-                      className="px-2 py-1.5 text-start text-[8px] font-mono font-semibold text-text-muted uppercase tracking-wider"
-                    >
-                      {col}
-                    </th>
-                  )
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {trades.length === 0 ? (
-                <tr>
-                  <td colSpan={11} className="px-4 py-12 text-center text-[11px] text-text-muted">
-                    {loading ? (
-                      <div className="flex items-center justify-center gap-2">
-                        <RefreshCw className="h-4 w-4 animate-spin" />
-                        جارٍ تحميل trades...
-                      </div>
-                    ) : loadError ? (
-                      <>سجل التداول غير متاح. الحالة الفارغة المعروضة لا تؤكد عدم وجود trades.</>
-                    ) : (
-                      <>
-                        <Calendar className="h-6 w-6 mx-auto mb-2 opacity-30" />
-                        لا توجد trades مسجّلة في هذه الفترة. ابدأ جلسة تداول لعرض السجل.
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ) : (
-                trades.map((trade, i) => {
-                  const isBuy = (trade.side || '').toUpperCase() === 'BUY';
-                  const pnl = trade.pnl_usd ?? 0;
-                  return (
-                    <tr
-                      key={trade.id || i}
-                      className="border-b border-border-primary/5 hover:bg-bg-secondary/30 transition-colors"
-                    >
-                      <td dir="ltr" className="px-2 py-1.5 text-[9px] font-mono text-text-muted truncate">
-                        {trade.closed_at
-                          ? new Date(trade.closed_at).toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })
-                          : trade.opened_at
-                          ? new Date(trade.opened_at).toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })
-                          : '—'}
-                      </td>
-                      <td dir="ltr" className="px-2 py-1.5 text-[10px] font-semibold text-text-primary font-mono">
-                        {trade.symbol}
-                      </td>
-                      <td className="px-2 py-1.5">
-                        <span
-                          dir="ltr"
-                          className={cn(
-                            'inline-flex items-center gap-0.5 text-[9px] font-mono font-bold',
-                            isBuy ? 'text-neon-green' : 'text-neon-red'
-                          )}
-                        >
-                          {isBuy ? <ArrowUpRight className="h-2.5 w-2.5" /> : <ArrowDownRight className="h-2.5 w-2.5" />}
-                          {trade.side?.toUpperCase()}
-                        </span>
-                      </td>
-                      <td dir="ltr" className="px-2 py-1.5 text-[9px] font-mono text-text-secondary tabular-nums">
-                        {trade.size ?? '—'}
-                      </td>
-                      <td dir="ltr" className="px-2 py-1.5 text-[9px] font-mono text-text-secondary tabular-nums">
-                        {trade.entry_price?.toFixed(2) ?? '—'}
-                      </td>
-                      <td dir="ltr" className="px-2 py-1.5 text-[9px] font-mono text-text-secondary tabular-nums">
-                        {trade.exit_price?.toFixed(2) ?? '—'}
-                      </td>
-                      <td dir="ltr" className={cn('px-2 py-1.5 text-[10px] font-mono font-bold tabular-nums', pnl >= 0 ? 'text-neon-green' : 'text-neon-red')}>
-                        {formatCurrency(pnl)}
-                      </td>
-                      <td dir="ltr" className="px-2 py-1.5 text-[9px] font-mono text-text-secondary tabular-nums">
-                        {trade.pnl_pips != null ? formatPips(trade.pnl_pips) : '—'}
-                      </td>
-                      <td dir="ltr" className={cn('px-2 py-1.5 text-[9px] font-mono tabular-nums', (trade.rr_ratio ?? 0) >= 1 ? 'text-neon-cyan' : 'text-text-muted')}>
-                        {trade.rr_ratio != null ? trade.rr_ratio.toFixed(1) : '—'}
-                      </td>
-                      <td dir="ltr" className="px-2 py-1.5 text-[9px] font-mono text-text-muted">
-                        {formatDuration(trade.duration_s ?? 0)}
-                      </td>
-                      <td className="px-2 py-1.5 text-[9px] font-mono text-neon-purple truncate">
-                        {trade.agent_id || trade.comment || '—'}
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-        </div>
+        <VirtualTable
+          rows={trades}
+          rowKey={(t, i) => t.id || `idx-${i}`}
+          columns={TRADE_COLUMNS}
+          rowHeight={30}
+          height="480px"
+          minWidth={900}
+          emptyMessage={
+            loading ? (
+              <div className="flex items-center justify-center gap-2">
+                <RefreshCw className="h-4 w-4 animate-spin" />
+                جارٍ تحميل trades...
+              </div>
+            ) : loadError ? (
+              <>سجل التداول غير متاح. الحالة الفارغة المعروضة لا تؤكد عدم وجود trades.</>
+            ) : (
+              <>
+                <Calendar className="h-6 w-6 mx-auto mb-2 opacity-30" />
+                لا توجد trades مسجّلة في هذه الفترة. ابدأ جلسة تداول لعرض السجل.
+              </>
+            )
+          }
+        />
 
         {/* Pagination */}
         {totalPages > 1 && (

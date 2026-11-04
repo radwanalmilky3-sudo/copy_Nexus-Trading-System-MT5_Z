@@ -1,34 +1,40 @@
+// M2 — style config for the in-house lightweight-charts v5 canvas.
+// Upgraded from the v4 shapes that were never wired to any component:
+// v5 renames the series option types (*SeriesOptions → *StyleOptions)
+// and adds series via chart.addSeries(CandlestickSeries, …).
+// Marker / price-line colors live in candle-aggregation.ts (pure, testable).
 import type {
   ChartOptions,
   DeepPartial,
-  CandlestickSeriesOptions,
-  HistogramSeriesOptions,
-  LineSeriesOptions,
+  CandlestickSeriesPartialOptions,
+  HistogramSeriesPartialOptions,
+  LineSeriesPartialOptions,
 } from 'lightweight-charts';
+import { CrosshairMode, LineStyle } from 'lightweight-charts';
 
 export const DARK_CHART_OPTIONS: DeepPartial<ChartOptions> = {
   layout: {
     background: { color: 'transparent' },
     textColor: '#9898b0',
-    fontFamily: "'JetBrains Mono', monospace",
+    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
     fontSize: 11,
   },
   grid: {
-    vertLines: { color: '#1a1a2e', style: 1 },
-    horzLines: { color: '#1a1a2e', style: 1 },
+    vertLines: { color: '#1a1a2e', style: LineStyle.Dotted },
+    horzLines: { color: '#1a1a2e', style: LineStyle.Dotted },
   },
   crosshair: {
-    mode: 0,
+    mode: CrosshairMode.Normal,
     vertLine: {
       color: '#5a5a78',
       width: 1,
-      style: 2,
+      style: LineStyle.Dashed,
       labelBackgroundColor: '#2a2a3e',
     },
     horzLine: {
       color: '#5a5a78',
       width: 1,
-      style: 2,
+      style: LineStyle.Dashed,
       labelBackgroundColor: '#2a2a3e',
     },
   },
@@ -60,7 +66,7 @@ export const DARK_CHART_OPTIONS: DeepPartial<ChartOptions> = {
   },
 };
 
-export const CANDLESTICK_OPTIONS: DeepPartial<CandlestickSeriesOptions> = {
+export const CANDLESTICK_OPTIONS: DeepPartial<CandlestickSeriesPartialOptions> = {
   upColor: '#39ff14',
   downColor: '#ff3b5c',
   borderUpColor: '#39ff14',
@@ -69,12 +75,13 @@ export const CANDLESTICK_OPTIONS: DeepPartial<CandlestickSeriesOptions> = {
   wickDownColor: '#ff3b5c',
 };
 
-export const VOLUME_OPTIONS: DeepPartial<HistogramSeriesOptions> = {
+/** Overlay histogram (v5 overlay convention: priceScaleId ''). */
+export const VOLUME_OPTIONS: DeepPartial<HistogramSeriesPartialOptions> = {
   color: 'rgba(0, 212, 255, 0.3)',
   priceFormat: {
     type: 'volume',
   },
-  priceScaleId: 'volume',
+  priceScaleId: '',
 };
 
 export const VOLUME_SCALE_OPTIONS = {
@@ -84,7 +91,10 @@ export const VOLUME_SCALE_OPTIONS = {
   },
 };
 
-export const MA20_OPTIONS: DeepPartial<LineSeriesOptions> = {
+export const VOLUME_UP_COLOR = 'rgba(57, 255, 20, 0.25)';
+export const VOLUME_DOWN_COLOR = 'rgba(255, 59, 92, 0.25)';
+
+export const MA20_OPTIONS: DeepPartial<LineSeriesPartialOptions> = {
   color: '#00d4ff',
   lineWidth: 1,
   priceLineVisible: false,
@@ -92,7 +102,7 @@ export const MA20_OPTIONS: DeepPartial<LineSeriesOptions> = {
   crosshairMarkerVisible: false,
 };
 
-export const MA50_OPTIONS: DeepPartial<LineSeriesOptions> = {
+export const MA50_OPTIONS: DeepPartial<LineSeriesPartialOptions> = {
   color: '#bf5af2',
   lineWidth: 1,
   priceLineVisible: false,
@@ -100,25 +110,18 @@ export const MA50_OPTIONS: DeepPartial<LineSeriesOptions> = {
   crosshairMarkerVisible: false,
 };
 
-export const BB_UPPER_OPTIONS: DeepPartial<LineSeriesOptions> = {
+export const BB_UPPER_OPTIONS: DeepPartial<LineSeriesPartialOptions> = {
   color: 'rgba(255, 215, 0, 0.4)',
   lineWidth: 1,
-  lineStyle: 2,
+  lineStyle: LineStyle.Dashed,
   priceLineVisible: false,
   lastValueVisible: false,
   crosshairMarkerVisible: false,
 };
 
-export const BB_LOWER_OPTIONS: DeepPartial<LineSeriesOptions> = {
+export const BB_LOWER_OPTIONS: DeepPartial<LineSeriesPartialOptions> = {
   ...BB_UPPER_OPTIONS,
 };
-
-export const SIGNAL_MARKER_COLORS = {
-  buy: '#39ff14',
-  sell: '#ff3b5c',
-  stopLoss: '#ff9500',
-  takeProfit: '#00d4ff',
-} as const;
 
 export function createChartOptions(
   overrides?: DeepPartial<ChartOptions>
