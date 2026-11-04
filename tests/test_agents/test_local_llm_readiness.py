@@ -45,7 +45,9 @@ def agents(monkeypatch):
 def test_local_probe_requires_healthy_and_available_model(agents, monkeypatch, probe, expected):
     monkeypatch.setattr(llm_factory, "local_health", AsyncMock(return_value=probe))
     monkeypatch.setattr(llm_factory, "local_base_url", lambda: "http://ollama.invalid/v1")
-    monkeypatch.setattr(llm_factory, "provider_model", lambda _: "qwen2.5:3b")
+    # provider_model() is called with zero args by the readiness probe
+    # (provider defaults to resolve_provider()); accept any call pattern.
+    monkeypatch.setattr(llm_factory, "provider_model", lambda *_, **__: "qwen2.5:3b")
     monkeypatch.setattr(agents, "_llm_health_cache", {"ts": 0.0, "result": None})
     monkeypatch.setattr(agents, "_llm_health_lock", asyncio.Lock())
     monkeypatch.setattr(agents.redis_client, "health_check", AsyncMock(return_value=True))
