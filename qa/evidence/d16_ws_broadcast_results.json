@@ -1,0 +1,32 @@
+{
+ "results": [
+  {
+   "what": "auth frame accepted",
+   "expected": "{\"type\":\"auth\",\"ok\":true}",
+   "actual": "{\"type\": \"auth\", \"ok\": true}",
+   "status": "PASS",
+   "evidence": "ws recv#1"
+  },
+  {
+   "what": "pub/sub relay delivery",
+   "expected": "published frame received verbatim",
+   "actual": "{\"type\": \"qa_broadcast_probe\", \"symbol\": \"XAUUSD\", \"data\": {\"v\": 1}}",
+   "status": "PASS",
+   "evidence": "redis PUBLISH nexus:ws:broadcast -> ws frame"
+  },
+  {
+   "what": "no auth frame -> server closes",
+   "expected": "4401 close",
+   "actual": "closed code=4401",
+   "status": "PASS",
+   "evidence": "ws negative probe"
+  },
+  {
+   "what": "garbage token -> server closes",
+   "expected": "4401 close",
+   "actual": "closed code=4401",
+   "status": "PASS",
+   "evidence": "ws negative probe"
+  }
+ ]
+}

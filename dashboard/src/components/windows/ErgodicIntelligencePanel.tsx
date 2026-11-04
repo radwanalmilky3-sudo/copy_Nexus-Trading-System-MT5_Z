@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState, useCallback } from 'react'
 import { getAuthHeaders } from '@/lib/api-client'
+import { gatewayWsUrl } from '@/lib/gateway-ws'
 
 interface HurstData {
   H: number
@@ -85,14 +86,20 @@ export default function ErgodicIntelligencePanel() {
 
   useEffect(() => {
     fetchData()
-    // Also listen on WebSocket for push updates
+    // Push updates via the gateway broadcast relay (ws://<gateway>/ws/broadcast).
+    // Native sockets require an auth frame as the FIRST message after open
+    // (same contract as ws-client.ts); without it the server closes 4401.
     let ws: WebSocket | null = null
     try {
-      const wsOrigin = typeof window !== 'undefined'
-        ? `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}`
-        : 'ws://127.0.0.1:9000'
-      const wsUrl = (process.env.NEXT_PUBLIC_WS_URL || `${wsOrigin}/ws?XTransformPort=9000`).replace(/^http/, 'ws')
-      ws = new WebSocket(wsUrl)
+      ws = new WebSocket(gatewayWsUrl('/broadcast'))
+      ws.onopen = () => {
+        const token = window.localStorage.getItem('nexus-token')
+        if (token && ws) {
+          ws.send(JSON.stringify({ type: 'auth', token }))
+        } else {
+          ws?.close(4401, 'authentication required')
+        }
+      }
       ws.onmessage = (e) => {
         try {
           const msg = JSON.parse(e.data)

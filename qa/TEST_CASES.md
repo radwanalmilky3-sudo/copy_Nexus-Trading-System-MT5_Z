@@ -42,8 +42,16 @@
 | TC-MT-03 | اتساق كامل EA↔OpenAPI↔EA_BRIDGE.md: handshake body (mt5_login/broker/server/terminal_version) = HandshakeIn؛ poll body results[{command_id,ok,detail,ticket,price}] = PollIn؛ توكن nexus_ea_ (EA يتحقق prefix+طول، الخادم يخزن SHA-256)؛ أوامر OPEN/CLOSE/PARTIAL_CLOSE/MODIFY؛ حد المطالبة 20 = `LIMIT 20` في ea_pending_commands؛ استعادة العالق 5 دقائق = `INTERVAL 5 MINUTE`؛ منع مزدوج = journal replay (سطر 477)؛ توقف بعد 20×401 | **PASS** | فحص ثابت موثق (ea.py:138-213، fundamental_store.py:187، NexusBridgeEA.mq5:7-29,463-494,505-566) |
 | TC-MT-04 | `.env` NEXUS_TRADING_MODE=paper + run.py يفرض paper افتراضياً (950-961) + LIVE_MODE_VALUES={live,production,prod} + executor: effective_broker=paper عند عدم live_mode_enabled؛ **حي 9007/health: broker=paper, trading_mode=paper, real_broker_execution_enabled=false** | **PASS** | جسم استجابة 9007/health حي + shared/safety.py + services/nexus_executor/main.py:569 |
 
-## TC-SC-01..16 — الشاشات (المرحلة 7)
+## TC-SC-01..16 — الشاشات (المرحلة 7) — منفذة 2026-11-04 ليلًا ✅ **17/17 PASS**
 لكل شاشة من المصفوفة: تحميل + صفر أخطاء كونسول/صفحة + نداءات شبكة + لقطة + زمن تحميل. (التفاصيل في SCREEN_COVERAGE_MATRIX).
+
+**نتائج الجولة الحية (أدلة `qa/evidence/tc_sc_results.json` + لقطات `docs/screenshots/round-m2-phase7/`):**
+| الشاشات | فعلي | الحالة | دليل |
+|---|---|---|---|
+| TC-SC-01 /login | load 840ms + دخول → /nexus + صفر أخطاء | **PASS** | tc_sc_results.json + لقطة 01 |
+| TC-SC-02..15 (14 شاشة) | load 1.3–4.6s (dev compile-on-demand) + صفر أخطاء صفحة؛ /nexus أعاد قياسه بعد إصلاحي D16/D17: صفر أخطاء WS + صفر تحذيرات مفاتيح + 404 صادق-فارغ فقط (موثق) | **PASS** | tc_sc_results.json + لقطة postfix + d16_ws_broadcast_results.json (4/4) |
+| TC-SC-16a/b التحويلان | بجلسة → /nexus/history و/nexus/settings بـ200 وصفر أخطاء؛ بلا جلسة → /login (حماية) | **PASS** | إعادة قياس معزولة + بجلسة |
+| موبايل 390×844 | /login و/nexus بلا أخطاء (لقطة) | **PASS** | mob__login.png, mob__nexus.png |
 
 ## TC-SV — الخدمات التسع (المرحلة 8)
 لكل خدمة SV-01..09: /health + openapi + نداء وظيفي حقيقي + حالة خطأ (مدخل خاطئ) + سجل.

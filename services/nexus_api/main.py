@@ -50,6 +50,7 @@ from .routers import (
 )
 from .websockets import (
     agents as ws_agents,
+    broadcast as ws_broadcast,
     news as ws_news,
     orders as ws_orders,
     positions as ws_positions,
@@ -71,6 +72,7 @@ async def _start_ws_broadcasters() -> None:
     from .websockets.orders import order_broadcaster
     from .websockets.news import news_broadcaster
     from .websockets.risk import risk_broadcaster
+    from .websockets.broadcast import broadcast_relay
 
     broadcasters = [
         tick_broadcaster(redis, ws_manager),
@@ -79,6 +81,7 @@ async def _start_ws_broadcasters() -> None:
         order_broadcaster(redis, ws_manager),
         news_broadcaster(redis, ws_manager),
         risk_broadcaster(redis, ws_manager),
+        broadcast_relay(redis, ws_manager),
     ]
     for coro in broadcasters:
         _broadcaster_tasks.append(asyncio.create_task(coro))
@@ -173,6 +176,7 @@ app.include_router(ws_positions.router)
 app.include_router(ws_orders.router)
 app.include_router(ws_news.router)
 app.include_router(ws_risk.router)
+app.include_router(ws_broadcast.router)
 
 
 # ── Health ───────────────────────────────────────────────────────────────────

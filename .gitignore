@@ -26,6 +26,7 @@ models_store/
 # secrets
 .env
 .env.*
+!.env.example
 *.key
 *.pem
 

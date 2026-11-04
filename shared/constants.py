@@ -158,6 +158,7 @@ class WSChannel(StrEnum):
     CALENDAR       = "calendar"
     PERFORMANCE    = "performance"
     ORDERS         = "orders"
+    BROADCAST      = "broadcast"  # generic service pub/sub relay (nexus:ws:broadcast)
 
 
 # ── Redis Streams ────────────────────────────────────────────────────────────

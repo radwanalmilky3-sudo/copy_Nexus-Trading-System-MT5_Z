@@ -1480,7 +1480,11 @@ class FundamentalRuntime:
     @staticmethod
     def _calendar_dto(event: CalendarEvent) -> dict[str, Any]:
         return {
-            "id": stable_event_id("cal-ui", event.source, event.event_name, event.timestamp.isoformat()),
+            # Include currency in the UI id: storage-level ids (stable_event_id
+            # "cal") hash source+name+currency+timestamp, but this DTO id omitted
+            # currency, so same-name/same-time events across currencies collided
+            # and React rendered duplicate keys in the dashboard calendar list.
+            "id": stable_event_id("cal-ui", event.source, event.event_name, event.currency, event.timestamp.isoformat()),
             "event_name": event.event_name,
             "currency": event.currency,
             "impact": str(event.impact).upper(),
