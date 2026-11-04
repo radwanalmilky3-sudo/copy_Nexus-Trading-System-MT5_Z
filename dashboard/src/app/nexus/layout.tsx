@@ -16,6 +16,7 @@ import {
   ChevronDown,
   Cpu,
   Trophy,
+  Cable,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { apiClient } from '@/lib/api-client';
@@ -99,6 +100,7 @@ const NAV_ITEMS = [
   { href: '/nexus/models',                 label: 'Models',     icon: Cpu },
   { href: '/nexus/model-comparison',       label: 'Compare',    icon: Trophy },
   { href: '/nexus/history',                label: 'History',    icon: History },
+  { href: '/nexus/ea-bridge',              label: 'جسر MT5',    icon: Cable },
   { href: '/nexus/settings',               label: 'Settings',   icon: Settings },
   { href: '/nexus/progress',                label: 'متابعة التطوير', icon: Activity },
   { href: '/nexus/research-lab',            label: 'مختبر البحث', icon: BrainCircuit },
