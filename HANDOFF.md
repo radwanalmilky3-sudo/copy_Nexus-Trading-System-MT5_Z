@@ -1,6 +1,6 @@
 # HANDOFF — حالة مشروع Nexus Trader MT5 (تُحدَّث مع كل مرحلة)
 
-> آخر تحديث: 2026-11-04 (بعد commit `d8b0618`)
+> آخر تحديث: 2026-11-04 (بعد commit `118d201` — بعد استعادة كاملة من إعادة تدوير عميقة للصندوق)
 > الهدف: أي جلسة جديدة تكمل من هنا دون إعادة نقاش.
 
 ## 1. ما هو المشروع
@@ -8,7 +8,7 @@
 + داشبورد Next.js 14 + Redis + DuckDB. يعمل حاليًا **Paper Trading** في بيئة عرض (sandbox).
 
 ## 2. التشغيل السريع
-- المستودع: `/home/z/my-project/nexus-trading-system-mt5` (remote: radwanmhh-svg/Nexus-Trading-System-MT5)
+- المستودع: `/home/z/my-project/Nexus-Trading-System-MT5` (بحروف كبيرة — remote: radwanmhh-svg/Nexus-Trading-System-MT5)
 - البيئة الافتراضية: `/home/z/venv-nexus`
 - الإقلاع: `run.py --services nexus-data,nexus-features,nexus-agents,nexus-risk,nexus-executor,nexus-monitor,nexus-api --paper --skip-preflight --no-frontend`
 - المنافذ: 9000 api | 9004 agents | 9001 data | 3100 dashboard مباشر | 3000 بروكسي | Redis 6379
@@ -23,6 +23,7 @@
 |---|---|
 | `redhwan` | **المالك** — Super Admin، نشط، سجل دخول ناجح (2026-11-03 23:23 UTC) |
 | `admin` | تجريبي قديم (Demo Admin) — مرشح للتعطيل عند طلب المالك |
+| `NEXUS_ADMIN_PIN` | `tyj95abn` (أُعيد توليده بعد فقد `.env` القديم — يقرأ من `.env` المحلي) |
 | bootstrap | مُغلق عمدًا (`bootstrap_user_count = 2`) — أي محاولة تعطي 409 بشكل صحيح |
 
 ## 5. آخر ما أُنجز (حتى `d8b0618`)
@@ -35,8 +36,9 @@
 ## 6. قائمة التنفيذ المتفق عليها (بالترتيب)
 1. 🔴 ~~إصلاح إنشاء الأدمن~~ — **منجز** (d8b0618)
 2. 📄 ~~حفظ TEST_PLAN.md + HANDOFF.md~~ — **منجز** (هذه الوثيقة)
-3. 🎫 نظام API Token للـ EA: توليد `nexus_ea_...` (secrets.token_urlsafe(32)، 256 بت)، تخزين SHA-256 فقط، ربط أول مصافحة بـ mt5_login/broker، إلغاء فوري، عرض مرة واحدة، جدول `api_tokens`، نقاط `/ea/handshake` و`/ea/poll`
-4. 🌉 جسر MT5: EA (MQL5) على جهاز المستخدم يستطلع كل 1-3 ث (OnTimer) طابور أوامر من nexus-executor، ويرفع بيانات (شموع/تيكات/حساب) — idempotency لكل أمر، خريطة رموز وسطاء، HTTPS إجباري، Allow WebRequest في دليل المستخدم
+3. ✅ ~~نظام API Token للـ EA~~ — **منجز** (`118d201`): جداول api_tokens/ea_commands، نقاط /api/admin/ea-tokens (create/list/revoke)، /api/ea/handshake، /api/ea/poll — مُختبر كاملًا على النظام الحي (إنشاء→مصافحة→مطالبة→تنفيذ→idempotency→إلغاء→401)
+4. 🔴 **جسر MT5 (التالي)**: كتابة الإكسبيرت MQL5 (WebRequest إلى /api/ea/handshake ثم /api/ea/poll كل 3 ث، OnTimer، تنفيذ الأوامر OrderSend/modify/close، إعادة تقارير النتائج)، ثم ربط nexus-executor بكتابة أوامر في ea_commands، ثم شاشة توكنات في الداشبورد
+- ⚠️ مفتاح ZAI_API_KEY فارغ حاليًا (فُقد مع .env القديم) — الوكلاء يعملون بقوالب احتياطية حتى يوفر المالك مفتاحًا جديدًا
 5. 🖥️ جولات اختبار الشاشات وفق `TEST_PLAN.md` (الجرد أولًا) + تقرير بالصور + Playwright
 6. 🟡 معلّقان بقرار المالك: توصيل rate limiter فعليًا + تشديد `risk_rules.yaml`
 
