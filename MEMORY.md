@@ -36,3 +36,10 @@
 - `curl -L http://127.0.0.1:3100/` = 200 و`http://127.0.0.1:3000/` = 200
 - 9004/health = 503 مقصود حتى توفر `ZAI_API_KEY` (fail-closed، ليس عطلًا)
 - E2E الجسر: `python3 scripts/ea_bridge_e2e.py` (يتطلب NEXUS_E2E_PASS)
+
+## إضافات جلسة 2026-11-04 الصباحية (إكمال يدوي بعد استعادة الكرون)
+- النسخ الاحتياطي نُفّذ يدوياً أيضاً: `5e00e03` على فرع `backups` (28KB مشفرة، tar.gz + openssl aes-256-pbkdf2) — السكربت: `/home/z/my-project/scripts/nexus_backup.sh` (خارج المستودع) — التعليمات في رأسه، وفُحص عكسياً (فك/فحص) بنجاح
+- تصحيح: معرّف redhwan الحي الحالي هو `56ecb98fe57d4b47b6aaebcbdb7b8638` (المعرف في الفهرس أعلاه من حالة قاعدة سابقة) — تمت إعادة تعيين كلمته عبر UPSERT داخلي (`fundamental/record`) بالسر الداخلي؛ الكلمة الحالية في `.env` باسم `NEXUS_ADMIN_PASSWORD`
+- تسجيل دخول redhwan فُحص بنجاح (HTTP 200، role=super_admin)
+- EA: `/api/ea/handshake` و `/api/ea/poll` يردان 401 بدون توكن (سلوك صحيح مؤكد حياً)
+- ملاحظة أمان: ADMIN_PIN و ADMIN_PASSWORD ظهرا عارضاً في مخرجات محادثة المالك → يُنصح بتدويرهما بعد حفظهما
