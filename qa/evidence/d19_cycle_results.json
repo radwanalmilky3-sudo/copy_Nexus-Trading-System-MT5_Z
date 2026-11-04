@@ -1,0 +1,42 @@
+{
+  "cycle": "D19_TEST_DEBT_REMEDIATION",
+  "date": "2026-11-05",
+  "baseline_git": "291386a",
+  "closing_git": "5d1c0e0",
+  "commits": [
+    "6d94020",
+    "ec9e79c",
+    "a102df1",
+    "4f6801c",
+    "5d1c0e0"
+  ],
+  "before": {
+    "pytest": "1842 passed / 39 failed",
+    "node": "191/202"
+  },
+  "after": {
+    "pytest": "1884 passed / 0 failed / 20 skipped (honest zero-state) / 1 xfailed",
+    "node": "202/202",
+    "playwright": "5/5 PASS (14 screens, page_errors=0)",
+    "heal": "redis/forwarder/dashboard/stack ok @ 18:25:28"
+  },
+  "production_code_changes": "none (requirements websockets pin >=13.0,<17.0 only declaration-of-reality change, live-verified)",
+  "defects_closed": [
+    "D18",
+    "D19"
+  ],
+  "remaining_open_owner_decisions": [
+    "D14",
+    "D15",
+    "D6",
+    "D4",
+    "D5",
+    "D7",
+    "N3",
+    "P2-1",
+    "N1",
+    "N2",
+    "N4",
+    "N6"
+  ]
+}
