@@ -43,3 +43,11 @@
 - تسجيل دخول redhwan فُحص بنجاح (HTTP 200، role=super_admin)
 - EA: `/api/ea/handshake` و `/api/ea/poll` يردان 401 بدون توكن (سلوك صحيح مؤكد حياً)
 - ملاحظة أمان: ADMIN_PIN و ADMIN_PASSWORD ظهرا عارضاً في مخرجات محادثة المالك → يُنصح بتدويرهما بعد حفظهما
+
+## استرجاع 2026-11-04 (بعد مسح بيئة الصندوق)
+- البيئة مُسحت بالكامل (~18:39)؛ الاسترجاع اكتمل من فرع main عبر PAT جديد من المالك.
+- أعيد بناء: redis 7.4.1 المصدرية في `/home/z/redis-bin`، venv في `/home/z/venv-nexus` (شامل torch CPU وsklearn وحزم TA)، وnpm ci للوحة.
+- `.env` أعيد توليده: القيم المعروفة (ADMIN_PASSWORD/ADMIN_PIN) + أسرار جديدة مولدة (INTERNAL_API_SECRET، JWT، RISK_APPROVAL، BACKUP_PASSPHRASE). ZAI_API_KEY ما زال معطلاً (9004=503 مقصود).
+- `data/nexus.duckdb` **فُقدت نهائياً** — النسخة المشفرة على فرع backups غير قابلة للفك لأن BACKUP_PASSPHRASE القديمة كانت داخل .env المفقود. القاعدة الحالية جديدة فارغة.
+- حساب redhwan أعيد إنشاؤه (`fix_admin_user.py` ثم `reset_redhwan_pw.py`): دخول موثق 200 بدور super_admin.
+- التوكن مخزّن في `~/.git-credentials` (credential.helper store) لتعمل النسخ الاحتياطية اليومية دون تدخل.
