@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معاينة ثيم الذهب — Gold Terminal Theme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --background: oklch(0.16 0.01 85);
+    --foreground: oklch(0.93 0.012 85);
+    --card: oklch(0.2 0.012 85);
+    --popover: oklch(0.19 0.012 85);
+    --primary: oklch(0.78 0.145 82);
+    --primary-foreground: oklch(0.18 0.03 82);
+    --secondary: oklch(0.26 0.015 85);
+    --muted: oklch(0.25 0.012 85);
+    --muted-foreground: oklch(0.66 0.02 85);
+    --accent: oklch(0.28 0.025 82);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: rgba(255,255,255,0.09);
+    --ring: rgba(229,173,52,0.55);
+    --radius: 0.625rem;
+    --font-sans: 'IBM Plex Sans Arabic', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01";
+    min-height: 100vh;
+    position: relative;
+  }
+  .glow {
+    position: fixed; inset-inline: 0; top: 0; height: 320px; z-index: 0;
+    background: radial-gradient(ellipse at top, rgba(245,158,11,0.12), transparent 62%);
+    pointer-events: none;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; position: relative; z-index: 1; }
+
+  /* ===== الهيدر ===== */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    border-bottom: 1px solid rgba(245,158,11,0.15);
+    background: color-mix(in oklab, var(--background) 80%, transparent);
+    backdrop-filter: blur(12px);
+  }
+  .header-in { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-size: 18px;
+    background: linear-gradient(to bottom right, #fcd34d, #d97706);
+    box-shadow: 0 8px 20px rgba(245,158,11,0.25);
+  }
+  h1 { font-size: 18px; font-weight: 700; line-height: 1.25; }
+  .sub { font-size: 12px; color: #a3a3a3; }
+  .badge-live {
+    display: inline-flex; align-items: center; gap: 4px;
+    border: 1px solid rgba(245,158,11,0.4); background: rgba(245,158,11,0.1); color: #fcd34d;
+    border-radius: 999px; padding: 4px 10px; font-size: 12px;
+  }
+
+  .gold-text {
+    background: linear-gradient(120deg, #fde68a 0%, #f59e0b 45%, #d97706 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .ltr { direction: ltr; unicode-bidi: isolate; }
+
+  section { margin-top: 40px; }
+  h2 { font-size: 14px; font-weight: 600; color: #fcd34d; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  h2::after { content: ""; flex: 1; height: 1px; background: rgba(245,158,11,0.15); }
+  .hint { font-size: 11px; color: #737373; margin-bottom: 12px; }
+
+  /* ===== بطاقات ===== */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;
+  }
+  .card.gold { border-color: rgba(245,158,11,0.2); background: linear-gradient(to bottom right, rgba(245,158,11,0.1), transparent); }
+  .card .label { font-size: 12px; color: #a3a3a3; }
+  .card .big { font-size: 30px; font-weight: 700; color: #fcd34d; margin-top: 4px; display: flex; align-items: baseline; gap: 8px; }
+  .card .meta { font-size: 11px; color: #737373; margin-top: 4px; }
+
+  /* ===== شارات ===== */
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 500; }
+  .b-pos { background: #059669; color: #fff; }
+  .b-neg { background: #ef4444; color: #fff; }
+  .b-neu { background: #525252; color: #fff; }
+  .b-gold { background: #f59e0b; color: #451a03; font-weight: 600; }
+  .b-out { background: rgba(245,158,11,0.1); color: #fcd34d; border: 1px solid rgba(245,158,11,0.4); }
+
+  /* ===== أزرار وتبويبات ===== */
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn {
+    border-radius: 10px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+    border: 1px solid transparent; font-family: inherit;
+  }
+  .btn-gold { background: linear-gradient(to bottom, #fbbf24, #d97706); color: #451a03; box-shadow: 0 6px 16px rgba(245,158,11,0.25); }
+  .btn-outline { background: transparent; border-color: #404040; color: #a3a3a3; }
+  .btn-outline:hover { border-color: rgba(245,158,11,0.4); color: #fcd34d; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tab { border-radius: 10px; padding: 6px 14px; font-size: 13px; color: #a3a3a3; cursor: pointer; }
+  .tab:hover { background: #171717; color: #fde68a; }
+  .tab.active { background: linear-gradient(to bottom, #fbbf24, #d97706); color: #451a03; font-weight: 700; box-shadow: 0 6px 16px rgba(245,158,11,0.25); }
+
+  /* ===== لوحة الألوان ===== */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .sw { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: var(--card); }
+  .sw .c { height: 52px; }
+  .sw .t { padding: 8px 10px; font-size: 11px; }
+  .sw .t b { display: block; font-size: 12px; font-weight: 600; }
+  .sw .t span { color: #737373; direction: ltr; unicode-bidi: isolate; font-family: var(--font-mono); font-size: 10px; }
+
+  /* ===== تيبوغرافي ===== */
+  .type-row { padding: 12px 0; border-bottom: 1px dashed rgba(255,255,255,0.08); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .type-tag { font-family: var(--font-mono); font-size: 10px; color: #737373; min-width: 130px; direction: ltr; }
+
+  /* ===== شريط تقدم ===== */
+  .track { height: 6px; border-radius: 999px; background: #262626; width: 100%; margin-top: 10px; }
+  .fill { height: 100%; border-radius: 999px; background: linear-gradient(to right, #d97706, #fcd34d); width: 65%; }
+
+  /* ===== جدول طرفية ===== */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: right; color: #989285; font-weight: 500; font-size: 12px; padding: 8px 10px; border-bottom: 1px solid rgba(245,158,11,0.15); }
+  td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .pos { color: #34d399; font-weight: 600; }
+  .neg { color: #f87171; font-weight: 600; }
+  .neu { color: #a8a29e; }
+
+  code.inline { font-family: var(--font-mono); font-size: 11px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; direction: ltr; unicode-bidi: isolate; }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+
+<header>
+  <div class="header-in">
+    <div class="brand">
+      <div class="logo">🥇</div>
+      <div>
+        <h1>FinGPT <span class="gold-text">Gold</span> — معاينة الثيم</h1>
+        <p class="sub">ثيم «طرفية الذهب» — أسود دافئ + ذهبي عنبري · IBM Plex Sans Arabic / Mono · RTL</p>
+      </div>
+    </div>
+    <span class="badge-live">● بث حي</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2>البطاقات</h2>
+    <p class="hint">البطاقة الذهبية (from-amber-500/10 to-transparent + border-amber-500/20) وبطاقة عادية</p>
+    <div class="grid">
+      <div class="card gold">
+        <p class="label">الذهب — عقود COMEX</p>
+        <div class="big num ltr">$3,957.9 <span style="font-size:12px;background:#059669;color:#fff;border-radius:999px;padding:2px 8px;">+1.51%</span></div>
+        <p class="meta num ltr">2026-11-03 · real data</p>
+      </div>
+      <div class="card">
+        <p class="label">نطاق 52 أسبوعاً</p>
+        <div class="big" style="font-size:17px"><span class="num ltr">$3,879</span> <span style="font-size:12px;color:#737373">→</span> <span class="num ltr" style="color:#fcd34d">$5,586</span></div>
+        <div class="track"><div class="fill"></div></div>
+        <p class="meta">موقع السعر داخل النطاق السنوي</p>
+      </div>
+      <div class="card">
+        <p class="label">دقة نموذج الذهب</p>
+        <div class="big num ltr">92.5%</div>
+        <p class="meta">مقابل 45% للنموذج العام — على بيانات لم يرها التدريب</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>الشارات والأزرار والتبويبات</h2>
+    <div class="row" style="margin-bottom:14px">
+      <span class="badge b-pos">إيجابي ▲</span>
+      <span class="badge b-neg">سلبي ▼</span>
+      <span class="badge b-neu">محايد</span>
+      <span class="badge b-gold">نموذج الذهب ✓</span>
+      <span class="badge b-out">● بث حي كل 4 ثوانٍ</span>
+    </div>
+    <div class="row" style="margin-bottom:14px">
+      <button class="btn btn-gold">الزر الذهبي النشط</button>
+      <button class="btn btn-outline">زر ثانوي</button>
+      <kbd class="num" style="border:1px solid #404040;border-radius:6px;padding:2px 8px;font-size:10px" dir="ltr">⌘K</kbd>
+    </div>
+    <div class="tabs">
+      <div class="tab active">📊 السوق</div>
+      <div class="tab">📰 الأخبار</div>
+      <div class="tab">⚡ التجربة الحية</div>
+      <div class="tab">🧪 التدريب</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>لوحة الألوان</h2>
+    <div class="swatches">
+      <div class="sw"><div class="c" style="background:#0f0d08"></div><div class="t"><b>background</b><span>oklch(0.16 0.01 85) · #0f0d08</span></div></div>
+      <div class="sw"><div class="c" style="background:#191610"></div><div class="t"><b>card</b><span>oklch(0.2 0.012 85) · #191610</span></div></div>
+      <div class="sw"><div class="c" style="background:#e5ad34"></div><div class="t"><b>primary ذهبي</b><span>oklch(0.78 0.145 82) · #e5ad34</span></div></div>
+      <div class="sw"><div class="c" style="background:#ebe7df"></div><div class="t"><b>foreground</b><span>oklch(0.93 0.012 85) · #ebe7df</span></div></div>
+      <div class="sw"><div class="c" style="background:#989285"></div><div class="t"><b>muted-foreground</b><span>oklch(0.66 0.02 85) · #989285</span></div></div>
+      <div class="sw"><div class="c" style="background:#2f281b"></div><div class="t"><b>accent</b><span>oklch(0.28 0.025 82) · #2f281b</span></div></div>
+      <div class="sw"><div class="c" style="background:#fcd34d"></div><div class="t"><b>amber-300</b><span>#fcd34d</span></div></div>
+      <div class="sw"><div class="c" style="background:#f59e0b"></div><div class="t"><b>amber-500</b><span>#f59e0b</span></div></div>
+      <div class="sw"><div class="c" style="background:#d97706"></div><div class="t"><b>amber-600</b><span>#d97706</span></div></div>
+      <div class="sw"><div class="c" style="background:linear-gradient(120deg,#fde68a,#f59e0b 45%,#d97706)"></div><div class="t"><b>gold-text</b><span>تدرج العنوان</span></div></div>
+      <div class="sw"><div class="c" style="background:#059669"></div><div class="t"><b>emerald-600 إيجابي</b><span>#059669</span></div></div>
+      <div class="sw"><div class="c" style="background:#ef4444"></div><div class="t"><b>red-500 سلبي</b><span>#ef4444</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>الخطوط والمقاييس</h2>
+    <div class="type-row"><span class="type-tag">text-xl / bold 700</span><span style="font-size:20px;font-weight:700">طرفية سوق الذهب الذكية <span class="gold-text">Gold</span></span></div>
+    <div class="type-row"><span class="type-tag">text-3xl / bold + num</span><span class="num ltr" style="font-size:30px;font-weight:700;color:#fcd34d">$3,957.9</span></div>
+    <div class="type-row"><span class="type-tag">text-sm / regular 400</span><span style="font-size:14px">نص عادي بخط IBM Plex Sans Arabic — قراءة مريحة بالعربية</span></div>
+    <div class="type-row"><span class="type-tag">text-xs / neutral-400</span><span style="font-size:12px;color:#a3a3a3">نموذج مالي متخصص بأخبار الذهب · دقة 92.5%</span></div>
+    <div class="type-row"><span class="type-tag">text-[11px] / neutral-500</span><span style="font-size:11px;color:#737373">تفاصيل دقيقة وتسميات ثانوية فوق البطاقات</span></div>
+    <div class="type-row"><span class="type-tag">mono / tabular</span><span class="num ltr" style="font-size:14px">0123456789 · $4,105.00 · 92.5% · 269ms</span></div>
+  </section>
+
+  <section>
+    <h2>جدول طرفية (تلوين التصنيفات)</h2>
+    <table>
+      <thead><tr><th>الخبر</th><th>المصدر</th><th>نموذج الذهب</th><th>النموذج العام</th><th>زمن الاستجابة</th></tr></thead>
+      <tbody>
+        <tr><td>الذهب يرتفع مع موجة طلب الملاذات الآمنة</td><td class="num ltr">Reuters</td><td class="pos">إيجابي</td><td class="neu">محايد</td><td class="num ltr">269ms</td></tr>
+        <tr><td>تراجع عقود الذهب أمام قوة الدولار</td><td class="num ltr">Bloomberg</td><td class="neg">سلبي</td><td class="neg">سلبي</td><td class="num ltr">298ms</td></tr>
+        <tr><td>البنوك المركزية تكمّل مشترياتها من المعدن الأصفر</td><td class="num ltr">Kitco</td><td class="pos">إيجابي</td><td class="neu">محايد</td><td class="num ltr">271ms</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>التدرجات والتوهجات</h2>
+    <div class="grid">
+      <div class="card" style="text-align:center">
+        <p class="label">.gold-text — تدرج النص الذهبي</p>
+        <p style="font-size:26px;font-weight:700" class="gold-text">تدرج 120°</p>
+        <p class="meta num ltr">linear-gradient(120deg, #fde68a, #f59e0b 45%, #d97706)</p>
+      </div>
+      <div class="card" style="text-align:center;background:radial-gradient(ellipse at top, rgba(245,158,11,0.12), transparent 62%)">
+        <p class="label">الهالة العلوية</p>
+        <p style="font-size:26px;font-weight:700" class="gold-text">radial glow</p>
+        <p class="meta num ltr">radial-gradient(ellipse at top, rgba(245,158,11,0.12), transparent 62%)</p>
+      </div>
+      <div class="card">
+        <p class="label">الهيدر الزجاجي</p>
+        <div style="margin-top:8px;border-radius:10px;border-bottom:1px solid rgba(245,158,11,0.15);background:rgba(15,13,8,0.8);backdrop-filter:blur(12px);padding:10px">
+          <span style="font-size:13px">border-amber-500/15 · bg-background/80 · backdrop-blur-md</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
