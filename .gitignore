@@ -38,3 +38,7 @@ logs/
 
 # بيئة بايثون المحلية (داخل مجلد المشروع — لا تُرفع أبدًا)
 venv-nexus/
+
+# build artifacts
+dashboard/tsconfig.tsbuildinfo
+*.tsbuildinfo
