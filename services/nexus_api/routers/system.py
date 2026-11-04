@@ -88,6 +88,28 @@ async def kill_switch(
     return {"status": "kill_switch_activated", "reason": body.reason}
 
 
+@router.post("/kill-switch/release", status_code=status.HTTP_200_OK)
+async def kill_switch_release(
+    body: KillSwitchRequest,
+    actor: CurrentUser,
+    redis: RedisClient = Depends(get_redis),
+) -> dict[str, str]:
+    """Release a latched EMERGENCY STOP (operator override, PIN required).
+
+    Clears the kill-switch latch so trading controls can resume. Auto-trade is
+    intentionally NOT restored here — the operator must re-enable it explicitly
+    via /toggle-auto-trade (fail-safe default).
+    """
+    verify_pin(body.pin)
+    await redis.cache_delete("system:kill_switch")
+    await redis.publish_channel(
+        "system:commands",
+        {"command": "kill_switch_released", "reason": body.reason},
+    )
+    await logger.awarning("KILL_SWITCH released", reason=body.reason)
+    return {"status": "kill_switch_released", "reason": body.reason}
+
+
 @router.post("/toggle-auto-trade")
 async def toggle_auto_trade(
     body: ToggleAutoTradeRequest,

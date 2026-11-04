@@ -835,6 +835,15 @@ class ApiClient {
     return wrap(data);
   }
 
+  async systemKillSwitchRelease(pin: string, reason = 'manual release from dashboard'): Promise<ApiResponse<Record<string, unknown>>> {
+    const res = await this.fetchPath('/api/system/kill-switch/release', {
+      method: 'POST',
+      body: JSON.stringify({ pin, reason }),
+    });
+    const data = await this.parseOk<Record<string, unknown>>(res);
+    return wrap(data);
+  }
+
   async getSystemMode(): Promise<ApiResponse<{ mode: 'paper' | 'live' | 'PAPER' | 'LIVE'; auto_trade: boolean; kill_switch: boolean }>> {
     const res = await this.fetchPath('/api/system/mode');
     return wrap(await this.parseOk<{ mode: 'paper' | 'live' | 'PAPER' | 'LIVE'; auto_trade: boolean; kill_switch: boolean }>(res));
