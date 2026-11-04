@@ -111,12 +111,14 @@ class BaseAgent(ABC):
         import asyncio
 
         from ..brain_budget import (
-            backoff_delay,
             budget_status,
+            is_rate_limit_error,
             max_attempts,
             note_provider_failure,
             note_provider_success,
+            pace_llm_call,
             provider_circuit_open,
+            rate_limit_backoff,
             record_usage,
             reserve_llm_call,
         )
@@ -151,6 +153,9 @@ class BaseAgent(ABC):
         result = None
         for attempt in range(1, attempts + 1):
             try:
+                # D6: space call starts process-wide so the parallel agent
+                # fan-out cannot burst the provider into a 429 → NO_TRADE.
+                await pace_llm_call()
                 result = await asyncio.wait_for(chain.ainvoke(input_dict), timeout=timeout_sec)
                 note_provider_success()
                 break
@@ -158,7 +163,16 @@ class BaseAgent(ABC):
                 last_exc = exc
                 note_provider_failure(str(exc))
                 if attempt < attempts:
-                    await asyncio.sleep(backoff_delay(attempt))
+                    # D6: a 429/quota rejection gets a calmer, longer wait than
+                    # a plain failure — retrying fast into a closed window
+                    # just burns the retry budget.
+                    delay = rate_limit_backoff(attempt, error=str(exc))
+                    if is_rate_limit_error(str(exc)):
+                        logger.warning(
+                            "brain_budget.rate_limited_retry agent=%s attempt=%d delay=%.1fs",
+                            self.agent_id, attempt, delay,
+                        )
+                    await asyncio.sleep(delay)
 
         if result is None:
             if last_exc is not None:

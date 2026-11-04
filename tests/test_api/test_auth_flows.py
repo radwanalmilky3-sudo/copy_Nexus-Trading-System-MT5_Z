@@ -213,10 +213,12 @@ async def test_logout_with_valid_token_captures_audit_instead_of_real_write(
     )
 
     assert response.status_code == 200
-    assert response.json() == {"ok": True}
+    # D15: logout now reports server-side revocation of the presented token.
+    assert response.json() == {"ok": True, "revoked": True}
     assert [table for table, _ in writes] == ["user_audit_log"]
     assert writes[0][1]["action"] == "auth.logout"
     assert writes[0][1]["actor_user_id"] == "u-1"
+    assert writes[0][1]["details_json"] == '{"revoked": true}'
 
 
 @pytest.mark.asyncio

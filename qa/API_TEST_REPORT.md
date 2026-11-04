@@ -3,7 +3,7 @@
 > التاريخ: 2026-11-04 ليلًا. البوابة الحية: `http://127.0.0.1:9000` (OpenAPI حي 165 مساراً). الأدلة: `qa/evidence/{tc_au_results.json, tc_mt_results.json, auth_login.json, phase12_rate_limit_results.json, d16_ws_broadcast_results.json, tc_sv_results.json}`.
 > الحالات: PASS / FAIL / BLOCKED / NOT TESTED / FIXED-PENDING RETEST / FIXED-VERIFIED.
 
-## 1) المصادقة والتوكنات — TC-AU (المرحلة 5): **8/10** (فشلان موثقان بقرار مالك)
+## 1) المصادقة والتوكنات — TC-AU (المرحلة 5): **10/10** (فشلا D14/D15 الموثقان عولجا بإعادة اختبار حي 2026-11-05 بعد قرار المالك «نفّذ» — أدلة `qa/evidence/d14_d15_d6_fix_evidence.json`)
 
 | ID | الفحص | الفعلي الحي | الحالة |
 |---|---|---|---|
@@ -12,8 +12,8 @@
 | TC-AU-03 | Bearer تالف | 401 | **PASS** |
 | TC-AU-04 | بلا ترويسة | 401 | **PASS** |
 | TC-AU-05 | توكن منته/ملغى | 401 | **PASS** |
-| TC-AU-06 | تجديد refresh | **404 — لا endpoint** (تصميم JWT وحيد 24h؛ تناقض الوثائق صُحح في DATA_FLOW_MAP F5) | **FAIL موثق (D14)** |
-| TC-AU-07 | خروج ثم استخدام القديم | 200 بعد logout (JWT عديم الحالة؛ مخفف: /me يرفض غير active فوراً) | **FAIL موثق (D15)** |
+| TC-AU-06 | تجديد refresh | **200 + زوج مدوّر** — endpoint نُفّذ (قرار المالك 2026-11-05): أزواج typed بـjti، تدوير single-use، تقييد معدل 30/60s؛ replay → 401 "Refresh token revoked" | **PASS (إعادة اختبار حي 2026-11-05 — D14)** ✅ |
+| TC-AU-07 | خروج ثم استخدام القديم | **401 "Token revoked (logged out)"** — denylist Redis بـjti نُفّذت (قرار المالك 2026-11-05)؛ logout يُبلّغ `revoked=true` صادقاً؛ fail-open موثق عند تعذر Redis | **PASS (إعادة اختبار حي 2026-11-05 — D15)** ✅ |
 | TC-AU-08 | دورة توكن EA | إنشاء→نشط→إلغاء→ملغى (SHA-256 فقط) | **PASS** |
 | TC-AU-09 | RBAC خلفي | مشاهد × API إداري = **403** (أعيد إثباته حياً في TC-E2E-05) | **PASS** |
 | TC-AU-10 | PIN الحساسات | PIN خاطئ على kill-release = 403 | **PASS** |

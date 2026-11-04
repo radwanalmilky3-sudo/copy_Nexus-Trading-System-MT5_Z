@@ -1,0 +1,48 @@
+{
+  "cycle": "owner_decisions_execute_2026-11-05",
+  "trigger": "Owner decision 'نفّذ' (2026-11-05): implement recommended options — D15 option (a) Redis denylist, D14 option (a) refresh endpoint, D6 call spacing",
+  "paper_only": true,
+  "production_code_changes": [
+    "services/nexus_api/middleware/auth.py — typed tokens (access/refresh) with jti; decode_token(expected_type); Redis denylist (nexus:auth:denylist:<jti>) add/check helpers; get_current_user enforces revocation (401 'Token revoked (logged out)')",
+    "services/nexus_api/routers/admin.py — login returns token+refresh_token+expiresAt+refreshExpiresAt; logout denylists presented jti with remaining TTL and reports revoked=true/false honestly; POST /api/v2/auth/refresh with single-use rotation (replay → 401, store failure → 503); shared _auth_rate_guard factory (login 12/60s, refresh 30/60s)",
+    "services/nexus_api/websockets/auth.py — new WS connections rejected 4401 when token jti is denylisted",
+    "services/nexus_agents/brain_budget.py — D6: min_interval_sec() (NEXUS_LLM_MIN_INTERVAL_SEC, default 1.0s, clamp 0-60), is_rate_limit_error() classification, rate_limit_backoff() 4x cadence capped 32s, process-wide pace_llm_call() pacer, reset_runtime_state() covers pacer",
+    "services/nexus_agents/agents/base_agent.py — _invoke_with_budget calls pace_llm_call() before every attempt and uses rate_limit_backoff() with a warning log on 429-style failures"
+  ],
+  "tests_added": {
+    "tests/test_api/test_auth_refresh_denylist.py": 12,
+    "tests/test_agents/test_brain_budget_pacing.py": 7,
+    "updated": "tests/test_api/test_auth_flows.py — logout response now {ok:true, revoked:true} + details_json assertion"
+  },
+  "regression": {
+    "pytest": "1903 passed, 20 skipped, 1 xfailed, 0 failed (125s) — baseline was 1884 after D19; +19 new = 12 auth + 7 pacing",
+    "node_contracts": "202/202 pass (dashboard/tests)",
+    "playwright_ui": "5/5 PASS — T1 login, T2 screens zero page errors, T3 console clean, T4 anonymous redirect, T5 mobile login"
+  },
+  "live_verification_8_steps": {
+    "method": "scripts/verify_d14_d15_live.sh against http://127.0.0.1:9000 after full stack restart (run.py --paper --skip-preflight --no-frontend)",
+    "steps": [
+      {"step": "health_9000", "result": 200},
+      {"step": "login", "result": "login_ok=true has_refresh=true expiresAt_set=true (typed pair minted)"},
+      {"step": "me_before", "result": 200},
+      {"step": "logout", "result": "ok=true revoked=true (denylist write confirmed)"},
+      {"step": "me_replay_logged_out_token_TC-AU-07", "result": "401 {\"detail\":\"Token revoked (logged out)\"}"},
+      {"step": "refresh_rotate_TC-AU-06", "result": "rotate_ok=true new_refresh=true"},
+      {"step": "refresh_replay_old_token", "result": "401 {\"detail\":\"Refresh token revoked\"} (single-use proven)"},
+      {"step": "agents_9004_d6_module", "result": "health 200; d6 loaded: min_interval=1.0, 5 rate markers"}
+    ]
+  },
+  "d6_live_observation": "During stack restart the Z.ai provider itself returned 429 on the readiness probe (2 rapid retries into a closed window) — service stayed fail-closed OFFLINE then recovered to ONLINE; this is the exact cascade D6 pacing now prevents for cycle calls (previously both retry attempts burned into the same closed window).",
+  "documented_availability_contract": "Denylist READ fails OPEN (documented in middleware/auth.py docstring): a paper-trading operator must not be locked out on a Redis blip; hard exp caps (24h access / 168h refresh) bound exposure. Denylist WRITE failure: logout reports revoked=false, refresh refuses with 503 because rotation is the security boundary.",
+  "residual_notes": [
+    "refresh does not re-check account active state in DuckDB (keeps endpoint independent of data-service availability); /me rejects inactive accounts immediately and denylist+rotation bound replay exposure",
+    "pre-D14 tokens without token_type verify only as access tokens and cannot hit the refresh endpoint (upgrade tolerance, no forced logout)"
+  ],
+  "docs_updated": [
+    "qa/DEFECT_REGISTER.md — D14/D15 (section ج) FIXED-VERIFIED, D6 (section ب) closed",
+    "qa/API_TEST_REPORT.md — auth 8/10 → 10/10, TC-AU-06/07 rows → PASS",
+    "qa/HANDOFF.md — section 4 decisions marked implemented, regression numbers",
+    ".env.example — NEXUS_JWT_EXPIRE_HOURS / NEXUS_JWT_REFRESH_EXPIRE_HOURS / NEXUS_REFRESH_RATE_* / NEXUS_LLM_MIN_INTERVAL_SEC documented"
+  ],
+  "timestamp_utc": "2026-11-04T19:40:00Z"
+}

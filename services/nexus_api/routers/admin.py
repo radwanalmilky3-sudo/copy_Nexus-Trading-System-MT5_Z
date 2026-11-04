@@ -7,9 +7,9 @@ import json
 import os
 import secrets
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any
+from typing import Annotated, Any
 
 import httpx
 from fastapi import APIRouter, Depends, Header, HTTPException, Request
@@ -19,11 +19,24 @@ from pydantic import BaseModel, Field
 from ..data_client import DataServiceClient, DataServiceUnavailable
 from ..deps import get_data_service, get_redis
 from ..http_client import new_client
-from ..middleware.auth import CurrentUser, create_token, verify_pin
+from ..middleware.auth import (
+    CurrentUser,
+    _bearer_token,
+    create_token,
+    decode_token,
+    denylist_add,
+    denylist_is_denied,
+    verify_pin,
+)
 from shared.redis_client import RedisClient
 
 router = APIRouter(tags=["admin"])
 UTC = timezone.utc
+
+# D14/D15: mirror the middleware TTLs so login/refresh can report expiresAt
+# values consistent with the minted claims.
+_JWT_EXPIRE_HOURS_REF = int(os.getenv("NEXUS_JWT_EXPIRE_HOURS", "24"))
+_JWT_REFRESH_EXPIRE_HOURS_REF = int(os.getenv("NEXUS_JWT_REFRESH_EXPIRE_HOURS", "168"))
 
 # ── Login rate limiter (Phase-12 pending item: wire an actual limiter) ──────
 # Fixed-window per-client-IP counter in Redis on the brute-force surface
@@ -33,26 +46,34 @@ UTC = timezone.utc
 # is gateway → public TLS terminator on the same host).
 _LOGIN_WINDOW_SEC = int(os.getenv("NEXUS_LOGIN_RATE_WINDOW_SEC", "60"))
 _LOGIN_LIMIT = int(os.getenv("NEXUS_LOGIN_RATE_LIMIT", "12"))
+_REFRESH_WINDOW_SEC = int(os.getenv("NEXUS_REFRESH_RATE_WINDOW_SEC", "60"))
+_REFRESH_LIMIT = int(os.getenv("NEXUS_REFRESH_RATE_LIMIT", "30"))
 
 
-async def login_rate_guard(request: Request, redis: RedisClient = Depends(get_redis)) -> None:
-    peer = request.client.host if request.client else "unknown"
-    xff = request.headers.get("x-forwarded-for", "")
-    if xff and peer in {"127.0.0.1", "::1", "localhost"}:
-        peer = xff.split(",")[0].strip()
-    key = f"rl:login:{peer}"
-    try:
-        # NOTE: raw r.* bypasses the RedisClient prefixing helpers, so the
-        # system key prefix is applied explicitly to keep the namespace tidy.
-        full_key = f"nexus:{key}"
-        count = await redis.r.incr(full_key)
-        if count == 1:
-            await redis.r.expire(full_key, _LOGIN_WINDOW_SEC)
-    except Exception:  # noqa: BLE001 — limiter must never take login down
-        return
-    if count > _LOGIN_LIMIT:
-        raise HTTPException(429, "too many login attempts; retry later",
-                            headers={"Retry-After": str(_LOGIN_WINDOW_SEC)})
+def _auth_rate_guard(scope: str, limit: int, window_sec: int):
+    """Fixed-window per-client-IP limiter for a named auth surface."""
+    async def guard(request: Request, redis: RedisClient = Depends(get_redis)) -> None:
+        peer = request.client.host if request.client else "unknown"
+        xff = request.headers.get("x-forwarded-for", "")
+        if xff and peer in {"127.0.0.1", "::1", "localhost"}:
+            peer = xff.split(",")[0].strip()
+        try:
+            # NOTE: raw r.* bypasses the RedisClient prefixing helpers, so the
+            # system key prefix is applied explicitly to keep the namespace tidy.
+            full_key = f"nexus:rl:{scope}:{peer}"
+            count = await redis.r.incr(full_key)
+            if count == 1:
+                await redis.r.expire(full_key, window_sec)
+        except Exception:  # noqa: BLE001 — limiter must never take auth down
+            return
+        if count > limit:
+            raise HTTPException(429, f"too many {scope} attempts; retry later",
+                                headers={"Retry-After": str(window_sec)})
+    return guard
+
+
+login_rate_guard = _auth_rate_guard("login", _LOGIN_LIMIT, _LOGIN_WINDOW_SEC)
+refresh_rate_guard = _auth_rate_guard("refresh", _REFRESH_LIMIT, _REFRESH_WINDOW_SEC)
 
 PERMISSIONS = [
     "users.view","users.create","users.edit","users.disable","users.delete",
@@ -256,14 +277,70 @@ async def login(payload: LoginIn, db: DataServiceClient=Depends(get_data_service
     user = rows[0]
     roles = await _role_ids(db, str(user["user_id"]))
     await _post_data("app_users", {**user,"last_login_at":datetime.now(UTC),"updated_at":datetime.now(UTC)})
-    token = create_token(str(user["user_id"]))
-    return {"token":token,"expiresAt":None,"user":{"id":user["user_id"],"username":user["username"],"full_name":user["full_name"],"role":roles[0] if roles else "viewer","avatar_url":f"/api/v2/users/{user['user_id']}/avatar" if user.get("avatar_path") else None}}
+    # D14: pair a short-lived access token with a long-lived refresh token
+    # (both typed + jti-stamped; see middleware/auth.py).
+    access_expires_at = datetime.now(UTC) + timedelta(hours=_JWT_EXPIRE_HOURS_REF)
+    refresh_expires_at = datetime.now(UTC) + timedelta(hours=_JWT_REFRESH_EXPIRE_HOURS_REF)
+    token = create_token(str(user["user_id"]), token_type="access")
+    refresh_token = create_token(str(user["user_id"]), token_type="refresh")
+    return {"token":token,"refresh_token":refresh_token,"expiresAt":access_expires_at.isoformat(),"refreshExpiresAt":refresh_expires_at.isoformat(),"user":{"id":user["user_id"],"username":user["username"],"full_name":user["full_name"],"role":roles[0] if roles else "viewer","avatar_url":f"/api/v2/users/{user['user_id']}/avatar" if user.get("avatar_path") else None}}
 
 
 @router.post("/api/v2/auth/logout")
-async def logout(user_id: CurrentUser):
-    await _audit(user_id,"auth.logout","user",user_id)
-    return {"ok":True}
+async def logout(
+    user_id: CurrentUser,
+    authorization: Annotated[str | None, Header()] = None,
+    redis: RedisClient = Depends(get_redis),
+):
+    # D15: server-side revocation — denylist the presented token's jti for the
+    # remainder of its life so the very next request with it is 401.
+    revoked = False
+    token = _bearer_token(authorization)
+    if token:
+        try:
+            claims = decode_token(token)
+            jti = str(claims.get("jti") or "")
+            exp = int(claims.get("exp") or 0)
+            ttl = max(0, exp - int(datetime.now(UTC).timestamp()))
+            revoked = await denylist_add(redis, jti, ttl)
+        except HTTPException:
+            revoked = False  # an expired/garbage token needs no revocation
+    await _audit(user_id,"auth.logout","user",user_id,{"revoked": revoked})
+    return {"ok":True,"revoked":revoked}
+
+
+class RefreshIn(BaseModel):
+    refresh_token: str = Field(min_length=1, max_length=4096)
+
+
+@router.post("/api/v2/auth/refresh", dependencies=[Depends(refresh_rate_guard)])
+async def refresh(payload: RefreshIn, redis: RedisClient = Depends(get_redis)):
+    """D14: rotate a refresh token for a fresh access+refresh pair.
+
+    Rotation is single-use: the presented refresh token's jti is denylisted
+    for its remaining life, so a replayed refresh token is rejected with 401.
+    Access tokens cannot hit this endpoint (typed-token contract).
+    """
+    try:
+        claims = decode_token(payload.refresh_token.strip(), expected_type="refresh")
+    except HTTPException:
+        raise HTTPException(401, "Invalid refresh token")
+    user_id = str(claims["user_id"])
+    jti = str(claims.get("jti") or "")
+    if jti and await denylist_is_denied(redis, jti):
+        raise HTTPException(401, "Refresh token revoked")
+    exp = int(claims.get("exp") or 0)
+    ttl = max(0, exp - int(datetime.now(UTC).timestamp()))
+    rotated = await denylist_add(redis, jti, ttl)
+    if not rotated:
+        # Rotation is the security boundary of this endpoint; without it a
+        # stolen refresh token would be indefinitely renewable.
+        raise HTTPException(503, "Revocation store unavailable; refresh refused")
+    access_expires_at = datetime.now(UTC) + timedelta(hours=_JWT_EXPIRE_HOURS_REF)
+    refresh_expires_at = datetime.now(UTC) + timedelta(hours=_JWT_REFRESH_EXPIRE_HOURS_REF)
+    new_access = create_token(user_id, token_type="access")
+    new_refresh = create_token(user_id, token_type="refresh")
+    return {"token":new_access,"refresh_token":new_refresh,"expiresAt":access_expires_at.isoformat(),"refreshExpiresAt":refresh_expires_at.isoformat()}
 
 
 @router.get("/api/v2/auth/me")

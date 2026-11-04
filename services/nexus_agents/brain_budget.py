@@ -7,6 +7,7 @@ agent loops. Local model health/availability is checked separately by
 """
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import os
@@ -47,6 +48,73 @@ def backoff_delay(attempt: int) -> float:
     base = min(2 ** max(1, attempt), 8.0)
     jitter = random.uniform(0.0, 0.5)
     return max(0.1, min(base + jitter, 10.0))
+
+
+# ── D6: provider-quota spacing (owner decision 2026-11-05) ──────────────────
+
+_RATE_LIMIT_MARKERS = ("429", "rate limit", "ratelimit", "too many requests", "quota")
+
+
+def min_interval_sec() -> float:
+    """Minimum spacing between consecutive LLM call starts, process-wide.
+
+    ``NEXUS_LLM_MIN_INTERVAL_SEC`` (default 1.0s). This is the D6 fix for the
+    429→NO_TRADE cascade: the parallel agent fan-out used to fire all its
+    provider calls at once; pacing call starts prevents the burst that trips
+    the cloud provider's rate/quota limit in the first place.
+    """
+    try:
+        raw = float(os.getenv("NEXUS_LLM_MIN_INTERVAL_SEC", "1.0"))
+    except ValueError:
+        raw = 1.0
+    return max(0.0, min(raw, 60.0))
+
+
+def is_rate_limit_error(error: str) -> bool:
+    """True when an exception looks like a provider rate/quota rejection."""
+    message = str(error or "").lower()
+    return any(marker in message for marker in _RATE_LIMIT_MARKERS)
+
+
+def rate_limit_backoff(attempt: int, *, error: str = "") -> float:
+    """Backoff for a retry, longer and calmer when the provider said 429.
+
+    Plain failures keep the standard ``backoff_delay`` cadence; rate-limit
+    rejections wait 4× longer per attempt (capped ~30s) with wider jitter so
+    the provider's window actually has time to recover instead of burning
+    both retry attempts into the same closed window.
+    """
+    if is_rate_limit_error(error):
+        base = min(2 ** max(1, attempt) * 4.0, 30.0)
+        return max(1.0, min(base + random.uniform(0.0, 2.0), 32.0))
+    return backoff_delay(attempt)
+
+
+_last_call_ts: float = 0.0
+_pace_lock = asyncio.Lock()
+
+
+async def pace_llm_call() -> float:
+    """Space out LLM call starts process-wide; returns the seconds slept.
+
+    Holding the lock across the sleep serializes call *starts* at least
+    ``min_interval_sec()`` apart — a pacer, not a limiter (calls are never
+    dropped, only slowed). With 4 parallel agents and the default 1s
+    interval the 4th call starts ~3s late, which is cheap insurance against
+    a 429 storm that would otherwise fail the whole cycle closed.
+    """
+    global _last_call_ts
+    interval = min_interval_sec()
+    if interval <= 0.0:
+        return 0.0
+    async with _pace_lock:
+        now = time.monotonic()
+        wait = _last_call_ts + interval - now
+        if wait > 0:
+            await asyncio.sleep(wait)
+            now = time.monotonic()
+        _last_call_ts = now
+        return max(0.0, wait)
 
 
 def max_calls_per_cycle() -> int:
@@ -129,10 +197,12 @@ def note_provider_success() -> None:
 
 def reset_runtime_state() -> None:
     """Clear all in-process runtime guard state (tests / manual recovery)."""
+    global _last_call_ts
     _cycle_calls.clear()
     _circuit["failures"] = 0
     _circuit["open_until"] = 0.0
     _circuit["last_error"] = ""
+    _last_call_ts = 0.0
 
 
 def daily_token_budget() -> int:

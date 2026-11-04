@@ -1,5 +1,5 @@
 {
- "executed_at_utc": "2026-11-04T18:25:21.526667+00:00",
+ "executed_at_utc": "2026-11-04T19:18:57.076526+00:00",
  "base": "http://localhost:3100",
  "suite": "qa/playwright/run_suite.py",
  "summary": "5/5 PASS",
@@ -7,13 +7,13 @@
   {
    "test": "T1_login_success",
    "status": "PASS",
-   "actual": "login→/nexus in 5778ms",
+   "actual": "login→/nexus in 4738ms",
    "evidence": "page.url"
   },
   {
    "test": "T2_screens_zero_pageerrors",
    "status": "PASS",
-   "actual": "14 screens, page_errors=0, tab_crashes(sandbox memory, not app JS errors)=1 ['/nexus/progress']",
+   "actual": "14 screens, page_errors=0, tab_crashes(sandbox memory, not app JS errors)=2 ['/nexus/progress', '/nexus/research-lab']",
    "evidence": "/home/z/my-project/Nexus-Trading-System-MT5/docs/screenshots/playwright-suite/"
   },
   {

@@ -7,8 +7,8 @@ import json
 from fastapi import HTTPException, WebSocket
 from starlette.websockets import WebSocketDisconnect
 
-from ..deps import data_service
-from ..middleware.auth import verify_token
+from ..deps import data_service, redis as default_redis
+from ..middleware.auth import decode_token, denylist_is_denied, verify_token
 
 AUTH_TIMEOUT_SECONDS = 5
 
@@ -27,6 +27,16 @@ async def authenticate_websocket(ws: WebSocket, required_permission: str) -> boo
         if not isinstance(token, str) or not token:
             raise ValueError("token required")
         user_id = verify_token(token)
+        # D15: a logged-out (denylisted) token must not open NEW websocket
+        # sessions. Fail-open on Redis trouble — same availability contract
+        # as the HTTP dependency.
+        try:
+            claims = decode_token(token)
+        except HTTPException:
+            claims = {}
+        if await denylist_is_denied(default_redis, str(claims.get("jti") or "")):
+            await ws.close(code=4401, reason="token revoked")
+            return False
         permissions = await data_service.query(
             "user_permissions", {"user_id": user_id},
         )
