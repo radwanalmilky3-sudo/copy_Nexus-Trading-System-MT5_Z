@@ -1,0 +1,65 @@
+{
+  "defect": "D2",
+  "retest_kind": "POST-FIX REGRESSION RETEST (fresh session, default-OFF patch)",
+  "executed_at_utc": "2026-11-04T18:31:51+0000",
+  "patch": "LiveChart.tsx readTvEnabled(): missing key -> False (=== '1'), was '!== 0' -> True",
+  "criteria": "fresh context (no localStorage pref), 90s dwell on /nexus, JS roundtrip <3s, no TV iframe auto-mount, zero page errors/crashes",
+  "login_seconds": 4.99,
+  "pref_before": null,
+  "pref_after": null,
+  "crash_phases": [],
+  "cycles": [
+    {
+      "cycle": 1,
+      "dwell_total_s": 15,
+      "js_roundtrip_ms": 7,
+      "readyState": "complete",
+      "tv_iframe_mounted": false,
+      "responsive": true
+    },
+    {
+      "cycle": 2,
+      "dwell_total_s": 30,
+      "js_roundtrip_ms": 5,
+      "readyState": "complete",
+      "tv_iframe_mounted": false,
+      "responsive": true
+    },
+    {
+      "cycle": 3,
+      "dwell_total_s": 45,
+      "js_roundtrip_ms": 4,
+      "readyState": "complete",
+      "tv_iframe_mounted": false,
+      "responsive": true
+    },
+    {
+      "cycle": 4,
+      "dwell_total_s": 60,
+      "js_roundtrip_ms": 3,
+      "readyState": "complete",
+      "tv_iframe_mounted": false,
+      "responsive": true
+    },
+    {
+      "cycle": 5,
+      "dwell_total_s": 75,
+      "js_roundtrip_ms": 5,
+      "readyState": "complete",
+      "tv_iframe_mounted": false,
+      "responsive": true
+    },
+    {
+      "cycle": 6,
+      "dwell_total_s": 90,
+      "js_roundtrip_ms": 4,
+      "readyState": "complete",
+      "tv_iframe_mounted": false,
+      "responsive": true
+    }
+  ],
+  "page_errors": [],
+  "total": 6,
+  "passed": 6,
+  "verdict": "FIXED-VERIFIED"
+}

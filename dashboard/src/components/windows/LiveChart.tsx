@@ -9,18 +9,21 @@ const TIMEFRAMES: Timeframe[] = ['M1', 'M5', 'M15', 'H1', 'H4'];
 
 // D2 fix: the heavy external TradingView widget can stall the dashboard tab in
 // memory-constrained environments (sandbox: 2 vCPU / ~150MB free). The embed is
-// now (a) toggleable per browser via localStorage, default ON, (b) mounted on a
-// short delay so the first dashboard paint never waits on it, and (c) fully
-// unmounted when OFF so the renderer memory is actually released.
+// now (a) toggleable per browser via localStorage, default OFF (safe on fresh
+// sessions — a missing preference must NOT auto-mount the embed; D2 regression
+// found 2026-11-05: 'null !== 0' made fresh sessions default ON and the
+// renderer crashed ~75s in), (b) mounted on a short delay so the first
+// dashboard paint never waits on it, and (c) fully unmounted when OFF so the
+// renderer memory is actually released.
 const TV_ENABLED_KEY = 'nexus_tv_chart_enabled';
 const TV_MOUNT_DELAY_MS = 2500;
 
 function readTvEnabled(): boolean {
   if (typeof window === 'undefined') return false;
   try {
-    return window.localStorage.getItem(TV_ENABLED_KEY) !== '0';
+    return window.localStorage.getItem(TV_ENABLED_KEY) === '1';
   } catch {
-    return true;
+    return false;
   }
 }
 

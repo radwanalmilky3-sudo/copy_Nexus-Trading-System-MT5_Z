@@ -1,0 +1,75 @@
+{
+  "defect": "D2",
+  "retest_kind": "ORIGINAL-RETEST (formal, M.2)",
+  "executed_at_utc": "2026-11-04T18:12:23.436751+00:00",
+  "fix_commit": "842aa03",
+  "criteria": "60s x 6 cycles, TV OFF, JS-eval responsive <3s",
+  "cycles": [
+    {
+      "cycle": 1,
+      "wait_s": 60,
+      "js_roundtrip_ms": 4,
+      "readyState": "complete",
+      "dom_nodes": 3943,
+      "tv_iframe": true,
+      "responsive": false
+    },
+    {
+      "cycle": 2,
+      "wait_s": 60,
+      "js_roundtrip_ms": 4,
+      "readyState": "complete",
+      "dom_nodes": 4118,
+      "tv_iframe": true,
+      "responsive": false
+    },
+    {
+      "cycle": 3,
+      "wait_s": 60,
+      "js_roundtrip_ms": 4,
+      "readyState": "complete",
+      "dom_nodes": 4173,
+      "tv_iframe": true,
+      "responsive": false
+    },
+    {
+      "cycle": 4,
+      "wait_s": 60,
+      "js_roundtrip_ms": 4,
+      "readyState": "complete",
+      "dom_nodes": 4173,
+      "tv_iframe": true,
+      "responsive": false
+    },
+    {
+      "cycle": 5,
+      "wait_s": 60,
+      "js_roundtrip_ms": 4,
+      "readyState": "complete",
+      "dom_nodes": 4173,
+      "tv_iframe": true,
+      "responsive": false
+    },
+    {
+      "cycle": 6,
+      "wait_s": 60,
+      "js_roundtrip_ms": 3,
+      "readyState": "complete",
+      "dom_nodes": 4173,
+      "tv_iframe": true,
+      "responsive": false
+    }
+  ],
+  "page_errors": [],
+  "total": 6,
+  "passed": 0,
+  "verdict": "FAIL",
+  "post_fix": {
+    "record": "qa/evidence/d2_postfix_retest_20261105.json",
+    "patch": "LiveChart.tsx readTvEnabled(): missing key -> False (=== '1')",
+    "verdict": "FIXED-VERIFIED",
+    "cycles_responsive": "6/6",
+    "tv_auto_mount": false,
+    "page_errors": 0
+  }
+}

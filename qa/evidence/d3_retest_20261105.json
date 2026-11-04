@@ -1,0 +1,68 @@
+{
+  "defect": "D3",
+  "retest_kind": "ORIGINAL-RETEST (formal, M.2)",
+  "executed_at_utc": "2026-11-04T18:04:59.168896+00:00",
+  "fix_commit": "7fe9f3d",
+  "total": 8,
+  "passed": 8,
+  "verdict": "FIXED-VERIFIED",
+  "baseline_auto_trade": "false",
+  "results": [
+    {
+      "step": "login super_admin",
+      "expected": "200 + token",
+      "actual": "200 + token=yes (89ms)",
+      "status": "PASS",
+      "at": "2026-11-04T18:04:59.150178+00:00"
+    },
+    {
+      "step": "activate KILL (correct PIN)",
+      "expected": "200 kill_switch_activated",
+      "actual": "200 kill_switch_activated (3ms)",
+      "status": "PASS",
+      "at": "2026-11-04T18:04:59.154120+00:00"
+    },
+    {
+      "step": "latch key present after activate",
+      "expected": "nexus:system:kill_switch exists",
+      "actual": "present",
+      "status": "PASS",
+      "at": "2026-11-04T18:04:59.156443+00:00"
+    },
+    {
+      "step": "release with WRONG pin",
+      "expected": "403 Invalid PIN + latch still present",
+      "actual": "403 Invalid PIN + latch=present",
+      "status": "PASS",
+      "at": "2026-11-04T18:04:59.160702+00:00"
+    },
+    {
+      "step": "release with CORRECT pin",
+      "expected": "200 kill_switch_released",
+      "actual": "200 kill_switch_released (2ms)",
+      "status": "PASS",
+      "at": "2026-11-04T18:04:59.163180+00:00"
+    },
+    {
+      "step": "latch cleared after release",
+      "expected": "key absent",
+      "actual": "absent",
+      "status": "PASS",
+      "at": "2026-11-04T18:04:59.167314+00:00"
+    },
+    {
+      "step": "fail-safe: auto_trade NOT auto-restored",
+      "expected": "unchanged (false)",
+      "actual": "false",
+      "status": "PASS",
+      "at": "2026-11-04T18:04:59.167340+00:00"
+    },
+    {
+      "step": "release WITHOUT auth token",
+      "expected": "401 unauthorized",
+      "actual": "401",
+      "status": "PASS",
+      "at": "2026-11-04T18:04:59.168868+00:00"
+    }
+  ]
+}
