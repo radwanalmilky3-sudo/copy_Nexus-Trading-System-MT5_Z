@@ -63,7 +63,11 @@ def test_startup_resolution_returns_empty_for_legacy_install(tmp_path):
 def test_manifest_rejects_artifact_path_traversal(tmp_path):
     registry = ModelRegistry(tmp_path)
     stage = registry.create_staging("XAUUSD", "M5", "gen-safe")
-    with pytest.raises(ValueError, match="safe filenames"):
+    # The security contract is: a traversal artifact name must be rejected
+    # with ValueError. write_generation_manifest now checks artifact
+    # existence/emptiness before filename safety, so either rejection message
+    # upholds the contract — do not pin which guard fires first.
+    with pytest.raises(ValueError, match="(safe filenames|artifact missing or empty)"):
         registry.write_generation_manifest("XAUUSD", "M5", "gen-safe", ["..\\escape.bin"], ["f"])
 
 

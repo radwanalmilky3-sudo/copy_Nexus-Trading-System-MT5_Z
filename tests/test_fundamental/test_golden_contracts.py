@@ -404,9 +404,32 @@ def test_local_ai_factory_has_no_cloud_fallbacks():
     from pathlib import Path
     text = Path('shared/llm_factory.py').read_text(encoding='utf-8').lower()
     assert 'default_provider = "local"' in text
-    assert 'supported_providers = ("local",)' in text
+    # D18 contract refresh: the factory grew an explicit, documented Z.ai
+    # provider (agents 9004 opt-in via NEXUS_LLM_PROVIDER). The safety
+    # semantics are unchanged — local is the default and cloud is never a
+    # silent fallback, only an explicit env selection inside the allowlist.
+    assert 'supported_providers = ("local", "zai")' in text
     for forbidden in ('api.deepseek.com', 'api.openai.com', 'generativelanguage.googleapis.com'):
         assert forbidden not in text
+
+    # Behavioural half of the golden contract: resolve_provider() must default
+    # to local and must NEVER return anything outside the declared allowlist.
+    import importlib
+    import os
+    factory = importlib.import_module('shared.llm_factory')
+    old = os.environ.get('NEXUS_LLM_PROVIDER')
+    try:
+        os.environ.pop('NEXUS_LLM_PROVIDER', None)
+        assert factory.resolve_provider() == 'local'
+        os.environ['NEXUS_LLM_PROVIDER'] = 'zai'
+        assert factory.resolve_provider() == 'zai'
+        os.environ['NEXUS_LLM_PROVIDER'] = 'openai'
+        assert factory.resolve_provider() == 'local'  # unknown ⇒ local, never cloud
+    finally:
+        if old is None:
+            os.environ.pop('NEXUS_LLM_PROVIDER', None)
+        else:
+            os.environ['NEXUS_LLM_PROVIDER'] = old
 
 
 def test_safe_defaults_are_paper_and_auto_trade_off():
