@@ -47,6 +47,7 @@ from .broker_adapter import (
     OrderType,
 )
 from .ccxt_executor import CCXTExecutor
+from .ea_queue import mirror_close, mirror_modify, mirror_open
 from .ibkr_executor import IBKRExecutor
 from .mt5_executor import MT5Executor
 from .paper_executor import PaperExecutor
@@ -1512,6 +1513,18 @@ async def send_order(
                 status=result.status.value,
             )
             await redis.publish_event(RedisStream.ORDER_STREAM, order_event)
+            # EA bridge (item 4): mirror the executed order to MT5 terminals.
+            await mirror_open(
+                symbol=result.symbol,
+                side=result.side.value if hasattr(result.side, "value") else str(result.side),
+                order_type=order.order_type.value,
+                size=result.size,
+                price=result.fill_price,
+                sl=result.sl,
+                tp=result.tp,
+                slippage=req.slippage,
+                comment=order.comment,
+            )
 
         return OrderResponseModel(
             order_id=result.order_id,
@@ -1593,6 +1606,13 @@ async def close_position(
                 },
             )
             await redis.publish_event(RedisStream.TRADE_CLOSE, close_event)
+            # EA bridge (item 4): mirror the close to MT5 terminals.
+            await mirror_close(
+                symbol=result.symbol,
+                side=str(position_side or result.side or ""),
+                volume=result.size,
+                comment=str(meta.get("comment", "") or ""),
+            )
 
         return {
             "order_id": result.order_id,
@@ -1615,6 +1635,15 @@ async def modify_position(
     try:
         broker = await _get_broker()
         result = await broker.modify_order(position_id, sl=req.sl, tp=req.tp)
+        if result.is_success():
+            # EA bridge (item 4): mirror the SL/TP change to MT5 terminals.
+            await mirror_modify(
+                symbol=result.symbol,
+                sl=result.sl if result.sl is not None else (req.sl or 0),
+                tp=result.tp if result.tp is not None else (req.tp or 0),
+                comment="",
+                position_id=position_id,
+            )
         return {
             "order_id": result.order_id,
             "status": result.status.value,

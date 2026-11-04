@@ -179,7 +179,11 @@ class FundamentalStore:
         "api_token_by_hash": ("SELECT * FROM api_tokens WHERE token_hash=? AND active=TRUE LIMIT 1", ("token_hash",)),
         "api_tokens_by_user": ("SELECT token_id,label,mt5_login,mt5_broker,mt5_server,active,created_at,last_used_at,revoked_at FROM api_tokens WHERE user_id=? ORDER BY created_at DESC", ("user_id",)),
         "api_token_by_id": ("SELECT * FROM api_tokens WHERE token_id=? AND user_id=? LIMIT 1", ("token_id", "user_id")),
-        "ea_pending_commands": ("SELECT * FROM ea_commands WHERE user_id=? AND status='pending' ORDER BY created_at LIMIT 20", ("user_id",)),
+        "api_tokens_active_users": ("SELECT DISTINCT user_id FROM api_tokens WHERE active=TRUE", ()),
+        # Stale claims (EA died before reporting) re-enter the queue after 5
+        # minutes; NexusBridgeEA journals executed command_ids locally, so a
+        # re-claim never double-executes on the terminal.
+        "ea_pending_commands": ("SELECT * FROM ea_commands WHERE user_id=? AND (status='pending' OR (status='claimed' AND (claimed_at IS NULL OR claimed_at < CURRENT_TIMESTAMP - INTERVAL 5 MINUTE))) ORDER BY created_at LIMIT 20", ("user_id",)),
         "ea_command_by_id": ("SELECT * FROM ea_commands WHERE command_id=? AND user_id=? LIMIT 1", ("command_id", "user_id")),
         "ea_commands_recent": ("SELECT * FROM ea_commands WHERE user_id=? ORDER BY created_at DESC LIMIT 50", ("user_id",)),
     }

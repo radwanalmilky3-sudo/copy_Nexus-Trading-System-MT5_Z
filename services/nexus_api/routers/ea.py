@@ -116,6 +116,13 @@ async def list_tokens(actor: CurrentUser, db: DataServiceClient = Depends(get_da
     return {"tokens": rows}
 
 
+@router.get("/api/admin/ea-commands")
+async def list_commands(actor: CurrentUser, db: DataServiceClient = Depends(get_data_service)):
+    """Recent EA bridge commands for the signed-in user (dashboard view)."""
+    rows = await db.query("ea_commands_recent", {"user_id": actor})
+    return {"commands": rows}
+
+
 @router.delete("/api/admin/ea-tokens/{token_id}")
 async def revoke_token(token_id: str, actor: CurrentUser, db: DataServiceClient = Depends(get_data_service)):
     rows = await db.query("api_token_by_id", {"token_id": token_id, "user_id": actor})
