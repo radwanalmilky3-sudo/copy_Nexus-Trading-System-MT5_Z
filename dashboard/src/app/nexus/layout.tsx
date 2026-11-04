@@ -318,7 +318,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Top Nav Bar — Gold Terminal: gold hairline + warm glass blur */}
       <header className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 h-10 border-b border-amber-500/15 bg-bg-primary/80 backdrop-blur-md shrink-0 z-20">
-        {/* Brand — Yemen Smart golden Y emblem (owner's banner) + Nexus wordmark */}
+        {/* Brand — Yemen Smart golden Y emblem (owner's banner) + Arabic wordmark */}
         <div className="flex items-center gap-2 mr-3 shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -327,8 +327,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             className="h-7 w-auto rounded-md ring-1 ring-amber-400/30 shadow-md shadow-amber-500/20 select-none"
             draggable={false}
           />
-          <span className="text-xs font-black tracking-[0.2em] gradient-text hidden sm:inline select-none">
-            NEXUS
+          <span className="text-sm font-black gradient-text hidden sm:inline select-none" dir="rtl">
+            يمن سمارت
           </span>
           <span className="hidden sm:inline px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-amber-400/10 border border-amber-400/30 text-amber-300 tracking-wider select-none">
             DEMO

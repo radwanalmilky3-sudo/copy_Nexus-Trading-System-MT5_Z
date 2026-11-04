@@ -75,8 +75,8 @@ export default function LoginPage() {
               <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-amber-200/10" />
             </div>
           </div>
-          <p className="mt-2.5 text-[9px] font-mono tracking-[0.35em] text-text-muted select-none" dir="ltr">
-            POWERED BY NEXUS TRADER MT5
+          <p className="mt-2.5 text-[10px] font-medium text-text-muted select-none" dir="rtl">
+            طرفية التداول الذكية · MetaTrader 5
           </p>
         </div>
 

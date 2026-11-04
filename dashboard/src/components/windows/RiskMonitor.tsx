@@ -278,7 +278,7 @@ export function RiskMonitor({ className = '' }: { className?: string }) {
             <span className="text-neon-cyan font-semibold">{fullRisk.currentSession}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-text-muted">Nexus pos</span>
+            <span className="text-text-muted">System pos</span>
             <span className="text-neon-green font-semibold">{isConnected ? fullRisk.positionCount : '—'}</span>
             <span className="text-text-muted">/</span>
             <span className="text-text-secondary font-semibold">{fullRisk.positionMax}</span>

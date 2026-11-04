@@ -27,8 +27,8 @@ const plexMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'يمن سمارت | Nexus Trader',
-  description: 'استثمار أذكى .. لمستقبل أفضل — AI-Powered Multi-Agent Trading Terminal',
+  title: 'يمن سمارت — طرفية التداول الذكية',
+  description: 'استثمار أذكى .. لمستقبل أفضل — طرفية تداول ذكية متعددة الوكلاء على MetaTrader 5',
   other: { google: 'notranslate' },
 };
 
