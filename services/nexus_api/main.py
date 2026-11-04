@@ -30,6 +30,7 @@ from .routers import (
     audit_progress,
     backtest,
     config,
+    ea,
     env,
     intelligence,
     fundamental,
@@ -141,6 +142,7 @@ app.add_middleware(
 # ── REST routers ─────────────────────────────────────────────────────────────
 
 app.include_router(admin.router)
+app.include_router(ea.router)
 app.include_router(positions.router)
 app.include_router(trades.router)
 app.include_router(performance.router)

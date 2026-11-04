@@ -986,3 +986,41 @@ INSERT OR IGNORE INTO app_role_permissions(role_id,permission_code,allowed) VALU
 ('risk_manager','ticker.view',TRUE),('risk_manager','ticker.acknowledge',TRUE),('risk_manager','alerts.configure_self',TRUE),('risk_manager','risk.view',TRUE),('risk_manager','risk.modify',TRUE),
 ('operator','ticker.view',TRUE),('operator','ticker.acknowledge',TRUE),('operator','alerts.configure_self',TRUE),('operator','tts.configure_self',TRUE),
 ('viewer','ticker.view',TRUE),('viewer','fundamental.view',TRUE);
+
+-- R5 EA Bridge: terminal API tokens & command queue ---------------------------
+-- Raw tokens are never stored; only their SHA-256 hash lives here.  The raw
+-- token is shown exactly once at creation time and can be revoked instantly.
+CREATE TABLE IF NOT EXISTS api_tokens (
+    token_id VARCHAR PRIMARY KEY,
+    user_id VARCHAR NOT NULL,
+    token_hash VARCHAR UNIQUE NOT NULL,
+    label VARCHAR NOT NULL DEFAULT 'MT5 Terminal',
+    mt5_login VARCHAR,
+    mt5_broker VARCHAR,
+    mt5_server VARCHAR,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_used_at TIMESTAMPTZ,
+    revoked_at TIMESTAMPTZ
+);
+
+-- Outbound execution commands destined for a user's MT5 Expert Advisor.
+-- Lifecycle: pending -> claimed (handed to the EA) -> done | failed.
+-- command_id doubles as the idempotency key: the EA may safely re-report.
+CREATE TABLE IF NOT EXISTS ea_commands (
+    command_id VARCHAR PRIMARY KEY,
+    user_id VARCHAR NOT NULL,
+    token_id VARCHAR,
+    symbol VARCHAR NOT NULL,
+    action VARCHAR NOT NULL,
+    payload_json VARCHAR NOT NULL,
+    status VARCHAR NOT NULL DEFAULT 'pending',
+    claimed_at TIMESTAMPTZ,
+    completed_at TIMESTAMPTZ,
+    result_json VARCHAR,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_api_tokens_user ON api_tokens(user_id);
+CREATE INDEX IF NOT EXISTS idx_ea_commands_user_status ON ea_commands(user_id, status);

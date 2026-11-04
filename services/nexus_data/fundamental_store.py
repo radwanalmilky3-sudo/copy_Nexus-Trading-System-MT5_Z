@@ -64,6 +64,7 @@ class FundamentalStore:
         "alert_delivery_log", "local_ai_analysis_runs",
         "app_users", "app_roles", "app_role_permissions", "app_user_roles",
         "user_notification_preferences", "user_ticker_acknowledgements", "user_audit_log",
+        "api_tokens", "ea_commands",
     }
 
     # Canonical/mutable tables.  Keys are real primary keys in fundamental_schema.sql.
@@ -84,10 +85,13 @@ class FundamentalStore:
         "app_user_roles": ("user_id", "role_id"),
         "user_notification_preferences": ("user_id",),
         "user_ticker_acknowledgements": ("user_id", "ticker_item_id"),
+        "api_tokens": ("token_id",),
+        "ea_commands": ("command_id",),
     }
     UPDATED_AT_TABLES = {
         "economic_indicator_catalog", "fundamental_knowledge_claims", "asset_registry", "news_ticker_items",
-        "app_users", "app_roles", "app_role_permissions", "app_user_roles", "user_notification_preferences", "user_ticker_acknowledgements"
+        "app_users", "app_roles", "app_role_permissions", "app_user_roles", "user_notification_preferences", "user_ticker_acknowledgements",
+        "api_tokens", "ea_commands"
     }
     # DuckDB rejects an ON CONFLICT DO UPDATE that touches a unique identity
     # column referenced by another table, even when the value is unchanged.
@@ -140,6 +144,8 @@ class FundamentalStore:
         ),
         "user_notification_preferences": (("user_id", "app_users", "user_id"),),
         "user_ticker_acknowledgements": (("user_id", "app_users", "user_id"),),
+        "api_tokens": (("user_id", "app_users", "user_id"),),
+        "ea_commands": (("user_id", "app_users", "user_id"),),
     }
 
     QUERY_SPECS: dict[str, tuple[str, tuple[str, ...]]] = {
@@ -170,6 +176,12 @@ class FundamentalStore:
         "asset_outcomes": ("SELECT * FROM asset_event_outcomes WHERE asset_id=? ORDER BY captured_at DESC LIMIT ?", ("asset_id", "limit")),
         "knowledge_claims": ("SELECT claim_id,domain,concept,statement_ar,conditions_json,counter_conditions_json,required_confirmations_json,exceptions_json,horizon_json FROM fundamental_knowledge_claims WHERE allowed_for_explanation=TRUE AND review_status='reviewed_for_explanation' ORDER BY claim_id LIMIT 100", ()),
         "local_ai_history": ("SELECT analysis_id,asset_id,event_id,impact_id,question,model_name,model_version,schema_valid,latency_ms,created_at,response_json,hallucination_flags_json FROM local_ai_analysis_runs ORDER BY created_at DESC LIMIT ?", ("limit",)),
+        "api_token_by_hash": ("SELECT * FROM api_tokens WHERE token_hash=? AND active=TRUE LIMIT 1", ("token_hash",)),
+        "api_tokens_by_user": ("SELECT token_id,label,mt5_login,mt5_broker,mt5_server,active,created_at,last_used_at,revoked_at FROM api_tokens WHERE user_id=? ORDER BY created_at DESC", ("user_id",)),
+        "api_token_by_id": ("SELECT * FROM api_tokens WHERE token_id=? AND user_id=? LIMIT 1", ("token_id", "user_id")),
+        "ea_pending_commands": ("SELECT * FROM ea_commands WHERE user_id=? AND status='pending' ORDER BY created_at LIMIT 20", ("user_id",)),
+        "ea_command_by_id": ("SELECT * FROM ea_commands WHERE command_id=? AND user_id=? LIMIT 1", ("command_id", "user_id")),
+        "ea_commands_recent": ("SELECT * FROM ea_commands WHERE user_id=? ORDER BY created_at DESC LIMIT 50", ("user_id",)),
     }
 
     def __init__(self, data_store: Any) -> None:
