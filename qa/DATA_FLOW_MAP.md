@@ -19,7 +19,7 @@ MT5 (EA على طرف المالك) / CCXT / YFinance / IBKR
 Redis nexus:features:history:*
   → nexus-ml :9003 (8 نماذج؛ إن غير مدرّبة → rule_based_signal + حالة "not trained yet" صادقة)
   → nexus-agents :9004 (graph: 13 وكيلاً؛ LLM glm-4.5-flash اختياري)
-     - LLM متاح → نقاش كامل A1→A7 (مُثبت: llm ONLINE، latency 5.6s)
+     - LLM متاح → نقاش كامل A1→A7 (مُثبت: llm ONLINE — آخر قياس 263ms مساءً؛ قياس سابق 5.6s)
      - LLM مرفوض (429) → fail-closed: تحليل خام + NO_TRADE (مُثبت)
   → قرار موثق (agent_logs / redis nexus:decision:*)
   → nexus-api routers/agents.py + websockets/agents.py → LiveDecisionPanel
@@ -65,6 +65,6 @@ nexus-monitor :9008 → مقاييس/أداء/Telegram
 | dashboard | nexus-api | HTTP :3000→9000 | سجلات 22,968 نداء (جولة 1) |
 | nexus-api | كل الخدمات | HTTP 127.0.0.1 | data_client.py + env URLs |
 | nexus-agents | Z.ai | HTTPS | llm_url في /health |
-| كل الخدمات | Redis | TCP 6379 | 123 مفتاحاً حي |
+| كل الخدمات | Redis | TCP 6379 | 129 مفتاحاً حياً (مساءً) + stream:agent:analysis (32 حدثاً) / agent:verdict (4) |
 | nexus-data | DuckDB | ملف مقفول | إثبات القفل |
 | EA(المالك) | nexus-api | HTTP+توكن | docs/EA_BRIDGE.md — BLOCKED هنا |

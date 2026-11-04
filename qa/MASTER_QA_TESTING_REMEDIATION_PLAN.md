@@ -4,8 +4,8 @@
 > نطاقها: البنية المكتشفة فعلياً في `qa/SYSTEM_ARCHITECTURE_DISCOVERY_REPORT.md` (9 خدمات + dashboard + مشرف + Redis + DuckDB + EA خارجي).
 
 ## 1. النطاق المكتشف (ملخص)
-- 9 خدمات FastAPI حية (9000–9008)، 257 مسار API (OpenAPI حي)، dashboard Next.js 14.2.5 بـ16 شاشة.
-- DuckDB 58 جدولاً (كاتب وحيد)، Redis 7.4.1 (123 مفتاحاً)، مشرف run.py (شفاء <1s مُقاس).
+- 9 خدمات FastAPI حية (9000–9008)، 257 مسار API (OpenAPI حي — مُعاد عدّه مساءً)، dashboard Next.js 14.2.5 بـ18 ملف مسار (15 شاشة فعّالة + 3 تحويلات).
+- DuckDB **62 جدولاً** (كاتب وحيد)، Redis 7.4.1 (**129 مفتاحاً**)، مشرف run.py (شفاء <1s مُقاس).
 - EA/MT5 على طرف المالك = **BLOCKED** للاختبار الحي في الصندوق (لا يُحسب فشلاً).
 - paper-only مفعّل (`run.py --paper`) — ممنوع أي مسار حقيقي.
 
@@ -51,6 +51,8 @@
 | 13 | Playwright | PLAYWRIGHT_AUTOMATION_REPORT | مجموعة قابلة للتشغيل |
 | 14 | انحدار نهائي | pytest+node+Playwright | اجتياز |
 | 15 | اعتماد | FINAL_ACCEPTANCE_REPORT + HANDOFF | ✋ |
+
+**سجل تنفيذ فوري (مساء 2026-11-04):** أُصلحت D10 (826eecb + تحصين 5921635) وD12 وD13 (عزل اختبار — 5921635) أثناء إعداد الوثائق؛ الانحدار المرتبط: **555/555 PASS** (test_api كاملاً). التفاصيل في DEFECT_REGISTER §أ/§ج.
 
 ## 6. معايير القبول
 - صفر عيوب Critical/High مفتوحة.

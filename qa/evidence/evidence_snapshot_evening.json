@@ -1,0 +1,344 @@
+{
+  "captured_at_utc": "2026-11-04T15:54:57Z",
+  "services_health": {
+    "9000": {
+      "service": "nexus-api",
+      "status": "healthy",
+      "ready": true
+    },
+    "9001": {
+      "service": "nexus-data",
+      "status": "degraded",
+      "ready": true
+    },
+    "9002": {
+      "service": "nexus-features",
+      "status": "healthy"
+    },
+    "9003": {
+      "service": "nexus-ml",
+      "status": "healthy"
+    },
+    "9004": {
+      "service": "nexus-agents",
+      "status": "healthy",
+      "state": "ONLINE",
+      "ready": true,
+      "llm": "ONLINE",
+      "llm_online": true,
+      "llm_latency_ms": 3759.57
+    },
+    "9005": {
+      "service": "nexus-news",
+      "status": "healthy"
+    },
+    "9006": {
+      "service": "nexus-risk",
+      "status": "healthy"
+    },
+    "9007": {
+      "service": "nexus-executor",
+      "status": "healthy"
+    },
+    "9008": {
+      "service": "nexus-monitor",
+      "status": "healthy"
+    }
+  },
+  "duckdb": {
+    "path": "data/nexus.duckdb",
+    "table_count": 62,
+    "tables": [
+      {
+        "table": "main.agent_logs",
+        "rows": 0
+      },
+      {
+        "table": "main.alert_delivery_log",
+        "rows": 0
+      },
+      {
+        "table": "main.api_tokens",
+        "rows": 1
+      },
+      {
+        "table": "main.app_role_permissions",
+        "rows": 36
+      },
+      {
+        "table": "main.app_roles",
+        "rows": 7
+      },
+      {
+        "table": "main.app_user_roles",
+        "rows": 45
+      },
+      {
+        "table": "main.app_users",
+        "rows": 45
+      },
+      {
+        "table": "main.asset_event_outcomes",
+        "rows": 0
+      },
+      {
+        "table": "main.asset_factor_profiles",
+        "rows": 67
+      },
+      {
+        "table": "main.asset_registry",
+        "rows": 2
+      },
+      {
+        "table": "main.broker_account_events",
+        "rows": 0
+      },
+      {
+        "table": "main.broker_account_settings",
+        "rows": 0
+      },
+      {
+        "table": "main.broker_accounts",
+        "rows": 0
+      },
+      {
+        "table": "main.broker_profiles",
+        "rows": 0
+      },
+      {
+        "table": "main.central_bank_events",
+        "rows": 3
+      },
+      {
+        "table": "main.data_vintages",
+        "rows": 50
+      },
+      {
+        "table": "main.datasets",
+        "rows": 0
+      },
+      {
+        "table": "main.ea_commands",
+        "rows": 0
+      },
+      {
+        "table": "main.economic_indicator_catalog",
+        "rows": 37
+      },
+      {
+        "table": "main.economic_indicator_observations",
+        "rows": 0
+      },
+      {
+        "table": "main.event_asset_impacts",
+        "rows": 1504
+      },
+      {
+        "table": "main.event_expectations",
+        "rows": 48
+      },
+      {
+        "table": "main.flow_observations",
+        "rows": 0
+      },
+      {
+        "table": "main.fund_events",
+        "rows": 135
+      },
+      {
+        "table": "main.fund_sources",
+        "rows": 25
+      },
+      {
+        "table": "main.fundamental_audit_log",
+        "rows": 0
+      },
+      {
+        "table": "main.fundamental_blackout_windows",
+        "rows": 0
+      },
+      {
+        "table": "main.fundamental_event_outcomes",
+        "rows": 0
+      },
+      {
+        "table": "main.fundamental_explanations",
+        "rows": 188
+      },
+      {
+        "table": "main.fundamental_factor_scores",
+        "rows": 940
+      },
+      {
+        "table": "main.fundamental_fusion_results",
+        "rows": 188
+      },
+      {
+        "table": "main.fundamental_guard_decisions",
+        "rows": 0
+      },
+      {
+        "table": "main.fundamental_knowledge_claims",
+        "rows": 5
+      },
+      {
+        "table": "main.fundamental_knowledge_sources",
+        "rows": 1
+      },
+      {
+        "table": "main.fundamental_training_features",
+        "rows": 0
+      },
+      {
+        "table": "main.geopolitical_events",
+        "rows": 0
+      },
+      {
+        "table": "main.gold_impact_predictions",
+        "rows": 188
+      },
+      {
+        "table": "main.import_jobs",
+        "rows": 0
+      },
+      {
+        "table": "main.lineage",
+        "rows": 0
+      },
+      {
+        "table": "main.local_ai_analysis_runs",
+        "rows": 0
+      },
+      {
+        "table": "main.macro_releases",
+        "rows": 50
+      },
+      {
+        "table": "main.market_series_observations",
+        "rows": 0
+      },
+      {
+        "table": "main.model_evaluations",
+        "rows": 0
+      },
+      {
+        "table": "main.news_articles",
+        "rows": 0
+      },
+      {
+        "table": "main.news_nlp_analysis",
+        "rows": 0
+      },
+      {
+        "table": "main.news_story_clusters",
+        "rows": 0
+      },
+      {
+        "table": "main.news_ticker_items",
+        "rows": 2
+      },
+      {
+        "table": "main.ohlcv",
+        "rows": 0
+      },
+      {
+        "table": "main.ohlcv_backfill_runs",
+        "rows": 0
+      },
+      {
+        "table": "main.ohlcv_manifests",
+        "rows": 0
+      },
+      {
+        "table": "main.positions",
+        "rows": 0
+      },
+      {
+        "table": "main.prediction_reasoning_steps",
+        "rows": 564
+      },
+      {
+        "table": "main.quality_runs",
+        "rows": 0
+      },
+      {
+        "table": "main.quarantine",
+        "rows": 0
+      },
+      {
+        "table": "main.research_artifacts",
+        "rows": 0
+      },
+      {
+        "table": "main.source_fetch_runs",
+        "rows": 137
+      },
+      {
+        "table": "main.source_health_history",
+        "rows": 137
+      },
+      {
+        "table": "main.ticks",
+        "rows": 0
+      },
+      {
+        "table": "main.trades",
+        "rows": 0
+      },
+      {
+        "table": "main.user_audit_log",
+        "rows": 15
+      },
+      {
+        "table": "main.user_notification_preferences",
+        "rows": 0
+      },
+      {
+        "table": "main.user_ticker_acknowledgements",
+        "rows": 0
+      }
+    ]
+  },
+  "redis": {
+    "key_total": 131,
+    "namespaces": {
+      "nexus:alerts": 1,
+      "nexus:correlation": 1,
+      "nexus:cross_asset": 4,
+      "nexus:fundamental": 19,
+      "nexus:genai": 2,
+      "nexus:health": 21,
+      "nexus:monitor": 1,
+      "nexus:news": 4,
+      "nexus:risk": 7,
+      "nexus:runtime": 2,
+      "nexus:strategy": 53,
+      "nexus:stream": 4,
+      "nexus:system": 1,
+      "stream:agent": 2,
+      "stream:features": 1,
+      "stream:news": 1,
+      "stream:ohlcv": 1,
+      "stream:orders": 1,
+      "stream:positions": 1,
+      "stream:risk": 1,
+      "stream:signals": 1,
+      "stream:ticks": 1,
+      "stream:trades": 1
+    },
+    "streams_lengths": {
+      "stream:signals": 0,
+      "stream:risk:decision": 0,
+      "stream:ohlcv": 0,
+      "stream:news:alert": 0,
+      "stream:features": 0,
+      "stream:orders": 0,
+      "stream:agent:verdict": 4,
+      "stream:positions": 0,
+      "stream:ticks": 0,
+      "stream:agent:analysis": 32,
+      "stream:trades:close": 0
+    }
+  },
+  "notes": "Paper-only environment; no secrets stored in this file."
+}
