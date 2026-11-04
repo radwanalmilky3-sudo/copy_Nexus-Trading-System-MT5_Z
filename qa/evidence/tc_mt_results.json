@@ -1,0 +1,77 @@
+{
+ "executed_at_utc": "2026-11-04T16:26:54.534584+00:00",
+ "results": [
+  {
+   "id": "TC-MT-02",
+   "what": "create EA token via 9000",
+   "expected": "200 + ok + token_id + raw token nexus_ea_* (shown once)",
+   "actual": "200 + ok=True + token_id=9b03228986af... + raw_prefix=nexus_ea_LQv... + note=store it now; it is never shown again",
+   "status": "PASS",
+   "evidence": "POST /api/admin/ea-tokens response"
+  },
+  {
+   "id": "TC-MT-02",
+   "what": "list tokens: no raw token in list (SHA-256 only)",
+   "expected": "200 + row exists + raw absent from response",
+   "actual": "200 + row=yes + raw_leaked=False + row_keys=['active', 'created_at', 'label', 'last_used_at', 'mt5_broker', 'mt5_login', 'mt5_server', 'revoked_at', 'token_id']",
+   "status": "PASS",
+   "evidence": "GET /api/admin/ea-tokens response"
+  },
+  {
+   "id": "TC-MT-02",
+   "what": "EA handshake (bind mt5_login/broker/server)",
+   "expected": "200 + ok + user.username=redhwan + heartbeat + protocol_version",
+   "actual": "200 + ok=True + user=redhwan + heartbeat=3 + protocol=1",
+   "status": "PASS",
+   "evidence": "POST /api/ea/handshake response"
+  },
+  {
+   "id": "TC-MT-02",
+   "what": "handshake with different identity on same token",
+   "expected": "409 (token already bound)",
+   "actual": "409 + detail=token already bound to a different MT5 login",
+   "status": "PASS",
+   "evidence": "POST /api/ea/handshake 2nd identity"
+  },
+  {
+   "id": "TC-MT-02",
+   "what": "EA poll (empty results batch)",
+   "expected": "200 + ok + commands(array) + server_time",
+   "actual": "200 + ok=True + commands=0 item(s) + server_time=yes",
+   "status": "PASS",
+   "evidence": "POST /api/ea/poll response"
+  },
+  {
+   "id": "TC-MT-02",
+   "what": "admin EA commands queue (live state)",
+   "expected": "200 + commands array (document state as-is)",
+   "actual": "200 + 0 command(s) in queue",
+   "status": "PASS",
+   "evidence": "GET /api/admin/ea-commands response (paper queue state recorded)"
+  },
+  {
+   "id": "TC-MT-02",
+   "what": "revoke token -> immediate 401 on EA poll",
+   "expected": "DELETE 200/204 then poll 401",
+   "actual": "delete=200 + post_revoke_poll=401",
+   "status": "PASS",
+   "evidence": "DELETE /api/admin/ea-tokens/{id} + post-revoke poll"
+  },
+  {
+   "id": "TC-MT-04",
+   "what": "paper-only enforcement (env + code + live health)",
+   "expected": "NEXUS_TRADING_MODE=paper + executor effective broker=paper",
+   "actual": "env_mode=paper + 9007/health=200 + keys=['broker', 'broker_connected', 'real_broker_execution_enabled', 'redis', 'service', 'status', 'timestamp', 'trading_mode'] + paper-signal-found-in-health + code_chain=ok + 9007_health_body={broker:paper, trading_mode:paper, real_broker_execution_enabled:false, broker_connected:true, redis:true, status:healthy}",
+   "status": "PASS",
+   "evidence": ".env + shared/safety.py + services/nexus_executor/main.py + run.py --paper -> NEXUS_TRADING_MODE=paper (run.py:950-961, default paper) | shared/safety.py LIVE_MODE_VALUES={live,production,prod}, default=paper | executor main.py:569 effective_broker = DEFAULT_BROKER if live_mode_enabled() else 'paper' + live GET 9007/health body (2026-11-04T16:27Z)"
+  },
+  {
+   "id": "TC-MT-01",
+   "what": "live MT5 bridge end-to-end on owner terminal",
+   "expected": "BLOCKED — requires real MT5 terminal (out of sandbox)",
+   "actual": "BLOCKED: no MT5 terminal in sandbox; handshake/poll/token APIs verified live instead",
+   "status": "BLOCKED",
+   "evidence": "sandbox constraint; per DEFECT_REGISTER §د; requires docs/EA_BRIDGE.md setup on owner device"
+  }
+ ]
+}

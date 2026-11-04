@@ -53,6 +53,7 @@
 | 15 | اعتماد | FINAL_ACCEPTANCE_REPORT + HANDOFF | ✋ |
 
 **سجل تنفيذ فوري (مساء 2026-11-04):** أُصلحت D10 (826eecb + تحصين 5921635) وD12 وD13 (عزل اختبار — 5921635) أثناء إعداد الوثائق؛ الانحدار المرتبط: **555/555 PASS** (test_api كاملاً). التفاصيل في DEFECT_REGISTER §أ/§ج.
+**سجل تنفيذ (2026-11-04 ليلًا):** المرحلة 6 (MT5) منفذة — TC-MT-02 **7/7 PASS حي** (توكن/ربط/409/poll/إبطال 401 فوري)، TC-MT-03 **PASS** (اتساق EA↔OpenAPI↔وثيقة شامل: LIMIT 20، INTERVAL 5 MINUTE، journal replay)، TC-MT-04 **PASS** (9007 حي: broker=paper، real_broker_execution_enabled=false)، TC-MT-01 **BLOCKED** (لا MT5 terminal في الصندوق). لا عيوب جديدة. الأدلة: `qa/evidence/tc_mt_results.json`.
 
 ## 6. معايير القبول
 - صفر عيوب Critical/High مفتوحة.

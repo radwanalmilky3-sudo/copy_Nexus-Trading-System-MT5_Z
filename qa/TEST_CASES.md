@@ -26,13 +26,21 @@
 | TC-AU-09 | RBAC خلفي | مستخدم عادي × endpoint إداري | 403 — لا تجاوز بتغيير الواجهة |
 | TC-AU-10 | PIN العمليات الحساسة | kill release بـPIN خاطئ | 403 |
 
-## TC-MT — تكامل MT5 (المرحلة 6)
+## TC-MT — تكامل MT5 (المرحلة 6) — منفذة 2026-11-04 ✅
 | ID | الوظيفة | الخطوات | المتوقع |
 |---|---|---|---|
 | TC-MT-01 | جسر حي على طرف المالك | — | **BLOCKED** (يتطلب MT5 terminal) — موثق بأسباب ومتطلبات |
 | TC-MT-02 | APIs الجسر المتاحة | ea tokens/queue/status عبر 9000 | تعمل صحيحاً |
 | TC-MT-03 | مخطط EA | مراجعة NexusBridgeEA.mq5 مقابل docs/EA_BRIDGE.md | اتساق endpoints/توكن |
 | TC-MT-04 | paper-only | فحص executor mode | paper فقط، لا مسار حقيقي مفعّل |
+
+**نتائج المرحلة 6 (حي — أدلة `qa/evidence/tc_mt_results.json`):**
+| ID | فعلي | الحالة | دليل |
+|---|---|---|---|
+| TC-MT-01 | لا MT5 terminal في الصندوق؛ اختُبرت بدائل API الحية بدلاً منه؛ المتطلبات على طرف المالك وفق docs/EA_BRIDGE.md | **BLOCKED** | قيد بيئي (DEFECT_REGISTER §د) |
+| TC-MT-02 | 7/7: إنشاء توكن (200 + raw nexus_ea_ مرة واحدة) → القائمة بلا توكن خام (SHA-256 فقط) → handshake يربط الهوية (200 + user=redhwan + heartbeat=3 + protocol=1) → هوية ثانية بنفس التوكن 409 → poll (200 + commands[] + server_time) → طابور الأوامر 200 → إبطال DELETE 200 ثم poll = **401 فوري** | **PASS** | `qa/evidence/tc_mt_results.json` (سكربت `scripts/tc_mt_bridge_live.py`) |
+| TC-MT-03 | اتساق كامل EA↔OpenAPI↔EA_BRIDGE.md: handshake body (mt5_login/broker/server/terminal_version) = HandshakeIn؛ poll body results[{command_id,ok,detail,ticket,price}] = PollIn؛ توكن nexus_ea_ (EA يتحقق prefix+طول، الخادم يخزن SHA-256)؛ أوامر OPEN/CLOSE/PARTIAL_CLOSE/MODIFY؛ حد المطالبة 20 = `LIMIT 20` في ea_pending_commands؛ استعادة العالق 5 دقائق = `INTERVAL 5 MINUTE`؛ منع مزدوج = journal replay (سطر 477)؛ توقف بعد 20×401 | **PASS** | فحص ثابت موثق (ea.py:138-213، fundamental_store.py:187، NexusBridgeEA.mq5:7-29,463-494,505-566) |
+| TC-MT-04 | `.env` NEXUS_TRADING_MODE=paper + run.py يفرض paper افتراضياً (950-961) + LIVE_MODE_VALUES={live,production,prod} + executor: effective_broker=paper عند عدم live_mode_enabled؛ **حي 9007/health: broker=paper, trading_mode=paper, real_broker_execution_enabled=false** | **PASS** | جسم استجابة 9007/health حي + shared/safety.py + services/nexus_executor/main.py:569 |
 
 ## TC-SC-01..16 — الشاشات (المرحلة 7)
 لكل شاشة من المصفوفة: تحميل + صفر أخطاء كونسول/صفحة + نداءات شبكة + لقطة + زمن تحميل. (التفاصيل في SCREEN_COVERAGE_MATRIX).
