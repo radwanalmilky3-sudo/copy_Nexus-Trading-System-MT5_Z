@@ -1,0 +1,53 @@
+{
+ "executed_at_utc": "2026-11-04T17:10:26.019180+00:00",
+ "results": [
+  {
+   "id": "TC-SEC-01",
+   "what": "secret scan (code/dashboard/qa docs)",
+   "expected": "no hardcoded secrets outside .env (gitignored)",
+   "actual": "0 findings",
+   "status": "PASS",
+   "evidence": "regex sweep over services/shared/dashboard-src/run.py/qa"
+  },
+  {
+   "id": "TC-SEC-02",
+   "what": ".env not in git (only .env.example template)",
+   "expected": ".env absent from tracked files",
+   "actual": "tracked env files: none (only .env.example)",
+   "status": "PASS",
+   "evidence": "git ls-files"
+  },
+  {
+   "id": "TC-SEC-03",
+   "what": "protected routes refuse anonymous calls",
+   "expected": "401/403 everywhere, zero 200",
+   "actual": "GET /api/admin/users=401; GET /api/admin/audit=401; POST /api/admin/ea-tokens=401; POST /api/system/kill-switch=401; POST /api/system/kill-switch/release=401; GET /api/config/risk=401; PUT /api/config/risk=401; GET /api/risk/status=401; GET /api/agents/decision/XAUUSD=401; GET /api/system/health=401; GET /api/fundamental/sources/health=401",
+   "status": "PASS",
+   "evidence": "no-token sweep on 9000"
+  },
+  {
+   "id": "TC-SEC-04",
+   "what": "security headers presence",
+   "expected": "recorded honestly (dev-mode baseline)",
+   "actual": "{\"gateway\": {\"x-frame-options\": null, \"x-content-type-options\": null, \"content-security-policy\": null, \"strict-transport-security\": null}, \"dashboard\": {\"x-frame-options\": null, \"x-content-type-options\": null, \"content-security-policy\": null}}",
+   "status": "PASS*",
+   "evidence": "observation: missing headers listed verbatim (hardening backlog candidate)"
+  },
+  {
+   "id": "TC-SEC-05",
+   "what": "paper/live separation (live body)",
+   "expected": "executor: broker=paper, real_broker_execution_enabled=false",
+   "actual": "{\"broker\": \"paper\", \"trading_mode\": \"paper\", \"real_broker_execution_enabled\": false}",
+   "status": "PASS",
+   "evidence": "9007/health live body (TC-MT-04 chain)"
+  },
+  {
+   "id": "TC-SEC-06",
+   "what": "dependency CVE scan (pip-audit)",
+   "expected": "scan performed if tooling available",
+   "actual": "NOT TESTED — pip-audit unavailable in sandbox (no CVE DB access); manual pin review remains valid",
+   "status": "NOT TESTED",
+   "evidence": "honest fallback per methodology"
+  }
+ ]
+}

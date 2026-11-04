@@ -1,0 +1,178 @@
+{
+ "executed_at_utc": "2026-11-04T17:10:50.709736+00:00",
+ "thresholds": {
+  "health_ms": 300,
+  "login_ms": 2000,
+  "screen_ms_dev": 8000
+ },
+ "health_per_service": {
+  "nexus-api": {
+   "n": 10,
+   "avg_ms": 9.4,
+   "p95_ms": 8.6,
+   "min_ms": 6.2,
+   "last_status": 200
+  },
+  "nexus-data": {
+   "n": 10,
+   "avg_ms": 10.3,
+   "p95_ms": 6.6,
+   "min_ms": 5.9,
+   "last_status": 200
+  },
+  "nexus-features": {
+   "n": 10,
+   "avg_ms": 8.8,
+   "p95_ms": 6.4,
+   "min_ms": 5.8,
+   "last_status": 200
+  },
+  "nexus-ml": {
+   "n": 10,
+   "avg_ms": 9.3,
+   "p95_ms": 11.5,
+   "min_ms": 5.6,
+   "last_status": 200
+  },
+  "nexus-agents": {
+   "n": 10,
+   "avg_ms": 235.1,
+   "p95_ms": 12.0,
+   "min_ms": 5.6,
+   "last_status": 200
+  },
+  "nexus-news": {
+   "n": 10,
+   "avg_ms": 7.0,
+   "p95_ms": 11.4,
+   "min_ms": 5.5,
+   "last_status": 200
+  },
+  "nexus-risk": {
+   "n": 10,
+   "avg_ms": 6.3,
+   "p95_ms": 6.1,
+   "min_ms": 5.6,
+   "last_status": 200
+  },
+  "nexus-executor": {
+   "n": 10,
+   "avg_ms": 6.3,
+   "p95_ms": 5.9,
+   "min_ms": 5.5,
+   "last_status": 200
+  },
+  "nexus-monitor": {
+   "n": 10,
+   "avg_ms": 6.9,
+   "p95_ms": 9.9,
+   "min_ms": 5.7,
+   "last_status": 200
+  }
+ },
+ "login": {
+  "n": 20,
+  "avg_ms": 57.0,
+  "p95_ms": 67.4,
+  "min_ms": 53.2,
+  "last_status": 200
+ },
+ "candles_404": {
+  "n": 10,
+  "avg_ms": 84.0,
+  "p95_ms": 87.9,
+  "min_ms": 77.7,
+  "last_status": 404
+ },
+ "dashboard_steady_state_ms": {
+  "/nexus": 1444,
+  "/nexus/strategies": 748,
+  "/nexus/ml-models": 556
+ },
+ "process_footprint": [
+  {
+   "pid": "4040",
+   "cpu_pct": "0.0",
+   "mem_pct": "0.9",
+   "rss_kb": "40592",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python run.py --paper --skip-pr"
+  },
+  {
+   "pid": "4059",
+   "cpu_pct": "0.3",
+   "mem_pct": "4.4",
+   "rss_kb": "188672",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python -m uvicorn services.nexu"
+  },
+  {
+   "pid": "4063",
+   "cpu_pct": "0.1",
+   "mem_pct": "2.6",
+   "rss_kb": "114780",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python -m uvicorn services.nexu"
+  },
+  {
+   "pid": "4068",
+   "cpu_pct": "0.1",
+   "mem_pct": "1.2",
+   "rss_kb": "52544",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python -m uvicorn services.nexu"
+  },
+  {
+   "pid": "11696",
+   "cpu_pct": "3.0",
+   "mem_pct": "23.8",
+   "rss_kb": "1014156",
+   "cmd": "next-server (v14.2.5)"
+  },
+  {
+   "pid": "12061",
+   "cpu_pct": "0.8",
+   "mem_pct": "2.3",
+   "rss_kb": "100012",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python -m uvicorn services.nexu"
+  },
+  {
+   "pid": "13842",
+   "cpu_pct": "0.2",
+   "mem_pct": "8.2",
+   "rss_kb": "352696",
+   "cmd": "./venv-nexus/bin/python -m uvicorn services.nexus_agents.main:app --app-dir /home/z/my-pro"
+  },
+  {
+   "pid": "14838",
+   "cpu_pct": "0.3",
+   "mem_pct": "2.4",
+   "rss_kb": "103336",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python -m uvicorn services.nexu"
+  },
+  {
+   "pid": "14840",
+   "cpu_pct": "0.5",
+   "mem_pct": "1.7",
+   "rss_kb": "73836",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python -m uvicorn services.nexu"
+  },
+  {
+   "pid": "16412",
+   "cpu_pct": "107",
+   "mem_pct": "3.6",
+   "rss_kb": "153748",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python -m uvicorn services.nexu"
+  },
+  {
+   "pid": "21985",
+   "cpu_pct": "0.2",
+   "mem_pct": "7.4",
+   "rss_kb": "316328",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python -m uvicorn services.nexu"
+  },
+  {
+   "pid": "31209",
+   "cpu_pct": "2.4",
+   "mem_pct": "4.0",
+   "rss_kb": "171404",
+   "cmd": "/home/z/my-project/Nexus-Trading-System-MT5/venv-nexus/bin/python -m uvicorn services.nexu"
+  }
+ ]
+}
