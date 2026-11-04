@@ -7,6 +7,20 @@ import { withRequestTimeout } from '@/lib/request-timeout';
 
 const API = process.env.NEXT_PUBLIC_API_URL || '';
 
+// Map backend status codes to clear Arabic messages instead of raw JSON dumps.
+const friendlyAuthError = async (res: Response): Promise<string> => {
+  if (res.status === 409) return 'يوجد حساب مدير مسجل بالفعل في النظام — عد إلى تسجيل الدخول واستخدم بياناتك مباشرة.';
+  if (res.status === 403) return 'الـ PIN غير صحيح. تأكد من قيمة NEXUS_ADMIN_PIN.';
+  if (res.status === 422) return 'تحقق من الحقول: اسم المستخدم 3 أحرف على الأقل، وكلمة المرور 10 أحرف على الأقل.';
+  if (res.status === 503) return 'إعدادات الخادم غير مكتملة (PIN أو JWT) — راجع ملف .env وأعد تشغيل الخدمات.';
+  if (res.status === 401) return 'بيانات الدخول غير صحيحة: تحقق من اسم المستخدم وكلمة المرور.';
+  try {
+    const txt = await res.text();
+    const detail = JSON.parse(txt)?.detail;
+    return typeof detail === 'string' ? detail : txt;
+  } catch { return `خطأ ${res.status}`; }
+};
+
 export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +35,7 @@ export default function LoginPage() {
     try {
       const data = await withRequestTimeout(async (signal) => {
         const res = await fetch(`${API}/api/v2/auth/login`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(credentials), signal });
-        if (!res.ok) throw new Error(await res.text());
+        if (!res.ok) throw new Error(await friendlyAuthError(res));
         return res.json();
       });
       localStorage.setItem('nexus-token', data.token); router.push('/nexus');
@@ -32,7 +46,7 @@ export default function LoginPage() {
     try {
       await withRequestTimeout(async (signal) => {
         const res=await fetch(`${API}/api/v2/auth/bootstrap`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(firstAdmin),signal});
-        if(!res.ok)throw new Error(await res.text());
+        if(!res.ok)throw new Error(await friendlyAuthError(res));
       });
       setCredentials({username:firstAdmin.username,password:firstAdmin.password}); setBootstrap(false); setError('تم إنشاء أول Super Administrator. سجّل الدخول الآن.');
     } catch(e){setError(e instanceof Error?e.message:'تعذر إنشاء الحساب');} finally{setIsLoading(false);}
