@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
 import {
   LineChart,
   TrendingUp,
@@ -12,40 +13,52 @@ import {
   Brain,
   BookOpen,
   FlaskConical,
+  RotateCcw,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { apiClient, getAuthHeaders } from '@/lib/api-client';
-import AgentFlowchart from '@/components/windows/AgentFlowchart';
+import { useDashboardStore, DEFAULT_LAYOUT } from '@/stores/dashboardStore';
+import type { LayoutItem } from '@/types';
 import ActivePositions from '@/components/windows/ActivePositions';
 import AgentConsole from '@/components/windows/AgentConsole';
-import AutonomousMLPanel from '@/components/windows/AutonomousMLPanel';
 import NewsFeed from '@/components/windows/NewsFeed';
-import PLDashboard from '@/components/windows/PLDashboard';
 import RegimeIndicator from '@/components/windows/RegimeIndicator';
-import { RiskMonitor } from '@/components/windows/RiskMonitor';
 import SessionClock from '@/components/windows/SessionClock';
-import LiveChart from '@/components/windows/LiveChart';
 import LiveDecisionPanel from '@/components/windows/LiveDecisionPanel';
 import SystemDiagnostic from '@/components/windows/SystemDiagnostic';
 import GatewayDiagnostic from '@/components/windows/GatewayDiagnostic';
+import { RiskMonitor } from '@/components/windows/RiskMonitor';
 import { SystemHealth } from '@/components/windows/SystemHealth';
 import { AutoTradeToggle } from '@/components/trade-controls/AutoTradeToggle';
 import { KillSwitch } from '@/components/trade-controls/KillSwitch';
 import { TradeSettingsPanel } from '@/components/trade-controls/TradeSettingsPanel';
 import SystemConsole from '@/components/windows/SystemConsole';
 import RegimeLive from '@/components/windows/RegimeLive';
-import MTFConfluence from '@/components/windows/MTFConfluence';
-import SignalQualityGate from '@/components/windows/SignalQualityGate';
-import ModelsByRegime from '@/components/windows/ModelsByRegime';
-import GenAIBrief from '@/components/windows/GenAIBrief';
 import TradeJournal from '@/components/windows/TradeJournal';
-import RLLifecycle from '@/components/windows/RLLifecycle';
-import CrossAsset from '@/components/windows/CrossAsset';
-import CorrelationMatrix from '@/components/windows/CorrelationMatrix';
-import BacktestPanel from '@/components/windows/BacktestPanel';
-import TradeMemoryPanel from '@/components/windows/TradeMemoryPanel';
-import ErgodicIntelligencePanel from '@/components/windows/ErgodicIntelligencePanel';
-import FundamentalWorkspace from '@/components/fundamental/FundamentalWorkspace';
+import PLDashboard from '@/components/windows/PLDashboard';
+import GridBoard from '@/components/shared/GridBoard';
+import WindowBoundary from '@/components/shared/WindowBoundary';
+import ConnectionStatusChip from '@/components/shared/ConnectionStatusChip';
+
+/* ── M1.5: heavy windows load on demand (next/dynamic) with a skeleton ── */
+const WindowSkeleton = () => (
+  <div className="h-full min-h-[120px] w-full animate-pulse rounded-lg border border-border-primary bg-bg-card/60" />
+);
+
+const LiveChart = dynamic(() => import('@/components/windows/LiveChart'), { ssr: false, loading: WindowSkeleton });
+const AutonomousMLPanel = dynamic(() => import('@/components/windows/AutonomousMLPanel'), { ssr: false, loading: WindowSkeleton });
+const AgentFlowchart = dynamic(() => import('@/components/windows/AgentFlowchart'), { ssr: false, loading: WindowSkeleton });
+const RLLifecycle = dynamic(() => import('@/components/windows/RLLifecycle'), { ssr: false, loading: WindowSkeleton });
+const GenAIBrief = dynamic(() => import('@/components/windows/GenAIBrief'), { ssr: false, loading: WindowSkeleton });
+const CorrelationMatrix = dynamic(() => import('@/components/windows/CorrelationMatrix'), { ssr: false, loading: WindowSkeleton });
+const CrossAsset = dynamic(() => import('@/components/windows/CrossAsset'), { ssr: false, loading: WindowSkeleton });
+const TradeMemoryPanel = dynamic(() => import('@/components/windows/TradeMemoryPanel'), { ssr: false, loading: WindowSkeleton });
+const ModelsByRegime = dynamic(() => import('@/components/windows/ModelsByRegime'), { ssr: false, loading: WindowSkeleton });
+const MTFConfluence = dynamic(() => import('@/components/windows/MTFConfluence'), { ssr: false, loading: WindowSkeleton });
+const SignalQualityGate = dynamic(() => import('@/components/windows/SignalQualityGate'), { ssr: false, loading: WindowSkeleton });
+const ErgodicIntelligencePanel = dynamic(() => import('@/components/windows/ErgodicIntelligencePanel'), { ssr: false, loading: WindowSkeleton });
+const BacktestPanel = dynamic(() => import('@/components/windows/BacktestPanel'), { ssr: false, loading: WindowSkeleton });
+const FundamentalWorkspace = dynamic(() => import('@/components/fundamental/FundamentalWorkspace'), { ssr: false, loading: WindowSkeleton });
 
 const SUB_TABS = [
   { id: 'overview',      label: 'نظرة عامة (Overview)',      icon: LineChart },
@@ -64,6 +77,25 @@ type SubTabId = (typeof SUB_TABS)[number]['id'];
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<SubTabId>('overview');
+
+  /* M1.5 — lazy tab mounting: a tab's content mounts on first visit, then
+   * stays mounted (display:none) so later switches remain instant. */
+  const [visited, setVisited] = useState<Set<SubTabId>>(
+    () => new Set<SubTabId>(['overview'])
+  );
+  useEffect(() => {
+    setVisited((prev) =>
+      prev.has(activeTab) ? prev : new Set<SubTabId>(prev).add(activeTab)
+    );
+  }, [activeTab]);
+
+  /* M1.4 — layout reset wiring (button in the tab bar). */
+  const setGridLayout = useDashboardStore((s) => s.setGridLayout);
+  const [layoutEpoch, setLayoutEpoch] = useState(0);
+  const resetLayout = useCallback(() => {
+    setGridLayout(DEFAULT_LAYOUT.map((l) => ({ ...l })));
+    setLayoutEpoch((e) => e + 1);
+  }, [setGridLayout]);
 
   return (
     <div className="flex flex-col h-full">
@@ -91,64 +123,115 @@ export default function DashboardPage() {
 
         <div className="flex-1" />
 
-        {/* Inline trade controls — visible en todas las tabs */}
+        {/* Live-feed status + layout reset + inline trade controls */}
         <div className="flex items-center gap-2 shrink-0">
+          <ConnectionStatusChip />
+          <button
+            onClick={resetLayout}
+            title="استعادة التخطيط الافتراضي للوحة"
+            className="flex items-center gap-1 rounded border border-border-primary px-2 py-1 font-mono text-[10px] text-text-muted transition-colors hover:bg-bg-tertiary hover:text-text-secondary"
+          >
+            <RotateCcw className="h-3 w-3" />
+            التخطيط الافتراضي
+          </button>
           <ScalpingModeToggle />
           <AutoTradeToggle compact />
           <KillSwitch compact />
         </div>
       </div>
 
-      {/* Content — Keep all tabs mounted (display:none) so switching is instant */}
+      {/* Content — tabs stay mounted (display:none) after first visit so switching is instant */}
       <div dir="rtl" className="flex-1 min-h-0 overflow-auto relative">
         <div style={{ display: activeTab === 'overview' ? 'block' : 'none' }}>
-          <OverviewGrid />
+          <OverviewGrid resetKey={layoutEpoch} />
         </div>
         <div style={{ display: activeTab === 'positions' ? 'block' : 'none' }} className="p-2 sm:p-3 h-full w-full max-w-[1600px] mx-auto">
-          <ActivePositions />
+          {visited.has('positions') && (
+            <WindowBoundary label="ActivePositions">
+              <ActivePositions />
+            </WindowBoundary>
+          )}
         </div>
         <div
           style={{ display: activeTab === 'risk' ? 'grid' : 'none' }}
           className="p-2 sm:p-3 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] gap-2 sm:gap-3 w-full max-w-[1800px] mx-auto min-h-[calc(100vh-90px)] h-[calc(100vh-90px)]"
         >
-          <div className="flex flex-col gap-2 min-h-0 overflow-hidden">
-            <RiskMonitor />
-            <div className="flex-1 min-h-[160px] overflow-hidden">
-              <ActivePositions />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 min-h-0 overflow-hidden">
-            <TradeSettingsPanel />
-            <SessionClock compact />
-            <div className="flex-1 min-h-[140px] overflow-hidden">
-              <SystemHealth compact className="h-full" />
-            </div>
-          </div>
+          {visited.has('risk') && (
+            <>
+              <div className="flex flex-col gap-2 min-h-0 overflow-hidden">
+                <WindowBoundary label="RiskMonitor">
+                  <RiskMonitor />
+                </WindowBoundary>
+                <div className="flex-1 min-h-[160px] overflow-hidden">
+                  <WindowBoundary label="ActivePositions">
+                    <ActivePositions />
+                  </WindowBoundary>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 min-h-0 overflow-hidden">
+                <WindowBoundary label="TradeSettingsPanel">
+                  <TradeSettingsPanel />
+                </WindowBoundary>
+                <WindowBoundary label="SessionClock">
+                  <SessionClock compact />
+                </WindowBoundary>
+                <div className="flex-1 min-h-[140px] overflow-hidden">
+                  <WindowBoundary label="SystemHealth">
+                    <SystemHealth compact className="h-full" />
+                  </WindowBoundary>
+                </div>
+              </div>
+            </>
+          )}
         </div>
         <div style={{ display: activeTab === 'news' ? 'block' : 'none' }} className="p-2 sm:p-3 w-full max-w-[1200px] mx-auto">
-          <NewsFeed />
+          {visited.has('news') && (
+            <WindowBoundary label="NewsFeed">
+              <NewsFeed />
+            </WindowBoundary>
+          )}
         </div>
         <div style={{ display: activeTab === 'agents' ? 'flex' : 'none' }} className="p-2 sm:p-3 w-full max-w-[1600px] mx-auto min-h-[calc(100vh-90px)] h-[calc(100vh-90px)] flex flex-col">
-          <AgentFlowchart />
+          {visited.has('agents') && (
+            <WindowBoundary label="AgentFlowchart">
+              <AgentFlowchart />
+            </WindowBoundary>
+          )}
         </div>
         <div style={{ display: activeTab === 'intelligence' ? 'block' : 'none' }} className="p-2 sm:p-3 w-full max-w-[1800px] mx-auto">
-          <IntelligenceGrid />
+          {visited.has('intelligence') && <IntelligenceGrid />}
         </div>
         <div style={{ display: activeTab === 'fundamental' ? 'block' : 'none' }} className="w-full max-w-[1900px] mx-auto">
-          <FundamentalWorkspace />
+          {visited.has('fundamental') && (
+            <WindowBoundary label="FundamentalWorkspace">
+              <FundamentalWorkspace />
+            </WindowBoundary>
+          )}
         </div>
         <div style={{ display: activeTab === 'journal' ? 'flex' : 'none' }} className="p-2 sm:p-3 w-full max-w-[1200px] mx-auto min-h-[calc(100vh-90px)] h-[calc(100vh-90px)] flex flex-col">
-          <div className="flex-1 min-h-0 overflow-hidden border border-border-primary rounded-lg bg-bg-secondary/40">
-            <TradeJournal />
-          </div>
+          {visited.has('journal') && (
+            <div className="flex-1 min-h-0 overflow-hidden border border-border-primary rounded-lg bg-bg-secondary/40">
+              <WindowBoundary label="TradeJournal">
+                <TradeJournal />
+              </WindowBoundary>
+            </div>
+          )}
         </div>
         <div style={{ display: activeTab === 'backtest' ? 'flex' : 'none' }} className="p-2 sm:p-3 w-full max-w-[1800px] mx-auto min-h-[calc(100vh-90px)] h-[calc(100vh-90px)] flex flex-col">
-          <div className="flex-1 min-h-0 overflow-hidden border border-neon-purple/20 rounded-lg bg-bg-secondary/40">
-            <BacktestPanel />
-          </div>
+          {visited.has('backtest') && (
+            <div className="flex-1 min-h-0 overflow-hidden border border-neon-purple/20 rounded-lg bg-bg-secondary/40">
+              <WindowBoundary label="BacktestPanel">
+                <BacktestPanel />
+              </WindowBoundary>
+            </div>
+          )}
         </div>
         <div style={{ display: activeTab === 'console' ? 'flex' : 'none' }} className="p-2 sm:p-3 w-full max-w-[1600px] mx-auto min-h-[calc(100vh-90px)] h-[calc(100vh-90px)] flex flex-col">
-          <AgentConsole />
+          {visited.has('console') && (
+            <WindowBoundary label="AgentConsole">
+              <AgentConsole />
+            </WindowBoundary>
+          )}
         </div>
       </div>
     </div>
@@ -224,37 +307,55 @@ function IntelligenceGrid() {
       {/* Top row: Regime + MTF + Signal Quality */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-3 min-h-[320px]">
         <div className="border border-border-primary rounded-lg bg-bg-secondary/40 overflow-hidden">
-          <RegimeLive />
+          <WindowBoundary label="RegimeLive">
+            <RegimeLive />
+          </WindowBoundary>
         </div>
         <div className="border border-border-primary rounded-lg bg-bg-secondary/40 overflow-hidden">
-          <MTFConfluence />
+          <WindowBoundary label="MTFConfluence">
+            <MTFConfluence />
+          </WindowBoundary>
         </div>
         <div className="border border-border-primary rounded-lg bg-bg-secondary/40 overflow-hidden">
-          <SignalQualityGate />
+          <WindowBoundary label="SignalQualityGate">
+            <SignalQualityGate />
+          </WindowBoundary>
         </div>
       </div>
       {/* Bottom row: Models by Regime + GenAI Brief + RL Lifecycle + Cross-Asset */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 sm:gap-3 min-h-[340px]">
         <div className="border border-border-primary rounded-lg bg-bg-secondary/40 overflow-hidden">
-          <ModelsByRegime />
+          <WindowBoundary label="ModelsByRegime">
+            <ModelsByRegime />
+          </WindowBoundary>
         </div>
         <div className="border border-border-primary rounded-lg bg-bg-secondary/40 overflow-hidden">
-          <GenAIBrief />
+          <WindowBoundary label="GenAIBrief">
+            <GenAIBrief />
+          </WindowBoundary>
         </div>
         <div className="border border-neon-purple/20 rounded-lg bg-neon-purple/5 overflow-hidden">
-          <RLLifecycle />
+          <WindowBoundary label="RLLifecycle">
+            <RLLifecycle />
+          </WindowBoundary>
         </div>
         <div className="border border-neon-purple/20 rounded-lg bg-neon-purple/5 overflow-hidden">
-          <CrossAsset />
+          <WindowBoundary label="CrossAsset">
+            <CrossAsset />
+          </WindowBoundary>
         </div>
       </div>
       {/* Trade Memory + Correlation row */}
       <div className="grid grid-cols-1 xl:grid-cols-[minmax(320px,420px)_minmax(0,1fr)] gap-2 sm:gap-3 min-h-[280px]">
         <div className="border border-neon-purple/20 rounded-lg bg-neon-purple/5 overflow-hidden">
-          <TradeMemoryPanel />
+          <WindowBoundary label="TradeMemoryPanel">
+            <TradeMemoryPanel />
+          </WindowBoundary>
         </div>
         <div className="border border-neon-purple/20 rounded-lg bg-neon-purple/5 overflow-hidden">
-          <CorrelationMatrix />
+          <WindowBoundary label="CorrelationMatrix">
+            <CorrelationMatrix />
+          </WindowBoundary>
         </div>
       </div>
       {/* Ergodic Intelligence row */}
@@ -264,53 +365,141 @@ function IntelligenceGrid() {
             <span className="text-xs font-medium text-cyan-400 uppercase tracking-widest">الذكاء الإرجعي المؤسسي (Ergodic Intelligence)</span>
             <span className="text-xs text-gray-600" dir="ltr">Hurst · Kelly Peters · Lyapunov · Entropy</span>
           </div>
-          <ErgodicIntelligencePanel />
+          <WindowBoundary label="ErgodicIntelligencePanel">
+            <ErgodicIntelligencePanel />
+          </WindowBoundary>
         </div>
       </div>
     </div>
   );
 }
 
-function OverviewGrid() {
+/* M1.4 — Overview as a draggable/resizable GridBoard wired to the store. */
+function OverviewGrid({ resetKey }: { resetKey: number }) {
+  const gridLayout = useDashboardStore((s) => s.gridLayout);
+  const setGridLayout = useDashboardStore((s) => s.setGridLayout);
+
+  /* Defensive merge: accept saved values only for known slots; anything
+   * stale (old ids / corrupted) falls back to the shipped default. */
+  const layout = useMemo<LayoutItem[]>(
+    () =>
+      DEFAULT_LAYOUT.map((def) => {
+        const saved = gridLayout.find((l) => l.i === def.i);
+        return saved ? { ...def, ...saved, i: def.i } : { ...def };
+      }),
+    [gridLayout]
+  );
+
+  const items = useMemo(
+    () => [
+      {
+        i: 'system-diag',
+        node: (
+          <WindowBoundary label="SystemDiagnostic">
+            <SystemDiagnostic />
+          </WindowBoundary>
+        ),
+      },
+      {
+        i: 'gateway-diag',
+        node: (
+          <WindowBoundary label="GatewayDiagnostic">
+            <GatewayDiagnostic />
+          </WindowBoundary>
+        ),
+      },
+      {
+        i: 'live-chart',
+        node: (
+          <WindowBoundary label="LiveChart">
+            <LiveChart />
+          </WindowBoundary>
+        ),
+      },
+      {
+        i: 'side-widgets',
+        node: (
+          <div className="flex h-full flex-col gap-2 overflow-hidden">
+            <WindowBoundary label="SessionClock">
+              <SessionClock compact />
+            </WindowBoundary>
+            <WindowBoundary label="PLDashboard">
+              <PLDashboard compact />
+            </WindowBoundary>
+            <WindowBoundary label="RegimeIndicator">
+              <RegimeIndicator compact />
+            </WindowBoundary>
+          </div>
+        ),
+      },
+      {
+        i: 'decisions',
+        node: (
+          <WindowBoundary label="LiveDecisionPanel">
+            <LiveDecisionPanel />
+          </WindowBoundary>
+        ),
+      },
+      {
+        i: 'positions',
+        node: (
+          <WindowBoundary label="ActivePositions">
+            <ActivePositions />
+          </WindowBoundary>
+        ),
+      },
+      {
+        i: 'ml-panel',
+        node: (
+          <WindowBoundary label="AutonomousMLPanel">
+            <AutonomousMLPanel />
+          </WindowBoundary>
+        ),
+      },
+      {
+        i: 'risk',
+        node: (
+          <WindowBoundary label="RiskMonitor">
+            <RiskMonitor className="h-full" />
+          </WindowBoundary>
+        ),
+      },
+      {
+        i: 'console',
+        node: (
+          <WindowBoundary label="SystemConsole">
+            <SystemConsole className="h-full" />
+          </WindowBoundary>
+        ),
+      },
+    ],
+    []
+  );
+
+  const handleLayoutChange = useCallback(
+    (next: LayoutItem[]) => {
+      const normalized: LayoutItem[] = next.map((l) => ({
+        i: l.i,
+        x: l.x,
+        y: l.y,
+        w: l.w,
+        h: l.h,
+        minW: l.minW,
+        minH: l.minH,
+      }));
+      setGridLayout(normalized);
+    },
+    [setGridLayout]
+  );
+
   return (
-    <div className="p-2 sm:p-3 w-full max-w-[1800px] mx-auto flex flex-col gap-2 sm:gap-3">
-
-      <SystemDiagnostic />
-      <GatewayDiagnostic />
-
-      <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_minmax(300px,380px)] gap-2 sm:gap-3 xl:items-stretch">
-        <div className="min-h-[min(68vh,620px)] xl:min-h-0 h-[min(68vh,620px)] overflow-hidden">
-          <LiveChart />
-        </div>
-        <div className="flex flex-col gap-2 xl:max-h-[min(68vh,620px)]">
-          <SessionClock compact />
-          <PLDashboard compact />
-          <RegimeIndicator compact />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[minmax(300px,400px)_minmax(0,1fr)] gap-2 sm:gap-3">
-        <div className="min-h-[260px] md:max-h-[460px] overflow-hidden">
-          <LiveDecisionPanel />
-        </div>
-        <div className="min-h-[260px] md:max-h-[460px] overflow-hidden">
-          <ActivePositions />
-        </div>
-      </div>
-
-      <div className="min-h-[200px] overflow-hidden">
-        <AutonomousMLPanel />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 items-stretch min-h-[340px] lg:min-h-[400px]">
-        <div className="h-full min-h-[300px] overflow-hidden">
-          <RiskMonitor className="h-full" />
-        </div>
-        <div className="h-full min-h-[300px] overflow-hidden">
-          <SystemConsole className="h-full" />
-        </div>
-      </div>
-
+    <div className="w-full max-w-[1800px] mx-auto p-2 sm:p-3">
+      <GridBoard
+        key={resetKey}
+        layout={layout}
+        items={items}
+        onLayoutChange={handleLayoutChange}
+      />
     </div>
   );
 }

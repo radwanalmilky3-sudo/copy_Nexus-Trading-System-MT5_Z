@@ -384,3 +384,39 @@ body {
     animation: none !important;
   }
 }
+
+/* ── M1.3: numeric cells — IBM Plex Mono + tabular figures, always LTR ── */
+.num {
+  font-family: var(--font-plex-mono), 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* ── M1.4: react-grid-layout integration (subtle, neon-theme native) ── */
+.nexus-grid .react-grid-item.react-grid-placeholder {
+  background: var(--neon-purple) !important;
+  opacity: 0.12;
+  border-radius: 8px;
+}
+.nexus-grid .react-resizable-handle {
+  width: 14px;
+  height: 14px;
+  right: 2px;
+  bottom: 2px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.nexus-grid .react-grid-item:hover .react-resizable-handle {
+  opacity: 0.6;
+}
+.nexus-grid .react-resizable-handle::after {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+}
+.nexus-grid .react-grid-item {
+  transition: transform 200ms ease, width 200ms ease, height 200ms ease;
+}

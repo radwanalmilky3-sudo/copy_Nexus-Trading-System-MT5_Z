@@ -69,8 +69,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        /* M1.3: IBM Plex (owner design kit) leads; previous stacks kept as fallback. */
+        sans: ['var(--font-plex-arabic)', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-plex-mono)', 'JetBrains Mono', 'Fira Code', 'monospace'],
       },
       boxShadow: {
         /* Clean shadows — no glow, just depth */

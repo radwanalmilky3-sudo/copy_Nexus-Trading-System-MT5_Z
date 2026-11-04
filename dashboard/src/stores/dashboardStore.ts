@@ -35,19 +35,19 @@ interface DashboardState {
   toggleSidebar: () => void;
 }
 
-const DEFAULT_LAYOUT: LayoutItem[] = [
-  { i: 'live-chart', x: 0, y: 0, w: 7, h: 6, minW: 4, minH: 3 },
-  { i: 'agent-console', x: 7, y: 0, w: 5, h: 6, minW: 3, minH: 3 },
-  { i: 'positions', x: 0, y: 6, w: 4, h: 4, minW: 3, minH: 2 },
-  { i: 'order-book', x: 4, y: 6, w: 4, h: 4, minW: 3, minH: 2 },
-  { i: 'risk-gauge', x: 8, y: 6, w: 4, h: 4, minW: 2, minH: 2 },
-  { i: 'news-feed', x: 0, y: 10, w: 3, h: 4, minW: 2, minH: 2 },
-  { i: 'trade-journal', x: 3, y: 10, w: 3, h: 4, minW: 2, minH: 2 },
-  { i: 'performance', x: 6, y: 10, w: 3, h: 4, minW: 2, minH: 2 },
-  { i: 'market-depth', x: 9, y: 10, w: 3, h: 4, minW: 2, minH: 2 },
-  { i: 'strategy-config', x: 0, y: 14, w: 4, h: 3, minW: 2, minH: 2 },
-  { i: 'alerts', x: 4, y: 14, w: 4, h: 3, minW: 2, minH: 2 },
-  { i: 'system-status', x: 8, y: 14, w: 4, h: 3, minW: 2, minH: 2 },
+/* M1.4 — Overview board slots (12-col GridBoard). Ids must match the
+ * windows rendered in OverviewGrid (nexus/page.tsx); stale persisted
+ * layouts are discarded by migrate + the defensive merge in the page. */
+export const DEFAULT_LAYOUT: LayoutItem[] = [
+  { i: 'system-diag', x: 0, y: 0, w: 12, h: 3, minW: 6, minH: 2 },
+  { i: 'gateway-diag', x: 0, y: 3, w: 12, h: 3, minW: 6, minH: 2 },
+  { i: 'live-chart', x: 0, y: 6, w: 8, h: 16, minW: 6, minH: 10 },
+  { i: 'side-widgets', x: 8, y: 6, w: 4, h: 16, minW: 3, minH: 10 },
+  { i: 'decisions', x: 0, y: 22, w: 6, h: 12, minW: 4, minH: 8 },
+  { i: 'positions', x: 6, y: 22, w: 6, h: 12, minW: 4, minH: 8 },
+  { i: 'ml-panel', x: 0, y: 34, w: 12, h: 10, minW: 6, minH: 6 },
+  { i: 'risk', x: 0, y: 44, w: 6, h: 12, minW: 4, minH: 8 },
+  { i: 'console', x: 6, y: 44, w: 6, h: 12, minW: 4, minH: 8 },
 ];
 
 export const useDashboardStore = create<DashboardState>()(
@@ -95,7 +95,7 @@ export const useDashboardStore = create<DashboardState>()(
     }),
     {
       name: 'nexus-dashboard',
-      version: 3,
+      version: 4,
       partialize: (state) => ({
         symbol: state.symbol,
         timeframe: state.timeframe,
@@ -104,11 +104,30 @@ export const useDashboardStore = create<DashboardState>()(
         gridLayout: state.gridLayout,
         sidebarCollapsed: state.sidebarCollapsed,
       }),
-      migrate: (persisted: unknown) => {
+      migrate: (persisted: unknown, version: number) => {
         const state = persisted as unknown as Partial<DashboardState>;
         // Ensure symbol is always one of our valid symbols
         if (state?.symbol && !['XAUUSD', 'BTCUSD'].includes(state.symbol)) {
           state.symbol = 'XAUUSD';
+        }
+        // v4: GridBoard slots changed — discard stale/incompatible layouts.
+        const defaultIds = DEFAULT_LAYOUT.map((l) => l.i);
+        const gl = state?.gridLayout;
+        const valid =
+          version >= 4 &&
+          Array.isArray(gl) &&
+          gl.length === defaultIds.length &&
+          gl.every(
+            (item) =>
+              item &&
+              defaultIds.includes(item.i) &&
+              typeof item.x === 'number' &&
+              typeof item.y === 'number' &&
+              typeof item.w === 'number' &&
+              typeof item.h === 'number'
+          );
+        if (!valid) {
+          state.gridLayout = DEFAULT_LAYOUT.map((l) => ({ ...l }));
         }
         return state as DashboardState;
       },
