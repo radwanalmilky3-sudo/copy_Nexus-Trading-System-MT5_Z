@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  Zap,
   Activity,
   Shield,
   Bell,
@@ -319,11 +318,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Top Nav Bar — Gold Terminal: gold hairline + warm glass blur */}
       <header className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 h-10 border-b border-amber-500/15 bg-bg-primary/80 backdrop-blur-md shrink-0 z-20">
-        {/* Brand — kit fingerprint: gold gradient tile + gold shadow */}
+        {/* Brand — Yemen Smart golden Y emblem (owner's banner) + Nexus wordmark */}
         <div className="flex items-center gap-2 mr-3 shrink-0">
-          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-amber-300 to-amber-600 shadow-md shadow-amber-500/25">
-            <Zap className="h-3.5 w-3.5 text-amber-950" />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/yemen-smart-mark.png"
+            alt="يمن سمارت"
+            className="h-7 w-auto rounded-md ring-1 ring-amber-400/30 shadow-md shadow-amber-500/20 select-none"
+            draggable={false}
+          />
           <span className="text-xs font-black tracking-[0.2em] gradient-text hidden sm:inline select-none">
             NEXUS
           </span>

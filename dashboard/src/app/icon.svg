@@ -1,23 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <!-- Nexus Trader tab icon: the header's neon-green Zap bolt on the app's
-       dark surface. Filled (not stroked) so it stays legible at 16px. -->
+  <!-- Yemen Smart tab icon: golden Y emblem on the Gold Terminal warm-black
+       surface. Gold gradient from the design-theme-kit (#f59e0b family). -->
   <defs>
-    <linearGradient id="bolt" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#4ade80"/>
-      <stop offset="100%" stop-color="#22c55e"/>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="55%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
     </linearGradient>
   </defs>
 
-  <rect width="32" height="32" rx="7" fill="#09090b"/>
+  <rect width="32" height="32" rx="7" fill="#0f0d08"/>
   <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="none"
-        stroke="#22c55e" stroke-opacity="0.35" stroke-width="1"/>
+        stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1"/>
 
-  <!-- lucide "zap" polygon, scaled from its 24px grid and centred -->
-  <g transform="translate(4 4)">
-    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-             fill="url(#bolt)"
-             stroke="url(#bolt)"
-             stroke-width="1.6"
-             stroke-linejoin="round"/>
-  </g>
+  <!-- Y mark -->
+  <path d="M8.5 7.5 L16 16.5 L16 25" fill="none" stroke="url(#gold)"
+        stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M23.5 7.5 L16 16.5" fill="none" stroke="url(#gold)"
+        stroke-width="3.4" stroke-linecap="round"/>
+
+  <!-- rising arrow — the emblem's upward stroke -->
+  <path d="M11 19.5 L25 5.5 M25 5.5 L20.8 5.8 M25 5.5 L24.6 9.8"
+        fill="none" stroke="#fbbf24" stroke-width="1.6"
+        stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -27,8 +27,8 @@ const plexMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Nexus Trader',
-  description: 'AI-Powered Multi-Agent Trading Terminal',
+  title: 'يمن سمارت | Nexus Trader',
+  description: 'استثمار أذكى .. لمستقبل أفضل — AI-Powered Multi-Agent Trading Terminal',
   other: { google: 'notranslate' },
 };
 
