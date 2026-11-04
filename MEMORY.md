@@ -51,3 +51,4 @@
 - `data/nexus.duckdb` **فُقدت نهائياً** — النسخة المشفرة على فرع backups غير قابلة للفك لأن BACKUP_PASSPHRASE القديمة كانت داخل .env المفقود. القاعدة الحالية جديدة فارغة.
 - حساب redhwan أعيد إنشاؤه (`fix_admin_user.py` ثم `reset_redhwan_pw.py`): دخول موثق 200 بدور super_admin.
 - التوكن مخزّن في `~/.git-credentials` (credential.helper store) لتعمل النسخ الاحتياطية اليومية دون تدخل.
+- إصلاح ما بعد الاسترجاع: `.env` يجب أن يتضمن `DASHBOARD_ORIGIN=http://127.0.0.1:3000` — بدونه يفشل preflight الـ CORS (400) عند الدخول من البوابة :3000 والزر يعلق على /login. تم التحقق: دخول متصفح فعلي ناجح → /nexus بحساب redhwan super_admin (لقطة: download/nexus_logged_in.png).
