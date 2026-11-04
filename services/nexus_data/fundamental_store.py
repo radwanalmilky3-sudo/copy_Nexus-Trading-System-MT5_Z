@@ -158,6 +158,7 @@ class FundamentalStore:
         "user_permissions": ("SELECT rp.permission_code FROM app_role_permissions rp JOIN app_user_roles ur ON ur.role_id=rp.role_id WHERE ur.user_id=? AND ur.active=TRUE AND rp.allowed=TRUE", ("user_id",)),
         "users_list": ("SELECT u.user_id,u.username,u.full_name,u.email,u.language,u.timezone,u.active,u.created_at,u.last_login_at,ur.role_id,u.avatar_path FROM app_users u LEFT JOIN app_user_roles ur ON ur.user_id=u.user_id AND ur.primary_role=TRUE AND ur.active=TRUE WHERE u.deleted=FALSE ORDER BY u.full_name", ()),
         "user_exists": ("SELECT user_id FROM app_users WHERE lower(username)=lower(?) AND deleted=FALSE LIMIT 1", ("username",)),
+        "user_tombstone_by_username": ("SELECT user_id, username FROM app_users WHERE lower(username)=lower(?) AND deleted=TRUE LIMIT 1", ("username",)),
         "role_exists": ("SELECT role_id FROM app_roles WHERE role_id=? LIMIT 1", ("role_id",)),
         "user_active_roles": ("SELECT role_id FROM app_user_roles WHERE user_id=? AND active=TRUE", ("user_id",)),
         "roles_list": ("SELECT * FROM app_roles ORDER BY protected DESC,name_en", ()),

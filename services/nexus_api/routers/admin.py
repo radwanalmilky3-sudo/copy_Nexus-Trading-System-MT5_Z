@@ -65,7 +65,10 @@ async def _post_data(table: str, record: dict[str, Any]) -> None:
     except httpx.TransportError as exc:
         raise DataServiceUnavailable("Data service unavailable") from exc
     if not res.is_success:
-        raise DataServiceUnavailable("Data service unavailable")
+        # D10-a: surface the upstream rejection detail (validation messages only,
+        # no secrets) instead of masking every non-success as a generic 503.
+        detail = res.text[:200].replace("\n", " ")
+        raise DataServiceUnavailable(f"data service rejected write ({res.status_code}): {detail}")
 
 
 async def _role_ids(db: DataServiceClient, user_id: str) -> list[str]:
@@ -263,9 +266,28 @@ async def create_user(payload: UserCreate, actor: CurrentUser, db: DataServiceCl
     if exists: raise HTTPException(409,"username already exists")
     role=await db.query("role_exists", {"role_id": payload.role_id})
     if not role: raise HTTPException(422,"unknown role")
-    uid=uuid.uuid4().hex; avatar_path=_save_avatar(uid,payload.avatar_data_url); now=datetime.now(UTC)
-    await _post_data("app_users",{"user_id":uid,"username":payload.username.strip().lower(),"full_name":payload.full_name,"email":payload.email,"password_hash":_hash_password(payload.password),"avatar_path":avatar_path,"language":payload.language,"timezone":payload.timezone,"active":payload.active,"deleted":False,"created_at":now,"updated_at":now})
-    await _post_data("app_user_roles",{"user_id":uid,"role_id":payload.role_id,"primary_role":True,"active":True,"created_at":now,"updated_at":now})
+    now=datetime.now(UTC)
+    # D10-c: UNIQUE(username) survives soft delete. A tombstoned username would
+    # make INSERT OR IGNORE silently skip the new row (HTTP 200, nothing stored)
+    # and the role write would then fail with "unknown reference". Resurrect the
+    # tombstoned row in place (same user_id — audit trail stays coherent).
+    tomb=await db.query("user_tombstone_by_username", {"username": payload.username})
+    if tomb:
+        uid=str(tomb[0]["user_id"])
+        await _post_data("app_users",{"user_id":uid,"username":payload.username.strip().lower(),"full_name":payload.full_name,"email":payload.email,"password_hash":_hash_password(payload.password),"avatar_path":_save_avatar(uid,payload.avatar_data_url),"language":payload.language,"timezone":payload.timezone,"active":payload.active,"deleted":False,"updated_at":now})
+    else:
+        uid=uuid.uuid4().hex
+        await _post_data("app_users",{"user_id":uid,"username":payload.username.strip().lower(),"full_name":payload.full_name,"email":payload.email,"password_hash":_hash_password(payload.password),"avatar_path":_save_avatar(uid,payload.avatar_data_url),"language":payload.language,"timezone":payload.timezone,"active":payload.active,"deleted":False,"created_at":now,"updated_at":now})
+    try:
+        await _post_data("app_user_roles",{"user_id":uid,"role_id":payload.role_id,"primary_role":True,"active":True,"created_at":now,"updated_at":now})
+    except Exception:
+        # D10-b: never leave a half-created user (no role row) behind — roll the
+        # identity row back best-effort (upsert keys on username), then propagate.
+        try:
+            await _post_data("app_users",{"user_id":uid,"username":payload.username.strip().lower(),"deleted":True,"active":False,"updated_at":datetime.now(UTC)})
+        except Exception:
+            pass
+        raise
     await _audit(actor,"users.create","user",uid,{"role_id":payload.role_id})
     return {"ok":True,"user_id":uid}
 

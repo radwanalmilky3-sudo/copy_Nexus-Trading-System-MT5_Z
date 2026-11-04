@@ -308,7 +308,9 @@ async def global_exception_handler(request: Request, exc: Exception) -> JSONResp
 
 @app.exception_handler(DataServiceUnavailable)
 async def data_service_unavailable_handler(request: Request, exc: DataServiceUnavailable) -> JSONResponse:
-    return JSONResponse(status_code=503, content={"detail": "Data service unavailable"})
+    # D10-a: keep the detail (validation text only, no secrets) so operators and
+    # QA see WHY the write was rejected instead of a generic mask.
+    return JSONResponse(status_code=503, content={"detail": str(exc) or "Data service unavailable"})
 
 
 @app.exception_handler(DataServiceRejected)
