@@ -103,7 +103,14 @@ async def test_final_risk_approval_cannot_exceed_budget_after_multipliers(
         return {"risk_per_trade_pct": 1.0, "max_daily_trades": 0}
 
     monkeypatch.setattr(risk_main, "redis", SimpleNamespace(cache_get=FakeRedis().cache_get))
-    monkeypatch.setattr(risk_main, "runtime_settings", SimpleNamespace(get_settings=get_settings))
+    # Real session-gate resolver (stub predates session_gate_policy); the
+    # patched ALLOW_* values act as the caller's env-derived defaults.
+    import shared.runtime_settings as _rs
+
+    monkeypatch.setattr(
+        risk_main, "runtime_settings",
+        SimpleNamespace(get_settings=get_settings, session_gate_policy=_rs.session_gate_policy),
+    )
     monkeypatch.setattr(risk_main, "position_sizer", PositionSizer())
     monkeypatch.setattr(risk_main, "rules_engine", RulesEngine())
     monkeypatch.setattr(risk_main, "ALLOW_OFF_HOURS", True)

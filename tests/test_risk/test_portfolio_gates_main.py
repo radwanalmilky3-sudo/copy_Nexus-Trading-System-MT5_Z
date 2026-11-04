@@ -89,8 +89,23 @@ def _patch_evaluate(monkeypatch, state: dict, engine: RulesEngine | None = None)
     async def get_settings(redis):
         return {"risk_per_trade_pct": 1.0, "max_daily_trades": 0}
 
+    # Real session-gate resolver fed by the stubbed get_settings; the patched
+    # ALLOW_* module values act as the env-derived caller defaults (the stub
+    # predates session_gate_policy and broke every _evaluate_proposal test).
+    import shared.runtime_settings as _rs
+
+    def _gate_policy(doc=None, *, default_off_hours=False, default_sessions=None):
+        return _rs.session_gate_policy(
+            doc,
+            default_off_hours=ALLOW_OFF_HOURS if default_off_hours is None else default_off_hours,
+            default_sessions=ALLOWED_SESSIONS if default_sessions is None else default_sessions,
+        )
+
     monkeypatch.setattr(risk_main, "redis", SimpleNamespace(cache_get=FakeCache().cache_get))
-    monkeypatch.setattr(risk_main, "runtime_settings", SimpleNamespace(get_settings=get_settings))
+    monkeypatch.setattr(
+        risk_main, "runtime_settings",
+        SimpleNamespace(get_settings=get_settings, session_gate_policy=_gate_policy),
+    )
     monkeypatch.setattr(risk_main, "position_sizer", PositionSizer())
     monkeypatch.setattr(risk_main, "rules_engine", engine or RulesEngine())
     monkeypatch.setattr(risk_main, "ALLOW_OFF_HOURS", True)
@@ -533,6 +548,20 @@ async def test_evaluate_correlation_provider_untouched_when_cfg_unset(monkeypatc
 
 def test_breaker_session_gate_reports_actual_state(monkeypatch) -> None:
     import asyncio
+
+    # Isolate the resolver from session-global state: an empty settings doc
+    # makes session_gate_policy fall back to the caller defaults (the patched
+    # ALLOW_* values), so this test asserts the BREAKER logic — not whatever a
+    # previous test left in shared.runtime_settings._cache.
+    import shared.runtime_settings as _rs
+
+    async def _empty_settings(redis):
+        return {}
+
+    monkeypatch.setattr(
+        risk_main, "runtime_settings",
+        SimpleNamespace(get_settings=_empty_settings, session_gate_policy=_rs.session_gate_policy),
+    )
     monkeypatch.setattr(risk_main, "ALLOW_OFF_HOURS", False)
     monkeypatch.setattr(risk_main, "ALLOWED_SESSIONS", {"LONDON"})
     monkeypatch.setattr(
