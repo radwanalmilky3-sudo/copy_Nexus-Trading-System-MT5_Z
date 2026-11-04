@@ -12,7 +12,11 @@ import {
   type UserMenuProfile,
 } from '@/lib/user-menu-presentation';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:9000';
+// Same-origin default (empty base): the browser calls the dashboard's own
+// origin and next.config.js rewrites /api/* to nexus-api server-side. An
+// absolute loopback fallback breaks preview deployments — the owner's
+// browser would resolve it against their own machine (see MEMORY.md L64).
+const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 export default function UserMenu() {
   const router = useRouter();

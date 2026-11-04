@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useWebSocket } from './useWebSocket';
+import { gatewayWsUrl } from '@/lib/gateway-ws';
 
 export interface PerformanceMetrics {
   equity: number;
@@ -45,7 +46,7 @@ export function usePerformance() {
   const [metrics, setMetrics] = useState<PerformanceMetrics>(MOCK_PERFORMANCE);
 
   const { isConnected, lastMessage } = useWebSocket({
-    url: 'ws://127.0.0.1:9000/ws/performance',
+    url: gatewayWsUrl('/performance'),
     enabled: false,
   });
 
