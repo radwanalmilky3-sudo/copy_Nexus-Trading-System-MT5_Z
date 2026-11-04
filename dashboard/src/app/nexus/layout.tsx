@@ -204,11 +204,11 @@ function BalanceDisplay() {
     n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
 
   return (
-    <div className="hidden md:flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-1 rounded-md bg-bg-card border border-border-primary/30">
+    <div className="hidden md:flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-1 rounded-md border border-amber-500/25 bg-gradient-to-br from-amber-500/10 to-transparent">
       <div className="flex items-center gap-1.5">
-        <Wallet className="h-3 w-3 text-neon-gold" />
+        <Wallet className="h-3 w-3 text-amber-400" />
         <span className="text-[10px] text-text-muted font-mono">BAL</span>
-        <span className="text-[11px] font-mono font-bold text-neon-gold">{accountLoaded ? fmt(balance) : '—'}</span>
+        <span className="num text-[11px] font-mono font-bold text-amber-300">{accountLoaded ? fmt(balance) : '—'}</span>
       </div>
       {dailyPnL !== 0 && (
         <>
@@ -317,15 +317,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
       )}
 
-      {/* Top Nav Bar */}
-      <header className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 h-10 border-b border-border-primary bg-bg-secondary/90 backdrop-blur-sm shrink-0 z-20">
-        {/* Brand */}
+      {/* Top Nav Bar — Gold Terminal: gold hairline + warm glass blur */}
+      <header className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 h-10 border-b border-amber-500/15 bg-bg-primary/80 backdrop-blur-md shrink-0 z-20">
+        {/* Brand — kit fingerprint: gold gradient tile + gold shadow */}
         <div className="flex items-center gap-2 mr-3 shrink-0">
-          <Zap className="h-4 w-4 text-neon-green" />
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-amber-300 to-amber-600 shadow-md shadow-amber-500/25">
+            <Zap className="h-3.5 w-3.5 text-amber-950" />
+          </div>
           <span className="text-xs font-black tracking-[0.2em] gradient-text hidden sm:inline select-none">
             NEXUS
           </span>
-          <span className="hidden sm:inline px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 tracking-wider select-none">
+          <span className="hidden sm:inline px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-amber-400/10 border border-amber-400/30 text-amber-300 tracking-wider select-none">
             DEMO
           </span>
         </div>
@@ -345,17 +347,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-medium whitespace-nowrap transition-all relative',
+                  'flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-all',
                   isActive
-                    ? 'bg-neon-purple/15 text-neon-purple'
-                    : 'text-text-muted hover:text-text-secondary hover:bg-bg-tertiary/50'
+                    ? 'bg-gradient-to-b from-amber-400 to-amber-600 text-amber-950 font-bold shadow-md shadow-amber-500/25'
+                    : 'text-text-muted hover:text-amber-300/90 hover:bg-bg-tertiary/50'
                 )}
               >
                 <Icon className="h-3 w-3" />
                 <span className="hidden sm:inline">{item.label}</span>
-                {isActive && (
-                  <span className="absolute bottom-0 left-1 right-1 h-px rounded-full bg-neon-purple/60" />
-                )}
               </Link>
             );
           })}

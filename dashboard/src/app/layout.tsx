@@ -45,7 +45,9 @@ export default function RootLayout({
         style={{ background: 'var(--bg-primary)' }}
       >
         <Providers>
-          <div className="relative min-h-screen bg-matrix">
+          <div className="relative min-h-screen">
+            {/* M1.6 — Gold Terminal top halo (kit fingerprint), behind all content */}
+            <div aria-hidden className="gold-halo" />
             {children}
           </div>
         </Providers>

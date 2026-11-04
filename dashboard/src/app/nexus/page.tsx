@@ -99,8 +99,8 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Sub-tab bar with trade controls */}
-      <div dir="rtl" className="flex items-center gap-1 px-3 h-9 border-b border-border-primary/60 bg-bg-secondary/60 shrink-0 overflow-x-auto scrollbar-hide">
+      {/* Sub-tab bar with trade controls — Gold Terminal strip */}
+      <div dir="rtl" className="flex items-center gap-1 px-3 h-9 border-b border-amber-500/10 bg-bg-primary/70 backdrop-blur-md shrink-0 overflow-x-auto scrollbar-hide">
         {SUB_TABS.map((tab) => {
           const isActive = tab.id === activeTab;
           const Icon = tab.icon;
@@ -109,10 +109,10 @@ export default function DashboardPage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                'flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-medium font-mono whitespace-nowrap transition-all',
+                'flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium font-mono whitespace-nowrap transition-all border',
                 isActive
-                  ? 'bg-neon-purple/10 text-neon-purple border border-neon-purple/20'
-                  : 'text-text-muted hover:text-text-secondary hover:bg-bg-tertiary/30'
+                  ? 'bg-gradient-to-b from-amber-400 to-amber-600 text-amber-950 font-bold border-amber-500/40 shadow-md shadow-amber-500/25'
+                  : 'text-text-muted hover:text-amber-300/80 hover:bg-bg-tertiary/30 border-transparent'
               )}
             >
               <Icon className="h-3 w-3" />
@@ -360,10 +360,10 @@ function IntelligenceGrid() {
       </div>
       {/* Ergodic Intelligence row */}
       <div className="grid grid-cols-1 gap-2 sm:gap-3">
-        <div className="border border-cyan-500/20 rounded-lg bg-cyan-500/5 overflow-hidden">
+        <div className="border border-amber-500/20 rounded-lg bg-amber-500/5 overflow-hidden">
           <div className="flex items-center gap-2 px-3 pt-3 pb-1">
-            <span className="text-xs font-medium text-cyan-400 uppercase tracking-widest">الذكاء الإرجعي المؤسسي (Ergodic Intelligence)</span>
-            <span className="text-xs text-gray-600" dir="ltr">Hurst · Kelly Peters · Lyapunov · Entropy</span>
+            <span className="text-xs font-medium text-amber-300 uppercase tracking-widest">الذكاء الإرجعي المؤسسي (Ergodic Intelligence)</span>
+            <span className="text-xs text-text-muted" dir="ltr">Hurst · Kelly Peters · Lyapunov · Entropy</span>
           </div>
           <WindowBoundary label="ErgodicIntelligencePanel">
             <ErgodicIntelligencePanel />

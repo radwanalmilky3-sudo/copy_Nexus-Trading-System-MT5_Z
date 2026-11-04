@@ -458,6 +458,7 @@ body {
 .nexus-grid .react-grid-item {
   transition: transform 200ms ease, width 200ms ease, height 200ms ease;
 }
+/* (entrance animation for grid items is declared at the end of this file) */
 
 /* ═══════════════════════════════════════════════════════════════════
    Gold Terminal kit additions (M1.5) — from owner design-theme-kit
@@ -471,7 +472,8 @@ body {
   color: transparent;
 }
 
-/* Top gold halo — fixed layer behind the header (kit fingerprint) */
+/* Top gold halo — fixed layer behind the header (kit fingerprint).
+   z-index:-1 → above the body canvas, below ALL content layers. */
 .gold-halo {
   position: fixed;
   top: 0;
@@ -479,8 +481,32 @@ body {
   right: 0;
   height: 320px;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
   background: radial-gradient(ellipse at top, rgba(245, 158, 11, 0.12), transparent 62%);
+}
+
+/* Gold selection — the theme follows the cursor */
+::selection {
+  background: rgba(245, 158, 11, 0.35);
+  color: #fde68a;
+}
+
+/* Accessible gold focus ring on interactive elements */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgba(245, 158, 11, 0.55);
+  outline-offset: 2px;
+}
+
+/* Grid window entrance — opacity-only on purpose: react-grid-layout
+   drives `transform` inline for positioning, so a transform-based
+   keyframe would fight it and break the layout. */
+@keyframes grid-item-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.nexus-grid .react-grid-item {
+  animation: grid-item-in 0.4s ease-out both;
 }
 
 /* Terminal-thin scrollbar (8px, warm stone thumb) */

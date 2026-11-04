@@ -245,10 +245,10 @@ export default function SystemConsole({ className = '' }: { className?: string }
   }, [logs]);
 
   return (
-    <div className={cn('rounded-xl border border-border-primary/20 bg-bg-primary flex flex-col overflow-hidden h-full min-h-0', className)}>
-      <div className="flex items-center gap-2 px-3 py-1.5 border-b border-border-primary/10 bg-bg-secondary/40 shrink-0">
-        <Terminal className="h-3.5 w-3.5 text-neon-cyan" />
-        <span className="text-[11px] font-mono font-semibold text-text-secondary">System Console</span>
+    <div className={cn('rounded-xl border border-amber-500/10 bg-bg-primary flex flex-col overflow-hidden h-full min-h-0', className)}>
+      <div className="flex items-center gap-2 px-3 py-1.5 border-b border-amber-500/10 bg-gradient-to-b from-amber-500/5 to-transparent shrink-0">
+        <Terminal className="h-3.5 w-3.5 text-amber-400" />
+        <span className="text-[11px] font-mono font-semibold text-text-secondary tracking-wide">System Console</span>
         <span className="h-1.5 w-1.5 rounded-full bg-neon-green animate-pulse" />
         <span className="text-[10px] text-text-muted">{logs.length} events</span>
         <div className="flex-1" />
@@ -266,11 +266,11 @@ export default function SystemConsole({ className = '' }: { className?: string }
         )}
         {logs.map((log, i) => (
           <div key={`${log.ts}-${i}`} className="flex gap-2 py-0.5 border-b border-border-primary/5 last:border-0">
-            <span className="text-text-muted shrink-0 w-[72px]">{log.ts}</span>
+            <span className="num text-text-muted shrink-0 w-[72px]">{log.ts}</span>
             <span className={cn('shrink-0 uppercase w-[42px] font-bold', levelColor[log.level] || 'text-text-muted')}>
               {log.level}
             </span>
-            <span className="text-neon-purple shrink-0 w-[100px] truncate">{log.source}</span>
+            <span className="text-amber-300/80 shrink-0 w-[100px] truncate">{log.source}</span>
             <span className="text-text-secondary break-words min-w-0">{log.msg}</span>
           </div>
         ))}
