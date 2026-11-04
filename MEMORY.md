@@ -52,3 +52,4 @@
 - حساب redhwan أعيد إنشاؤه (`fix_admin_user.py` ثم `reset_redhwan_pw.py`): دخول موثق 200 بدور super_admin.
 - التوكن مخزّن في `~/.git-credentials` (credential.helper store) لتعمل النسخ الاحتياطية اليومية دون تدخل.
 - إصلاح ما بعد الاسترجاع: `.env` يجب أن يتضمن `DASHBOARD_ORIGIN=http://127.0.0.1:3000` — بدونه يفشل preflight الـ CORS (400) عند الدخول من البوابة :3000 والزر يعلق على /login. تم التحقق: دخول متصفح فعلي ناجح → /nexus بحساب redhwan super_admin (لقطة: download/nexus_logged_in.png).
+- إصلاح "Failed to fetch" عند المالك: أثناء الاسترجاع كُتب `NEXT_PUBLIC_API_URL=http://127.0.0.1:9000` في dashboard/.env.local فصار الـ bundle ينادي العنوان المطلق من متصفح المالك (غير موجود لديه). الصواب: تُترك المتغيرات UNSET — الواجهة تستخدم مساراً نسبياً /api عبر rewrites في next.config.js (نفس الأصل، بلا CORS، يعمل من أي دومين). أُعيد إقلاع 3100 ووُثّق دخول فعلي: /login → /nexus (redhwan super_admin).
