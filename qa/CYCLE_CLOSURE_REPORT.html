@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<style>@font-face{font-family:'NotoNaskhArabic';font-weight:400;font-style:normal;src:url('fonts/noto-naskh-arabic-arabic-400-normal.woff2') format('woff2');}
+@font-face{font-family:'NotoNaskhArabic';font-weight:700;font-style:normal;src:url('fonts/noto-naskh-arabic-arabic-700-normal.woff2') format('woff2');}
+@font-face{font-family:'NotoKufiArabic';font-weight:400;font-style:normal;src:url('fonts/noto-kufi-arabic-arabic-400-normal.woff2') format('woff2');}
+@font-face{font-family:'NotoKufiArabic';font-weight:700;font-style:normal;src:url('fonts/noto-kufi-arabic-arabic-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:400;font-style:normal;src:url('fonts/inter-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:600;font-style:normal;src:url('fonts/inter-latin-600-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:700;font-style:normal;src:url('fonts/inter-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:800;font-style:normal;src:url('fonts/inter-latin-800-normal.woff2') format('woff2');}
+/* ===== M.2 Detailed Report — RTL Arabic ===== */
+@page { size: 794px 1123px; margin: 0; }
+:root{
+  --navy:#0F2A43; --navy2:#163A5C; --gold:#C9A227; --ink:#1A2332;
+  --muted:#5B6B7C; --line:#D8E0E8; --bg:#F4F6F8; --panel:#FFFFFF; --soft:#EEF3F7;
+}
+html,body{margin:0;padding:0;width:794px;background:var(--bg);color:var(--ink);
+  font-family:'Noto Naskh Arabic','Inter','Noto Color Emoji',sans-serif;font-size:13px;line-height:1.95;}
+*,p,td,li,div{overflow-wrap:break-word;word-break:break-word;}
+p{margin:0 0 10px;text-align:justify;}
+b,strong{font-weight:700;}
+code{font-family:'DejaVu Sans Mono',monospace;font-size:.86em;direction:ltr;unicode-bidi:embed;
+  background:var(--soft);border:1px solid var(--line);border-radius:3px;padding:0 4px;color:var(--navy);}
+pre{direction:ltr;text-align:left;background:var(--navy);color:#DCE6F0;border-radius:8px;
+  padding:14px 16px;font-family:'DejaVu Sans Mono',monospace;font-size:10.5px;line-height:1.6;
+  overflow:hidden;break-inside:avoid;margin:10px 0;}
+pre code{background:none;border:none;color:inherit;padding:0;}
+hr{border:none;border-top:1px solid var(--line);margin:14px 0;}
+
+/* ===== Cover ===== */
+.cover{width:794px;height:1123px;box-sizing:border-box;background:var(--navy);color:#EDF2F7;
+  break-after:page;overflow:hidden;position:relative;
+  display:flex;flex-direction:column;justify-content:center;padding:64px 68px;}
+.cv-deco{position:absolute;border-radius:50%;}
+.cv-c1{width:420px;height:420px;right:-140px;top:-140px;background:var(--navy2);opacity:.55;}
+.cv-c2{width:220px;height:220px;right:60px;bottom:120px;border:2px solid var(--gold);opacity:.28;background:none;}
+.cv-l1{width:200px;height:2px;background:var(--gold);left:68px;top:150px;opacity:.85;border-radius:0;}
+.cv-badge{font-family:'Inter','Noto Kufi Arabic',sans-serif;font-size:11px;letter-spacing:2px;
+  color:var(--gold);font-weight:600;margin-bottom:26px;}
+.cv-title{font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:52px;line-height:1.25;margin-bottom:18px;}
+.cv-sub{font-family:'Noto Kufi Arabic',sans-serif;font-weight:400;font-size:19px;line-height:1.9;color:#B9C7D6;margin-bottom:44px;}
+.cv-stats{display:flex;flex-wrap:wrap;gap:14px;max-width:100%;margin-bottom:16px;}
+.st{flex:1 1 auto;min-width:130px;max-width:100%;background:var(--navy2);border:1px solid #24466B;
+  border-radius:10px;padding:16px 18px;}
+.st-n{font-family:'Inter',sans-serif;font-weight:800;font-size:30px;color:var(--gold);line-height:1.1;}
+.st-l{font-size:12px;color:#B9C7D6;margin-top:4px;}
+.cv-stats2{display:flex;flex-wrap:wrap;gap:14px;max-width:100%;margin-bottom:44px;}
+.st2{flex:1 1 auto;min-width:240px;max-width:100%;background:transparent;border:1px solid #2A4E76;
+  border-radius:10px;padding:14px 18px;}
+.cv-meta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:20px;}
+.cv-pill{display:inline-block;background:var(--gold);color:#14243A;font-family:'Noto Kufi Arabic',sans-serif;
+  font-weight:700;font-size:13px;border-radius:999px;padding:8px 20px;}
+.cv-date{font-size:12.5px;color:#B9C7D6;}
+.cv-foot{position:absolute;bottom:46px;right:68px;left:68px;border-top:1px solid #2A4E76;
+  padding-top:14px;font-size:11.5px;color:#8FA3B8;}
+
+/* ===== Flow content ===== */
+.main-content{background:var(--bg);padding:52px 56px 40px;}
+.sec-tag{font-family:'Inter','Noto Kufi Arabic',sans-serif;font-size:10px;letter-spacing:2.5px;
+  color:var(--gold);font-weight:700;margin-bottom:6px;}
+.sec-title{font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:24px;color:var(--navy);line-height:1.4;}
+.divider{height:3px;width:64px;background:var(--gold);border-radius:2px;margin:10px 0 16px;}
+.exec,.toc{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:26px 28px;margin-bottom:18px;}
+.exec{break-inside:avoid;}
+
+/* TOC */
+.toc-row{display:flex;align-items:baseline;gap:12px;padding:6.5px 0;border-bottom:1px dashed var(--line);}
+.toc-row:last-child{border-bottom:none;}
+.toc-n{font-family:'Inter',sans-serif;font-weight:800;color:var(--gold);font-size:13px;min-width:26px;flex-shrink:0;}
+.toc-t{font-family:'Noto Kufi Arabic',sans-serif;font-weight:400;font-size:13.5px;color:var(--ink);}
+.toc-f{font-family:'Inter',sans-serif;font-size:9px;color:var(--muted);margin-right:auto;direction:ltr;}
+
+/* Chapters */
+.chap{margin-top:26px;}
+.chap-head{break-after:avoid;break-inside:avoid;background:var(--panel);border:1px solid var(--line);
+  border-right:5px solid var(--navy);border-radius:12px;padding:20px 24px 16px;}
+.chap-num{font-family:'Inter','Noto Kufi Arabic',sans-serif;font-size:10px;letter-spacing:2.5px;
+  color:var(--gold);font-weight:700;}
+.chap-title{font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:21px;color:var(--navy);
+  line-height:1.5;margin-top:4px;}
+.chap-file{font-family:'Inter',sans-serif;font-size:10px;color:var(--muted);direction:ltr;text-align:right;margin-top:4px;}
+.chap-head .divider{margin-bottom:0;}
+.chap > p,.chap > ul,.chap > ol{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:14px 18px;margin:12px 0;}
+.chap > ul,.chap > ol{padding-right:34px;}
+.chap li{margin-bottom:5px;}
+
+/* Headings inside chapters */
+.chap h1,.chap h2,.chap h3,.chap h4{font-family:'Noto Kufi Arabic',sans-serif;color:var(--navy);
+  line-height:1.55;break-after:avoid;}
+.chap h2{font-size:16.5px;font-weight:700;margin:20px 0 8px;padding-right:12px;
+  border-right:4px solid var(--gold);}
+.chap h3{font-size:14px;font-weight:700;margin:14px 0 6px;color:var(--navy2);}
+.chap h4{font-size:12.5px;margin:10px 0 5px;}
+
+/* Blockquote -> info panel */
+.chap blockquote{background:var(--soft);border:1px solid var(--line);border-radius:10px;
+  padding:12px 18px;margin:12px 0;color:#2A3B4E;break-inside:avoid;}
+.chap blockquote p{margin:0 0 6px;}
+.chap blockquote p:last-child{margin-bottom:0;}
+
+/* Tables */
+.tbl-wrap{margin:12px 0;}
+table{width:100%;border-collapse:collapse;background:var(--panel);font-size:10.8px;line-height:1.65;}
+thead{display:table-header-group;}
+tr{break-inside:avoid;}
+th{font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;background:var(--navy);color:#fff;
+  padding:7px 8px;text-align:right;border:1px solid #24466B;font-size:10.5px;}
+td{padding:6px 8px;border:1px solid var(--line);vertical-align:top;text-align:right;}
+tbody tr:nth-child(even){background:#F7FAFC;}
+.cols5 table{font-size:10.2px;}
+.cols6 table,.cols7 table{font-size:9.6px;}
+.cols6 th,.cols7 th{font-size:9.4px;padding:6px 6px;}
+.cols6 td,.cols7 td{padding:5px 6px;}
+
+/* Cards (wide tables >= 8 cols) */
+.cards{display:flex;flex-direction:column;gap:10px;margin:12px 0;}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  break-inside:avoid;overflow:hidden;}
+.card-t{font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:12px;color:#fff;
+  background:var(--navy2);padding:7px 14px;}
+.card-b{display:flex;flex-wrap:wrap;gap:0;padding:6px 10px 10px;}
+.fld{flex:1 1 46%;min-width:44%;max-width:100%;display:flex;gap:8px;
+  padding:5px 6px;border-bottom:1px dashed #E4EAF0;align-items:baseline;}
+.fld:nth-last-child(-n+2){border-bottom:none;}
+.flab{font-size:9.5px;color:var(--muted);flex-shrink:0;min-width:96px;max-width:96px;
+  font-family:'Noto Kufi Arabic',sans-serif;font-weight:400;line-height:1.7;}
+.fval{font-size:10.5px;line-height:1.75;flex:1 1 auto;min-width:0;}
+
+/* Ending */
+.ending{width:794px;height:1123px;box-sizing:border-box;background:var(--navy);color:#EDF2F7;
+  break-before:page;overflow:hidden;position:relative;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px;}
+.end-deco{position:absolute;border-radius:50%;}
+.e1{width:320px;height:320px;left:0;bottom:0;border-radius:320px 0 0 0;background:var(--navy2);opacity:.5;}
+.e2{width:170px;height:170px;right:80px;top:110px;border:2px solid var(--gold);opacity:.25;}
+.end-badge{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2.5px;color:var(--gold);
+  font-weight:600;margin-bottom:24px;}
+.end-big{font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:36px;line-height:1.5;margin-bottom:18px;}
+.end-sub{font-size:14px;color:#B9C7D6;max-width:520px;line-height:2;margin-bottom:30px;}
+.end-meta{font-family:'Inter','Noto Kufi Arabic',sans-serif;font-size:12px;color:#8FA3B8;}
+</style>
+<title>تقرير إغلاق الدورة — NEXUS TRADER MT5 · M.2 QA &amp; Remediation</title>
+<style>
+/* ===== Closure additions ===== */
+.tl-n{width:34px;text-align:center;font-family:Inter,sans-serif;color:var(--gold);font-size:15px;}
+.tl-sub{font-weight:400;font-size:9.5px;color:var(--muted);font-family:Inter,'Noto Naskh Arabic',sans-serif;direction:ltr;text-align:right;margin-top:2px;}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:9.3px;font-weight:700;
+  font-family:'Noto Kufi Arabic',sans-serif;white-space:normal;line-height:1.6;}
+.pill.ok{background:#E7F3EC;color:#1B6B3A;border:1px solid #BFDFCC;}
+.pill.open{background:#FBF3E2;color:#8A6410;border:1px solid #E8D49A;}
+.pill.na{background:var(--soft);color:var(--muted);border:1px solid var(--line);}
+.cert{background:var(--panel);border:2px solid var(--gold);border-radius:12px;padding:26px 30px;margin:14px 0;break-inside:avoid;}
+.cert-tag{font-family:Inter,'Noto Kufi Arabic',sans-serif;font-size:10px;letter-spacing:2.5px;color:var(--gold);font-weight:700;margin-bottom:8px;}
+.cert-big{font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:22px;color:var(--navy);line-height:1.6;margin-bottom:12px;}
+.signrow{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap;}
+.sign{flex:1 1 200px;border:1px dashed var(--line);border-radius:10px;padding:12px 16px;background:#FBFCFD;}
+.sign .sl{font-size:9.5px;color:var(--muted);font-family:'Noto Kufi Arabic',sans-serif;}
+.sign .sv{font-size:12.5px;color:var(--navy);font-weight:700;margin-top:4px;font-family:'Noto Kufi Arabic',sans-serif;}
+.fixgrid{display:flex;flex-direction:column;gap:12px;margin:12px 0;}
+.fixcard{background:var(--panel);border:1px solid var(--line);border-right:5px solid var(--navy);border-radius:10px;padding:16px 20px;break-inside:avoid;}
+.fixcard .ft{font-family:'Noto Kufi Arabic',sans-serif;font-weight:700;font-size:14px;color:var(--navy);margin-bottom:6px;}
+.fixcard .ft .fid{color:var(--gold);font-family:Inter,sans-serif;}
+.regr{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0;}
+.rg{flex:1 1 150px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center;break-inside:avoid;}
+.rg .n{font-family:Inter,sans-serif;font-weight:800;font-size:21px;color:var(--navy);line-height:1.2;}
+.rg .l{font-size:10.5px;color:var(--muted);margin-top:4px;font-family:'Noto Kufi Arabic',sans-serif;}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cv-deco cv-c1"></div><div class="cv-deco cv-c2"></div><div class="cv-deco cv-l1"></div>
+  <div class="cv-badge">NEXUS TRADER MT5 — CYCLE CLOSURE REPORT</div>
+  <div class="cv-title">تقرير إغلاق الدورة</div>
+  <div class="cv-sub">الإغلاق الرسمي لدورة M.2 للاختبار والاكتشاف والإصلاح<br>والتحقق النهائي — من أول عيب مكتشف حتى قرار المالك بالغلق</div>
+  <div class="cv-stats">
+    <div class="st"><div class="st-n">19</div><div class="st-l">معرّفاً في سجل العيوب D1–D19</div></div>
+    <div class="st"><div class="st-n">14</div><div class="st-l">عيباً مغلقاً FIXED-VERIFIED</div></div>
+    <div class="st"><div class="st-n">0</div><div class="st-l">عيوب Critical / High مفتوحة</div></div>
+    <div class="st"><div class="st-n">10/10</div><div class="st-l">حالات المصادقة النهائية</div></div>
+  </div>
+  <div class="cv-stats2">
+    <div class="st2"><div class="st-n">CERTIFIED — PAPER ONLY</div><div class="st-l">الاعتماد النهائي: بيئة تجريبية حصراً</div></div>
+    <div class="st2"><div class="st-n">مغلقة رسمياً</div><div class="st-l">قرار المالك «اقفل الدورة» — 2026-11-05</div></div>
+  </div>
+  <div class="cv-meta">
+    <div class="cv-pill">PAPER TRADING ONLY — بيئة تجريبية حصراً</div>
+    <div class="cv-date">تاريخ الإغلاق: 2026-11-05 · نقطة الاعتماد Git: <span dir="ltr">9bf3a13</span> + إغلاق الدورة</div>
+  </div>
+  <div class="cv-foot">إصدار 1.0 · كل الأرقام في هذا التقرير مستخرجة من أدلة تحقق حية موثقة في qa/evidence/ ومن سجل العيوب المجمّد</div>
+</div>
+
+<div class="main-content">
+
+<div class="exec">
+  <div class="sec-tag">ملخص الإغلاق</div>
+  <div class="sec-title">خلاصة الإغلاق في صفحة واحدة</div>
+  <div class="divider"></div>
+  <p>بقرار المالك الصريح <b>«اقفل الدورة»</b> بتاريخ 2026-11-05 أُغلقت دورة M.2 لنظام NEXUS TRADER MT5 رسمياً بعد اكتمال مسارها الكامل: اكتشاف معماري مستقل، جرد شامل، خطة اختبار بالتسلسل الإلزامي ذي الخطوات الخمس عشرة، تنفيذ الاختبارات مع الإصلاح الفوري لكل عيب يُكتشف، التحقق النهائي والاعتماد للبيئة الورقية، ثم دورتان تكميليتان بعد الاعتماد — دورة D19 لتصفير ديون الاختبارات الموروثة، ودورة قرارات المالك «نفّذ» التي نفذت الإصلاحات الأمنية الثلاثة الأخيرة (D15/D14/D6) بتحقق حي من ثماني خطوات.</p>
+  <p>النتيجة الختامية الموثقة: <b>14 عيباً رئيسياً مغلقاً FIXED-VERIFIED</b> (D1/D2/D3/D6/D8/D10/D12/D13/D14/D15/D16/D17/D18/D19) مع P2-2 وP2-3(=D17) وN5 معالجةً تشغيلياً — و<b>صفر عيوب Critical أو High مفتوحة</b>. المصادقة الختامية 10/10 بعد انتقال TC-AU-06/07 من FAIL إلى PASS حي. الانحدار النهائي الكامل: pytest <b>1903/1903</b> (بضيف 19 اختباراً جديداً)، عقود الداشبورد node <b>202/202</b>، أتمتة Playwright <b>5/5</b>، وفحص الشفاء الذاتي heal 4/4 ok (redis/forwarder/dashboard/stack).</p>
+  <p>كل ما تبقى مفتوحاً هو مفتوح <b>بقرار صريح وليس نقصاً</b>: بنود نطاق ميزات للدورة القادمة (D4/D5/D7/D9 وتحسينات P2-1/N1–N4) وثلاثة بنود محجوبة بيئياً تتطلب أجهزة أو وصولاً خارج الصندوق (جسر MT5 الحي، صفقة S2 الكاملة، pip-audit). الخطوط الحمراء الأربعة محفوظة حتى اللحظة الأخيرة، وسجل العيوب مجمّد الآن كأرشيف نهائي لا يُعدَّل إلا بفتح دورة جديدة بقرار مالك.</p>
+</div>
+
+<div class="chap">
+  <div class="chap-head"><div class="chap-num">القسم 01</div>
+  <div class="chap-title">خط الدورة الزمني — من الاكتشاف إلى الإغلاق</div>
+  <div class="chap-file">2026-11-04 → 2026-11-05</div><div class="divider"></div></div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:34px">#</th><th style="width:34%">المرحلة والتاريخ</th><th>المخرجات الموثقة</th></tr></thead>
+    <tbody><tr><td class="tl-n"><b>1</b></td><td><b>الاكتشاف والجرد والخطة</b><div class="tl-sub">2026-11-04</div></td><td>ثلاث وثائق تأسيسية: اكتشاف معماري مستقل، جرد شامل (9 خدمات، 257 مسار API، 62 جدول DuckDB)، وخطة رئيسية بالتسلسل الإلزامي ذي الخطوات الخمس عشرة.</td></tr>
+<tr><td class="tl-n"><b>2</b></td><td><b>تنفيذ الاختبار مع الإصلاح الفوري</b><div class="tl-sub">2026-11-04</div></td><td>المراحل 1–15 كاملة: Admin 5/5، Auth 8/10، MT5 3+BLOCKED، شاشات 17/17، خدمات 9/9، DB 7/7، E2E 6+BLOCKED، أمن 5+NT، أداء ضمن العتبات — مع إصلاح فوري لكل عيب يُكتشف (D1/D2/D3/D8/D10 ثم D16/D17/P2-2/P2-3).</td></tr>
+<tr><td class="tl-n"><b>3</b></td><td><b>التحقق النهائي والاعتماد</b><div class="tl-sub">2026-11-04</div></td><td>القبول النهائي: 69/69 حالة منفذة (تغطية 100%)، نجاح فعلي 64/69 = 92.8%، والفروقات موثقة الأسباب — الاعتماد: CERTIFIED — PAPER ONLY.</td></tr>
+<tr><td class="tl-n"><b>4</b></td><td><b>دورة D19 — تصفير ديون الاختبارات</b><div class="tl-sub">2026-11-05</div></td><td>39 pytest + 11 node فاشلة موروثة أُصلحت بصفر كود-إنتاج (5 عائلات): pytest 1884/1884، node 202/202، Playwright 5/5 — D18/D19 مغلقتان رسمياً.</td></tr>
+<tr><td class="tl-n"><b>5</b></td><td><b>دورة قرارات المالك «نفّذ»</b><div class="tl-sub">2026-11-05</div></td><td>تنفيذ الخيارات الموصى بها: D15 (Redis denylist)، D14 (/api/v2/auth/refresh)، D6 (تباعد نداءات GLM) — 19 اختباراً جديداً، pytest 1903/1903، TC-AU-06/07 FAIL→PASS، المصادقة 8/10→10/10، تحقق حي من 8 خطوات.</td></tr>
+<tr><td class="tl-n"><b>6</b></td><td><b>الإغلاق الرسمي للدورة</b><div class="tl-sub">2026-11-05</div></td><td>قرار المالك «اقفل الدورة»: تجميد سجل العيوب كأرشيف نهائي، إصدار تقرير الإغلاق هذا، ودفع كل شيء إلى GitHub بدفعات عادية (fast-forward) دون force push.</td></tr></tbody>
+  </table></div>
+</div>
+
+<div class="chap">
+  <div class="chap-head"><div class="chap-num">القسم 02</div>
+  <div class="chap-title">الحالة النهائية لسجل العيوب — الأرشيف المجمّد</div>
+  <div class="chap-file">qa/DEFECT_REGISTER.md — final state</div><div class="divider"></div></div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:52px">ID</th><th style="width:16%">المكوّن</th><th>الخلاصة</th><th style="width:20%">الحالة النهائية</th><th style="width:12%">Commit</th></tr></thead>
+    <tbody><tr><td><b>D1</b></td><td>nexus-api</td><td>PyJWT غائب عن المتطلبات يمنع الإقلاع</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">e492767</td></tr>
+<tr><td><b>D2</b></td><td>dashboard</td><td>تجمّد تبويب TradingView (iframe ثقيل) — مفتاح ON/OFF + default-OFF + أدلة v4</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">842aa03 + رقعة</td></tr>
+<tr><td><b>D3</b></td><td>api+dashboard</td><td>نهاية مسدودة بعد KILL — مسار release بـPIN إلزامي</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">7fe9f3d</td></tr>
+<tr><td><b>D4</b></td><td>risk+dashboard</td><td>لا UI لقواعد المخاطرة (API يعمل)</td><td><span class="pill open">مفتوحة — نطاق دورة قادمة بقرار المالك</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">—</td></tr>
+<tr><td><b>D5</b></td><td>agents+dashboard</td><td>إيقاف وكيل شكلي (S3 غير منفذ)</td><td><span class="pill open">مفتوحة — نطاق دورة قادمة بقرار المالك</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">—</td></tr>
+<tr><td><b>D6</b></td><td>agents</td><td>429 من حصة GLM → قاطع يفتح → NO_TRADE — pacer عام + backoff ×4</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED (دورة «نفّذ»)</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">cedd9c3</td></tr>
+<tr><td><b>D7</b></td><td>api</td><td>evaluate متزامن → 502 بعد ~15s</td><td><span class="pill open">مفتوحة — نطاق دورة قادمة بقرار المالك</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">—</td></tr>
+<tr><td><b>D8</b></td><td>البوابة/التشغيل</td><td>كل /api/ml/* = 502 أبدي — تسليم env عبر المشرف</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">حي (لا كود)</td></tr>
+<tr><td><b>D9</b></td><td>تشغيل</td><td>حلقة إعادة bind لأبناء المشرف</td><td><span class="pill open">مفتوحة — إجراء تشغيلي (إعادة إقلاع كاملة بوقت هادئ)</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">—</td></tr>
+<tr><td><b>D10</b></td><td>nexus-api</td><td>إنشاء مستخدم باسم محذوف منطقياً = 200 صامت — إحياء الصف + rollback + إظهار الرفض</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">826eecb + 5921635</td></tr>
+<tr><td><b>D11</b></td><td>—</td><td>غير مستخدم — فجوة ترقيم محفوظة (لا عيب سُمي بها)</td><td><span class="pill na">لا تنطبق</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">—</td></tr>
+<tr><td><b>D12</b></td><td>tests</td><td>stub لرمز غير موجود يُسقط ملف الاختبار عند الجمع</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">5921635</td></tr>
+<tr><td><b>D13</b></td><td>tests</td><td>نداء شبكة حقيقي داخل الاختبار (403 حي) — عزل الاختبار</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">5921635</td></tr>
+<tr><td><b>D14</b></td><td>api (auth)</td><td>لا endpoint تجديد — /api/v2/auth/refresh بأزواج typed + تدوير single-use</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED (دورة «نفّذ») · TC-AU-06 PASS</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">cedd9c3</td></tr>
+<tr><td><b>D15</b></td><td>api (auth)</td><td>logout لا يبطل التوكن خادمياً — Redis denylist بـjti + TTL متبقٍ</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED (دورة «نفّذ») · TC-AU-07 PASS</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">cedd9c3</td></tr>
+<tr><td><b>D16</b></td><td>api+dashboard (WS)</td><td>بث /nexus معطل من الطرفين — موجّه /ws/broadcast + gatewayWsUrl</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">هذه الدورة</td></tr>
+<tr><td><b>D17</b></td><td>news+dashboard</td><td>مفاتيح React مكررة — تضمين currency في معرّف cal-ui</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">هذه الدورة</td></tr>
+<tr><td><b>D18</b></td><td>tests</td><td>العقد الذهبي منزاح عن الواقع — تحديث + تعزيز سلوكي</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED (دورة D19)</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">4f6801c</td></tr>
+<tr><td><b>D19</b></td><td>tests (موروث)</td><td>39 pytest + 11 node فاشلة موروثة — 5 عائلات إصلاح بصفر كود-إنتاج</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED (دورة D19)</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">6d94020→5d1c0e0</td></tr>
+<tr><td><b>P2-1</b></td><td>dashboard</td><td>إلغاء توكن EA بلا حوار تأكيد</td><td><span class="pill open">مفتوحة — تحسين (دورة قادمة)</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">—</td></tr>
+<tr><td><b>P2-2</b></td><td>api/monitor</td><td>news/monitor «unknown» في /health — نبضة كاملة للطرفين</td><td><span class="pill ok">مغلقة — FIXED-VERIFIED</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">هذه الدورة</td></tr>
+<tr><td><b>P2-3</b></td><td>dashboard</td><td>تحذيرات cal-ui-* — أُسندت صحيحاً إلى NewsFeed (صارت D17)</td><td><span class="pill ok">مغلقة كـD17</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">انظر D17</td></tr>
+<tr><td><b>N1–N4</b></td><td>dashboard/api</td><td>تحسينات نصية وشكلية: لافتة paused، i18n أخطاء، CORS :3000، ضجيج 404</td><td><span class="pill open">مفتوحة — لا إجراء إلا برغبة المالك</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">—</td></tr>
+<tr><td><b>N5</b></td><td>تشغيل</td><td>سقوط dashboard (OOM) — فحص + إعادة إقلاع أُضيفت لـnexus_heal.sh</td><td><span class="pill open">مُعالجة تشغيلياً — heal: dashboard ok</span></td><td dir="ltr" style="font-family:Inter,monospace;font-size:9.5px">حي</td></tr></tbody>
+  </table></div>
+</div>
+
+<div class="chap">
+  <div class="chap-head"><div class="chap-num">القسم 03</div>
+  <div class="chap-title">دورة «نفّذ» — الإصلاحات الثلاثة الأخيرة بتحقق حي</div>
+  <div class="chap-file">qa/evidence/d14_d15_d6_fix_evidence.json</div><div class="divider"></div></div>
+  <div class="fixgrid">
+    <div class="fixcard"><div class="ft"><span class="fid">D15</span> — إبطال خادمي للتوكن بعد logout (الخيار أ: Redis denylist)</div>
+      كل توكن يولد الآن معرّف <code>jti</code>؛ عند logout يُضاف المفتاح <code>nexus:auth:denylist:&lt;jti&gt;</code> بمدة البقاء (TTL) المتبقية للتوكن نفسه. كل قراءة محمية عبر <code>get_current_user</code> تُجري فحص الإبطال وترد 401 «Token revoked (logged out)»، وقنوات WebSocket الجديدة تُرفض بالرمز 4401 إن كان <code>jti</code> مُبطلاً. الإبلاغ صادق: عند فشل كتابة الـdenylist يعيد logout <code>revoked=false</code> بدلاً من ادعاء نجاح كاذب (قراءة fail-open موثقة لضمان التوفر). التحقق الحي: logout → نفس التوكن على /me → 401، مع بقاء التوكنات الشقيقة سليمة (إبطال لكل-توكن) وتسامح ترقية للتوكنات القديمة بلا jti.</div>
+    <div class="fixcard"><div class="ft"><span class="fid">D14</span> — نقطة تجديد /api/v2/auth/refresh (الخيار أ)</div>
+      الدخول يعيد الآن زوجاً مكتوب الأنواع (access 24h / refresh 168h) كلاهما بـjti، مع <b>تدوير إلزامي single-use</b>: كل استخدام للـrefresh يبطل القديم عبر الـdenylist ويولد بديلاً، وإعادة استخدام توكن مُدار تُقابَل بـ401 «Refresh token revoked»، وفشل كتابة الإبطال عند التدوير يُنهي النداء بـ503 (حد أمان لا صدار توكنات غير قابلة للإبطال). تقييد معدل مستقل 30/60s إلى جانب حارس الدخول 12/60s. الداشبورد يحتفظ بسلوكه الحالي والـrefresh متاح للاستهلاك عند الحاجة — صفر تغيير بصري.</div>
+    <div class="fixcard"><div class="ft"><span class="fid">D6</span> — تباعد نداءات GLM (معالجة 429 قبل فتح القاطع)</div>
+      pacer على مستوى العملية بفاصل أدنى <code>NEXUS_LLM_MIN_INTERVAL_SEC</code> (افتراضي 1s، مدى مقيد 0–60) يُسلسل بدايات النداءات، وعند 429 backoff ×4 بسقف 32s مع تصنيف أخطاء الحصة. النتيجة: الدوران عند 429 يتحول من احتراق المحاولتين داخل النافذة المغلقة نفسها إلى انتظار هادئ واحد — والسلوك fail-closed الأصلي (NO_TRADE) يبقى حد الأمان عند استنفاد كل المحاولات. 7 اختبارات pacing جديدة تغطي الفاصل والتصنيف والسقف وإعادة ضبط الحالة.</div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:30px">#</th><th style="width:24%">الخطوة (تحقق حي)</th><th>النتيجة الموثقة</th><th style="width:44px">الحالة</th></tr></thead>
+    <tbody><tr><td><b>1</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">health_9000</td><td>بوابة النظام تستجيب 200 — المنظومة حية قبل الفحص</td><td style="text-align:center">✅</td></tr>
+<tr><td><b>2</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">login</td><td>دخول المالك: زوج typed كامل (access + refresh + expiresAt)</td><td style="text-align:center">✅</td></tr>
+<tr><td><b>3</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">me_before</td><td>قراءة الحساب بالتوكن الطازج: 200</td><td style="text-align:center">✅</td></tr>
+<tr><td><b>4</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">logout</td><td>logout يعيد {ok:true, revoked:true} — كتابة الـdenylist مؤكدة</td><td style="text-align:center">✅</td></tr>
+<tr><td><b>5</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">me_replay (TC-AU-07)</td><td>نفس التوكن بعد logout → 401 «Token revoked (logged out)»</td><td style="text-align:center">✅</td></tr>
+<tr><td><b>6</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">refresh_rotate (TC-AU-06)</td><td>تدوير الزوج: 200 بزوج جديد — الاستخدام الواحد مُطبق</td><td style="text-align:center">✅</td></tr>
+<tr><td><b>7</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">refresh_replay</td><td>إعادة استخدام refresh القديم → 401 «Refresh token revoked»</td><td style="text-align:center">✅</td></tr>
+<tr><td><b>8</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">per-token scope</td><td>إبطال التوكن المُقدم فقط — التوكنات الشقيقة سليمة + تسامح ترقية للتوكنات بلا jti</td><td style="text-align:center">✅</td></tr></tbody>
+  </table></div>
+</div>
+
+<div class="chap">
+  <div class="chap-head"><div class="chap-num">القسم 04</div>
+  <div class="chap-title">الانحدار الختامي وحالات الاختبار</div>
+  <div class="chap-file">regression @ closure</div><div class="divider"></div></div>
+  <div class="regr">
+    <div class="rg"><div class="n">1903/1903</div><div class="l">pytest كامل (125s) — 19 اختباراً جديداً: 12 auth + 7 pacing</div></div>
+    <div class="rg"><div class="n">202/202</div><div class="l">عقود الداشبورد node — دون تغيير عن خط الأساس</div></div>
+    <div class="rg"><div class="n">5/5</div><div class="l">مجموعة Playwright — T1–T5 بعد النشر، صفر أخطاء صفحة</div></div>
+    <div class="rg"><div class="n">4/4</div><div class="l">شفاء ذاتي heal — redis / forwarder / dashboard / stack</div></div>
+    <div class="rg"><div class="n">10/10</div><div class="l">حالات المصادقة TC-AU — بعد TC-AU-06/07 FAIL→PASS حي</div></div>
+  </div>
+  <p>القبول الأصلي (69/69 منفذة، 64 PASS = 92.8%) لم يتزعزع؛ الفروقات الخمس الموثقة وقت الاعتماد تحولت حالة اثنتين منهما: TC-AU-06 وTC-AU-07 الفاشلتان تصميمياً بقرار المالك أصبحتا PASS حياً بعد دورة «نفّذ»، بينما تبقى ثلاث بنود محجوبة بيئياً بأسباب خارجية موثقة لا علاقة لها بجودة الكود، مفكوكة في القسم 06.</p>
+</div>
+
+<div class="chap">
+  <div class="chap-head"><div class="chap-num">القسم 05</div>
+  <div class="chap-title">الالتزام بالخطوط الحمراء الأربعة</div>
+  <div class="chap-file">red lines — verified at closure</div><div class="divider"></div></div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:24%">الخط الأحمر</th><th style="width:12%">الحالة</th><th>الدليل عند الإغلاق</th></tr></thead>
+    <tbody><tr><td><b>لا تغيير للهوية البصرية</b></td><td><span class="pill ok">محفوظ</span></td><td>لم يُمس أي ملف UI في دورة «نفّذ» إلا جسر التخويل (gatewayWsUrl / إطار JWT)؛ لقطات Playwright الـ14 بعد النشر مطابقة للهوية المعتمدة — T2: صفر أخطاء صفحة.</td></tr>
+<tr><td><b>لا حذف ميزات</b></td><td><span class="pill ok">محفوظ</span></td><td>كل الميزات القائمة بلا استثناء؛ دورة «نفّذ» أضافت فقط: endpoint تجديد جديد، إبطال خادمي عند logout، وpacer لنداءات LLM — صفر إزالة.</td></tr>
+<tr><td><b>لا أسرار في المستودع أو الوثائق</b></td><td><span class="pill ok">محفوظ</span></td><td>`.env.example` بقيم شكلية فقط؛ كلمات المرور والتوكنات في `.env` المحلي غير المرفوع؛ لا وثيقة تحتوي بيانات اعتماد حقيقية.</td></tr>
+<tr><td><b>لا Force Push</b></td><td><span class="pill ok">محفوظ</span></td><td>كل الدفعات إلى origin/main fast-forward: 291386a → 68adee1 → 9bf3a13 → إغلاق الدورة — سجل Git خطي بلا أي إعادة كتابة.</td></tr></tbody>
+  </table></div>
+</div>
+
+<div class="chap">
+  <div class="chap-head"><div class="chap-num">القسم 06</div>
+  <div class="chap-title">المؤجل للدورة القادمة — بقرار صريح</div>
+  <div class="chap-file">deferred scope + environmental blockers</div><div class="divider"></div></div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th style="width:18%">البند</th><th style="width:22%">المرجع</th><th>مطلوب لفتحه</th></tr></thead>
+    <tbody><tr><td><b>D4</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">UI لقواعد المخاطرة</td><td>فجوة ميزة: واجهة جديدة فوق API قائم (GET/PUT /api/config/risk) — تحتاج تحديد نطاق الواجهة</td></tr>
+<tr><td><b>D5</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">إيقاف وكيل فعلي</td><td>فجوة ميزة: جعل enabled ملزماً في graph.py (S3) — تحتاج قرار سلوك الإيقاف</td></tr>
+<tr><td><b>D7</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">evaluate غير متزامن</td><td>نمط async (job + polling) بدل النداء المتزامن المعرض للـ502 عند ~15s</td></tr>
+<tr><td><b>D9</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">إعادة إقلاع كاملة</td><td>إجراء تشغيلي في وقت هادئ عبر run.py لمعالجة حلقة إعادة bind</td></tr>
+<tr><td><b>P2-1 / N1–N4</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">تحسينات UI/نصية</td><td>حوار تأكيد EA، لافتة paused، i18n أخطاء، CORS :3000، ضجيج 404 المتوقع</td></tr>
+<tr><td><b>محجوب بيئياً: جسر MT5</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">TC-MT-01</td><td>يتطلب جهاز المالك: MT5 terminal + ترجمة NexusBridgeEA.mq5 + allowlist WebRequest — خطوات docs/EA_BRIDGE.md</td></tr>
+<tr><td><b>محجوب بيئياً: صفقة S2 كاملة</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">TC-E2E-06</td><td>يتطلب تراكم شموع XAUUSD + تدريب النماذج عبر bootstrap_ensemble.py</td></tr>
+<tr><td><b>محجوب بيئياً: pip-audit</b></td><td dir="ltr" style="font-family:Inter,monospace;font-size:10px">TC-SEC-06</td><td>يتطلب وصولاً لقاعدة CVE ثم pip-audit -r requirements.txt</td></tr></tbody>
+  </table></div>
+</div>
+
+<div class="chap">
+  <div class="chap-head"><div class="chap-num">القسم 07</div>
+  <div class="chap-title">شهادة الإغلاق الرسمية</div>
+  <div class="chap-file">formal closure certificate</div><div class="divider"></div></div>
+  <div class="cert">
+    <div class="cert-tag">FORMAL CYCLE CLOSURE — CERTIFICATE</div>
+    <div class="cert-big">تُغلق دورة M.2 للاختبار والإصلاح لنظام NEXUS TRADER MT5 رسمياً بحالة: CERTIFIED — PAPER ONLY</div>
+    <p>بناءً على قرار المالك «اقفل الدورة» (2026-11-05)، وبعد استكمال: الاكتشاف والجرد والخطة، المراحل الخمس عشرة كاملة، الاعتماد النهائي (69/69 منفذة — تغطية 100%)، دورة D19 لتصفير ديون الاختبارات (1884/1884)، ودورة قرارات المالك «نفّذ» (D15/D14/D6 — 1903/1903، المصادقة 10/10، تحقق حي من 8 خطوات) — يُعتبر سجل العيوب هذا أرشيفاً نهائياً مجمّداً، ولا يجوز تعديله إلا بفتح دورة جديدة بقرار مالك صريح.</p>
+    <p>يظل النظام معتمداً للتشغيل في <b>بيئة التداول الورقي حصراً</b>. أي انتقال نحو التشغيل الحي يتطلب: قرار مالك صريحاً منفصلاً، تمكين TLS وتحصين رؤوس الأمان عند أي تعرض خارجي، جسر MT5 حياً على جهاز المالك، ودورة اختبار واعتماد كاملة على البيئة الحية ذاتها.</p>
+    <div class="signrow">
+      <div class="sign"><div class="sl">قرار المالك</div><div class="sv">«اقفل الدورة» — 2026-11-05</div></div>
+      <div class="sign"><div class="sl">نقطة الاعتماد Git</div><div class="sv" dir="ltr">9bf3a13 → closure commit</div></div>
+      <div class="sign"><div class="sl">المرجع النهائي للدورة</div><div class="sv">qa/CYCLE_CLOSURE_REPORT.pdf</div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="ending">
+  <div class="end-deco e1"></div><div class="end-deco e2"></div>
+  <div class="end-badge">NEXUS TRADER MT5 · M.2 · CYCLE CLOSED</div>
+  <div class="end-big">نهاية تقرير إغلاق الدورة</div>
+  <div class="end-sub">اعتماد ورقي حصراً — أي انتقال للتشغيل الحي يتطلب قرار مالك صريحاً وTLS وجسر MT5 حياً ودورة QA كاملة على البيئة الحية. الدورة القادمة تفتح بقرار مالك جديد فقط.</div>
+  <div class="end-meta">2026-11-05 · Git <span dir="ltr">9bf3a13 + closure</span> · 14 عيباً مغلقاً · صفر Critical/High مفتوحة</div>
+</div>
+
+</body>
+</html>
