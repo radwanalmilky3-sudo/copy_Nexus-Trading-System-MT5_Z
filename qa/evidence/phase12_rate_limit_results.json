@@ -1,0 +1,23 @@
+{
+ "executed_at": "live",
+ "burst_codes": [
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  429,
+  429,
+  429
+ ],
+ "limit_env_default": 12,
+ "first_429_attempt": 13,
+ "retry_after": "60"
+}

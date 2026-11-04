@@ -12,17 +12,47 @@ from pathlib import Path
 from typing import Any
 
 import httpx
-from fastapi import APIRouter, Depends, Header, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from ..data_client import DataServiceClient, DataServiceUnavailable
-from ..deps import get_data_service
+from ..deps import get_data_service, get_redis
 from ..http_client import new_client
 from ..middleware.auth import CurrentUser, create_token, verify_pin
+from shared.redis_client import RedisClient
 
 router = APIRouter(tags=["admin"])
 UTC = timezone.utc
+
+# ── Login rate limiter (Phase-12 pending item: wire an actual limiter) ──────
+# Fixed-window per-client-IP counter in Redis on the brute-force surface
+# (POST /api/v2/auth/login). Window/limit are env-tunable; exceed → 429 with
+# Retry-After. Behind a reverse proxy the X-Forwarded-For FIRST hop is
+# trusted only when the direct peer is loopback (the documented deployment
+# is gateway → public TLS terminator on the same host).
+_LOGIN_WINDOW_SEC = int(os.getenv("NEXUS_LOGIN_RATE_WINDOW_SEC", "60"))
+_LOGIN_LIMIT = int(os.getenv("NEXUS_LOGIN_RATE_LIMIT", "12"))
+
+
+async def login_rate_guard(request: Request, redis: RedisClient = Depends(get_redis)) -> None:
+    peer = request.client.host if request.client else "unknown"
+    xff = request.headers.get("x-forwarded-for", "")
+    if xff and peer in {"127.0.0.1", "::1", "localhost"}:
+        peer = xff.split(",")[0].strip()
+    key = f"rl:login:{peer}"
+    try:
+        # NOTE: raw r.* bypasses the RedisClient prefixing helpers, so the
+        # system key prefix is applied explicitly to keep the namespace tidy.
+        full_key = f"nexus:{key}"
+        count = await redis.r.incr(full_key)
+        if count == 1:
+            await redis.r.expire(full_key, _LOGIN_WINDOW_SEC)
+    except Exception:  # noqa: BLE001 — limiter must never take login down
+        return
+    if count > _LOGIN_LIMIT:
+        raise HTTPException(429, "too many login attempts; retry later",
+                            headers={"Retry-After": str(_LOGIN_WINDOW_SEC)})
 
 PERMISSIONS = [
     "users.view","users.create","users.edit","users.disable","users.delete",
@@ -218,7 +248,7 @@ async def bootstrap(payload: BootstrapIn, db: DataServiceClient=Depends(get_data
     return {"ok":True,"user_id":user_id}
 
 
-@router.post("/api/v2/auth/login")
+@router.post("/api/v2/auth/login", dependencies=[Depends(login_rate_guard)])
 async def login(payload: LoginIn, db: DataServiceClient=Depends(get_data_service)):
     rows = await db.query("user_by_username", {"username": payload.username.strip()})
     if not rows or not rows[0].get("active") or not _verify_password(payload.password, str(rows[0]["password_hash"])):
