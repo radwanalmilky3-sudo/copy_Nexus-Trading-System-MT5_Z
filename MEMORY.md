@@ -1,12 +1,12 @@
 # MEMORY — فهرس حالة مشروع Nexus Trader MT5
 
 > الوثيقة الحية التفصيلية: `HANDOFF.md`. هذا الملف فهرس سريع للحالة الثابتة.
-> القواعد الثابتة: `PROJECT_RULES.md`. سجل هذه الجلسة: `docs/CHAT_LOG_2026-11-04.md`.
+> القواعد الثابتة: `PROJECT_RULES.md`. سجل هذه الجلسة: `docs/CHAT_LOG_2026-11-05.md`.
 
 ## الهوية
 - المستودع: https://github.com/radwanmhh-svg/Nexus-Trading-System-MT5 (خاص)
 - الاستنساخ المحلي: `/home/z/my-project/Nexus-Trading-System-MT5`
-- المالك: `redhwan` (super_admin، user_id `d636bc7c69c34590bc3ca48057af54f3` — أُنشئ 2026-11-05 على القاعدة الثالثة)
+- المالك: `redhwan` (super_admin، user_id `00a2bacf11e5488fb81ffe6dac64b0b6` — أُنشئ 2026-11-05 على القاعدة الرابعة)
 
 ## البيئة (ساندبوكس)
 - venv: `Nexus-Trading-System-MT5/venv-nexus` (Python 3.12، torch CPU، PyJWT — مستثناة في .gitignore)
@@ -29,8 +29,9 @@
 - `001504a` البند 4 كامل — NexusBridgeEA.mq5 + docs/EA_BRIDGE.md + شاشة /nexus/ea-bridge
 
 ## مهام مجدولة (كرون)
-- **503829** يوميًا 04:00 Asia/Aden — نسخة احتياطية متجددة إلى فرع `backups` (أرشيف يتضمن .env + DuckDB + config) — مُختبرة حيًا (20261104-210505، `cb24e5b`)
-- **503830** كل 5 دقائق — شفاء ذاتي (Redis + بروكسي 3000 + إقلاع المنظومة عند الضرورة) — يطبع HEAL_STATUS
+- **503934** كل 5 دقائق — شفاء ذاتي (Redis + المنظومة + الداشبورد + البروكسي 3000) — يطبع HEAL_STATUS — مُختبر حيًا (HEAL_STATUS: redis=OK api=200 dashboard=307 proxy=307)
+- **503933** يوميًا 04:00 Asia/Aden — نسخة احتياطية متجددة إلى فرع `backups` (أرشيف يتضمن .env + DuckDB + config عبر git plumbing بلا لمس شجرة العمل) — مُختبرة حيًا (20261104-214433، `d44cd04`)
+- (سابقان منتهيان مع القاعدة الثالثة: 503830/503829)
 
 ## نقاط تحقق سريعة
 - `curl http://127.0.0.1:9000/health` = 200 و`...:9001/health` = 200
@@ -52,6 +53,14 @@
 - تسجيل دخول redhwan فُحص بنجاح (HTTP 200، role=super_admin)
 - EA: `/api/ea/handshake` و `/api/ea/poll` يردان 401 بدون توكن (سلوك صحيح مؤكد حياً)
 - ملاحظة أمان: ADMIN_PIN و ADMIN_PASSWORD ظهرا عارضاً في مخرجات محادثة المالك → يُنصح بتدويرهما بعد حفظهما
+
+## إضافات جلسة 2026-11-05 (الاسترجاع الرابع — صندوق جديد كليًا)
+- الربط المباشر بـ GitHub مُثبت تجريبيًا مجددًا: استنساخ خاص كامل (main @ `e95d218`) + صلاحية دفع (push/admin عبر API + dry-run) — التوكن في `.secrets/gh_token` (600) عبر `gh-cred-helper.sh` **وأزيل من `.git/config`** + نسخة mirror محلية لكل الفروع
+- درس جديد موثق: الإقلاع بـ `venv-nexus/bin/python3` حصرًا — python3 النظام بلا اعتمادات
+- install_deps.sh يستثني MetaTrader5 (لا حزم Linux له على Python 3.12) — استيراده محمي fail-soft في الكود
+- بيئة كاملة: venv (torch 2.15.0+cpu) + Redis 7.4.1 + npm ci 230 — إقلاع 9000–9008 = 200 + **9004 = llm ONLINE (309ms)** + داشبورد/بروكسي 307
+- bootstrap رابع: user_id `00a2bacf11e5488fb81ffe6dac64b0b6` — دخول 200 super_admin + قفل 409 + كلمة أولية جديدة أُبلغت للمالك في المحادثة
+- كرون جديد: **503934** شفاء/5د + **503933** نسخ يومي 04:00 Asia/Aden — وأول نسخة مختبرة `d44cd04` على backups
 
 ## إضافات جلسة 2026-11-05 (الاسترجاع الثالث — صندوق جديد)
 - البيئة أُعيد بناؤها كاملة من GitHub (main @ `5c93911`) — **صفر تعديلات على الكود**؛ أُضيف تحديث وثائق الحالة فقط (بانتظار مراجعة المالك قبل الدفع)
