@@ -1,0 +1,62 @@
+{
+ "executed_at_utc": "2026-11-04T17:03:20.443907+00:00",
+ "isolated_copy": "/tmp/tcdb_nexus.duckdb",
+ "results": [
+  {
+   "id": "TC-DB-01",
+   "what": "table inventory + PK count",
+   "expected": "62 tables (updated evening count) with PKs inventoried",
+   "actual": "62 tables, 65 PK columns total",
+   "status": "PASS",
+   "evidence": "information_schema + PRAGMA table_info on isolated copy"
+  },
+  {
+   "id": "TC-DB-02",
+   "what": "users/roles consistency",
+   "expected": "every active user exactly 1 role link; 7 roles; 36 perm links; no stale role refs; soft-deleted users keep links by design",
+   "actual": "users=43, links=53, roles=7, perm_links=36 (allowed=36), orphans=10 | breakdown: total=53 (43 active + 10 soft-deleted); links 53 = 43→active (1:1 exact) + 10→soft-deleted (by-design residue for D10-c revival path); stale_roles=0",
+   "status": "PASS",
+   "evidence": "isolated copy: app_users/app_roles/app_user_roles/app_role_permissions"
+  },
+  {
+   "id": "TC-DB-03",
+   "what": "api_tokens active/revoked accounting",
+   "expected": "every token either active or revoked_at set; hashes only",
+   "actual": "total=5 active=0 revoked=5; columns=['token_id', 'user_id', 'token_hash', 'label', 'mt5_login', 'mt5_broker', 'mt5_server', 'active', 'created_at', 'last_used_at', 'revoked_at']",
+   "status": "PASS",
+   "evidence": "PRAGMA + counts (incl. this round's revoked QA token)"
+  },
+  {
+   "id": "TC-DB-04",
+   "what": "audit trail timestamps",
+   "expected": "UTC valid, no nulls, log grows",
+   "actual": "rows=56, null_ts=0, future_ts=0, recent=['ea.token_revoke', 'ea.handshake', 'ea.token_create', 'users.delete', 'users.delete']",
+   "status": "PASS",
+   "evidence": "isolated copy"
+  },
+  {
+   "id": "TC-DB-05",
+   "what": "market tables honest-empty",
+   "expected": "0 rows (sandbox zero market rule) — no fake data",
+   "actual": "{\"ohlcv\": 0, \"ticks\": 0, \"trades\": 0, \"positions\": 0, \"ea_commands\": 0}",
+   "status": "PASS",
+   "evidence": "row counts on isolated copy"
+  },
+  {
+   "id": "TC-DB-06",
+   "what": "duplicates on key columns",
+   "expected": "0 duplicates",
+   "actual": "app_users.username: 43rows/43distinct dup=0; app_roles.name_en: 7rows/7distinct dup=0; app_role_permissions.role_id|permission_code: 36rows/36distinct dup=0; ea_commands.command_id: 0rows/0distinct dup=0; api_tokens.token_hash: 5rows/5distinct dup=0",
+   "status": "PASS",
+   "evidence": "COUNT vs COUNT DISTINCT"
+  },
+  {
+   "id": "TC-DB-07",
+   "what": "writer isolation",
+   "expected": "second connection to the live file must be refused while the data-service holds the write lock",
+   "actual": "IO Error: Could not set lock — exactly the documented single-writer behavior (IO Error: Could not set lock on file \"/home/z/my-project/Nexus-Trading-System-MT)",
+   "status": "PASS",
+   "evidence": "live lock refusal = proof"
+  }
+ ]
+}
