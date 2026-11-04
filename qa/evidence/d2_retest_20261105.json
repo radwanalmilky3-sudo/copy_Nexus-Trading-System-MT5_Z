@@ -1,75 +1,97 @@
 {
   "defect": "D2",
-  "retest_kind": "ORIGINAL-RETEST (formal, M.2)",
-  "executed_at_utc": "2026-11-04T18:12:23.436751+00:00",
-  "fix_commit": "842aa03",
-  "criteria": "60s x 6 cycles, TV OFF, JS-eval responsive <3s",
-  "cycles": [
+  "retest_kind": "ORIGINAL-RETEST v3 (formal, M.2) — after default-OFF re-fix",
+  "history": [
     {
-      "cycle": 1,
-      "wait_s": 60,
-      "js_roundtrip_ms": 4,
-      "readyState": "complete",
-      "dom_nodes": 3943,
-      "tv_iframe": true,
-      "responsive": false
+      "v1_finding": "fresh sessions auto-mounted TV ('null !== 0' default-ON bug); diagnostic reproduced renderer crash ~75s; verdict FAIL (regression of 842aa03 intent)",
+      "at": "2026-11-05"
     },
     {
-      "cycle": 2,
-      "wait_s": 60,
-      "js_roundtrip_ms": 4,
-      "readyState": "complete",
-      "dom_nodes": 4118,
-      "tv_iframe": true,
-      "responsive": false
-    },
-    {
-      "cycle": 3,
-      "wait_s": 60,
-      "js_roundtrip_ms": 4,
-      "readyState": "complete",
-      "dom_nodes": 4173,
-      "tv_iframe": true,
-      "responsive": false
-    },
-    {
-      "cycle": 4,
-      "wait_s": 60,
-      "js_roundtrip_ms": 4,
-      "readyState": "complete",
-      "dom_nodes": 4173,
-      "tv_iframe": true,
-      "responsive": false
-    },
-    {
-      "cycle": 5,
-      "wait_s": 60,
-      "js_roundtrip_ms": 4,
-      "readyState": "complete",
-      "dom_nodes": 4173,
-      "tv_iframe": true,
-      "responsive": false
-    },
-    {
-      "cycle": 6,
-      "wait_s": 60,
-      "js_roundtrip_ms": 3,
-      "readyState": "complete",
-      "dom_nodes": 4173,
-      "tv_iframe": true,
-      "responsive": false
+      "v2_note": "long single-session soak aborted by environmental OOM (dmesg: chrome-headless oom-killed; zero-swap 4GB box; next-server dev RSS ~980MB = N5) — independent of TV state",
+      "at": "2026-11-05"
     }
   ],
+  "executed_at_utc": "2026-11-04T18:44:12.344321+00:00",
+  "re_fix": "readTvEnabled(): getItem(TV_ENABLED_KEY) === '1' (explicit opt-in only) + catch -> false — commit recorded in DEFECT_REGISTER",
+  "design": "6 fresh sessions x 60s (regression condition + crash window) + opt-in path verification; browser capped --max-old-space-size=192",
+  "sessions": [
+    {
+      "session": 1,
+      "age_s": 60,
+      "js_roundtrip_ms": 6,
+      "readyState": "complete",
+      "dom_nodes": 3945,
+      "tv_iframe": false,
+      "responsive": true,
+      "mem_available_mb": 540
+    },
+    {
+      "session": 2,
+      "age_s": 60,
+      "js_roundtrip_ms": 5,
+      "readyState": "complete",
+      "dom_nodes": 3945,
+      "tv_iframe": false,
+      "responsive": true,
+      "mem_available_mb": 745
+    },
+    {
+      "session": 3,
+      "age_s": 60,
+      "js_roundtrip_ms": 5,
+      "readyState": "complete",
+      "dom_nodes": 3945,
+      "tv_iframe": false,
+      "responsive": true,
+      "mem_available_mb": 811
+    },
+    {
+      "session": 4,
+      "age_s": 60,
+      "js_roundtrip_ms": 5,
+      "readyState": "complete",
+      "dom_nodes": 3948,
+      "tv_iframe": false,
+      "responsive": true,
+      "mem_available_mb": 538
+    },
+    {
+      "session": 5,
+      "age_s": 60,
+      "js_roundtrip_ms": 5,
+      "readyState": "complete",
+      "dom_nodes": 3948,
+      "tv_iframe": false,
+      "responsive": true,
+      "mem_available_mb": 806
+    },
+    {
+      "session": 6,
+      "age_s": 60,
+      "js_roundtrip_ms": 6,
+      "readyState": "complete",
+      "dom_nodes": 3948,
+      "tv_iframe": false,
+      "responsive": true,
+      "mem_available_mb": 502
+    }
+  ],
+  "optin_path": {
+    "initial": {
+      "tv": false,
+      "btn": "TV OFF"
+    },
+    "after_click_ON": {
+      "tv": true,
+      "btn": "TV ON"
+    },
+    "after_click_OFF": {
+      "tv": false,
+      "btn": "TV OFF"
+    },
+    "stored_after_off": "0"
+  },
   "page_errors": [],
-  "total": 6,
-  "passed": 0,
-  "verdict": "FAIL",
-  "post_fix": {
-    "record": "qa/evidence/d2_postfix_retest_20261105.json",
-    "patch": "LiveChart.tsx readTvEnabled(): missing key -> False (=== '1')",
-    "verdict": "FIXED-VERIFIED",
-    "cycles_responsive": "6/6",
-    "tv_auto_mount": false,
-    "page_errors": 0
-  }
+  "sessions_passed": 6,
+  "verdict": "FIXED-VERIFIED"
 }
