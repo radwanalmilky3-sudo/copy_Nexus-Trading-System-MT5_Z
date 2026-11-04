@@ -636,8 +636,13 @@ class ProcessManager:
         if env_override:
             env.update(env_override)
         env.pop("NEXUS_RISK_APPROVAL_SECRET", None)
-        env.setdefault("NEXT_PUBLIC_API_URL", f"http://127.0.0.1:{SERVICE_REGISTRY['nexus-api']}")
-        env.setdefault("NEXT_PUBLIC_WS_GATEWAY_URL", f"ws://127.0.0.1:{SERVICE_REGISTRY['nexus-api']}")
+        # 2026-11-05 fix: NEXT_PUBLIC_* values are inlined into the browser
+        # bundle. Absolute 127.0.0.1 URLs made external browsers (preview
+        # gateway, HTTPS) fetch a loopback address -> "Failed to fetch".
+        # Empty = same-origin /api (next.config.js rewrites proxy server-side
+        # to nexus-api) and window.location-derived WS origin (gateway-ws.ts).
+        env.setdefault("NEXT_PUBLIC_API_URL", "")
+        env.setdefault("NEXT_PUBLIC_WS_GATEWAY_URL", "")
 
         proc = subprocess.Popen(
             cmd,
@@ -941,10 +946,11 @@ def main() -> None:
         env_override.setdefault(
             _env_name, f"http://127.0.0.1:{SERVICE_REGISTRY[_svc]}"
         )
-    # Dashboard must point at the gateway port even if .env still has old values.
-    env_override["NEXT_PUBLIC_API_URL"] = f"http://127.0.0.1:{SERVICE_REGISTRY['nexus-api']}"
-    env_override["NEXT_PUBLIC_WS_URL"] = f"ws://127.0.0.1:{SERVICE_REGISTRY['nexus-api']}"
-    env_override["NEXT_PUBLIC_WS_GATEWAY_URL"] = f"ws://127.0.0.1:{SERVICE_REGISTRY['nexus-api']}"
+    # 2026-11-05 fix: keep browser-bound URLs same-origin (see dashboard
+    # launch comment above) — the gateway proxies server-side instead.
+    env_override["NEXT_PUBLIC_API_URL"] = ""
+    env_override["NEXT_PUBLIC_WS_URL"] = ""
+    env_override["NEXT_PUBLIC_WS_GATEWAY_URL"] = ""
 
     # Trading mode override
     if args.paper:
