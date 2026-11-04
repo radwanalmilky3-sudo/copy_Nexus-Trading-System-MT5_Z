@@ -13,7 +13,7 @@ const compiledClient = ts.transpileModule(
 function clientWith(fetch, storage = { getItem: () => null, removeItem() {} }) {
   const context = {
     exports: {}, process: { env: {} }, fetch, localStorage: storage,
-    window: { location: { href: '' } },
+    window: { location: { href: '', pathname: '/' } },
     require: () => ({ withRequestTimeout }),
   };
   vm.runInNewContext(compiledClient, context);
@@ -65,7 +65,8 @@ for (const bootstrap of [false, true]) {
     t.mock.timers.enable({ apis: ['setTimeout'] });
     let signal;
     const form = loginForm(async (url, options) => {
-      assert.equal(url, `http://localhost:9000/api/v2/auth/${bootstrap ? 'bootstrap' : 'login'}`);
+      // Sandbox contract: empty NEXT_PUBLIC_API_URL ⇒ same-origin relative URL.
+      assert.equal(url, `/api/v2/auth/${bootstrap ? 'bootstrap' : 'login'}`);
       assert.equal(options.method, 'POST');
       signal = options.signal;
       return new Promise(() => {});
@@ -83,11 +84,12 @@ for (const bootstrap of [false, true]) {
   });
 }
 
-test('successful login still saves the token and routes to the dashboard', async () => {
+test('successful login still saves the token and routes to the app root', async () => {
   const form = loginForm(async () => Response.json({ token: 'example' }));
   await form.submit();
   assert.deepEqual(form.tokens, [['nexus-token', 'example']]);
-  assert.deepEqual(form.routes, ['/dashboard']);
+  // The app root moved from /dashboard to /nexus (screen matrix M.2).
+  assert.deepEqual(form.routes, ['/nexus']);
   assert.equal(form.updates.get(1), false);
 });
 
@@ -114,7 +116,7 @@ test('getMe bounds a stalled body and does not redirect on timeout', async (t) =
   await Promise.resolve();
   t.mock.timers.tick(15000);
   await rejected;
-  assert.equal(fetched.url, 'http://localhost:9000/api/v2/auth/me');
+  assert.equal(fetched.url, '/api/v2/auth/me');
   assert.equal(fetched.options.signal.aborted, true);
   assert.equal(window.location.href, '');
 });

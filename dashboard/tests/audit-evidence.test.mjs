@@ -25,7 +25,9 @@ const evidence = { status: 'available', source: 'project_audit', state: {
 
 test('audit loads real evidence through the authenticated gateway', async () => {
   const result = await loader(async (url, options) => {
-    assert.equal(url, 'http://localhost:9000/api/audit/progress');
+    // The client now requests the same-origin proxy path (NEXT_PUBLIC_API_URL
+    // is prepended when set; the test VM context has no env, so relative).
+    assert.equal(url, '/api/audit/progress');
     assert.equal(options.headers.Authorization, 'Bearer example');
     return Response.json(evidence);
   })();

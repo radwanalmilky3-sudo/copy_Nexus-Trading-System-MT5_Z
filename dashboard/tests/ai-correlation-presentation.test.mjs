@@ -46,7 +46,8 @@ test('corrCellPresentation renders value with sign prefix', () => {
   const cell = corrCellPresentation(FULL_WINDOWS['20'].pairs['BTCUSD/XAUUSD'], 0.42);
   assert.equal(cell.text, '+0.42');
   assert.equal(cell.tone, 'value');
-  assert.equal(cell.title, '19 muestras · cobertura 100%');
+  // UI was localized to Arabic: "19 samples · coverage 100%"
+  assert.equal(cell.title, '19 عيّنة · تغطية 100%');
 });
 
 test('corrCellPresentation negative value keeps minus sign', () => {
@@ -58,7 +59,7 @@ test('corrCellPresentation marks insufficient data honestly', () => {
   const cell = corrCellPresentation(FULL_WINDOWS['60'].pairs['BTCUSD/XAUUSD'], null);
   assert.equal(cell.text, '—');
   assert.equal(cell.tone, 'insufficient');
-  assert.match(cell.title, /datos insuficientes/i);
+  assert.match(cell.title, /بيانات غير كافية/i);
   assert.notEqual(cell.text, '0.00');
 });
 
@@ -66,7 +67,7 @@ test('corrCellPresentation marks constant series honestly', () => {
   const cell = corrCellPresentation(FULL_WINDOWS['120'].pairs['BTCUSD/XAUUSD'], null);
   assert.equal(cell.text, '—');
   assert.equal(cell.tone, 'constant');
-  assert.match(cell.title, /serie constante/i);
+  assert.match(cell.title, /سلسلة ثابتة/i);
 });
 
 test('corrCellPresentation unknown pair is unavailable, never zero', () => {
@@ -97,10 +98,14 @@ test('lagPairPresentation insufficient lag stays unavailable', () => {
 
 test('correlation disclaimer forbids prediction framing', () => {
   const d = correlationDisclaimer();
-  assert.match(d, /no es causa ni garant/i);
-  assert.doesNotMatch(d.toLowerCase(), /predicta|predice/);
+  // Arabic disclaimer: "observed correlation on synchronized returns; not a
+  // cause nor a guarantee of prediction" — the noun (التنبؤ) may appear, but
+  // the disclaimer must never ASSERT that it predicts (verb يتنبأ) or frame
+  // the correlation as causal/guaranteed.
+  assert.match(d, /ليس سببًا ولا ضمانًا/);
+  assert.doesNotMatch(d, /يتنبأ|ضمانًا للربح/);
 });
 
 test('correlationBasisNote declares synchronized returns', () => {
-  assert.match(correlationBasisNote(), /retornos sincronizados/i);
+  assert.match(correlationBasisNote(), /عوائد متزامنة/);
 });
