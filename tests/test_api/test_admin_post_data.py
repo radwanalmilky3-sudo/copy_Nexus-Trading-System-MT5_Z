@@ -32,7 +32,7 @@ def mocked_data_http(monkeypatch):
 @pytest.mark.parametrize(
     "failure",
     [
-        301, 302, 307, 400, 401, 403, 408, 429, 500, 503,
+        301, 302, 307, 401, 403, 408, 429, 500, 503,
         httpx.ConnectError, httpx.ReadError, httpx.RemoteProtocolError,
         httpx.ConnectTimeout, httpx.ReadTimeout, httpx.WriteTimeout, httpx.PoolTimeout,
     ],
@@ -65,6 +65,45 @@ async def test_post_data_failure_uses_generic_503(mocked_data_http, failure):
 
     assert response.status_code == 503
     assert response.json() == {"detail": "Data service unavailable"}
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "payload_body,expected",
+    [
+        ('{"detail":"unknown reference: app_users.user_id"}', "data service rejected write (400): unknown reference: app_users.user_id"),
+        ("not-json-private-body", "Data service unavailable"),
+        ('{"other":"field"}', "Data service unavailable"),
+    ],
+)
+async def test_post_data_400_detail_contract(mocked_data_http, payload_body, expected):
+    """D10-a: only the data service's controlled 400 JSON detail is surfaced;
+    raw upstream bodies never leak to the client."""
+    def upstream(request):
+        if payload_body.startswith("{"):
+            return httpx.Response(400, json=json.loads(payload_body))
+        return httpx.Response(400, text=f"private upstream body: test-only-internal-secret | {payload_body}")
+
+    mocked_data_http(upstream)
+    app = FastAPI()
+    app.add_exception_handler(DataServiceUnavailable, data_service_unavailable_handler)
+
+    @app.post("/write")
+    async def write():
+        await admin._post_data("app_users", {"user_id": "test-user"})
+        return {"ok": True}
+
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app, raise_app_exceptions=False),
+        base_url="http://gateway.test",
+    ) as client:
+        response = await client.post("/write")
+
+    assert response.status_code == 503
+    assert response.json() == {"detail": expected}
+    assert "test-only-internal-secret" not in response.text
+    if payload_body.startswith("not-json"):
+        assert "private upstream body" not in response.text
 
 
 @pytest.mark.asyncio

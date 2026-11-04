@@ -29,4 +29,5 @@ async def test_login_reports_data_service_outage_as_503_not_invalid_credentials(
             app.dependency_overrides[get_data_service] = previous
 
     assert response.status_code == 503
-    assert response.json() == {"detail": "Data service unavailable"}
+    # D10-a contract: detail is surfaced but must never read as bad-credentials.
+    assert "Invalid credentials" not in response.json()["detail"]

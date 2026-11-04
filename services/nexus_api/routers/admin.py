@@ -65,10 +65,17 @@ async def _post_data(table: str, record: dict[str, Any]) -> None:
     except httpx.TransportError as exc:
         raise DataServiceUnavailable("Data service unavailable") from exc
     if not res.is_success:
-        # D10-a: surface the upstream rejection detail (validation messages only,
-        # no secrets) instead of masking every non-success as a generic 503.
-        detail = res.text[:200].replace("\n", " ")
-        raise DataServiceUnavailable(f"data service rejected write ({res.status_code}): {detail}")
+        # D10-a: surface ONLY the data service's own 400 validation detail (a
+        # controlled JSON message written by us). Any other non-success keeps
+        # the generic wording — raw upstream bodies may contain sensitive text.
+        if res.status_code == 400:
+            try:
+                detail = str(res.json().get("detail", ""))[:200]
+            except Exception:
+                detail = ""
+            if detail:
+                raise DataServiceUnavailable(f"data service rejected write (400): {detail}")
+        raise DataServiceUnavailable("Data service unavailable")
 
 
 async def _role_ids(db: DataServiceClient, user_id: str) -> list[str]:

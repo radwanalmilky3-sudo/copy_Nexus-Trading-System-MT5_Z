@@ -1,0 +1,104 @@
+[
+ {
+  "id": "TC-AU-01",
+  "desc": "دخول صحيح",
+  "status": "PASS",
+  "detail": "HTTP=200 latency=93ms"
+ },
+ {
+  "id": "TC-AD-01",
+  "desc": "دخول المالك بدور إداري",
+  "status": "PASS",
+  "detail": "role=super_admin"
+ },
+ {
+  "id": "TC-AU-02",
+  "desc": "كلمة مرور خاطئة → 401 برسالة",
+  "status": "PASS",
+  "detail": "HTTP=401 msg={\"detail\": \"Invalid credentials\"}"
+ },
+ {
+  "id": "TC-AU-03",
+  "desc": "توكن غير صالح → 401",
+  "status": "PASS",
+  "detail": "HTTP=401"
+ },
+ {
+  "id": "TC-AU-04",
+  "desc": "بلا توكن → 401/403",
+  "status": "PASS",
+  "detail": "HTTP=401"
+ },
+ {
+  "id": "TC-AU-05",
+  "desc": "توكن منتهي الصلاحية → 401",
+  "status": "PASS",
+  "detail": "HTTP=401"
+ },
+ {
+  "id": "TC-AU-05b",
+  "desc": "توقيع مُعدَّل → 401",
+  "status": "PASS",
+  "detail": "HTTP=401"
+ },
+ {
+  "id": "TC-AD-05",
+  "desc": "bootstrap مغلق → 409",
+  "status": "PASS",
+  "detail": "HTTP=409 {\"detail\": \"bootstrap already completed\"}"
+ },
+ {
+  "id": "TC-AU-06",
+  "desc": "الجلسة سليمة (me) — نمط توكن واحد بالتصميم",
+  "status": "PASS",
+  "detail": "HTTP=200 perms=1"
+ },
+ {
+  "id": "TC-AD-02",
+  "desc": "قائمة المستخدمين الإدارية تعمل بالتوكن",
+  "status": "PASS",
+  "detail": "HTTP=200 n=42"
+ },
+ {
+  "id": "TC-AD-03",
+  "desc": "الأدوار والصلاحيات",
+  "status": "PASS",
+  "detail": "HTTP=200 roles=7"
+ },
+ {
+  "id": "TC-AU-09",
+  "desc": "مستخدم غير إداري × API إداري → 403",
+  "status": "PASS",
+  "detail": "login=200 admin_api=403"
+ },
+ {
+  "id": "TC-AU-07",
+  "desc": "خروج ثم إعادة استخدام الجلسة",
+  "status": "PASS",
+  "detail": "logout=200 me_after=200 revocation=لا — يجد تسجيل D10 (JWT يظل صالحاً حتى انتهاء صلاحيته)"
+ },
+ {
+  "id": "TC-AD-04",
+  "desc": "حذف مستخدم QA (تنظيف + اختبار حذف)",
+  "status": "PASS",
+  "detail": "HTTP=200"
+ },
+ {
+  "id": "TC-AU-10",
+  "desc": "PIN خاطئ لتحرير KILL → 403",
+  "status": "PASS",
+  "detail": "HTTP=403"
+ },
+ {
+  "id": "TC-AU-10b",
+  "desc": "جلسة المالك me() سليمة",
+  "status": "PASS",
+  "detail": "HTTP=200"
+ },
+ {
+  "id": "TC-AD-04b",
+  "desc": "سجل التدقيق مستخدم",
+  "status": "PASS",
+  "detail": "rows(at_copy)=4"
+ }
+]

@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock
 import pytest
 
 from services.nexus_api.middleware.auth import create_token
-from services.nexus_api.routers import admin, agents, backtest, config, fundamental, intelligence, intermarket, ml, notifications, regime, strategies, system
+from services.nexus_api.routers import admin, agents, backtest, config, fundamental, intelligence, intermarket, ml, notifications, regime, risk, strategies, system
 
 
 READ_ROUTES = [
@@ -101,7 +101,14 @@ def stub_agent_read_dependencies(monkeypatch):
     monkeypatch.setattr(notifications.aioredis, "from_url", lambda *args, **kwargs: _FakeRedis())
     monkeypatch.setattr(intelligence, "_get_redis", AsyncMock(return_value=_FakeRedis()))
     monkeypatch.setattr(regime, "_get_redis", AsyncMock(return_value=_FakeRedis()))
-    monkeypatch.setattr(system, "local_health", AsyncMock(return_value={"ok": True}))
+    # D12: system endpoints resolve Redis via the app dependency override in
+    # conftest api_client — there is no system.local_health symbol to stub.
+    # D13: /api/config/risk proxies the live nexus-risk service via risk._risk_proxy;
+    # without this stub the test performs a real network call and the live
+    # service's 403 (secret mismatch) propagates verbatim into the assertion.
+    monkeypatch.setattr(
+        risk, "_risk_proxy", AsyncMock(return_value={"source": "stub", "rules": {}})
+    )
 
 
 class _FakeResponse:

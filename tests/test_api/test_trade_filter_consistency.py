@@ -13,7 +13,7 @@ import pytest
 
 from services.nexus_api.routers import trades
 
-HISTORY_PAGE = Path(__file__).resolve().parents[2] / "dashboard" / "src" / "app" / "dashboard" / "history" / "page.tsx"
+HISTORY_PAGE = Path(__file__).resolve().parents[2] / "dashboard" / "src" / "app" / "nexus" / "history" / "page.tsx"
 
 SHARED_FILTERS = {"symbol", "session", "since"}
 
