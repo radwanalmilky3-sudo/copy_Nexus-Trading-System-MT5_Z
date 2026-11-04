@@ -306,7 +306,7 @@ def test_shipped_optimal_template_covers_every_page_field():
     import re
 
     source = io.open(
-        ROOT / "dashboard" / "src" / "app" / "dashboard" / "settings" / "page.tsx",
+        ROOT / "dashboard" / "src" / "app" / "nexus" / "settings" / "page.tsx",
         encoding="utf-8",
     ).read()
     block = re.search(r"const RUNTIME_SECTIONS\b.*?=\s*\[(?P<body>.*?)\n\];", source, flags=re.S)

@@ -49,7 +49,7 @@ from shared import runtime_settings
 from shared.config_loader import RiskRulesSchema, SettingsSchema
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGE_TSX = ROOT / "dashboard" / "src" / "app" / "dashboard" / "settings" / "page.tsx"
+PAGE_TSX = ROOT / "dashboard" / "src" / "app" / "nexus" / "settings" / "page.tsx"
 API_CLIENT_TS = ROOT / "dashboard" / "src" / "lib" / "api-client.ts"
 MAIN_PY = ROOT / "services" / "nexus_api" / "main.py"
 ENV_ROUTER_PY = ROOT / "services" / "nexus_api" / "routers" / "env.py"

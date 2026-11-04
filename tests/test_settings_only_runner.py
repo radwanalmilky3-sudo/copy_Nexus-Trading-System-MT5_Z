@@ -334,6 +334,13 @@ def test_run_spawn_dashboard_never_deletes_next(monkeypatch):
 
     monkeypatch.setattr(run_mod.subprocess, "Popen", fake_popen)
     monkeypatch.setattr(run_mod, "IS_WINDOWS", True)
+    # Simulating the Windows branch on POSIX also needs the Windows-only
+    # subprocess flag (run.py only touches it when IS_WINDOWS is True; the
+    # real constant does not exist on POSIX, so provide it for the sim).
+    monkeypatch.setattr(
+        run_mod.subprocess, "CREATE_NEW_PROCESS_GROUP", 0x00000200,
+        raising=False,
+    )
     monkeypatch.setattr(run_mod, "_log", lambda *_args, **_kwargs: None)
 
     manager = run_mod.ProcessManager(root=ROOT)
