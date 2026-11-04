@@ -1,0 +1,92 @@
+{
+  "executed_at_utc": "2026-11-04T16:01:30.455113+00:00",
+  "total": 10,
+  "passed": 8,
+  "failed": 2,
+  "results": [
+    {
+      "id": "TC-AU-01",
+      "what": "correct login",
+      "expected": "200 + token",
+      "actual": "200 + token=yes + expiresAt=None",
+      "status": "PASS",
+      "evidence": "login response"
+    },
+    {
+      "id": "TC-AU-02",
+      "what": "wrong password",
+      "expected": "401 + no token + Arabic surfaced to user (UI mapper)",
+      "actual": "401 + token_in_body=False + api_detail='Invalid credentials' (EN by design) + UI_mapper=login/page.tsx 401→'بيانات الدخول غير صحيحة…' (R2 evidence)",
+      "status": "PASS",
+      "evidence": "login response + login/page.tsx mapper + round-2 screenshot evidence"
+    },
+    {
+      "id": "TC-AU-03",
+      "what": "garbage token",
+      "expected": "401",
+      "actual": "401",
+      "status": "PASS",
+      "evidence": "admin users call"
+    },
+    {
+      "id": "TC-AU-04",
+      "what": "no auth header",
+      "expected": "401",
+      "actual": "401",
+      "status": "PASS",
+      "evidence": "admin users call"
+    },
+    {
+      "id": "TC-AU-05",
+      "what": "tampered token",
+      "expected": "401",
+      "actual": "401",
+      "status": "PASS",
+      "evidence": "admin users call"
+    },
+    {
+      "id": "TC-AU-06",
+      "what": "refresh flow",
+      "expected": "refresh -> new access (per TC doc)",
+      "actual": "404 — NO /api/v2/auth/refresh endpoint in OpenAPI (single-JWT design, 24h exp)",
+      "status": "FAIL",
+      "evidence": "refresh call + openapi.json"
+    },
+    {
+      "id": "TC-AU-07",
+      "what": "logout invalidation",
+      "expected": "old token refused IF revoke exists (none found)",
+      "actual": "after logout /me with old token = 200 (stateless JWT, no server revocation)",
+      "status": "FAIL",
+      "evidence": "/me call after logout"
+    },
+    {
+      "id": "TC-AU-08",
+      "what": "EA token lifecycle",
+      "expected": "create->active->handshake OK->revoke->handshake refused",
+      "actual": "create=200, handshake=200, listed_active=True, revoke=200, handshake_after=401",
+      "status": "PASS",
+      "evidence": "ea-tokens + handshake calls (raw token not stored)"
+    },
+    {
+      "id": "TC-AU-09",
+      "what": "RBAC backend",
+      "expected": "viewer x admin endpoint = 403",
+      "actual": "403",
+      "status": "PASS",
+      "evidence": "admin users call"
+    },
+    {
+      "id": "TC-AU-10",
+      "what": "sensitive op PIN",
+      "expected": "wrong PIN refused 403 (verify_pin precedes state change)",
+      "actual": "403 (Invalid PIN)",
+      "status": "PASS",
+      "evidence": "release call with valid JWT + wrong PIN — verify_pin (hmac.compare_digest) raises 403 first"
+    }
+  ],
+  "temp_users_cleaned": [
+    "dbcec33533f04621979be4ea9a0819b1",
+    "baa3e374e5534933a015d9c41eb70d1a"
+  ]
+}

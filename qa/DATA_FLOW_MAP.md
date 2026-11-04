@@ -44,12 +44,12 @@ Redis nexus:features:history:*
 
 ## F5 — دورة المستخدم والمصادقة
 ```
-/login → POST /api/auth/login (JWT access+refresh، DuckDB app_users/user_audit_log)
+/login → POST /api/auth/login (JWT وحيد 24h — لا refresh endpoint: D14؛ DuckDB app_users/user_audit_log)
   → الواجهة تحفظ الجلسة → كل نداء عبر Authorization Bearer (middleware/auth.py)
   → WS auth (websockets/auth.py)
-  → خروج/انتهاء/إلغاء → رفض صادق 401
+  → خروج/انتهاء/إلغاء → رفض صادق 401 (ملاحظة D15: logout بلا إبطال خادمي — JWT عديم الحالة)
 ```
-إثبات: دخول 200، كلمة خاطئة رسالة عربية، توكن ملغى مرفوض (جولة 2)، admin APIs محمية.
+إثبات: دخول 200، كلمة خاطئة → 401 صادق والواجهة تعرضها عربياً (mapper جولة 2)، توكن ملغى مرفوض (جولة 2)، admin APIs محمية (TC-AD-02: 401/401/403 حي).
 
 ## F6 — المراقبة والتشغيل
 ```

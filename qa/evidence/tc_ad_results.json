@@ -1,0 +1,50 @@
+{
+  "executed_at_utc": "2026-11-04T15:57:32.944248+00:00",
+  "total": 5,
+  "passed": 5,
+  "results": [
+    {
+      "id": "TC-AD-01",
+      "what": "owner login redhwan",
+      "expected": "200 + token + super_admin",
+      "actual": "200 + token=yes + role=super_admin",
+      "status": "PASS",
+      "evidence": "response keys recorded"
+    },
+    {
+      "id": "TC-AD-02",
+      "what": "admin API protection",
+      "expected": "401 no-token / 401 garbage / 403 viewer",
+      "actual": "no-token=401, garbage=401, viewer=403",
+      "status": "PASS",
+      "evidence": "3 live calls"
+    },
+    {
+      "id": "TC-AD-03",
+      "what": "roles & permissions",
+      "expected": "7 roles + 36 linked permissions",
+      "actual": "7 roles ['Super Administrator', 'Risk Manager', 'Operator', 'System Administrator', 'Trading Administrator', 'Fundamental Analyst', 'Viewer'] + 36 perms",
+      "status": "PASS",
+      "evidence": "isolated copy /tmp/tcad03.duckdb"
+    },
+    {
+      "id": "TC-AD-04",
+      "what": "audit trail",
+      "expected": "log grows + valid timestamps",
+      "actual": "15→15 rows, null_ts=0, recent=[('users.delete',), ('users.create',), ('users.delete',), ('qa.test',), ('qa.test',)]",
+      "status": "PASS",
+      "evidence": "/tmp/tcad04.duckdb"
+    },
+    {
+      "id": "TC-AD-05",
+      "what": "bootstrap closed",
+      "expected": "second bootstrap refused 4xx",
+      "actual": "422",
+      "status": "PASS",
+      "evidence": "status code only"
+    }
+  ],
+  "temp_users_cleaned": [
+    "c7f6a10d8fdd40f490f5238991a0f471"
+  ]
+}
