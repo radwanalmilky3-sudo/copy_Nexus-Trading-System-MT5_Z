@@ -6,7 +6,7 @@
 ## الهوية
 - المستودع: https://github.com/radwanmhh-svg/Nexus-Trading-System-MT5 (خاص)
 - الاستنساخ المحلي: `/home/z/my-project/Nexus-Trading-System-MT5`
-- المالك: `redhwan` (super_admin، user_id `469087c903cf40298fb3679a2fcc3fb4` — أعيد إنشاؤه 2026-11-04 على القاعدة الجديدة الثانية)
+- المالك: `redhwan` (super_admin، user_id `d636bc7c69c34590bc3ca48057af54f3` — أُنشئ 2026-11-05 على القاعدة الثالثة)
 
 ## البيئة (ساندبوكس)
 - venv: `Nexus-Trading-System-MT5/venv-nexus` (Python 3.12، torch CPU، PyJWT — مستثناة في .gitignore)
@@ -15,7 +15,7 @@
 - قاعدة البيانات: `data/nexus.duckdb` (`DUCKDB_PATH` مطلق في `.env`)
 - الداشبورد: `dashboard/` (Next.js 14، `npm run dev -- --port 3100`، node_modules حاضر)
 - مُمرِّر المعاينة: `scripts/port3000_forward.py` (3000 → 3100، خارج المستودع)
-- بيانات git للدفع: `/home/z/my-project/.git-credentials` (خارج شجرة المستودع — لا تُرفع أبدًا)
+- بيانات git للدفع: `/home/z/my-project/.secrets/gh_token` عبر `gh-cred-helper.sh` (خارج شجرة المستودع — لا تُرفع أبدًا)
 
 ## المنافذ
 `9000` api | `9001` data | `9002` features | `9003` ml | `9004` agents | `9005` news | `9006` risk | `9007` executor | `9008` monitor | `3100` dashboard | `3000` proxy | `6379` redis
@@ -29,8 +29,8 @@
 - `001504a` البند 4 كامل — NexusBridgeEA.mq5 + docs/EA_BRIDGE.md + شاشة /nexus/ea-bridge
 
 ## مهام مجدولة (كرون)
-- **502676** يوميًا 04:00 Asia/Aden — نسخة احتياطية متجددة إلى فرع `backups` (أرشيف يتضمن .env + DuckDB + config) — مُختبرة حيًا (20261104-125133)
-- **502675** كل 5 دقائق — شفاء ذاتي (Redis + بروكسي 3000 + إقلاع المنظومة عند الضرورة) — يطبع HEAL_STATUS
+- **503829** يوميًا 04:00 Asia/Aden — نسخة احتياطية متجددة إلى فرع `backups` (أرشيف يتضمن .env + DuckDB + config) — مُختبرة حيًا (20261104-210505، `cb24e5b`)
+- **503830** كل 5 دقائق — شفاء ذاتي (Redis + بروكسي 3000 + إقلاع المنظومة عند الضرورة) — يطبع HEAL_STATUS
 
 ## نقاط تحقق سريعة
 - `curl http://127.0.0.1:9000/health` = 200 و`...:9001/health` = 200
@@ -52,6 +52,14 @@
 - تسجيل دخول redhwan فُحص بنجاح (HTTP 200، role=super_admin)
 - EA: `/api/ea/handshake` و `/api/ea/poll` يردان 401 بدون توكن (سلوك صحيح مؤكد حياً)
 - ملاحظة أمان: ADMIN_PIN و ADMIN_PASSWORD ظهرا عارضاً في مخرجات محادثة المالك → يُنصح بتدويرهما بعد حفظهما
+
+## إضافات جلسة 2026-11-05 (الاسترجاع الثالث — صندوق جديد)
+- البيئة أُعيد بناؤها كاملة من GitHub (main @ `5c93911`) — **صفر تعديلات على الكود**؛ أُضيف تحديث وثائق الحالة فقط (بانتظار مراجعة المالك قبل الدفع)
+- سكربتات خارج المستودع أعيد إنشاؤها: daemonize.py، port3000_forward.py، nexus_heal.sh، backup_nexus.sh، install_deps.sh، build_redis.sh، gen_env.py
+- bootstrap redhwan جديد: دخول 200 super_admin، تجديد D14 يعمل (200)، bootstrap مقفل (409)
+- 9004 يصل فعليًا إلى Z.ai (117ms) لكن يرجع 503 fail-closed بسبب 429 — نفس السلوك الموثق لحصة Flash المجانية
+- كرون جديد: **503830** شفاء كل 5 د + **503829** نسخ يومي 04:00 — ونسخة تجريبية مختبرة على `backups` (cb24e5b)
+- ملاحظات جديدة: next@14.2.5 تحذير ثغرة أمنية (قرار ترقية للمالك) + عيب قديم `TradeMemory._records` في lifecycle retrain (غير حاجز)
 
 ## استرجاع 2026-11-04 (بعد مسح بيئة الصندوق)
 - البيئة مُسحت بالكامل (~18:39)؛ الاسترجاع اكتمل من فرع main عبر PAT جديد من المالك.
