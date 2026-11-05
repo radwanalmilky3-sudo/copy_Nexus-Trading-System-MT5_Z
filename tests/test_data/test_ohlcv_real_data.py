@@ -168,6 +168,11 @@ def test_live_provenance_endpoint_reports_coverage_shape():
         status, body = _get_json(f"{DATA_BASE}/api/data/ohlcv/XAUUSD/M15/provenance")
     except ConnectionError as exc:
         pytest.skip(f"nexus-data not reachable at {DATA_BASE}: {exc}")
+    # N6 (2026-11-05): an empty series answers 404 like ohlcv itself — the
+    # shape below is certified only when the service actually holds bars.
+    if status == 404:
+        assert "No OHLCV data" in str(body.get("detail", ""))
+        pytest.skip("zero-state store: XAUUSD/M15 holds no bars (N6 unified 404)")
     assert status == 200
     assert body.get("symbol") == "XAUUSD"
     assert body.get("timeframe") == "M15"

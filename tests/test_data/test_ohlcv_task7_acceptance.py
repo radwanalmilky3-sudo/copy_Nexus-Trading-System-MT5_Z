@@ -346,6 +346,13 @@ def test_real_provenance_endpoint_reports_coverage_without_false_certification()
     try:
         for symbol, timeframe in (("XAUUSD", "M15"), ("XAUUSD", "M5")):
             status, body = _get_json(f"{DATA_BASE}/api/data/ohlcv/{symbol}/{timeframe}/provenance")
+            # N6 (2026-11-05): an empty series answers 404 like ohlcv itself —
+            # honest absence, not a zeroed envelope.
+            if status == 404:
+                assert "No OHLCV data" in str(body.get("detail", ""))
+                pytest.skip(f"zero-state store: {symbol}/{timeframe} holds no bars "
+                            "(N6 unified 404) — real-data provenance acceptance "
+                            "requires accumulated bars")
             assert status == 200, f"{symbol}/{timeframe} provenance HTTP {status}: {body}"
             coverage = body.get("coverage", {})
             for key in ("first_bar", "last_bar", "bar_count", "expected_bars", "missing_bars"):

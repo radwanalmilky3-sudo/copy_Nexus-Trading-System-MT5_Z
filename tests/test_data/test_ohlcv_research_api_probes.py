@@ -183,6 +183,10 @@ def test_real_backfill_runs_never_overstate_inserted_via_api():
             status, body = _api("GET", f"{DATA_BASE}/api/data/ohlcv/{symbol}/{timeframe}/provenance")
         except ConnectionError as exc:
             pytest.skip(f"nexus-data not reachable at {DATA_BASE}: {exc}")
+        # N6 (2026-11-05): an empty series answers 404 — nothing to overstate.
+        if status == 404:
+            assert "No OHLCV data" in str(body.get("detail", ""))
+            continue
         assert status == 200, f"{symbol}/{timeframe} provenance HTTP {status}: {body}"
         runs = (body.get("recent_backfill_runs") or [])
         bad = [r for r in runs

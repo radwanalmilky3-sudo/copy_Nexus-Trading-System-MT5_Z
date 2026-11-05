@@ -820,6 +820,16 @@ async def get_order_flow(symbol: str, bars: int = Query(default=20, ge=5, le=100
         except Exception:
             bars_data = []
 
+    # N6 unification (2026-11-05): per-symbol lookups answer 404 when the
+    # service holds nothing for the symbol — same semantics as
+    # /api/data/ohlcv/{symbol}/{timeframe}. A 200 zero-wrap could be misread
+    # as "market is flat"; absence must be explicit (honesty UI-05/UI-06:
+    # missing data is never silently zeroed). Consumers already degrade
+    # safely: nexus_agents analysis_tools falls back to its own zero
+    # envelope on any non-200.
+    if not bars_data:
+        raise HTTPException(404, f"No order-flow data for {symbol}")
+
     bid_volume = 0.0
     ask_volume = 0.0
     spreads: list[float] = []
@@ -1008,9 +1018,16 @@ async def get_ohlcv_provenance(
             datetime.fromisoformat(value.replace("Z", "+00:00"))
         except ValueError as exc:
             raise HTTPException(400, f"{name} must be an ISO 8601 timestamp") from exc
-    return await data_store.query_ohlcv_provenance(
+    result = await data_store.query_ohlcv_provenance(
         symbol, timeframe, start=start, end=end, limit=limit,
     )
+    # N6 unification (2026-11-05): an empty series answers 404 like
+    # /api/data/ohlcv/{symbol}/{timeframe} — coverage metadata for a series
+    # that holds nothing is stated as absence, not as a zeroed envelope.
+    coverage = result.get("coverage") or {}
+    if not int(coverage.get("bar_count") or 0):
+        raise HTTPException(404, f"No OHLCV data for {symbol}/{timeframe}")
+    return result
 
 
 # ── Point-in-time (PIT) research reads (Phase 2, env-flagged) ────────────────
