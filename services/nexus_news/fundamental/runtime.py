@@ -373,19 +373,39 @@ class FundamentalRuntime:
         if not self.internal_secret:
             log.error("fundamental.persistence_disabled", reason="NEXUS_INTERNAL_API_SECRET missing")
             return False
-        try:
-            resp = await self._client.post(
-                self.data_url + path,
-                json=payload,
-                headers={"X-Nexus-Internal-Secret": self.internal_secret},
-            )
-            if resp.status_code >= 400:
-                log.warning("fundamental.persistence_failed", path=path, status=resp.status_code, body=resp.text[:300])
-                return False
-            return True
-        except Exception as exc:
-            log.warning("fundamental.persistence_unavailable", path=path, error=str(exc))
-            return False
+        # Boot-order race (seen 2026-11-06): this service starts in parallel
+        # with nexus-data, so the first bootstrap persists can hit
+        # "All connection attempts failed" while :9001 is still binding.
+        # A connection error is transient by definition — retry it a bounded
+        # number of times (~8s total). HTTP >=400 responses are NOT retried:
+        # they are real rejections and must fail exactly as before.
+        attempts = 5
+        backoff_sec = 2.0
+        last_error: Exception | None = None
+        for attempt in range(1, attempts + 1):
+            try:
+                resp = await self._client.post(
+                    self.data_url + path,
+                    json=payload,
+                    headers={"X-Nexus-Internal-Secret": self.internal_secret},
+                )
+                if resp.status_code >= 400:
+                    log.warning("fundamental.persistence_failed", path=path, status=resp.status_code, body=resp.text[:300])
+                    return False
+                return True
+            except Exception as exc:
+                last_error = exc
+                if attempt < attempts:
+                    log.warning(
+                        "fundamental.persistence_retry",
+                        path=path,
+                        attempt=attempt,
+                        next_backoff_sec=backoff_sec,
+                        error=str(exc),
+                    )
+                    await asyncio.sleep(backoff_sec)
+        log.warning("fundamental.persistence_unavailable", path=path, error=str(last_error))
+        return False
 
     def _set_source_health(
         self,
