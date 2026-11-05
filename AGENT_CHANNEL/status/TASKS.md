@@ -7,3 +7,4 @@
 | T-003 | استعادة خادم LLM لخدمة 9004 | ZAI | done 2026-11-05: مزوّد GLM-4.5-Flash السحابي بمفتاح من المالك (429 لحظي عند الإقلاع يزول ذاتيًا)، الأسطول أعيد إقلاعه 9/9 | توجيه المالك في المحادثة |
 | T-004 | قرارات المالك المفتوحة: D4–D7، M3 ثيم ذهبي، ترقية Next 15/16 + zod v4 | OWNER | blocked | بانتظار المالك |
 | T-005 | تشغيل القناة من جهاز المالك عبر البرومبت الموحد + ACK أول رسالة | OPENCODE | in_progress | MSG-20261105-1350-Z001 |
+| T-006 | دورة TC-SEC-06: فتح pip-audit المحجوب بيئيًا وتصفير الثغرات — إزالة python-jose/ecdsa (ميتان بلا إصلاح) + ترقية عائلة langchain/langgraph 1.x + mlflow 3.18 + transformers 5.22 + pyarrow 26 + تحديث requirements.txt + إعادة إقلاع الأسطول | ZAI | **done 2026-11-05**: 85 ثغرة في 12 حزمة → **صفر ثغرات** (238 حزمة مفحوصة)؛ FinBERT مُتحقق حيًا على transformers 5.22؛ pytest 1912 + node 216/216 + Playwright 5/5 خضراء | أدلة: logs/pip_audit_tc_sec_06{,_after}.json + qa/evidence |

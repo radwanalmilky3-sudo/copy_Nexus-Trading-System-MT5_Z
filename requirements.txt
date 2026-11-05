@@ -12,7 +12,8 @@ python-multipart>=0.0.12
 orjson>=3.10.0,<4.0
 
 # ── Auth & security ─────────────────────────────────────────────────────────
-python-jose[cryptography]>=3.3.0,<4.0
+# python-jose أُزيل 2026-11-05 (TC-SEC-06): غير مستورد إطلاقًا — المصادقة تُنفَّذ حصريًا بـ PyJWT
+# وإزالته قضى على PYSEC-2026-4298 + ecdsa PYSEC-2026-1325 (كلاهما بلا إصلاح متاح)
 passlib[bcrypt]>=1.7.4,<2.0
 PyJWT>=2.9.0,<3.0          # nexus_api/middleware/auth.py يستورد jwt مباشرة
 
@@ -38,15 +39,17 @@ scikit-learn>=1.5.0,<2.0
 xgboost>=2.1.0,<3.0
 lightgbm>=4.5.0,<5.0
 torch>=2.4.0,<3.0
-transformers>=4.44.0,<5.0
+transformers>=5.22.1,<6.0   # TC-SEC-06 2026-11-05: 5.x يغلق PYSEC-2025-217/2026-2288/2289/2290/3929 (FinBERT pipeline متوافق)
+pyarrow>=26.0.1,<27.0      # TC-SEC-06: PYSEC-2026-113 — تابِع mlflow غير مستورد مباشرة
 hmmlearn>=0.3.0,<1.0
 stable-baselines3>=2.3.0,<3.0
 gymnasium>=0.29.0,<1.0
 
 # ── LLM & agents ────────────────────────────────────────────────────────────
-langchain>=0.3.0,<1.0
-langgraph>=0.2.0,<1.0
-langchain-openai>=0.2.0,<1.0    # local Ollama/OpenAI-compatible client
+# عائلة langchain ترقيت إلى 1.x (TC-SEC-06 2026-11-05): StateGraph/END/ChatPromptTemplate أسماء مستقرة
+langchain>=1.4.9,<2.0
+langgraph>=1.2.20,<2.0
+langchain-openai>=1.7.4,<2.0    # local Ollama/OpenAI-compatible client
 
 # ── Brokers & market data ───────────────────────────────────────────────────
 MetaTrader5>=5.0.4200
@@ -55,7 +58,7 @@ ccxt>=4.4.0,<5.0
 yfinance>=0.2.43,<1.0
 
 # ── Experiment tracking & orchestration ──────────────────────────────────────
-mlflow>=2.16.0,<3.0
+mlflow>=3.18.0,<4.0         # TC-SEC-06: 3.x يغلق 30+ ثغرة mlflow حتى CVE-2026-53995 (إصلاح 3.17.2)
 prefect>=3.0.0,<4.0
 
 # ── Observability ────────────────────────────────────────────────────────────
