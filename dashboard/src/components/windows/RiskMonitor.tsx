@@ -138,6 +138,16 @@ export function RiskMonitor({ className = '' }: { className?: string }) {
   const [resetting, setResetting] = React.useState(false);
   const [resetOk, setResetOk] = React.useState(false);
   const [resetError, setResetError] = React.useState<string | null>(null);
+  // Two-step armed state — resetting the day clears every breaker, counter,
+  // anti-tilt and pause in one shot, so a single stray click must not do it.
+  const [resetArmed, setResetArmed] = React.useState(false);
+  const resetArmTimer = React.useRef<number | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (resetArmTimer.current !== null) window.clearTimeout(resetArmTimer.current);
+    };
+  }, []);
 
   const loadTradeLimit = React.useCallback(() => {
     // Relative URL — proxied same-origin to the gateway by next.config.js,
@@ -187,6 +197,31 @@ export function RiskMonitor({ className = '' }: { className?: string }) {
       setResetting(false);
     }
   };
+
+  const disarmReset = React.useCallback(() => {
+    if (resetArmTimer.current !== null) {
+      window.clearTimeout(resetArmTimer.current);
+      resetArmTimer.current = null;
+    }
+    setResetArmed(false);
+  }, []);
+
+  const requestResetDay = React.useCallback(() => {
+    if (resetting) return;
+    if (!resetArmed) {
+      // First click — arm only. The button reverts automatically so the armed
+      // state can never linger and fire later by accident.
+      setResetArmed(true);
+      if (resetArmTimer.current !== null) window.clearTimeout(resetArmTimer.current);
+      resetArmTimer.current = window.setTimeout(() => {
+        resetArmTimer.current = null;
+        setResetArmed(false);
+      }, 5000);
+      return;
+    }
+    disarmReset();
+    void resetDay();
+  }, [resetArmed, resetting, disarmReset]);
 
   const limitHit = tradeLimit && tradeLimit.max > 0 && tradeLimit.count >= tradeLimit.max;
 
@@ -249,20 +284,27 @@ export function RiskMonitor({ className = '' }: { className?: string }) {
             </div>
             <button
               type="button"
-              onClick={resetDay}
+              onClick={requestResetDay}
               disabled={resetting}
-              title="Re-basea el día: limpia pérdida diaria, contadores, breakers, anti-tilt, bloqueos direccionales y pausa ergódica"
+              title={
+                resetArmed
+                  ? 'اضغط مجددًا خلال 5 ثوان لتأكيد تصفير اليوم'
+                  : 'Re-basea el día: limpia pérdida diaria, contadores, breakers, anti-tilt, bloqueos direccionales y pausa ergódica — تنتظر ضغطة ثانية للتأكيد'
+              }
+              aria-label={resetArmed ? 'اضغط مجددًا لتأكيد تصفير اليوم' : 'تصفير اليوم — يتطلب تأكيدًا بضغطة ثانية'}
               className={cn(
                 'shrink-0 flex items-center gap-1 rounded px-2 py-1 text-[10px] font-bold font-mono border transition-all',
                 resetOk
                   ? 'bg-neon-green/15 border-neon-green/40 text-neon-green'
-                  : violatedBreakers.length > 0
-                    ? 'bg-neon-red/20 border-neon-red/50 text-neon-red hover:bg-neon-red/30'
-                    : 'bg-neon-gold/20 border-neon-gold/50 text-neon-gold hover:bg-neon-gold/30',
+                  : resetArmed
+                    ? 'bg-neon-red/40 border-neon-red text-white animate-pulse'
+                    : violatedBreakers.length > 0
+                      ? 'bg-neon-red/20 border-neon-red/50 text-neon-red hover:bg-neon-red/30'
+                      : 'bg-neon-gold/20 border-neon-gold/50 text-neon-gold hover:bg-neon-gold/30',
               )}
             >
               <RotateCcw className={cn('h-3 w-3', resetting && 'animate-spin')} />
-              {resetOk ? 'OK' : resetting ? '…' : 'Reset Todo'}
+              {resetOk ? 'OK' : resetting ? '…' : resetArmed ? 'تأكيد؟' : 'Reset Todo'}
             </button>
           </div>
         )}

@@ -7,7 +7,7 @@
  */
 
 import { useCallback, useEffect, useState } from 'react';
-import { Cable, Copy, KeyRound, RefreshCw, Trash2, TriangleAlert } from 'lucide-react';
+import { Cable, Copy, KeyRound, RefreshCw, Trash2, TriangleAlert, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import VirtualTable, { type VirtualColumn } from '@/components/shared/VirtualTable';
 
@@ -125,6 +125,9 @@ export default function EaBridgePage() {
   const [label, setLabel] = useState('MT5 Terminal');
   const [creating, setCreating] = useState(false);
   const [revokingId, setRevokingId] = useState('');
+  // Destructive-action guard — revoking an active token cuts the live MT5
+  // bridge immediately, so it always waits for an explicit confirmation.
+  const [pendingRevoke, setPendingRevoke] = useState<EaToken | null>(null);
   const [newToken, setNewToken] = useState('');
   const [copied, setCopied] = useState(false);
 
@@ -177,7 +180,13 @@ export default function EaBridgePage() {
       setError(err instanceof Error ? err.message : 'تعذر إلغاء التوكن');
     } finally {
       setRevokingId('');
+      setPendingRevoke(null);
     }
+  };
+
+  const confirmRevoke = () => {
+    if (!pendingRevoke || revokingId) return;
+    void revokeToken(pendingRevoke.token_id);
   };
 
   const copyToken = async () => {
@@ -311,7 +320,7 @@ export default function EaBridgePage() {
                     {t.active && (
                       <button
                         type="button"
-                        onClick={() => void revokeToken(t.token_id)}
+                        onClick={() => setPendingRevoke(t)}
                         disabled={revokingId === t.token_id}
                         className="flex items-center gap-1 rounded border border-neon-red/30 px-2 py-1 text-[10px] text-neon-red hover:bg-neon-red/10 disabled:opacity-50"
                       >
@@ -351,6 +360,63 @@ export default function EaBridgePage() {
         وضعه التوكن في المدخل <code dir="ltr" className="font-mono">InpToken</code>. التفاصيل في
         <code dir="ltr" className="font-mono"> docs/EA_BRIDGE.md</code>.
       </p>
+
+      {/* Confirm revoke — destructive action guard */}
+      {pendingRevoke && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-bg-overlay animate-fade-in"
+          role="dialog"
+          aria-modal="true"
+          aria-label="تأكيد إلغاء توكن الإكسبيرت"
+          onClick={() => { if (!revokingId) setPendingRevoke(null); }}
+        >
+          <div
+            className="relative w-80 rounded-xl border border-neon-red/60 bg-bg-card p-5 shadow-lg shadow-neon-red/20 animate-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => { if (!revokingId) setPendingRevoke(null); }}
+              className="absolute top-3 left-3 text-text-muted hover:text-text-primary transition-colors"
+              aria-label="إغلاق"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div className="flex items-center gap-2 mb-3">
+              <TriangleAlert className="h-5 w-5 text-neon-red" />
+              <h3 className="text-sm font-bold text-text-primary">إلغاء توكن الإكسبيرت؟</h3>
+            </div>
+            <p className="text-xs leading-relaxed text-text-secondary mb-2">
+              سيلغي التوكن
+              <span className="mx-1 font-semibold text-text-primary">«{pendingRevoke.label}»</span>
+              فورًا، وسينقطع اتصال طرف MetaTrader 5 المرتبط به حتى وضع توكن جديد في المدخل
+              <code dir="ltr" className="mx-0.5 font-mono">InpToken</code>.
+            </p>
+            <p className="text-[11px] leading-relaxed text-text-muted mb-4">
+              الأوامر المعلّقة في الطابور ستبقى بلا مُطالبة، ولا يمكن استرجاع هذا التوكن بعد الإلغاء —
+              أنشئ توكنًا جديدًا لإعادة ربط الطرف.
+            </p>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setPendingRevoke(null)}
+                disabled={revokingId !== ''}
+                className="flex-1 rounded-lg py-2.5 text-xs font-medium border border-border-primary text-text-secondary hover:text-text-primary transition-colors disabled:opacity-50"
+              >
+                تراجع
+              </button>
+              <button
+                type="button"
+                onClick={confirmRevoke}
+                disabled={revokingId !== ''}
+                className="flex-1 rounded-lg py-2.5 text-xs font-bold border border-neon-red bg-neon-red/20 text-neon-red hover:bg-neon-red/30 transition-colors disabled:cursor-wait disabled:opacity-60"
+              >
+                {revokingId ? 'جارٍ الإلغاء…' : 'نعم، ألغِ التوكن'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -225,6 +225,15 @@ export default function ActivePositions() {
 
   const onClose = async (pos: LocalPosition, e: React.MouseEvent) => {
     e.stopPropagation();
+    // Destructive action guard — closing a position sends a live order to the
+    // executor immediately; a misclick must not be able to do it in one step.
+    if (
+      !window.confirm(
+        `إغلاق مركز ${pos.side} ${pos.symbol} (#${pos.id}) بسعر الدخول ${pos.entry_price.toFixed(2)} والربح الحالي ${pos.pnl_usd >= 0 ? '+' : ''}$${pos.pnl_usd.toFixed(2)}؟ سيُرسَل أمر الإغلاق فورًا إلى خدمة التنفيذ.`,
+      )
+    ) {
+      return;
+    }
     setClosingId(pos.id);
     try {
       await apiClient.closePosition(pos.id);
