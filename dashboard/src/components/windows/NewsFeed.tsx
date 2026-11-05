@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { CalendarClock, Search, ShieldCheck } from 'lucide-react';
 import NeonCard from '../shared/NeonCard';
 import { useDashboardStore } from '@/stores/dashboardStore';
 import { apiClient } from '@/lib/api-client';
 import type { CalendarEvent, NewsItem } from '@/types/trading';
-import type { BlackoutDTO } from '@/types/fundamental';
+import type { BlackoutDTO, NewsTickerItemDTO } from '@/types/fundamental';
 import {
   filterNewsItems,
   impactValue,
@@ -35,6 +36,9 @@ function ago(iso: string, now: number) {
   return h < 24 ? `منذ ${h} س` : `منذ ${Math.floor(h / 24)} يوم`;
 }
 
+function s(v: unknown): string { return v == null ? '—' : String(v); }
+function num(v: unknown): string { return typeof v === 'number' && Number.isFinite(v) ? v.toFixed(1) : '—'; }
+
 const STATE_MESSAGE: Record<string, string> = {
   loading: 'جارٍ تحميل البيانات الحقيقية…',
   empty: 'اكتمل آخر مسح للأخبار دون نتائج. الغياب لا يُعامل كحالة جاهزية ولا كبيانات تجريبية.',
@@ -42,10 +46,18 @@ const STATE_MESSAGE: Record<string, string> = {
   offline: 'تعذر الاتصال بالمصدر. لا توجد بيانات تجريبية بديلة.',
 };
 
+type ExtraNews = {
+  topic?: unknown;
+  novelty_score?: unknown;
+  asset_relevance?: Record<string, unknown>;
+  is_commercial_noise?: unknown;
+};
+
 export default function NewsFeed() {
   const symbol = useDashboardStore((s) => s.symbol);
   const [news, setNews] = useState<NewsItem[]>([]);
   const [calendar, setCalendar] = useState<CalendarEvent[]>([]);
+  const [ticker, setTicker] = useState<NewsTickerItemDTO[]>([]);
   const [blackout, setBlackout] = useState<BlackoutDTO>({ state: 'unavailable' });
   const [envelope, setEnvelope] = useState<Record<string, unknown> | null>(null);
   const [fetchFailed, setFetchFailed] = useState(false);
@@ -54,6 +66,8 @@ export default function NewsFeed() {
   const [period, setPeriod] = useState<PeriodFilter>('ALL');
   const [symbolFilter, setSymbolFilter] = useState<'ALL' | 'SYMBOL'>('ALL');
   const [sourceFilter, setSourceFilter] = useState<string>('ALL');
+  const [query, setQuery] = useState('');
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [now, setNow] = useState(Date.now());
 
   useEffect(() => {
@@ -82,6 +96,7 @@ export default function NewsFeed() {
         }
         setNews(data.news as unknown as NewsItem[]);
         setCalendar(data.calendar as unknown as CalendarEvent[]);
+        setTicker(Array.isArray(data.ticker) ? (data.ticker as NewsTickerItemDTO[]) : []);
         setBlackout(data.blackout);
         setEnvelope(data as unknown as Record<string, unknown>);
         setFetchFailed(false);
@@ -112,6 +127,13 @@ export default function NewsFeed() {
     () => filterNewsItems(news, { impact, period, symbol, symbolFilter, source: sourceFilter, now }),
     [news, impact, period, symbol, symbolFilter, sourceFilter, now],
   );
+  const searchedNews = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return filteredNews;
+    return filteredNews.filter(
+      (x) => x.headline.toLowerCase().includes(q) || String(x.source).toLowerCase().includes(q),
+    );
+  }, [filteredNews, query]);
   const filteredCalendar = useMemo(
     () => calendar.filter(
       (e) => (impact === 'ALL' || impactValue(e.impact) === impact)
@@ -119,10 +141,15 @@ export default function NewsFeed() {
     ),
     [calendar, impact, sourceFilter],
   );
+  const selected = useMemo(
+    () => searchedNews.find((x) => x.id === selectedId) ?? searchedNews[0] ?? null,
+    [searchedNews, selectedId],
+  );
+  const selectedExtra = (selected ?? null) as (NewsItem & ExtraNews) | null;
 
   return (
     <div dir="rtl">
-      <NeonCard title={`الأخبار والتقويم — ${symbol}`} glow="cyan" noPadding className="h-full flex flex-col">
+      <NeonCard title={`الأخبار والتقويم — الشاشة الموحدة (${symbol})`} glow="cyan" noPadding className="h-full flex flex-col">
         {blackout.state !== 'clear' && (
           <div className="border-b border-amber-400 bg-amber-50 px-4 py-3 text-xs font-semibold text-amber-950">
             حالة الأمان: {blackout.reason_ar ?? 'حالة التقويم غير واضحة؛ فتح تعرّض جديد محظور احترازيًا.'}
@@ -166,6 +193,16 @@ export default function NewsFeed() {
             {sourceOptions.map(src => <option key={src} value={src}>{src}</option>)}
           </select>
           {sourceFilter !== 'ALL' && <button onClick={() => setSourceFilter('ALL')} className="px-2 py-1 border border-sky-200 bg-white text-sky-900">إلغاء التصفية</button>}
+          <span className="mr-auto flex items-center gap-2 border border-sky-200 bg-white px-2 py-1">
+            <Search className="h-3.5 w-3.5 text-sky-600" />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="بحث في الأخبار…"
+              className="w-44 bg-transparent text-xs outline-none"
+              aria-label="بحث في الأخبار"
+            />
+          </span>
         </div>
 
         <div className="flex flex-wrap gap-3 border-b border-border-primary/20 px-3 py-1.5 text-[10px] text-slate-600">
@@ -194,33 +231,109 @@ export default function NewsFeed() {
           </div>
         )}
 
-        {loaded && (viewState === 'ready' || viewState === 'stale' || viewState === 'empty' || viewState === 'unavailable') && <div className="grid gap-3 p-3 xl:grid-cols-2">
-          <section className="border border-sky-200 bg-white text-slate-900">
-            <h3 className="border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950">الأخبار الحقيقية</h3>
-            <div className="max-h-[520px] divide-y divide-sky-100 overflow-y-auto">
-              {filteredNews.length === 0 ? <div className="p-4 text-xs text-slate-600">لا توجد أخبار مطابقة للفلاتر.</div> : filteredNews.map(item => (
-                <article key={item.id} className="p-3">
-                  <div className="flex items-start justify-between gap-3"><h4 className="text-xs font-semibold leading-5">{item.headline}</h4><span className="shrink-0 border border-sky-200 px-1.5 py-0.5 text-[9px]">{impactAr(item.impact)}</span></div>
-                  <div className="mt-2 flex flex-wrap gap-2 text-[10px] text-slate-600"><span>{item.source}</span><span>•</span><span>{ago(item.timestamp, now)}</span><span>•</span><span>{sentimentAr(item.sentiment)}</span><span>•</span><span>الأصل: {item.data_origin ?? 'REAL'}</span></div>
-                  <div className="mt-1 text-[10px] text-slate-500">FinBERT: {item.finbert_state === 'available' && typeof item.finbert_score === 'number' ? item.finbert_score.toFixed(3) : 'غير متاح'} — النبرة لا تساوي اتجاه الذهب.</div>
-                </article>
-              ))}
-            </div>
-          </section>
+        {loaded && (viewState === 'ready' || viewState === 'stale' || viewState === 'empty' || viewState === 'unavailable') && (
+          <div className="space-y-3 p-3">
+            <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
+              <section className="border border-sky-200 bg-white text-slate-900">
+                <h3 className="border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950">الأخبار الحقيقية</h3>
+                <div className="max-h-[460px] divide-y divide-sky-100 overflow-y-auto">
+                  {searchedNews.length === 0 ? <div className="p-4 text-xs text-slate-600">لا توجد أخبار مطابقة للفلاتر أو البحث.</div> : searchedNews.map(item => {
+                    const extra = item as NewsItem & ExtraNews;
+                    const rel = extra.asset_relevance;
+                    const xau = rel?.XAUUSD;
+                    const btc = rel?.BTCUSD;
+                    const selectedNow = selected?.id === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => setSelectedId(item.id)}
+                        className={`block w-full p-3 text-right transition ${selectedNow ? 'bg-sky-50' : 'hover:bg-sky-50/60'}`}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <h4 className="text-xs font-semibold leading-5">{item.headline}</h4>
+                          <span className="shrink-0 border border-sky-200 px-1.5 py-0.5 text-[9px]">{impactAr(item.impact)}</span>
+                        </div>
+                        <div className="mt-2 flex flex-wrap gap-2 text-[10px] text-slate-600">
+                          <span>{item.source}</span><span>•</span><span>{ago(item.timestamp, now)}</span><span>•</span><span>{sentimentAr(item.sentiment)}</span><span>•</span><span>الأصل: {item.data_origin ?? 'REAL'}</span>
+                          {extra.is_commercial_noise === true && <span className="rounded bg-amber-100 px-1.5 py-0.5 text-amber-900">مستبعد من التحليل المالي</span>}
+                        </div>
+                        <div className="mt-1 flex flex-wrap gap-2 text-[10px] text-slate-500">
+                          <span>FinBERT: {item.finbert_state === 'available' && typeof item.finbert_score === 'number' ? item.finbert_score.toFixed(3) : 'غير متاح'} — النبرة لا تساوي اتجاه الذهب.</span>
+                          {extra.topic != null && <span>• الموضوع: {s(extra.topic)}</span>}
+                          {extra.novelty_score != null && <span>• الجِدّة: {num(extra.novelty_score)}</span>}
+                          {typeof xau === 'number' && <span>• صلة XAU: {num(xau)}</span>}
+                          {typeof btc === 'number' && <span>• صلة BTC: {num(btc)}</span>}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
 
-          <section className="border border-sky-200 bg-white text-slate-900">
-            <h3 className="border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950">التقويم الاقتصادي</h3>
-            <div className="max-h-[520px] divide-y divide-sky-100 overflow-y-auto">
-              {filteredCalendar.length === 0 ? <div className="p-4 text-xs text-slate-600">لا توجد أحداث مطابقة للفلاتر.</div> : filteredCalendar.map(event => (
-                <article key={event.id} className="p-3">
-                  <div className="flex items-start justify-between gap-3"><h4 className="text-xs font-semibold">{event.event_name}</h4><span className="border border-sky-200 px-1.5 py-0.5 text-[9px]">{impactAr(event.impact)}</span></div>
-                  <div className="mt-2 grid grid-cols-3 gap-2 text-[10px]"><div>الفعلي: <b>{event.actual ?? '—'}</b></div><div>المتوقع: <b>{event.forecast ?? '—'}</b></div><div>السابق: <b>{event.previous ?? '—'}</b></div></div>
-                  <div className="mt-2 text-[10px] text-slate-600">{event.currency} • {new Date(event.timestamp).toLocaleString('ar')} • {event.source ?? 'مصدر تقويم'} • {event.data_origin ?? 'REAL'}</div>
-                </article>
-              ))}
+              <section className="border border-sky-200 bg-white text-slate-900">
+                <h3 className="border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950">تفاصيل الخبر المختار</h3>
+                {!selected ? <div className="p-5 text-xs text-slate-600">اختر خبرًا لعرض التفاصيل.</div> : (
+                  <div className="space-y-4 p-4">
+                    <div>
+                      <div className="text-[11px] text-slate-500">ماذا حدث؟</div>
+                      <div className="mt-1 text-sm font-semibold leading-7 text-slate-900">{selected.headline}</div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div className="border border-sky-100 bg-sky-50 p-2"><span className="text-slate-500">المصدر</span><div className="mt-1 font-medium">{selected.source}</div></div>
+                      <div className="border border-sky-100 bg-sky-50 p-2"><span className="text-slate-500">الموضوع</span><div className="mt-1 font-medium">{s(selectedExtra?.topic)}</div></div>
+                      <div className="border border-sky-100 bg-sky-50 p-2"><span className="text-slate-500">FinBERT</span><div className="mt-1 font-medium">{selected.finbert_state === 'available' && typeof selected.finbert_score === 'number' ? `${selected.finbert_state} · ${selected.finbert_score.toFixed(3)}` : s(selected.finbert_state ?? 'غير متاح')}</div></div>
+                      <div className="border border-sky-100 bg-sky-50 p-2"><span className="text-slate-500">أصل البيانات</span><div className="mt-1 font-medium">{s(selected.data_origin ?? 'REAL')}</div></div>
+                    </div>
+                    <div className="border border-sky-200 bg-white p-3 text-xs leading-6 text-slate-700"><b>قاعدة الأمان:</b> المشاعر ليست اتجاهًا للذهب. اتجاه الأصل لا يُعرض إلا من محرك Asset Impact الحتمي.</div>
+                  </div>
+                )}
+              </section>
             </div>
-          </section>
-        </div>}
+
+            <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
+              <section className="border border-sky-200 bg-white text-slate-900">
+                <h3 className="flex items-center gap-2 border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950"><CalendarClock className="h-4 w-4" /> التقويم الاقتصادي</h3>
+                <div className="max-h-[420px] overflow-auto">
+                  <table className="w-full min-w-[720px] text-right text-xs">
+                    <thead className="sticky top-0 bg-sky-50 text-sky-900">
+                      <tr>{['الحدث','العملة','الأهمية','الفعلي','المتوقع','السابق','الوقت','المصدر'].map(x => <th key={x} className="px-3 py-2 font-semibold">{x}</th>)}</tr>
+                    </thead>
+                    <tbody>
+                      {filteredCalendar.length === 0 ? <tr><td colSpan={8} className="p-4 text-center text-slate-600">لا توجد أحداث مطابقة للفلاتر.</td></tr> : filteredCalendar.map(event => (
+                        <tr key={event.id} className="border-t border-sky-100">
+                          <td className="px-3 py-2 font-medium">{event.event_name}</td>
+                          <td className="px-3 py-2">{event.currency}</td>
+                          <td className="px-3 py-2">{impactAr(event.impact)}</td>
+                          <td className="px-3 py-2"><b>{event.actual ?? '—'}</b></td>
+                          <td className="px-3 py-2">{event.forecast ?? '—'}</td>
+                          <td className="px-3 py-2">{event.previous ?? '—'}</td>
+                          <td className="px-3 py-2">{new Date(event.timestamp).toLocaleString('ar')}</td>
+                          <td className="px-3 py-2">{event.source ?? 'مصدر تقويم'} • {event.data_origin ?? 'REAL'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section className="border border-sky-200 bg-white text-slate-900">
+                <h3 className="flex items-center gap-2 border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950"><ShieldCheck className="h-4 w-4" /> الشريط النشط (تنبيهات عالية الأهمية)</h3>
+                <div className="max-h-[420px] divide-y divide-sky-100 overflow-y-auto">
+                  {ticker.length === 0 ? <div className="p-4 text-xs text-slate-600">لا توجد تنبيهات نشطة.</div> : ticker.slice(0, 20).map(x => (
+                    <div key={x.ticker_item_id} className="p-3">
+                      <div className="flex flex-wrap items-center gap-2 text-[10px]">
+                        <span className="rounded bg-sky-100 px-1.5 py-0.5 font-bold text-sky-800">{s(x.severity).toUpperCase()}</span>
+                        {x.asset_id && <span>{x.asset_id}</span>}
+                        <span className="text-slate-500">{s(x.status)}</span>
+                      </div>
+                      <div className="mt-1 text-xs leading-5 text-slate-800">{x.headline_ar}</div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+        )}
       </NeonCard>
     </div>
   );

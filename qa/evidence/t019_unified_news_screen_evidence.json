@@ -1,0 +1,59 @@
+{
+  "task": "T-019",
+  "title": "توحيد شاشة الأخبار — شاشة واحدة بدل الجداول والشاشات المتعددة",
+  "date": "2026-11-05 21:00+03",
+  "request": "المالك: «يوجد العديد من جداول الاخبار وشاشات متعدده نريد شاشه واحده»",
+  "before": {
+    "news_screens_count": 4,
+    "locations": [
+      "تبويب الأخبار الرئيسي (NewsFeed): جدولا أخبار + تقويم مع فلاتر",
+      "التحليل الأساسي ← قسم الأخبار والتقويم (NewsIntelligencePanel): جدول أخبار ثالث مكرر + بحث + تفاصيل + تقويم جدولي + شريط نشط",
+      "GenAIBrief في تبويب الذكاء (يبقى — ملخص AI وليس جدول أخبار)",
+      "شريط الأخبار المتحرك NewsTickerBar + لوحة تحكمه في الإعدادات (يبقيان — شريط محيطي وإعدادات، ليستا شاشة عرض)"
+    ]
+  },
+  "after": {
+    "unified_screen": "تبويب الأخبار الرئيسي (NewsFeed) — الشاشة الواحدة",
+    "sections": [
+      "الأخبار الحقيقية (صفوف قابلة للنقر: التأثير/المصدر/الزمن/النبرة/FinBERT/الموضوع/الجِدّة/صلة XAU وBTC/شارة ضوضاء تجارية)",
+      "تفاصيل الخبر المختار (ماذا حدث/المصدر/الموضوع/FinBERT/أصل البيانات + قاعدة الأمان)",
+      "التقويم الاقتصادي (جدول كامل 8 أعمدة برأس مثبت، يخضع لفلاتر التأثير والمصدر)",
+      "الشريط النشط (تنبيهات عالية الأهمية)"
+    ],
+    "controls": "فلاتر التأثير/الفترة/الرمز/المصدر (كما هي) + بحث نصي جديد في الأخبار",
+    "removed": [
+      "NewsIntelligencePanel.tsx (حُذف نهائياً — 117 سطراً)",
+      "قسم «الأخبار والتقويم» من FundamentalWorkspace (التبويب + الاستيراد + الاستخدام)"
+    ]
+  },
+  "convergence": {
+    "note": "تقارب سلمي: جلسة موازية نفذت جزء الدمج (حذف NewsIntelligencePanel.tsx + تنظيف FundamentalWorkspace) بينما كانت إعادة كتابة NewsFeed.tsx جارية في هذه الجلسة",
+    "verification": "التحقق البيني أظهر صفر تعارض — تعديلات الجلسة الموازية نظيرة تماماً وخالية من المراجع المعلقة (refs-check: لا مطابقات)"
+  },
+  "verification": {
+    "build": "npm run build PASS (بناء إنتاجي كامل)",
+    "node_tests": "216/216 pass (node --test tests/*.test.mjs من dashboard/)",
+    "live_restart": "إعادة إقلاع الداشبورد وحدها عبر المشرف التلقائي (TERM لnext-server القديم pid=482 → إحياء تلقائي pid=1077) — الخدمات التسع لم تُلمس",
+    "bundle_served": "نص «الشاشة الموحدة» موجود في chunks المُخدمة (static + server)",
+    "playwright_ui": {
+      "script": "scripts/verify_news_unified.py",
+      "result": "NEWS_UNIFIED PASS",
+      "checks": {
+        "unified_title": true,
+        "section_news": true,
+        "section_details": true,
+        "section_calendar": true,
+        "section_ticker": true,
+        "search_present": true,
+        "search_filters": true,
+        "search_restore": true,
+        "detail_follows_selection": "NO_ITEMS (التغذية الحية فارغة الآن — الحالة الصادقة مسموحة ولا تُلفّق بيانات)",
+        "fundamental_news_tab_removed": true,
+        "fundamental_overview_kept": true
+      }
+    },
+    "heal_after": "HEAL_STATUS redis=PONG services=9/9 dash=307 proxy=307 backup=OK action=[none]"
+  },
+  "verdict": "PASS — شاشة أخبار واحدة في التبويب المخصص، صفر ازدواجية، العقود الصادقة (news-presentation.ts) لم تُمَس",
+  "screenshots": "/tmp/news_shots/ (news_unified.png, news_selected.png, fundamental_tabs.png)"
+}

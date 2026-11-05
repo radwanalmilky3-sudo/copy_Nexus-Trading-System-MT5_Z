@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { apiClient } from '@/lib/api-client';
 import { deriveDomainContract } from '@/lib/fundamental-contract';
 import type { DomainDTO, DriverDTO, GoldOverviewDTO, SourceHealthDTO } from '@/types/fundamental';
-import NewsIntelligencePanel from './NewsIntelligencePanel';
 import LocalAIAnalystPanel from './LocalAIAnalystPanel';
 import MultiAssetImpactPanel from './MultiAssetImpactPanel';
 import FundamentalCharts from './FundamentalCharts';
@@ -17,7 +16,6 @@ const TABS = [
   ['cross_asset', 'الأسواق المترابطة'],
   ['geopolitical', 'الجيوسياسة والمخاطر العالمية'],
   ['flows', 'التدفقات والتمركزات'],
-  ['news', 'الأخبار والتقويم'],
   ['learning', 'التعلم والنتائج'],
   ['local_ai', 'المحلل المحلي AI'],
 ] as const;
@@ -267,8 +265,6 @@ export default function FundamentalWorkspace() {
         </>}
 
         {(['macro','monetary','cross_asset','geopolitical','flows'] as Tab[]).includes(tab) && <DomainView domain={domain} />}
-
-        {tab === 'news' && <NewsIntelligencePanel />}
 
         {tab === 'learning' && <section className="border border-sky-200 bg-white p-4"><h2 className="text-sm font-semibold text-sky-950">وضع التعلم</h2><p className="mt-2 text-xs leading-6 text-slate-700">المبسّط: خلاصة عربية مباشرة. المتوسط: المحركات والتعارض والآفاق. المتقدم: النتائج الأصلية، أثر الذهب، الأوزان، جودة البيانات، المصدر، والاستقلال السببي.</p>{overview.explanation && <div className="mt-3 grid gap-3 lg:grid-cols-2"><div className="border border-sky-100 bg-sky-50 p-3 text-xs leading-6"><b>مبسّط:</b> {overview.explanation.simple_summary_ar}</div><div className="border border-sky-100 bg-sky-50 p-3 text-xs leading-6"><b>متقدم:</b> {overview.explanation.advanced_summary_ar}</div></div>}</section>}
 
