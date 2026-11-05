@@ -55,5 +55,13 @@
     "heal_after": "HEAL_STATUS redis=PONG services=9/9 dash=307 proxy=307 backup=OK action=[none]"
   },
   "verdict": "PASS — شاشة أخبار واحدة في التبويب المخصص، صفر ازدواجية، العقود الصادقة (news-presentation.ts) لم تُمَس",
-  "screenshots": "/tmp/news_shots/ (news_unified.png, news_selected.png, fundamental_tabs.png)"
+  "screenshots": "/tmp/news_shots/ (news_unified.png, news_selected.png, fundamental_tabs.png)",
+  "reconciliation_2": {
+    "date": "2026-11-06 02:20+03",
+    "note": "المصالحة النهائية بين الجلستين: الالتزام 94963e3 تضمّن مسودة qa/playwright/verify_t019.py القديمة (تصميم تبويبات لم يُطبَّق + خطأ parents[1] منع تحميل .env ففشل الدخول). هذه الجلسة أصلحت السكربت ليطابق التصميم المكدس المنشور فعلاً",
+    "verify_t019_fixed": "9/9 PASS حي (honest_empty — التغذية الحية فارغة، الفراغ الصادق مسموح)",
+    "gates_reverified": "run_suite 5/5 PASS (console_errors=0) + node 216/216 على البناء المُخدم hg2nHg0Jppqos0x7OuKhe18",
+    "screenshot": "docs/screenshots/t019_news_center.png (من التشغيل الناجح)",
+    "openbox_note": "التحقق المستدام أصبح qa/playwright/verify_t019.py بدل scripts/verify_news_unified.py المؤقت"
+  }
 }
