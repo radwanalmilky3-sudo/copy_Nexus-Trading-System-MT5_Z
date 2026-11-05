@@ -623,14 +623,46 @@ class ProcessManager:
 
     def spawn_dashboard(self, color: str, *, env_override: Optional[dict] = None) -> ManagedProcess:
         dashboard_dir = self.root / "dashboard"
-        cmd = ["npm", "run", "dev", "--", "--port", str(DASHBOARD_PORT)]
+        # 2026-11-05 (P2-1 production build): dashboard launch mode is
+        # selectable via NEXUS_DASHBOARD_MODE:
+        #   "auto" (default) — production `next start` when a production
+        #     build exists (dashboard/.next/BUILD_ID), dev otherwise.
+        #   "dev" / "prod"   — force one mode (prod without a build falls
+        #     back to dev with a warning instead of crashing the fleet).
+        # Rationale: `next dev` on the cloud box costs ~1.2GB RSS on a 4GB
+        # box (memory lesson D2); the same code as a production build runs
+        # in a fraction of that. No `.next` is committed to git, so a fresh
+        # clone (owner machine / OPENCODE) keeps the dev workflow unchanged.
+        mode = str(os.environ.get("NEXUS_DASHBOARD_MODE", "auto")).strip().lower()
+        try:
+            has_prod_build = (dashboard_dir / ".next" / "BUILD_ID").is_file()
+        except (OSError, AttributeError):
+            # Probe failed (tests use PurePosixPath fakes with no filesystem;
+            # or the dashboard dir is unreadable): treat as "no build" and
+            # stay in dev mode — never claim a build we cannot prove.
+            has_prod_build = False
+        if mode == "auto":
+            mode = "prod" if has_prod_build else "dev"
+        if mode == "prod" and not has_prod_build:
+            _log(
+                f"{color}dashboard{RESET} NEXUS_DASHBOARD_MODE=prod but no "
+                "production build (.next/BUILD_ID missing) — falling back to dev"
+            )
+            mode = "dev"
+        if mode == "prod":
+            cmd = ["npm", "run", "start", "--", "--port", str(DASHBOARD_PORT)]
+        else:
+            cmd = ["npm", "run", "dev", "--", "--port", str(DASHBOARD_PORT)]
         if IS_WINDOWS:
             # Windows cannot execute npm.cmd directly through CreateProcess
             # (PATHEXT is not applied), so wrap it in cmd.  Never delete
             # `.next`: the runner contract forbids destroying user/build
             # files — a corrupt build must surface as a capped dashboard
             # restart failure instead of silently wiping the directory.
-            cmd = ["cmd", "/c", f"npm run dev -- --port {DASHBOARD_PORT}"]
+            if mode == "prod":
+                cmd = ["cmd", "/c", f"npm run start -- --port {DASHBOARD_PORT}"]
+            else:
+                cmd = ["cmd", "/c", f"npm run dev -- --port {DASHBOARD_PORT}"]
 
         env = {**os.environ}
         if env_override:
