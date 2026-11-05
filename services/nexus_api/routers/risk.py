@@ -23,7 +23,9 @@ from .admin import _require
 
 logger = structlog.get_logger(__name__)
 
-router = APIRouter(prefix="/api/risk", tags=["risk"])
+from shared.rate_limit import rate_limit_scope
+
+router = APIRouter(prefix="/api/risk", tags=["risk"], dependencies=[rate_limit_scope("risk")])
 
 # Fallback must match shared.constants.SERVICE_PORTS["nexus-risk"] and resolve
 # to IPv4: run.py injects NEXUS_RISK_URL=http://127.0.0.1:9006, but launchers

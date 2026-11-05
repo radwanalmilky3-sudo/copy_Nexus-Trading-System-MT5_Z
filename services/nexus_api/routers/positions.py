@@ -29,6 +29,8 @@ from .admin import _require
 
 logger = structlog.get_logger(__name__)
 
+from shared.rate_limit import rate_limit_scope
+
 router = APIRouter(prefix="/api/positions", tags=["positions"])
 
 EXECUTOR_URL = os.getenv(
@@ -243,7 +245,11 @@ async def get_position(
     return rows[0]
 
 
-@router.post("/{position_id}/close", status_code=status.HTTP_202_ACCEPTED)
+@router.post(
+    "/{position_id}/close",
+    status_code=status.HTTP_202_ACCEPTED,
+    dependencies=[rate_limit_scope("edit_close")],
+)
 async def close_position(
     position_id: str,
     actor: CurrentUser,
@@ -275,6 +281,7 @@ async def close_position(
     "/{position_id}/modify",
     status_code=status.HTTP_200_OK,
     response_model=None,
+    dependencies=[rate_limit_scope("edit_close")],
 )
 async def modify_position(
     position_id: str,

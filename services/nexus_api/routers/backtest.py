@@ -37,6 +37,8 @@ from .admin import _require
 
 logger = logging.getLogger(__name__)
 
+from shared.rate_limit import rate_limit_scope
+
 router = APIRouter(prefix="/api/backtest", tags=["Backtest"])
 
 _DATA_URL  = os.getenv("NEXUS_DATA_URL", "http://127.0.0.1:9001")
@@ -287,7 +289,7 @@ def _hour_breakdown(trades: list[dict]) -> dict[str, dict]:
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
-@router.post("")
+@router.post("", dependencies=[rate_limit_scope("backtest")])
 async def run_backtest(
     cfg: BacktestConfig,
     actor: CurrentUser,

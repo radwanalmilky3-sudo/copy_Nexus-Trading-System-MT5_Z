@@ -18,6 +18,8 @@ from .admin import _require
 
 logger = structlog.get_logger(__name__)
 
+from shared.rate_limit import rate_limit_scope
+
 router = APIRouter(prefix="/api/ml", tags=["ml"])
 
 ML_BASE = os.getenv("NEXUS_ML_URL", f"http://localhost:{os.getenv('NEXUS_ML_PORT', '8003')}")
@@ -86,7 +88,7 @@ async def traders_predict_single(model_type: str, symbol: str, actor: CurrentUse
     return await _proxy("GET", f"/api/traders/predict/{model_type}/{symbol}")
 
 
-@router.post("/traders/train")
+@router.post("/traders/train", dependencies=[rate_limit_scope("ml")])
 async def traders_train(
     request: Request,
     actor: CurrentUser,
@@ -124,7 +126,7 @@ async def traders_mode(actor: CurrentUser, db: DataServiceClient = Depends(get_d
     return await _proxy("GET", "/api/traders/mode")
 
 
-@router.post("/traders/mode/switch")
+@router.post("/traders/mode/switch", dependencies=[rate_limit_scope("ml")])
 async def traders_mode_switch(
     request: Request,
     actor: CurrentUser,
@@ -135,7 +137,7 @@ async def traders_mode_switch(
     return await _proxy("POST", "/api/traders/mode/switch", body=body)
 
 
-@router.post("/traders/retrain/force")
+@router.post("/traders/retrain/force", dependencies=[rate_limit_scope("ml")])
 async def traders_retrain_force(
     request: Request,
     actor: CurrentUser,
@@ -159,7 +161,7 @@ async def traders_autonomous_status(actor: CurrentUser, db: DataServiceClient = 
     return await _proxy("GET", "/api/traders/autonomous/status")
 
 
-@router.post("/traders/autonomous/toggle")
+@router.post("/traders/autonomous/toggle", dependencies=[rate_limit_scope("ml")])
 async def traders_autonomous_toggle(
     request: Request,
     actor: CurrentUser,
@@ -178,7 +180,7 @@ async def retrain_status(actor: CurrentUser, db: DataServiceClient = Depends(get
     return await _proxy("GET", "/api/ml/retrain/status")
 
 
-@router.post("/train")
+@router.post("/train", dependencies=[rate_limit_scope("ml")])
 async def train_ensemble(
     request: Request,
     actor: CurrentUser,

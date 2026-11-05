@@ -44,7 +44,9 @@ from .admin import _require, require_permission
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/system", tags=["system-env"])
+from shared.rate_limit import rate_limit_scope
+
+router = APIRouter(prefix="/api/system", tags=["system-env"], dependencies=[rate_limit_scope("env")])
 _env_read = require_permission("trading.settings")
 
 # Generic Arabic refusal for anything the UI may not change: unknown keys,

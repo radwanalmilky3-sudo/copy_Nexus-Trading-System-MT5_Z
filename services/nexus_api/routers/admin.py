@@ -30,6 +30,8 @@ from ..middleware.auth import (
 )
 from shared.redis_client import RedisClient
 
+from shared.rate_limit import rate_limit_scope
+
 router = APIRouter(tags=["admin"])
 UTC = timezone.utc
 
@@ -365,7 +367,7 @@ async def avatar(user_id: str, actor: CurrentUser, db: DataServiceClient=Depends
     return FileResponse(p)
 
 
-@router.get("/api/admin/users")
+@router.get("/api/admin/users", dependencies=[rate_limit_scope("admin")])
 async def list_users(actor: CurrentUser, db: DataServiceClient=Depends(get_data_service)):
     await _require(db,actor,"users.view")
     rows=await db.query("users_list")
@@ -373,7 +375,7 @@ async def list_users(actor: CurrentUser, db: DataServiceClient=Depends(get_data_
     return {"users":rows}
 
 
-@router.post("/api/admin/users")
+@router.post("/api/admin/users", dependencies=[rate_limit_scope("admin")])
 async def create_user(payload: UserCreate, actor: CurrentUser, db: DataServiceClient=Depends(get_data_service)):
     await _require(db,actor,"users.create")
     exists=await db.query("user_exists", {"username": payload.username})
@@ -406,7 +408,7 @@ async def create_user(payload: UserCreate, actor: CurrentUser, db: DataServiceCl
     return {"ok":True,"user_id":uid}
 
 
-@router.put("/api/admin/users/{target_id}")
+@router.put("/api/admin/users/{target_id}", dependencies=[rate_limit_scope("admin")])
 async def update_user(target_id: str, payload: UserUpdate, actor: CurrentUser, db: DataServiceClient=Depends(get_data_service)):
     await _require(db,actor,"users.edit")
     rows=await db.query("user_by_id", {"user_id": target_id})
@@ -433,7 +435,7 @@ async def update_user(target_id: str, payload: UserUpdate, actor: CurrentUser, d
     return {"ok":True}
 
 
-@router.post("/api/admin/users/{target_id}/reset-password")
+@router.post("/api/admin/users/{target_id}/reset-password", dependencies=[rate_limit_scope("admin")])
 async def reset_password(target_id: str,payload:PasswordReset,actor:CurrentUser,db:DataServiceClient=Depends(get_data_service)):
     await _require(db,actor,"users.edit")
     rows=await db.query("user_by_id", {"user_id": target_id})
@@ -443,7 +445,7 @@ async def reset_password(target_id: str,payload:PasswordReset,actor:CurrentUser,
     return {"ok":True}
 
 
-@router.delete("/api/admin/users/{target_id}")
+@router.delete("/api/admin/users/{target_id}", dependencies=[rate_limit_scope("admin")])
 async def delete_user(target_id:str,actor:CurrentUser,db:DataServiceClient=Depends(get_data_service)):
     await _require(db,actor,"users.delete")
     if actor==target_id: raise HTTPException(409,"cannot delete current account")
@@ -454,7 +456,7 @@ async def delete_user(target_id:str,actor:CurrentUser,db:DataServiceClient=Depen
     return {"ok":True}
 
 
-@router.get("/api/admin/roles")
+@router.get("/api/admin/roles", dependencies=[rate_limit_scope("admin")])
 async def roles(actor:CurrentUser,db:DataServiceClient=Depends(get_data_service)):
     await _require(db,actor,"roles.view")
     rs=await db.query("roles_list")
@@ -463,7 +465,7 @@ async def roles(actor:CurrentUser,db:DataServiceClient=Depends(get_data_service)
     return {"roles":rs,"available_permissions":PERMISSIONS}
 
 
-@router.put("/api/admin/roles/{role_id}/permissions")
+@router.put("/api/admin/roles/{role_id}/permissions", dependencies=[rate_limit_scope("admin")])
 async def update_role_permissions(role_id:str,payload:RolePermissionsIn,actor:CurrentUser,db:DataServiceClient=Depends(get_data_service)):
     await _require(db,actor,"roles.manage")
     if role_id=="super_admin": raise HTTPException(409,"super_admin permissions are locked")
@@ -498,7 +500,7 @@ async def put_prefs(payload:NotificationPreferencesIn,user_id:CurrentUser,db:Dat
     return {"ok":True,"preferences":payload.model_dump()}
 
 
-@router.get("/api/admin/audit")
+@router.get("/api/admin/audit", dependencies=[rate_limit_scope("admin")])
 async def audit(actor:CurrentUser, limit:int=100, db:DataServiceClient=Depends(get_data_service)):
     await _require(db,actor,"audit.view")
     rows=await db.query("audit_entries", {"limit": max(1,min(limit,500))})

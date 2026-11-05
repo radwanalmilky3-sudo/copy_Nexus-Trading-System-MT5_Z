@@ -28,7 +28,9 @@ from ..deps import get_data_service
 from ..middleware.auth import CurrentUser
 from .admin import _audit, _post_data
 
-router = APIRouter(tags=["ea-bridge"])
+from shared.rate_limit import rate_limit_scope
+
+router = APIRouter(tags=["ea-bridge"], dependencies=[rate_limit_scope("ea")])
 UTC = timezone.utc
 TOKEN_PREFIX = "nexus_ea_"
 
