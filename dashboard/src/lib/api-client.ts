@@ -549,7 +549,14 @@ class ApiClient {
     try {
       const res = await this.fetchPath(`/api/agents/decision/${symbol.toUpperCase()}`);
       if (res.status === 404) return null;
-      return this.parseOk<LiveDecisionDTO>(res);
+      const data = await this.parseOk<LiveDecisionDTO & { available?: boolean }>(res);
+      // N4 (2026-11-05): the gateway façade translates the agents service's
+      // honest 404 ("no decision yet") into 200 {available:false} so the
+      // browser console stays free of unsuppressible 404 network lines for
+      // an expected poll. Same semantics, explicit state, no fabricated
+      // verdict fields.
+      if (data && data.available === false) return null;
+      return data;
     } catch (err) {
       if (err instanceof ApiError && err.status === 404) return null;
       throw err;

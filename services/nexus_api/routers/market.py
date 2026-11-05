@@ -66,7 +66,17 @@ async def candles(
         ) from exc
 
     if res.status_code == 404:
-        raise HTTPException(status_code=404, detail="Historical market data not found")
+        # N4 (2026-11-05): the dashboard polls this endpoint continuously.
+        # "No data yet" is a *state*, not an error — answer 200 with an
+        # explicitly empty series so the browser never logs an
+        # unsuppressible "Failed to load resource: 404" line for an
+        # expected poll. Service-layer semantics at nexus-data stay 404
+        # (N6 unification, load-bearing for service consumers); this
+        # presentation façade translates absence for browser consumers.
+        # Consumers already handle it honestly: SystemDiagnostic
+        # classifyCandlesProbe(200, bars=[]) -> 'no-data'; NexusPriceChart
+        # renders its explicit empty state — never synthetic bars.
+        return _response([])
     try:
         res.raise_for_status()
     except httpx.HTTPStatusError as exc:

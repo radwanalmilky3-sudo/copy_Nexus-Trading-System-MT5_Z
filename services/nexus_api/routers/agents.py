@@ -264,7 +264,13 @@ async def latest_decision(
                 f"Agents service unreachable: {exc}",
             )
     if resp.status_code == 404:
-        raise HTTPException(404, "No decision yet for this symbol")
+        # N4 (2026-11-05): polling façade — "no decision yet" is a state,
+        # not an error. Bare not-available marker (same unwrapped shape as
+        # the normal DTO path; verdict fields are never fabricated) keeps
+        # the honesty contracts intact while sparing the browser console
+        # the unsuppressible 404 network line. The UI client treats
+        # available:false exactly like the old 404 (null).
+        return {"symbol": symbol.upper(), "available": False}
     if resp.status_code >= 400:
         raise HTTPException(resp.status_code, resp.text)
     return resp.json()
