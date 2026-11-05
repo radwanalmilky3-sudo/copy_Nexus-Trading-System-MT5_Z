@@ -43,3 +43,6 @@ venv-nexus/
 # build artifacts
 dashboard/tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+# سيملينك مخزن node_modules الخارجي (نمط node_modules/ لا يطابق symlinks)
+/dashboard/node_modules
