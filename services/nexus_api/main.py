@@ -135,9 +135,35 @@ app.state.research_backend = NexusResearchBackend(data_service)
 
 DASHBOARD_ORIGIN = os.getenv("DASHBOARD_ORIGIN", "http://localhost:3100")
 
+
+def build_cors_origins(dashboard_origin: str) -> list[str]:
+    """N3 closure (T-011): the dashboard is browsed from :3100 (next-server) or
+    from :3000 (scripts/port3000_forward.py, a raw TCP forwarder onto :3100 —
+    the browser Origin is then http://localhost:3000).
+
+    In the primary flow CORS is never evaluated: next.config.js rewrites keep
+    every API call same-origin, and same-origin fetches are exempt. The
+    allowlist below only matters for the degraded case a stale browser bundle
+    calling nexus-api (:9000) cross-origin — it must keep working (the
+    next.config.js comment documents the same contract) instead of dying on a
+    blocked preflight. DASHBOARD_ORIGIN stays first so external deployments can
+    extend the list via env without touching code. Duplicates are collapsed.
+    """
+    extras = (
+        "http://localhost:3100",
+        "http://127.0.0.1:3100",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    )
+    seen: dict[str, None] = {dashboard_origin.strip().rstrip("/"): None}
+    for origin in extras:
+        seen.setdefault(origin, None)
+    return list(seen)
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[DASHBOARD_ORIGIN, "http://localhost:3100", "http://127.0.0.1:3100"],
+    allow_origins=build_cors_origins(DASHBOARD_ORIGIN),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

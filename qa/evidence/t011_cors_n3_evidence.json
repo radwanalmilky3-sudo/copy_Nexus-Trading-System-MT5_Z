@@ -1,0 +1,38 @@
+{
+  "task": "T-011",
+  "cycle": "N3",
+  "title": "CORS allowlist closure — dashboard forwarder origin :3000",
+  "date": "2026-11-05",
+  "owner": "ZAI",
+  "decision": "add :3000 origins (localhost/127.0.0.1) to the nexus-api CORS allowlist; keep DASHBOARD_ORIGIN env override first",
+  "rationale": [
+    "Primary flow never evaluates CORS: next.config.js rewrites proxy /api/* same-origin to :9000.",
+    ":3000 is a real browsing origin (scripts/port3000_forward.py, raw TCP -> :3100), so a stale bundle calling :9000 cross-origin from a :3000 tab must keep working — same contract as the next.config.js comment.",
+    "Foreign origins stay rejected (Starlette preflight 400)."
+  ],
+  "change": {
+    "file": "services/nexus_api/main.py",
+    "function": "build_cors_origins",
+    "commit": "see git log 'fix(cors): N3'"
+  },
+  "hardening": {
+    "file": "pytest.ini",
+    "why": "bare `pytest` collected fx-trading-system-main (foreign reference repo) and aborted collection; testpaths=tests makes bare runs match the official `pytest tests` regression command"
+  },
+  "regression": {
+    "pytest": "1926 passed, 22 skipped, 1 xfailed (1918 + 8 new CORS tests)",
+    "node": "216/216 pass",
+    "playwright_live": "5/5 PASS (console_errors=0)",
+    "fleet_health": "9/9 = 200 (9000-9008)"
+  },
+  "tests_added": [
+    "test_preflight_allowed_for_forwarder_origin_3000",
+    "test_preflight_allowed_for_loopback_forwarder_origin_3000",
+    "test_preflight_allowed_for_next_server_origin_3100",
+    "test_preflight_allowed_for_dashboard_env_origin",
+    "test_preflight_rejected_for_foreign_origin",
+    "test_build_cors_origins_env_default_first_no_duplicates",
+    "test_build_cors_origins_env_override_extends_not_replaces",
+    "test_build_cors_origins_normalizes_trailing_slash_and_whitespace"
+  ]
+}
