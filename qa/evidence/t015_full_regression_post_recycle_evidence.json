@@ -1,0 +1,23 @@
+{
+  "cycle": "T-015",
+  "title": "دورة تحقق انحداري شاملة بعد إعادة تدوير الصندوق وجلسات cron متزامنة",
+  "date": "2026-11-06",
+  "trigger": "أمر المالك «اكمل» — لوحة المهارك مغلقة (T-001..T-014) والبنود المتبقية محجوبة بقرارات مالك أو انتظار وكيل محلي؛ أعلى قيمة متاحة: إثبات تماسك الشجرة النهائية بأدلة جديدة",
+  "gates": {
+    "pytest": {"command": "python -m pytest tests -q", "passed": 1942, "skipped": 22, "xfailed": 1, "duration_s": 73.91, "baseline_match": true},
+    "node": {"tests": 216, "pass": 216, "fail": 0, "duration_ms": 8135},
+    "playwright_live": {"suite": "qa/playwright/run_suite.py", "result": "5/5 PASS", "console_errors": 0, "page_errors": 0, "evidence": "qa/evidence/playwright_suite_results.json"},
+    "fleet": {"health": "9/9 services=200", "redis": "PONG", "source": "nexus_heal.sh HEAL_STATUS 2026-11-06 01:04 +08"},
+    "security_headers_live": {
+      "api_9000": ["x-content-type-options: nosniff", "x-frame-options: DENY", "referrer-policy: strict-origin-when-cross-origin", "permissions-policy: camera=(), microphone=(), geolocation=()", "content-security-policy: frame-ancestors 'none'", "cache-control: no-store"],
+      "dashboard_3100": ["X-Content-Type-Options: nosniff", "X-Frame-Options: DENY", "Referrer-Policy: strict-origin-when-cross-origin", "Permissions-Policy: camera=(), microphone=(), geolocation=()", "Content-Security-Policy: frame-ancestors 'none'"]
+    }
+  },
+  "state_verified": {
+    "repo_head": "2ac2a24 (channel: T-012/T-013/T-014 final evidence + Z005 local verify task)",
+    "sandbox_recycled": true,
+    "concurrent_cron_sessions_reconciled": true,
+    "node_modules_store": "/home/z/nm-store/dashboard_wrap/node_modules (symlink سليم)"
+  },
+  "conclusion": "الشجرة النهائية بعد كل الجلسات المتزامنة وإعادة التدوير: كل البوابات خضراء ومطابقة للخط الأساسي الموثق — لا انحدار. صفر انحرافات."
+}
