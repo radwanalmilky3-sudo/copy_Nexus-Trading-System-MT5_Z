@@ -29,6 +29,7 @@ from shared.constants import (
 )
 from shared.events import NewsAlertEvent
 from shared.models import CalendarEvent, NewsItem, SystemHealth
+from shared.security_headers import SecurityHeadersMiddleware
 
 from .calendar_parser import CalendarParser
 from .news_fetcher import NewsFetcher
@@ -155,6 +156,8 @@ app = FastAPI(
     version="2.0.0",
     lifespan=lifespan,
 )
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 
 def _require_internal_service_secret(

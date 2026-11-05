@@ -315,8 +315,24 @@ def _kill_pid(pid: int) -> bool:
             capture_output=True,
         )
         return result.returncode == 0
+    # POSIX: kill the whole process GROUP, not just the pid. Since the
+    # 2026-11-06 fix every runner child is spawned with its own session
+    # (start_new_session=True), so the group covers the entire tree —
+    # npm wrapper AND the node/uvicorn grandchildren. Killing the single
+    # pid let next-server survive as an orphan holding :3100, which then
+    # blocked every restart with "Port conflicts" until a manual kill.
+    # For pids that are not group leaders (legacy trees) ps resolves the
+    # shared pgid — every member of such a group is Nexus-owned anyway.
+    group_term = (
+        f"pgid=$(ps -o pgid= -p {pid} 2>/dev/null | tr -d ' '); "
+        f"if [ -n \"$pgid\" ]; then kill -TERM -- -\"$pgid\" 2>/dev/null; "
+        f"else kill -TERM {pid} 2>/dev/null; fi; "
+        "sleep 1; "
+        f"if [ -n \"$pgid\" ]; then kill -KILL -- -\"$pgid\" 2>/dev/null; "
+        f"else kill -KILL {pid} 2>/dev/null; fi"
+    )
     result = subprocess.run(
-        ["bash", "-lc", f"kill -TERM {pid} 2>/dev/null; sleep 1; kill -KILL {pid} 2>/dev/null"],
+        ["bash", "-lc", group_term],
         check=False,
         capture_output=True,
     )
@@ -602,6 +618,11 @@ class ProcessManager:
         env.setdefault("PYTHONUTF8", "1")
         env.setdefault("PYTHONNOUSERSITE", "1")
 
+        # POSIX: each child gets its own session so shutdown/--stop can
+        # kill the full tree via killpg (see _kill_pid). Without it the
+        # node grandchild of an npm wrapper survives SIGTERM and orphans
+        # the dashboard port (seen 2026-11-06).
+        child_session = {} if IS_WINDOWS else {"start_new_session": True}
         proc = subprocess.Popen(
             cmd,
             cwd=str(self.root),
@@ -609,6 +630,7 @@ class ProcessManager:
             creationflags=(
                 subprocess.CREATE_NEW_PROCESS_GROUP if IS_WINDOWS else 0
             ),
+            **child_session,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
@@ -676,6 +698,7 @@ class ProcessManager:
         env.setdefault("NEXT_PUBLIC_API_URL", "")
         env.setdefault("NEXT_PUBLIC_WS_GATEWAY_URL", "")
 
+        child_session = {} if IS_WINDOWS else {"start_new_session": True}
         proc = subprocess.Popen(
             cmd,
             cwd=str(dashboard_dir),
@@ -683,6 +706,7 @@ class ProcessManager:
             creationflags=(
                 subprocess.CREATE_NEW_PROCESS_GROUP if IS_WINDOWS else 0
             ),
+            **child_session,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
@@ -814,7 +838,14 @@ class ProcessManager:
                     # shutdown; terminating cmd.exe alone can orphan npm/node.
                     mp.proc.send_signal(signal.CTRL_BREAK_EVENT)
                 else:
-                    mp.proc.send_signal(signal.SIGTERM)
+                    # POSIX: signal the child's whole process group (each
+                    # child owns a session since the 2026-11-06 spawn fix),
+                    # so npm wrappers and node/uvicorn grandchildren die
+                    # together instead of leaving port-holding orphans.
+                    try:
+                        os.killpg(os.getpgid(mp.proc.pid), signal.SIGTERM)
+                    except (ProcessLookupError, PermissionError):
+                        mp.proc.send_signal(signal.SIGTERM)
         deadline = time.time() + 8
         for mp in self.processes:
             remaining = max(0, deadline - time.time())
@@ -827,7 +858,10 @@ class ProcessManager:
                     # taskkill /T is scoped to this runner-owned process tree.
                     _kill_pid(mp.proc.pid)
                 else:
-                    mp.proc.kill()
+                    try:
+                        os.killpg(os.getpgid(mp.proc.pid), signal.SIGKILL)
+                    except (ProcessLookupError, PermissionError):
+                        mp.proc.kill()
         _log_ok("All services stopped.")
 
 

@@ -36,6 +36,7 @@ from shared.nexus_trades import is_nexus_comment, partition_positions
 from shared.redis_client import RedisClient
 from shared.safety import approval_signature
 from shared.sessions import detect_session_now
+from shared.security_headers import SecurityHeadersMiddleware
 from shared import runtime_settings
 
 import time as _time_mod
@@ -2306,6 +2307,8 @@ app = FastAPI(
     version="2.0.0",
     lifespan=lifespan,
 )
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 
 def _verify_internal_service_secret(provided_secret: str | None) -> None:

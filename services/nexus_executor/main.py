@@ -36,6 +36,7 @@ from shared.nexus_trades import (
 )
 from shared.redis_client import RedisClient
 from shared.safety import GuardCode, evaluate_executor_guard, live_mode_enabled, record_guard_decision, trading_mode
+from shared.security_headers import SecurityHeadersMiddleware
 
 from .broker_adapter import (
     AccountInfo,
@@ -1212,6 +1213,8 @@ app = FastAPI(
     version="2.0.0",
     lifespan=lifespan,
 )
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 
 def _verify_internal_service_secret(provided_secret: str | None) -> None:

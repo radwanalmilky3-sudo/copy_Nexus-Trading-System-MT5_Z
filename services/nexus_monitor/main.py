@@ -28,6 +28,7 @@ from shared.constants import CACHE_HEALTH_PREFIX, SERVICE_PORTS, ServiceName
 from shared.events import SystemHealthEvent, TradeCloseEvent
 from shared.models import SystemHealth
 from shared.redis_client import RedisClient
+from shared.security_headers import SecurityHeadersMiddleware
 
 from .metrics_exporter import MetricsExporter
 from .performance import PerformanceAnalyzer
@@ -269,6 +270,8 @@ app = FastAPI(
     version="2.0.0",
     lifespan=lifespan,
 )
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 
 @app.get("/health")

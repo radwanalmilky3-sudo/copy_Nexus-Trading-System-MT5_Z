@@ -35,6 +35,7 @@ from shared.constants import (
 )
 from shared.events import FeatureEvent, OHLCVEvent
 from shared.models import SystemHealth
+from shared.security_headers import SecurityHeadersMiddleware
 
 from .indicators import calculate_all
 from .internal_auth import verify_internal_service_secret
@@ -123,6 +124,8 @@ app = FastAPI(
     version="2.0.0",
     lifespan=lifespan,
 )
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 
 # ── Request / Response schemas ───────────────────────────────────────────────

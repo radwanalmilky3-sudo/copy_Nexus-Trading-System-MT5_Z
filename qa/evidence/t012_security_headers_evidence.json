@@ -1,0 +1,35 @@
+{
+  "task": "T-012",
+  "cycle": "security response headers (HANDOFF §6 item 2 — headers half; TLS stays deployment-time)",
+  "date": "2026-11-06",
+  "owner": "ZAI",
+  "attribution": "middleware + wiring authored by a concurrent cron agent turn (partially complete, uncommitted); completed, verified, documented and committed by ZAI main session",
+  "scope": {
+    "fleet": "SecurityHeadersMiddleware (pure ASGI) wired into all 9 FastAPI services (9000-9008)",
+    "dashboard": "next.config.js headers() — same set on every route of the :3100 production build",
+    "headers": ["x-content-type-options: nosniff", "x-frame-options: DENY", "referrer-policy: strict-origin-when-cross-origin", "permissions-policy: camera=(), microphone=(), geolocation=()", "content-security-policy: frame-ancestors 'none'", "cache-control: no-store (default only — handler-set Cache-Control always wins)"],
+    "deliberately_excluded": "HSTS (TLS-time header; wired at reverse proxy when fleet is first exposed externally)"
+  },
+  "live_verification": {
+    "gateway_9000_health": "all 5 hardening headers + cache-control: no-store present",
+    "dashboard_3100_login": "all 5 hardening headers present; Next's own cache-control (s-maxage=31536000, stale-while-revalidate) NOT overridden — handler-wins contract proven live",
+    "fleet_after_restart": "9/9 = 200 (9004 LLM 503-at-boot self-recovered, APR-001 documented transient)"
+  },
+  "ops_incidents_fixed_during_cycle": [
+    "node_modules external store wiped by platform: reinstalled (npm ci, 231 pkgs) into /home/z/nm-store/dashboard_wrap/node_modules — store path MUST end in node_modules so Node's realpath walk-up resolves sibling packages; the heal script's dashboard_real layout broke next build/start and was corrected (heal script updated with rationale comment)",
+    "orphan next-server from a prior session held :3100 and blocked run.py boot (documented exception: orphans only) — killed, then official heal reboot",
+    "bare `pytest` collected foreign fx-trading-system-main repo → pytest.ini testpaths=tests (committed with T-011)"
+  ],
+  "regression": {
+    "pytest": "1938 passed, 22 skipped (all environment probes: connection-refused/duckdb-absent/zero-state), 1 xfailed — includes 8 CORS (T-011) + 5 security-headers tests; pass-count variance vs 1918 baseline is live-probe activation after fresh fleet restart (documented behaviour)",
+    "node": "216/216 pass",
+    "playwright_live": "5/5 PASS on the NEW production build (console_errors=0)"
+  },
+  "tests_added": [
+    "test_all_hardening_headers_injected",
+    "test_handler_cache_control_wins",
+    "test_handler_security_header_not_duplicated",
+    "test_non_http_scope_passes_through",
+    "test_gateway_health_carries_hardening_set"
+  ]
+}

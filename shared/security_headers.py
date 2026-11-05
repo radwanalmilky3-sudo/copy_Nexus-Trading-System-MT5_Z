@@ -1,4 +1,4 @@
-"""Security response headers for every Nexus HTTP surface (T-011, 2026-11-06).
+"""Security response headers for every Nexus HTTP surface (T-012, 2026-11-06).
 
 Adds a conservative, breakage-free hardening set to every HTTP response:
 anti-framing (``X-Frame-Options: DENY`` plus ``CSP: frame-ancestors 'none'``),

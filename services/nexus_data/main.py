@@ -24,6 +24,7 @@ from shared.events import TickEvent, OHLCVEvent
 from shared.models import Tick, OHLCV
 from shared.nexus_trades import strategy_from_comment as _strategy_from_comment
 from shared.redis_client import RedisClient
+from shared.security_headers import SecurityHeadersMiddleware
 
 from .duckdb_store import DataStore, OHLCV_RETENTION_DAYS
 from .fundamental_store import FundamentalStore
@@ -715,6 +716,8 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
+app.add_middleware(SecurityHeadersMiddleware)
 app.include_router(create_trial_registry_router(data_store))
 app.include_router(create_broker_settings_router(BrokerSettingsStore(data_store)))
 

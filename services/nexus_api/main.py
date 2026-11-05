@@ -19,6 +19,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from shared.constants import SERVICE_PORTS
+from shared.security_headers import SecurityHeadersMiddleware
 
 from .deps import config_loader, data_service, redis, ws_manager
 from .data_client import DataServiceRejected, DataServiceUnavailable
@@ -131,6 +132,8 @@ app = FastAPI(
     redoc_url="/redoc",
     lifespan=lifespan,
 )
+
+app.add_middleware(SecurityHeadersMiddleware)
 app.state.research_backend = NexusResearchBackend(data_service)
 
 DASHBOARD_ORIGIN = os.getenv("DASHBOARD_ORIGIN", "http://localhost:3100")

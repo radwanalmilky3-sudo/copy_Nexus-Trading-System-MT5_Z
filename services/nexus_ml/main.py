@@ -35,6 +35,7 @@ from shared.constants import (
     Verdict,
 )
 from shared.events import FeatureEvent, SignalEvent
+from shared.security_headers import SecurityHeadersMiddleware
 
 from .ensemble import EnsembleSignal, ModelEnsemble
 from .labeling import advance_pending_bar
@@ -411,6 +412,8 @@ app = FastAPI(
     version="2.0.0",
     lifespan=lifespan,
 )
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 # ── Parallel Model Traders (ML / DL / RL) ───────────────────────────────────
 try:

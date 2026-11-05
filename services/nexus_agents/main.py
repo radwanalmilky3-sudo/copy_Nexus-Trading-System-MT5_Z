@@ -34,6 +34,7 @@ from .internal_auth import verify_internal_service_secret
 from .research import StrategyResearcher
 from .state import AgentState, validate_state
 from shared.orchestrator import claim_active_signal, should_defer
+from shared.security_headers import SecurityHeadersMiddleware
 from .tools.market_tools import get_htf_context
 from .tools.risk_tools import get_open_positions
 
@@ -856,6 +857,8 @@ app = FastAPI(
     version="2.0.0",
     lifespan=lifespan,
 )
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 
 @app.get("/health", response_model=HealthResponse)
