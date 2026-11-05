@@ -1,0 +1,93 @@
+{
+  "cycle": "T-021",
+  "title": "إعادة بناء البيئة الكاملة بعد مسح شامل للصندوق (تدوير 2026-11-06؛ دُمج سلمياً مع دورة قناة 506416 المتوازية التي أخذت رقم T-020) + إقلاع وإغلاق كل البوابات",
+  "date": "2026-11-06T22:05:00+03:00",
+  "motivation": "افتُتحت الجلسة على صندوق فارغ تماماً: /home/z/my-project أُمسح بكامله (المستودع، venv-nexus، node_modules، .next، data/nexus.duckdb، .env، سكربتات التشغيل خارج المستودع، والمهام المجدولة الثلاث). أعلى بند غير محجوب = إعادة بناء كل شيء من GitHub ثم إثبات كل البوابات حية.",
+  "data_loss_disclosure": {
+    "lost": [
+      "data/nexus.duckdb (63 جدولاً — بيانات ورقية مكتملة منذ 2026-11-04)",
+      ".env بكل أسراره (منها BACKUP_PASSPHRASE وبيانات دخول المالك السابقة)",
+      "scripts/nexus_heal.sh و scripts/backup_nexus.sh (كانا خارج المستودع — لم يُلزما قط)",
+      "scripts/port3000_forward.py",
+      "مهام cron الثلاث (شفاء/مشاهدة/نسخ)"
+    ],
+    "unrecoverable_encrypted_backup": "nexus_backup_20261105-172202.enc ما يزال على فرع backups (81f40af) لكن مفتاحه BACKUP_PASSPHRASE كان داخل .env المفقود — الاسترداد ممكن فقط إن عثر المالك على القيمة في محادثة Z.ai السابقة (سؤال مفتوح غير محجوب للعمل)",
+    "remediation": "قاعدة جديدة بمخطط مطابق (nexus-data يُنشئ المخطط عند الإقلاع) + حساب مالك جديد bootstrapped + أسرار جديدة مولدة + أول نسخة احتياطية جديدة فورية BACKUP_OK 20261105-190143"
+  },
+  "environment_rebuilt": {
+    "repo": "git clone (main 7d6df18) + git pull --rebase قبل الدفع",
+    "venv_nexus": "python 3.12.16 — 232 حزمة (torch 2.15.0+cpu أولاً من فهرس CPU ثم requirements.txt باستثناء MetaTrader5 — ويندوز فقط بحسب التصميم)",
+    "redis": "7.4.1 مبنية من المصدر → /home/z/my-project/redis/bin",
+    "dashboard": "npm ci (231 حزمة) + npm run build إنتاجي — BUILD_ID=d6V8_qfmqw0FZm-m3SYMC220M",
+    "env": ".env جديد (أسرار عشوائية 64hex/32hex، NEXUS_TRADING_MODE=paper، مزوّد zai بمفتاح المالك الجديد 2026-11-06، APR-001 خيار C: NEXUS_LLM_HEALTH_TIMEOUT_SEC=12 + NEXUS_LLM_HEALTH_TTL_SEC=45)",
+    "owner_bootstrap": "POST /api/v2/auth/bootstrap — المستخدم redhwan (بيانات الدخول الجديدة سُلّمت للمالك في محادثة Z.ai فقط — لا تُكتب في أي ملف)"
+  },
+  "new_operational_code_now_versioned": [
+    "scripts/nexus_rebuild.sh — إعادة بناء كاملة من الصفر بأمر واحد (استجابة لمحو المنصة الشامل)",
+    "scripts/nexus_heal.sh — شفاء redis/ممرر :3000/dashboard/أسطول/طزاجة النسخ (backup=OK|STALE_<h>h|UNKNOWN، عتبة 26س، تنبيه عند 3 دورات)",
+    "scripts/backup_nexus.sh — لقطة قاعدة+env مشفرة AES-256-CBC/PBKDF2 → فرع backups (fast-forward فقط، آخر 5 ملفات) + علامة logs/last_backup.txt عند النجاح المؤكد فقط",
+    "scripts/port3000_forward.py — ممرر TCP خام :3000→:3100 (N3)",
+    "qa/live_gate.sh — البوابة الحية الكاملة في نداء واحد (إقلاع→تهيئة→رؤوس→LLM→Playwright)"
+  ],
+  "code_fix": {
+    "file": "preflight.py — _check_local_ai",
+    "defect": "الفحص يطلب Ollama المحلي (:11434) دائماً حتى مع NEXUS_LLM_PROVIDER=zai — يُسقط preflight على أي صندوق سحابي رغم أن 9004 تعمل عبر api.z.ai (عاق الإقلاع الرسمي run.py --paper مرتين هذه الجلسة)",
+    "fix": "وعي بالمزوّد: zai + مفتاح → PASS (Cloud AI)؛ zai بلا مفتاح → FAIL فشل مغلق؛ local = السلوك الأصلي حرفياً",
+    "tests": "tests/test_preflight.py +3 (8/8 تمر على الملف): zai+مفتاح يمر دون لمس Ollama (boom-guard)، zai بلا مفتاح FAIL، local ميت FAIL"
+  },
+  "quality_gates": {
+    "pytest": {
+      "result": "1942 passed, 25 skipped, 1 xfailed",
+      "duration_sec": 73.52,
+      "note": "خط الأساس 1942+22skip+1xfail؛ +3 اختبارات preflight الجديدة و+3 skips بيئية لقاعدة فارغة جديدة (probes بيانات) — الحساب: 1965+3=1968 إجمالي مطابق"
+    },
+    "node_test": {
+      "result": "216/216 pass",
+      "duration_ms": 6381
+    },
+    "playwright": {
+      "result": "5/5 PASS",
+      "exit": 0,
+      "highlights": "T1 دخول→/nexus في 4049ms؛ T2 كل 14 شاشة page_errors=0؛ T3 console_errors=0"
+    },
+    "fleet": {
+      "result": "9/9 = 200",
+      "dashboard": ":3100 = 200 (بناء إنتاجي)",
+      "port3000": "ممرر TCP = 200"
+    },
+    "llm_9004": {
+      "result": "ONLINE",
+      "model": "glm-4.5-flash",
+      "latency_ms": 533.01,
+      "key": "مفتاح المالك الجديد 2026-11-06 — مُتحقق حي"
+    },
+    "security_headers": {
+      "9000": [
+        "x-content-type-options: nosniff",
+        "x-frame-options: DENY",
+        "referrer-policy: strict-origin-when-cross-origin",
+        "permissions-policy: camera=(), microphone=(), geolocation=()",
+        "content-security-policy: frame-ancestors 'none'",
+        "cache-control: no-store"
+      ],
+      "3100": [
+        "نفس الست + Cache-Control: s-maxage=31536000, stale-while-revalidate (عقد المدرب يسبق محفوظ)"
+      ]
+    },
+    "backup": {
+      "result": "BACKUP_OK 20261105-190143 (PUSHED)",
+      "branch": "origin/backups",
+      "marker": "logs/last_backup.txt = OK … PUSHED",
+      "heal_line": "backup=OK"
+    }
+  },
+  "platform_behavior_notes": {
+    "sandbox": "my-project يُمسح كلياً بين الجلسات (وليس المجلدات الكبيرة فقط كما كان سابقاً) — المداوم: GitHub (main + backups)، تعريفات cron، ومحادثة IM",
+    "processes": "العمليات الخلفية تُقتل بين نداءات الأداة بشكل متقلب (بقي الأسطول عبر نداءات أحياناً ومات عدّاد اختبار في ثوانٍ أحياناً) — القاعدة: لا افتراض حياة أبداً؛ كل فحص حي يتحقق ويُقيلع عند الحاجة",
+    "cron_rebuilt": "شفاء (كل 5 دقائق) + مشاهدة قناة (كل 5 دقائق) + نسخ يومي 04:00+03 — ببرومبتات تفهم الصندوق البارد (استنساخ إذا غاب، لا بناء ثقيل إلا عند اللزوم)"
+  },
+  "pending_owner": {
+    "recoverable_backup": "إن وجدتَ BACKUP_PASSPHRASE القديمة في محادثة Z.ai السابقة فسلّمها وسأستعيد قاعدة 63 جدولاً من nexus_backup_20261105-172202.enc",
+    "unresolved_decisions": "APR-001 اعتماد خيار C رسمياً · T-004 (D4-D7/M3/Next15) · تدوير PAT ومفاتيح Z.ai (تم تدوير المفتاح عملياً اليوم بمفتاحك الجديد)"
+  }
+}

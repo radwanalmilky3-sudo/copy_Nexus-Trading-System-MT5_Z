@@ -29,6 +29,10 @@ models_store/
 !.env.example
 *.key
 *.pem
+# بيانات اعتماد git المحلية (يملؤها المالك محلياً — لا تُرفع أبدًا)
+scripts/ghcred.sh
+# نسخ احتياطية محلية مشفرة (المُلتزَم في فرع backups فقط)
+backups_local/
 
 # logs and editors
 *.log

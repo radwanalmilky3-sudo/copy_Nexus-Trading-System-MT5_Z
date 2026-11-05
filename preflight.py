@@ -245,6 +245,24 @@ def _check_env_vars(env: dict[str, str], report: Report) -> None:
 
 
 def _check_local_ai(env: dict[str, str], report: Report) -> None:
+    # Provider-aware (2026-11-06): مع مزوّد سحابي (zai) فحص Ollama المحلي
+    # لا علاقة له بالإقلاع — كان يُسقط preflight على الصندوق السحابي رغم
+    # أن خدمة الوكلاء 9004 تعمل عبر api.z.ai. نقارن المفتاح بدل النهاية
+    # المحلية، ونحافظ على السلوك الأصلي حرفياً للمزوّد local.
+    provider = (env.get("NEXUS_LLM_PROVIDER") or "").strip().lower()
+    if provider == "zai":
+        if env.get("ZAI_API_KEY", "").strip():
+            report.add(
+                "Cloud AI", "PASS",
+                "NEXUS_LLM_PROVIDER=zai — ZAI_API_KEY مضبوط (الصحة الحية عبر /health لخدمة 9004)",
+            )
+        else:
+            report.add(
+                "Cloud AI", "FAIL",
+                "NEXUS_LLM_PROVIDER=zai بدون ZAI_API_KEY",
+                "اضبط ZAI_API_KEY أو أعِد NEXUS_LLM_PROVIDER=local",
+            )
+        return
     base = (env.get("NEXUS_LOCAL_LLM_URL") or "http://127.0.0.1:11434/v1").rstrip("/")
     model = (env.get("NEXUS_LLM_MODEL") or env.get("NEXUS_LOCAL_MODEL") or "llama3.3:70b").strip()
     try:

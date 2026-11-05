@@ -86,3 +86,49 @@ def test_preflight_checks_isolated_risk_approval_secret(approval_secret, expecte
 
     check = next(item for item in report.checks if item.name == "Firma de riesgo")
     assert check.status == expected_status
+
+
+# ── LLM provider-aware preflight (2026-11-06 — إقلاع الصندوق السحابي) ──────
+
+
+def test_cloud_provider_zai_with_key_passes_without_touching_local_ollama(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """zai + مفتاح → PASS، ولا يجب أن يُسأل Ollama المحلي إطلاقاً."""
+
+    def boom(*args: object, **kwargs: object) -> object:
+        raise AssertionError("local /v1/models must not be probed for provider=zai")
+
+    monkeypatch.setattr(preflight.urllib.request, "urlopen", boom)
+    report = preflight.Report()
+
+    preflight._check_local_ai(
+        {"NEXUS_LLM_PROVIDER": "zai", "ZAI_API_KEY": "test-key"}, report
+    )
+
+    check = report.checks[0]
+    assert check.status == "PASS"
+    assert "zai" in check.detail.lower()
+
+
+def test_cloud_provider_zai_without_key_fails_closed() -> None:
+    report = preflight.Report()
+
+    preflight._check_local_ai({"NEXUS_LLM_PROVIDER": "zai"}, report)
+
+    check = report.checks[0]
+    assert check.status == "FAIL"
+    assert "ZAI_API_KEY" in check.detail
+
+
+def test_local_provider_unreachable_endpoint_still_fails() -> None:
+    """السلوك الأصلي محفوظ: مزوّد local + نهاية ميتة → FAIL (لا تغيير عقد)."""
+    report = preflight.Report()
+
+    preflight._check_local_ai(
+        {"NEXUS_LLM_PROVIDER": "local", "NEXUS_LOCAL_LLM_URL": "http://127.0.0.1:9/v1"},
+        report,
+    )
+
+    check = report.checks[0]
+    assert check.status == "FAIL"

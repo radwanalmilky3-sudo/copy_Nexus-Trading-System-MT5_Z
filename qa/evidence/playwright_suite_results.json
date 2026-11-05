@@ -1,13 +1,13 @@
 {
- "executed_at_utc": "2026-11-05T18:11:37.868294+00:00",
- "base": "http://127.0.0.1:3100",
+ "executed_at_utc": "2026-11-05T18:59:17.929729+00:00",
+ "base": "http://localhost:3100",
  "suite": "qa/playwright/run_suite.py",
  "summary": "5/5 PASS",
  "tests": [
   {
    "test": "T1_login_success",
    "status": "PASS",
-   "actual": "login→/nexus in 4054ms",
+   "actual": "login→/nexus in 4049ms",
    "evidence": "page.url"
   },
   {
@@ -25,7 +25,7 @@
   {
    "test": "T4_anonymous_redirect",
    "status": "PASS",
-   "actual": "/nexus/settings anonymous → http://127.0.0.1:3100/login",
+   "actual": "/nexus/settings anonymous → http://localhost:3100/login",
    "evidence": ""
   },
   {
