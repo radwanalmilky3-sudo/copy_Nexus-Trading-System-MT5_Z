@@ -91,9 +91,9 @@ async def _start_ws_broadcasters() -> None:
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     global _health_refresher
     app.state.ws_manager = ws_manager
-    app.state.nexus_redis = redis.r  # raw async client: scope rate limiter (T-001)
     app.state.data_service_available = False
     await redis.connect()
+    app.state.nexus_redis = redis.r  # raw async client: scope rate limiter (T-001)
     # Fail-safe startup invariant: autonomous opening is always OFF after a
     # gateway restart and must be explicitly re-enabled with the admin PIN.
     await redis.cache_set("system:auto_trade", False, ttl_sec=10 * 3600 * 24 * 3600)
