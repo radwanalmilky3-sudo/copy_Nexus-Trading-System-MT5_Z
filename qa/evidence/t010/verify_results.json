@@ -1,0 +1,21 @@
+{
+ "guard1_button_found": true,
+ "guard1_confirm_fired": true,
+ "guard1_msg_symbol": true,
+ "guard1_msg_warns_live_order": true,
+ "guard2_banner_present": true,
+ "guard2_armed_shows_confirm": true,
+ "guard2_reset_executed_on_second_click": false,
+ "guard2_click_probe": "Reset Todo",
+ "guard2_auto_reverts": true,
+ "guard2_first_label": "Reset Todo",
+ "guard3_token_created": true,
+ "guard3_row_visible": true,
+ "guard3_modal_opens": true,
+ "guard3_names_label": true,
+ "guard3_warns_bridge_cut": true,
+ "guard3_cancel_closes_modal": true,
+ "guard3_token_still_listed": true,
+ "guard3_cleanup_done": true
+}
+T010_VERIFY: PASS
