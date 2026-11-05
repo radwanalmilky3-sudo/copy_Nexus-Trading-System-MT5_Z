@@ -332,3 +332,105 @@ async def test_fixed_lots_never_increases_risk_approved_size(
     actual_size = await executor._clamp_lot_size(approved_size, "BTCUSD")
 
     assert actual_size == expected_size
+
+
+# ---------------------------------------------------------------------------
+# POSIX process-group lifecycle (2026-11-06 orphan fix): every runner child
+# owns a session at spawn, and stop/shutdown kill the whole group, so npm
+# wrappers and their node/uvicorn grandchildren die together instead of
+# surviving as port-holding orphans.
+# ---------------------------------------------------------------------------
+
+
+def _patch_spawn(monkeypatch: pytest.MonkeyPatch, captured: dict) -> None:
+    def fake_popen(command, **kwargs):
+        captured["kwargs"] = kwargs
+        return SimpleNamespace(pid=321)
+
+    monkeypatch.setattr(run.subprocess, "Popen", fake_popen)
+    monkeypatch.setattr(run, "_log", lambda _message: None)
+
+
+def test_posix_spawn_gives_child_its_own_session(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: dict[str, object] = {}
+    _patch_spawn(monkeypatch, captured)
+    monkeypatch.setattr(run, "IS_WINDOWS", False)
+
+    manager = run.ProcessManager(root=PurePosixPath("/workspace/nexus"))
+    manager.spawn_service("nexus-api", 9000, "blue")
+
+    assert captured["kwargs"]["start_new_session"] is True
+
+
+def test_windows_spawn_does_not_request_posix_session(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: dict[str, object] = {}
+    _patch_spawn(monkeypatch, captured)
+    monkeypatch.setattr(run, "IS_WINDOWS", True)
+    monkeypatch.setattr(run.subprocess, "CREATE_NEW_PROCESS_GROUP", 512, raising=False)
+
+    manager = run.ProcessManager(root=PurePosixPath("/workspace/nexus"))
+    manager.spawn_dashboard("cyan")
+
+    assert "start_new_session" not in captured["kwargs"]
+    assert captured["kwargs"]["creationflags"] == 512
+
+
+def test_posix_shutdown_signals_the_child_process_group(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    actions: list[tuple] = []
+
+    class FakeProcess:
+        pid = 4321
+
+        def poll(self):
+            return None
+
+        def send_signal(self, sig):
+            actions.append(("signal", sig))
+
+        def wait(self, timeout=None):
+            return 0
+
+        def kill(self):
+            actions.append(("kill",))
+
+    manager = run.ProcessManager(root=PurePosixPath("/workspace/nexus"))
+    manager.processes.append(
+        run.ManagedProcess(name="nexus-api", proc=FakeProcess(), port=9000, color="")
+    )
+    monkeypatch.setattr(run, "IS_WINDOWS", False)
+    monkeypatch.setattr(run.os, "getpgid", lambda pid: 4321)
+    monkeypatch.setattr(
+        run.os, "killpg", lambda pgid, sig: actions.append(("killpg", pgid, sig))
+    )
+    monkeypatch.setattr(run, "_log_warn", lambda _message: None)
+    monkeypatch.setattr(run, "_log", lambda _message: None)
+    monkeypatch.setattr(run, "_log_ok", lambda _message: None)
+
+    manager.shutdown()
+
+    assert ("killpg", 4321, run.signal.SIGTERM) in actions
+    assert ("signal", run.signal.SIGTERM) not in actions
+
+
+def test_posix_kill_pid_targets_the_whole_group(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    commands: list[list[str]] = []
+
+    def fake_run(cmd, **_kwargs):
+        commands.append(cmd)
+        return SimpleNamespace(returncode=0)
+
+    monkeypatch.setattr(run.subprocess, "run", fake_run)
+
+    assert run._kill_pid(4321) is True
+    script = commands[0][2]
+    assert "pgid=$(ps -o pgid= -p 4321" in script
+    assert "kill -TERM -- " in script
+    assert "kill -KILL -- " in script
