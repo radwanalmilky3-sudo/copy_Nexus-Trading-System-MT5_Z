@@ -5,14 +5,10 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'recharts'],
   },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
-  },
+  // images: next/image optimizer is unused (zero imports, zero remote assets).
+  // The former images.remotePatterns hostname:'**' allowed ANY https host and
+  // kept the self-hosted Image-Optimizer DoS advisory (GHSA-9g9p-9gw9-jx7f)
+  // practically reachable — removed as security hardening (next 14.2.5 -> 14.2.35).
   async rewrites() {
     // Same-origin proxy for the whole gateway API: the browser talks to this
     // dev server (:3100) and Next forwards server-side to nexus-api. This
