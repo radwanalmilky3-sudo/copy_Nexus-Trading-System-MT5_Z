@@ -11,7 +11,7 @@ from .trial_registry_router import _authorize
 
 
 class Operation(StrictModel):
-    operation: Literal['list_profiles','create_profile','create_account','get_account','get_identity','save_settings','list_events','research_market','research_runs','research_batch_certificate','research_train_dataset','research_analysis','research_report','sync_sessions']
+    operation: Literal['list_profiles','create_profile','create_account','get_account','get_identity','save_settings','list_events','research_market','research_runs','research_batch_certificate','research_train_dataset','research_labels_generate','research_labels_list','research_analysis','research_report','sync_sessions']
     owner_id: Name
     payload: dict[str, Any] = Field(default_factory=dict)
 
@@ -29,6 +29,17 @@ class TrainDatasetCreate(StrictModel):
     account_id: Name
     group_id: Name
     name: Name
+
+
+class LabelGenerate(StrictModel):
+    account_id: Name
+    symbol: Name
+    timeframe: Literal['M1','M5','M15','M30','H1','H4','D1']
+    kind: Literal['direction','barrier']
+    horizon_bars: int
+    name: Name
+    tp_atr: float = 1.5
+    sl_atr: float = 1.0
 
 
 class SaveAccount(SaveSettings):
@@ -66,6 +77,14 @@ def create_broker_settings_router(store) -> APIRouter:
                 from .research_market import create_train_dataset
                 lookup=TrainDatasetCreate.model_validate(payload)
                 result=await create_train_dataset(store,owner,lookup.account_id,lookup.group_id,lookup.name)
+            elif op=='research_labels_generate':
+                from .research_labels import generate_labels
+                req=LabelGenerate.model_validate(payload)
+                result=await generate_labels(store,owner,req.account_id,req.symbol,req.timeframe,req.kind,req.horizon_bars,req.name,req.tp_atr,req.sl_atr)
+            elif op=='research_labels_list':
+                from .research_labels import list_label_targets
+                lookup=AccountLookup.model_validate(payload)
+                result=await list_label_targets(store,owner,lookup.account_id)
             elif op=='research_analysis':
                 from .research_analysis import research_analysis
                 result=await research_analysis(store,owner,payload)

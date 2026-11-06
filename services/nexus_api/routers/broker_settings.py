@@ -52,6 +52,26 @@ async def create_train_dataset(account_id:str,payload:TrainDatasetRequest,actor:
     await _require(db,actor,'source_manager.edit')
     return await call(db,'research_train_dataset',actor,{'account_id':account_id,'group_id':payload.group_id,'name':payload.name})
 
+class LabelGenerateRequest(BaseModel):
+    symbol:str=Field(min_length=1,max_length=128)
+    timeframe:Literal['M1','M5','M15','M30','H1','H4','D1']='M1'
+    kind:Literal['direction','barrier']='direction'
+    horizon_bars:int=Field(ge=1,le=500)
+    name:str=Field(min_length=1,max_length=128)
+    tp_atr:float=Field(default=1.5,gt=0)
+    sl_atr:float=Field(default=1.0,gt=0)
+
+@router.post('/accounts/{account_id}/research-labels')
+async def generate_labels(account_id:str,payload:LabelGenerateRequest,actor:CurrentUser,db:DataServiceClient=Depends(get_data_service)):
+    """Generate supervised labels (direction / barrier) from stored research candles."""
+    await _require(db,actor,'source_manager.edit')
+    return await call(db,'research_labels_generate',actor,{'account_id':account_id,**payload.model_dump()})
+
+@router.get('/accounts/{account_id}/research-labels')
+async def list_labels(account_id:str,actor:CurrentUser,db:DataServiceClient=Depends(get_data_service)):
+    await _require(db,actor,'source_manager.view')
+    return await call(db,'research_labels_list',actor,{'account_id':account_id})
+
 class AnalysisRequest(BaseModel):
     timeframe:Literal['M1','M5','M15','M30','H1','H4','D1']='M15'
     start:int|None=None

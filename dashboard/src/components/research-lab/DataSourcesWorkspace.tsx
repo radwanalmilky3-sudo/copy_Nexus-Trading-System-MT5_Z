@@ -5,6 +5,7 @@ import {brokerAPI} from '../settings/broker/api';
 import type {BrokerAccount} from '../settings/broker/types';
 import {getAuthHeaders} from '@/lib/api-client';
 import {DownloadRunsTable} from './DownloadRunsTable';
+import {LabelTargetsPanel} from './LabelTargetsPanel';
 import {useResearchScope} from './ResearchScope';
 import {executeBatch,planBatch,type BatchRow} from './batch';
 
@@ -68,6 +69,7 @@ export function DataSourcesWorkspace({children}:{children:ReactNode}){
    </div></details><details className="rounded-lg border border-border-primary p-3"><summary className="cursor-pointer text-sm">معاينة آخر {result.bars.length} شمعة مكتملة</summary><div className="max-h-72 overflow-auto"><table className="w-full text-sm [&_td]:p-2 [&_th]:p-2"><thead><tr>{['وقت المصدر MT5','فتح','أعلى','أدنى','إغلاق','حجم'].map(v=><th key={v}>{v}</th>)}</tr></thead><tbody>{result.bars.map(b=><tr key={b.time}><td>{date(b.time)}</td><td>{b.open}</td><td>{b.high}</td><td>{b.low}</td><td>{b.close}</td><td>{b.volume}</td></tr>)}</tbody></table></div></details>
   </div>}
   {account&&<div id="research-asset-operations"><DownloadRunsTable key={account+symbol} account={account} symbol={symbol} refresh={runsRefresh}/></div>}
+  {account&&<LabelTargetsPanel key={'labels'+account+symbol} account={account} symbol={symbol} timeframe={timeframes[0]||'M1'}/>}
   {mode==='history'&&<details className="border-t border-border-primary pt-3"><summary className="cursor-pointer text-xs text-text-muted">أرشيف المختبر السابق — قد لا يكون خاصًا بالحساب المختار</summary><div className="mt-4">{children}</div></details>}
  </section>;
 }
