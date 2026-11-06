@@ -11,13 +11,18 @@ from .trial_registry_router import _authorize
 
 
 class Operation(StrictModel):
-    operation: Literal['list_profiles','create_profile','create_account','get_account','get_identity','save_settings','list_events','research_market','research_runs','research_analysis','research_report','sync_sessions']
+    operation: Literal['list_profiles','create_profile','create_account','get_account','get_identity','save_settings','list_events','research_market','research_runs','research_batch_certificate','research_analysis','research_report','sync_sessions']
     owner_id: Name
     payload: dict[str, Any] = Field(default_factory=dict)
 
 
 class AccountLookup(StrictModel):
     account_id: Name
+
+
+class BatchCertificateLookup(StrictModel):
+    account_id: Name
+    group_id: Name
 
 
 class SaveAccount(SaveSettings):
@@ -47,6 +52,10 @@ def create_broker_settings_router(store) -> APIRouter:
                 from .research_market import list_research_runs
                 lookup=AccountLookup.model_validate(payload)
                 result=await list_research_runs(store,owner,lookup.account_id)
+            elif op=='research_batch_certificate':
+                from .research_market import batch_certificate
+                lookup=BatchCertificateLookup.model_validate(payload)
+                result=await batch_certificate(store,owner,lookup.account_id,lookup.group_id)
             elif op=='research_analysis':
                 from .research_analysis import research_analysis
                 result=await research_analysis(store,owner,payload)

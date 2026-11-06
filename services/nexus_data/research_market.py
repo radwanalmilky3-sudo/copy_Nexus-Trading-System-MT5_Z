@@ -302,3 +302,77 @@ async def _complete_evidence(store,owner,record):
         except BaseException:
             conn.execute('ROLLBACK');raise
     await store.owner_store._execute_locked(_persist)
+
+
+_TF_SECONDS={'M1':60,'M5':300,'M15':900,'M30':1800,'H1':3600,'H4':14400,'D1':86400}
+BASE_SYMBOL='XAUUSD'
+
+
+async def batch_certificate(store,owner,account_id,group_id):
+    """Batch-level quality certificate (dictionary: quality.data_certificates +
+    context.cross_asset_observations). Aggregates the runs sharing group_id:
+    totals, per-symbol coverage, and pack alignment vs the base symbol. Honest
+    by construction — derived only from persisted run records, nothing invented."""
+    if not group_id or len(group_id)>64:
+        raise ValueError('group_id required')
+    await store.get_account(owner,account_id)
+    def read():
+        conn=store.owner_store._conn;_ledger(conn)
+        return [json.loads(r[0]) for r in conn.execute(
+            'SELECT record_json FROM research_account_runs WHERE owner_id=? AND account_id=? AND record_json LIKE ? ORDER BY started_at ASC',
+            (owner,account_id,'%'+group_id+'%')).fetchall()]
+    runs=await store.owner_store._execute_locked(read)
+    runs=[r for r in runs if r.get('group_id')==group_id]
+    if not runs:
+        raise ValueError('No runs found for this group_id')
+    totals={'runs':len(runs),
+            'completed':sum(1 for r in runs if r.get('status')=='completed'),
+            'partial':sum(1 for r in runs if r.get('status')=='partial'),
+            'failed':sum(1 for r in runs if r.get('status')=='failed'),
+            'bars':sum(int(r.get('count') or 0) for r in runs),
+            'fetch_rejected':sum(int(r.get('fetch_rejected') or 0) for r in runs),
+            'archived_rejected':sum(int(r.get('archived_rejected') or 0) for r in runs)}
+    gaps=sum(int((r.get('quality') or {}).get('unclassified_gaps') or 0) for r in runs)
+    totals['unclassified_gaps']=gaps
+    # محاذاة الحزمة: أول/آخر شمعة لكل رمز مقابل الرمز الأساس
+    by_symbol={}
+    for r in runs:
+        if not r.get('first') or not r.get('last'):continue
+        cur=by_symbol.get(r['symbol'])
+        if cur is None:by_symbol[r['symbol']]={'first':r['first'],'last':r['last'],'tf':r.get('timeframe'),
+                                               'requested_start':r.get('requested_start'),'requested_end':r.get('requested_end')}
+        else:
+            cur['first']=min(cur['first'],r['first']);cur['last']=max(cur['last'],r['last'])
+    base=by_symbol.get(BASE_SYMBOL) or next(iter(by_symbol.values()),None)
+    alignment=[]
+    for sym,info in sorted(by_symbol.items()):
+        entry={'symbol':sym,'timeframe':info['tf'],
+               'first':datetime.fromtimestamp(info['first'],tz=timezone.utc).isoformat(),
+               'last':datetime.fromtimestamp(info['last'],tz=timezone.utc).isoformat()}
+        if base and info is not base:
+            entry['last_offset_vs_base_seconds']=int(info['last']-base['last'])
+            tf_sec=_TF_SECONDS.get(info['tf'] or '',900)
+            entry['aligned']=abs(info['last']-base['last'])<=tf_sec*2
+        else:
+            entry['last_offset_vs_base_seconds']=0;entry['aligned']=True;entry['is_base']=info is base
+        if info['requested_start'] and info['requested_end']:
+            span=max(1,int((datetime.fromisoformat(str(info['requested_end']).replace('Z','+00:00'))-datetime.fromisoformat(str(info['requested_start']).replace('Z','+00:00'))).total_seconds()))
+            entry['coverage_pct']=round(min(100.0,(info['last']-info['first'])/span*100),2)
+        alignment.append(entry)
+    misaligned=[a['symbol'] for a in alignment if not a.get('aligned',True)]
+    low_coverage=[a['symbol'] for a in alignment if a.get('coverage_pct') is not None and a['coverage_pct']<95.0]
+    checks={'all_runs_completed':totals['failed']==0 and totals['partial']==0,
+            'no_fetch_rejected':totals['fetch_rejected']==0,
+            'no_unclassified_gaps':gaps==0,
+            'pack_aligned':not misaligned,
+            'coverage_complete':not low_coverage}
+    passed=sum(1 for ok in checks.values() if ok)
+    cert={'group_id':group_id,'account_id':account_id,'owner_id':owner,
+          'issued_at':datetime.now(timezone.utc).isoformat(),
+          'status':'valid' if passed==len(checks) else ('warning' if passed>=len(checks)-2 else 'invalid'),
+          'checks':checks,'checks_passed':passed,'checks_total':len(checks),
+          'totals':totals,'alignment':alignment,
+          'misaligned_symbols':misaligned,'low_coverage_symbols':low_coverage,
+          'fingerprints':[r.get('output_hash') for r in runs if r.get('output_hash')][:32],
+          'note':'شهادة مستنتجة من سجلات العمليات المحفوظة فقط — لا افتراض ولا تعبئة. لا تغطي شيئاً لم يُستورد.'}
+    return cert

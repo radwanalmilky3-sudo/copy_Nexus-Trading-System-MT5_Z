@@ -36,6 +36,12 @@ async def research_runs(account_id:str,actor:CurrentUser,db:DataServiceClient=De
     await _require(db,actor,'source_manager.view')
     return await call(db,'research_runs',actor,{'account_id':account_id})
 
+@router.get('/accounts/{account_id}/research-certificate')
+async def research_batch_certificate(account_id:str,actor:CurrentUser,group_id:str=Query(min_length=8,max_length=64),db:DataServiceClient=Depends(get_data_service)):
+    """Batch-level quality certificate + pack alignment (derived from persisted run records only)."""
+    await _require(db,actor,'source_manager.view')
+    return await call(db,'research_batch_certificate',actor,{'account_id':account_id,'group_id':group_id})
+
 class AnalysisRequest(BaseModel):
     timeframe:Literal['M1','M5','M15','M30','H1','H4','D1']='M15'
     start:int|None=None
