@@ -1,0 +1,35 @@
+{
+  "task": "T-024",
+  "title": "فتح قفل بيانات السحابة: شموع حقيقية عبر CCXT (بلا MT5، والبديل المزيف محظور)",
+  "timestamp": "2026-11-06T17:10+03:00",
+  "trigger": "أمر المالك: «افتح القفل لأننا نريد تطويراً الآن» — nexus-data كان degraded بـ data_mode=REAL_MT5_REQUIRED وبلا أي مصدر شموع على لينكس",
+  "root_cause": [
+    "ccxt_connector موجود كاملاً (Binance/Bybit/OKX، REST+WS) لكنه لا يُشغَّل: البوابة تشترط CCXT_API_KEY غير فارغ + ENABLE_CCXT",
+    "حتى لو اتصل: لا توجد مهمة بث OHLCV له (على عكس MT5 publisher/backfill)",
+    "health لا يعترف به كمصدر: data_mode لا يخرج عن REAL_MT5/SYNTHETIC/REQUIRED وstatus يبقى degraded"
+  ],
+  "implementation": [
+    "بوابة عام بلا مفتاح: ENABLE_CCXT وحده يكفي (public market data keyless) — mode=keyed/public موثق في السجل",
+    "CCXT_SYMBOL_MAP=XAUUSD:XAUT/USDT (افتراضي الكود PAXG/USDT) — ذهب حقيقي مُرمز، يُعاد تسميته إلى XAUUSD المنطقي عبر _relabel_bars ليستهلكه features/strategy بلا تغيير",
+    "_ccxt_ohlcv_publisher: كل CCXT_POLL_SEC (45ث) يجلب OHLCV_BAR_COUNT شمعة، يمررها عبر usable_bars (يحذف الشمعة غير المغلقة) → _persist_closed_ohlcv(source=ccxt_poll) → كاش redis + نشر OHLCVEvent على OHLCV_STREAM — نفس مسار MT5 حرفياً",
+    "health: resolve_data_mode يعترف بREAL_CCXT وstatus=healthy عندما يتوفر مصدر حقيقي واحد على الأقل (mt5 أو ccxt)",
+    "حارس جودة نفسه: pair_blocked يمنع نشر أي زوج محجور"
+  ],
+  "gates": {
+    "pytest": "1951 passed (1942 سابقة + 9 جديدة: parse/relabel/resolve/public-mode) + 25 skip + 1 xfail في 76s",
+    "node_playwright": "لم تُمس الواجهات (لا تغيير dashboard) — آخر أخضر T-022 (node 216/216, Playwright 5/5)",
+    "live": "أسطول 9/9 + داشبورد :3100=200 — nexus-data healthy/REAL_CCXT/ccxt=true"
+  },
+  "live_proof": {
+    "startup": "startup.ccxt_connected mode=public @14:04:50Z",
+    "publishing": "ccxt.ohlcv_published متكرر (14:05:41، 14:06:26 ...)",
+    "readback": "GET /api/data/ohlcv/XAUUSD/M15 → 5 شموع، آخرها 2026-11-06T13:45Z close=4028.56 (مطابق لBybit XAUTUSDT)",
+    "consistency": "قيم XAUT تعكس XAUUSD الفعلي (~4048) بهامش رمز الذهب المرمز"
+  },
+  "discovery": "أول محاولة على Binance صدمت حظر IP سحابي مشترك (418 DDoSProtection حتى ~9 ساعات) — التبديل إلى Bybit/XAUT/USDT حسم المسار؛ البديل في .env لأي بيئة",
+  "honest_notes": [
+    "XAUT/PAXG ليست سبوت XAUUSD الخاص بالفوركس — إنما أقرب بروكسي حقيقي متاح سحابياً للتطوير (فروق بسيطة في الأسعار/الفوليوم)",
+    "بيانات المالك المحلية (MT5 حقيقي عبر الجسر) تبقى على جهازه — هذا المصدر لبيئة التطوير السحابية فقط",
+    "البيانات المزيفة ما تزال محظورة تماماً (synthetic_fallback=false)"
+  ]
+}

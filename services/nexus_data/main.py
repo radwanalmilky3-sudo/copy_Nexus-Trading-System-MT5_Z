@@ -57,6 +57,45 @@ IBKR_CLIENT_ID = int(os.getenv("IBKR_CLIENT_ID", "1"))
 CCXT_EXCHANGE = os.getenv("CCXT_EXCHANGE", "binance")
 CCXT_API_KEY = os.getenv("CCXT_API_KEY", "")
 CCXT_SECRET = os.getenv("CCXT_SECRET", "")
+# T-024: REAL cloud market data via CCXT public endpoints (paper/dev only —
+# synthetic data stays forbidden). Maps logical Nexus symbols to exchange
+# pairs: XAUUSD uses PAXG/USDT (tokenized gold on Binance — the closest
+# honest real-time gold proxy available without an MT5 terminal).
+CCXT_SYMBOL_MAP_RAW = os.getenv("CCXT_SYMBOL_MAP", "XAUUSD:PAXG/USDT")
+CCXT_POLL_SEC = max(15, int(os.getenv("CCXT_POLL_SEC", "45")))
+ENABLE_CCXT_FLAG = bool(os.getenv("ENABLE_CCXT", ""))
+
+
+def parse_ccxt_symbol_map(raw: str) -> dict[str, str]:
+    """Parse 'LOGICAL:PAIR,LOGICAL:PAIR' — malformed entries are skipped loudly."""
+    mapping: dict[str, str] = {}
+    for chunk in raw.split(","):
+        chunk = chunk.strip()
+        if not chunk:
+            continue
+        if ":" not in chunk:
+            log.warning("ccxt.symbol_map_entry_ignored", entry=chunk)
+            continue
+        logical, pair = (part.strip() for part in chunk.split(":", 1))
+        if not logical or "/" not in pair:
+            log.warning("ccxt.symbol_map_entry_ignored", entry=chunk)
+            continue
+        mapping[logical.upper()] = pair
+    return mapping
+
+
+def resolve_data_mode(mt5_ok: bool, ccxt_ok: bool, synthetic: bool) -> str:
+    """Honest data-mode label: real sources first, synthetic only when allowed."""
+    if synthetic:
+        return "SYNTHETIC_ALLOWED"
+    if mt5_ok:
+        return "REAL_MT5"
+    if ccxt_ok:
+        return "REAL_CCXT"
+    return "REAL_MT5_REQUIRED"
+
+
+CCXT_SYMBOL_MAP = parse_ccxt_symbol_map(CCXT_SYMBOL_MAP_RAW)
 
 DEFAULT_BROKER = os.getenv("DEFAULT_BROKER", "mt5")
 # Production default: MT5-only real data. Set NEXUS_DATA_SYNTHETIC_FALLBACK=1 only for offline dev.
@@ -372,6 +411,89 @@ async def _persist_closed_ohlcv(bars: list[OHLCV], source: str | None = None) ->
         await data_store.insert_ohlcv_batch(bars, source=source)
 
 
+def _relabel_bars(bars: list[OHLCV], logical: str) -> list[OHLCV]:
+    """Relabel provider-pair bars (e.g. PAXG/USDT) to the logical symbol (pure)."""
+    relabeled: list[OHLCV] = []
+    for b in bars:
+        if b.symbol == logical:
+            relabeled.append(b)
+        elif hasattr(b, "model_copy"):
+            relabeled.append(b.model_copy(update={"symbol": logical}))
+        else:
+            relabeled.append(b)
+    return relabeled
+
+
+async def _ccxt_ohlcv_publisher() -> None:
+    """T-024: REAL exchange candles via CCXT for mapped symbols (cloud/dev).
+
+    Mirrors the MT5 publisher's persist/cache/publish path. fetch_ohlcv's last
+    bar may be in-progress; usable_bars() filters to completed candles before
+    anything is stored or published.
+    """
+    await asyncio.sleep(3)
+    while True:
+        for logical, pair in CCXT_SYMBOL_MAP.items():
+            for tf in OHLCV_TIMEFRAMES:
+                try:
+                    raw_bars = await ccxt_conn.get_ohlcv(pair, tf, OHLCV_BAR_COUNT)
+                except asyncio.CancelledError:
+                    return
+                except Exception:
+                    await log.aexception("ccxt.ohlcv_fetch_failed", pair=pair, tf=tf)
+                    continue
+                bars = _relabel_bars(usable_bars(raw_bars), logical)
+                if not bars:
+                    continue
+                try:
+                    await _persist_closed_ohlcv(bars, source="ccxt_poll")
+                except Exception:
+                    await log.aexception("ccxt.persistence_failed", logical=logical, tf=tf)
+                    continue
+                if await pair_blocked(data_store, logical, tf):
+                    await log.awarning(
+                        "ccxt.quarantine_blocks_publish", logical=logical, tf=tf,
+                    )
+                    continue
+                last_bar = bars[-1]
+                bars_json = [
+                    {
+                        "timestamp": b.timestamp.isoformat(),
+                        "open": b.open,
+                        "high": b.high,
+                        "low": b.low,
+                        "close": b.close,
+                        "volume": b.volume,
+                    }
+                    for b in bars
+                ]
+                await redis_client.r.set(
+                    f"nexus:ohlcv:{logical}:{tf}", _json.dumps(bars_json), ex=3600,
+                )
+                await redis_client.publish_event(
+                    RedisStream.OHLCV_STREAM,
+                    OHLCVEvent(
+                        source="nexus-data",
+                        symbol=last_bar.symbol,
+                        timeframe=last_bar.timeframe,
+                        open=last_bar.open,
+                        high=last_bar.high,
+                        low=last_bar.low,
+                        close=last_bar.close,
+                        volume=last_bar.volume,
+                    ),
+                )
+                await log.ainfo(
+                    "ccxt.ohlcv_published",
+                    logical=logical,
+                    pair=pair,
+                    tf=tf,
+                    bars=len(bars),
+                    close=round(last_bar.close, 2),
+                )
+        await asyncio.sleep(CCXT_POLL_SEC)
+
+
 # Markers of a provider answer "this window genuinely has no bars". The
 # in-process connector raises ValueError for an empty range, while the
 # isolated worker (mt5_worker.py, exit code 6) wraps the very same answer in
@@ -671,14 +793,20 @@ async def lifespan(app: FastAPI):
             except Exception:
                 await log.aexception("startup.ibkr_failed")
 
-        if CCXT_API_KEY and os.getenv("ENABLE_CCXT", ""):
+        if ENABLE_CCXT_FLAG:
             try:
                 await ccxt_conn.connect(
                     exchange_name=CCXT_EXCHANGE,
                     api_key=CCXT_API_KEY,
                     secret=CCXT_SECRET,
                 )
-                await log.ainfo("startup.ccxt_connected")
+                await log.ainfo(
+                    "startup.ccxt_connected",
+                    mode="keyed" if CCXT_API_KEY else "public",
+                )
+                if CCXT_SYMBOL_MAP:
+                    ccxt_ohlcv_task = asyncio.create_task(_ccxt_ohlcv_publisher())
+                    _streaming_tasks.append(ccxt_ohlcv_task)
             except Exception:
                 await log.aexception("startup.ccxt_failed")
 
@@ -741,12 +869,11 @@ async def mt5_symbols(expected_login: str, expected_server: str, x_nexus_interna
 async def health_check() -> dict[str, Any]:
     redis_ok = await redis_client.health_check()
     mt5_ok = mt5.connected
-    data_mode = "REAL_MT5" if mt5_ok and not SYNTHETIC_FALLBACK else (
-        "SYNTHETIC_ALLOWED" if SYNTHETIC_FALLBACK else "REAL_MT5_REQUIRED"
-    )
+    data_mode = resolve_data_mode(mt5_ok, ccxt_conn.connected, SYNTHETIC_FALLBACK)
     duckdb_ok = data_store.is_open
-    # Startup gate: DuckDB writer must be up; MT5 may still be connecting.
-    if redis_ok and duckdb_ok and mt5_ok:
+    # Startup gate: DuckDB writer must be up; a real source (MT5 or CCXT) may
+    # still be connecting — healthy requires at least one real source.
+    if redis_ok and duckdb_ok and (mt5_ok or ccxt_conn.connected):
         status = "healthy"
     elif redis_ok and duckdb_ok:
         status = "degraded"
