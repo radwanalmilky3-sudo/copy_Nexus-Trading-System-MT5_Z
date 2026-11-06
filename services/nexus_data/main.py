@@ -30,6 +30,7 @@ from .duckdb_store import DataStore, OHLCV_RETENTION_DAYS
 from .fundamental_store import FundamentalStore
 from .trial_registry_router import create_router as create_trial_registry_router
 from .broker_settings_router import create_broker_settings_router
+from .ml_runs import create_ml_runs_router
 from .broker_settings_store import BrokerSettingsStore
 from .redis_cache import TickCache
 from .mt5_connector import MT5Connector
@@ -848,6 +849,7 @@ app = FastAPI(
 app.add_middleware(SecurityHeadersMiddleware)
 app.include_router(create_trial_registry_router(data_store))
 app.include_router(create_broker_settings_router(BrokerSettingsStore(data_store)))
+app.include_router(create_ml_runs_router(BrokerSettingsStore(data_store)))
 
 
 # ── Health ───────────────────────────────────────────────────────────────────

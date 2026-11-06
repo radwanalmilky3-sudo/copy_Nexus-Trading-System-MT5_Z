@@ -190,3 +190,27 @@ async def train_ensemble(
     await _require(db, actor, "trading.settings")
     body = await request.json() if request.headers.get("content-type", "").startswith("application/json") else {}
     return await _proxy("POST", "/api/ml/train", body=body)
+
+# ── /api/ml/training-runs — قراءة سجل التدريب من خدمة البيانات ──────────────
+@router.get("/training-runs")
+async def training_runs(actor: CurrentUser, symbol: str | None = None, limit: int = 100, db: DataServiceClient = Depends(get_data_service)):
+    """سجل دورات تدريب ML المسجلة (ml.training_runs) — من nexus-data."""
+    await _require(db, actor, "trading.view")
+    base=os.getenv("NEXUS_DATA_URL","http://127.0.0.1:9001").rstrip("/")
+    secret=os.getenv("NEXUS_INTERNAL_API_SECRET","").strip()
+    if not secret:
+        raise HTTPException(503,"internal data service credential is not configured")
+    params={"limit":max(1,min(int(limit),500))}
+    if symbol: params["symbol"]=symbol
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp=await client.get(f"{base}/api/data/ml/training-runs",params=params,
+                                  headers={"X-Nexus-Internal-Secret":secret})
+    except httpx.HTTPError:
+        raise HTTPException(503,"nexus-data is unreachable") from None
+    if resp.status_code>=400:
+        raise HTTPException(503,"training runs unavailable")
+    try:
+        return resp.json()["rows"]
+    except (ValueError,KeyError,TypeError):
+        raise HTTPException(503,"invalid training runs response") from None

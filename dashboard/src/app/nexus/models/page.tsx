@@ -21,6 +21,7 @@ import {
   GitBranch,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { TrainingRunsTable } from '@/components/models/TrainingRunsTable';
 import { apiClient, getAuthHeaders } from '@/lib/api-client';
 
 const API = process.env.NEXT_PUBLIC_API_URL || '';
@@ -469,6 +470,8 @@ export default function ModelsPage() {
           <AlertCircle className="h-3 w-3" /> {error}
         </div>
       )}
+
+      <TrainingRunsTable />
 
       {/* Tab content */}
       {activeTab === 'hmm' ? <HMMPanel /> : loading && !traders ? (

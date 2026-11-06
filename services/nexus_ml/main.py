@@ -1015,6 +1015,30 @@ async def _fetch_training_data(
     return X, y, timestamps, feature_names
 
 
+async def _report_training_run(report: dict[str, Any]) -> None:
+    """Best-effort: register this training attempt in nexus-data (ml.training_runs).
+
+    Never raises — the training pipeline must not depend on the registry being
+    reachable. Dictionary mapping: ml.training_runs / ml.model_registry_events."""
+    base=os.getenv("NEXUS_DATA_URL","http://127.0.0.1:9001").rstrip("/")
+    secret=os.getenv("NEXUS_INTERNAL_API_SECRET","").strip()
+    if not secret:
+        logger.info("ml_runs.skipped no internal secret configured")
+        return
+    try:
+        import httpx
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            resp=await client.post(f"{base}/api/data/ml/training-run",
+                                   headers={"X-Nexus-Internal-Secret":secret},
+                                   json=report)
+            if resp.status_code>=400:
+                logger.warning("ml_runs.record_failed status=%s body=%s",resp.status_code,resp.text[:200])
+            else:
+                logger.info("ml_runs.recorded run_id=%s decision=%s",report.get("run_id"),report.get("decision"))
+    except Exception:
+        logger.warning("ml_runs.report_unreachable",exc_info=True)
+
+
 async def _auto_retrain_loop() -> None:
     """Background task: trigger ensemble retraining when enough new feature data accumulates.
 
@@ -1083,6 +1107,13 @@ async def _auto_retrain_loop() -> None:
                         candidate_outcomes.append({
                             "symbol": sym, "decision": "rejected", "reason": "no_training_data",
                         })
+                        import uuid as _uuid
+                        await _report_training_run({
+                            "run_id": f"mlrun:{task_id}:{sym}:{timeframe}",
+                            "symbol": sym, "timeframe": timeframe,
+                            "generation": None, "decision": "rejected",
+                            "reason": "no_training_data", "fold_count": 0, "metrics": {},
+                        })
                         continue
                     cfg = WalkForwardConfig(
                         train_months=6,
@@ -1092,6 +1123,17 @@ async def _auto_retrain_loop() -> None:
                     outcome, results = await _train_symbol_candidate(sym, timeframe, data, cfg, task_id)
                     total_folds += len(results)
                     candidate_outcomes.append(outcome)
+                    import uuid as _uuid
+                    await _report_training_run({
+                        "run_id": f"mlrun:{task_id}:{sym}:{timeframe}",
+                        "symbol": sym, "timeframe": timeframe,
+                        "generation": outcome.get("generation"),
+                        "decision": outcome.get("decision", "rejected"),
+                        "reason": str(outcome.get("reason") or "")[:250] or None,
+                        "fold_count": int(outcome.get("fold_count") or 0),
+                        "metrics": outcome.get("metrics") or {},
+                        "data_window": outcome.get("data_window") or None,
+                    })
                     if outcome["decision"] == "promoted":
                         new_status[f"{sym}:{timeframe}"] = _get_symbol_ensemble(sym, timeframe).models_status()
                     logger.info(
