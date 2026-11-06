@@ -1586,24 +1586,47 @@ class DataStore:
     # ── Internal helpers ─────────────────────────────────────────────────
 
     async def _execute_locked(self, operation: Callable[[], Any]) -> Any:
-        """Serialize one connection operation and surface fatal DB invalidation."""
+        """Serialize one connection operation and surface fatal DB invalidation.
+
+        2026-11-06 hardening: the asyncio lock must never wedge the whole
+        service. A cancelled/timed-out holder used to leave everything queued
+        behind it forever (login, ledger, certificates all froze). Now: a
+        hard acquire deadline (60s), release guaranteed by the context
+        manager even when the waiter is cancelled, and the culprit is named
+        in the log when the queue is long."""
         loop = asyncio.get_running_loop()
-        async with self._connection_lock:
-            if self._invalidated or self._conn is None:
-                raise RuntimeError("DuckDB store is unavailable; reinitialize the data service")
-            try:
-                return await loop.run_in_executor(_POOL, operation)
-            except Exception as exc:
-                fatal_type = getattr(duckdb, "FatalException", None)
-                if fatal_type is not None and isinstance(exc, fatal_type):
-                    self._invalidated = True
-                    connection, self._conn = self._conn, None
-                    if connection is not None:
-                        try:
-                            await loop.run_in_executor(_POOL, connection.close)
-                        except Exception:
-                            log.exception("duckdb.close_after_fatal_failed")
-                raise
+        try:
+            await asyncio.wait_for(self._connection_lock.acquire(), timeout=60.0)
+        except asyncio.TimeoutError:
+            held = getattr(self, '_lock_holder', '<unknown>')
+            raise RuntimeError(
+                f'DuckDB owner-store lock busy >60s (held by {held}) — '
+                'refusing to queue; the long operation must finish or be cancelled'
+            ) from None
+        self._lock_holder = getattr(operation, '__name__', repr(operation)[:60])
+        try:
+            return await self._execute_locked_inner(operation, loop)
+        finally:
+            self._lock_holder = None
+            self._connection_lock.release()
+
+    async def _execute_locked_inner(self, operation: Callable[[], Any], loop) -> Any:
+        # القفل ممسوك أصلاً من _execute_locked — لا يعاد اقتناؤه هنا
+        if self._invalidated or self._conn is None:
+            raise RuntimeError("DuckDB store is unavailable; reinitialize the data service")
+        try:
+            return await loop.run_in_executor(_POOL, operation)
+        except Exception as exc:
+            fatal_type = getattr(duckdb, "FatalException", None)
+            if fatal_type is not None and isinstance(exc, fatal_type):
+                self._invalidated = True
+                connection, self._conn = self._conn, None
+                if connection is not None:
+                    try:
+                        await loop.run_in_executor(_POOL, connection.close)
+                    except Exception:
+                        log.exception("duckdb.close_after_fatal_failed")
+            raise
 
     async def _run(self, sql: str, params: tuple[Any, ...] = ()) -> None:
         def _exec() -> None:

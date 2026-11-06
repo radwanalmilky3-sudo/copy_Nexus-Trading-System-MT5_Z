@@ -106,26 +106,30 @@ def main() -> None:
                 _TF_SEC={'M1':60,'M5':300,'M15':900,'M30':1800,'H1':3600,'H4':14400,'D1':86400}
                 tf_sec=_TF_SEC.get(tf_name,900)
                 collected={}
+                # MT5 downloads history newest->oldest; walk chunks in that
+                # order and give each chunk a real first-sync budget (40s):
+                # a never-opened symbol returns a sliver until the terminal
+                # finishes pulling its history from the broker server.
+                chunks=[]
                 seg_start=start
                 guard=0
                 while seg_start<end and guard<80:
                     seg_end=min(seg_start+_timedelta(days=10),end);guard+=1
+                    chunks.append((seg_start,seg_end));seg_start=seg_end
+                for seg_start,seg_end in reversed(chunks):
                     expected=max(1,int((seg_end-seg_start).total_seconds()/tf_sec))
                     best=None
-                    for attempt in range(8):
+                    for attempt in range(20):
                         rates=mt5.copy_rates_range(broker_symbol,tf,seg_start,seg_end)
                         n=len(rates) if rates is not None else 0
                         if n and (best is None or n>len(best)):
                             best=rates
-                        # تراجع فقط عندما تكون التغطية أقل بكثير من المتوقع لنافذة مغلقة:
-                        # MT5 يرجع شريحة صغيرة بدل None أثناء مزامنة التاريخ المؤجلة
                         if n>=expected*0.6:
                             break
-                        _time.sleep(1.0)
+                        _time.sleep(2.0)
                     if best is not None:
                         for r in best:
                             collected[int(r['time'])]=r
-                    seg_start=seg_end
                 rates=sorted(collected.values(),key=lambda r:int(r['time'])) if collected else None
             else:
                 rates=mt5.copy_rates_from_pos(broker_symbol,tf,0,100)
