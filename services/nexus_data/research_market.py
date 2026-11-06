@@ -184,7 +184,7 @@ async def _research_market(store,owner,payload):
         return [json.loads(r[0]) for r in conn.execute('SELECT bar_json FROM research_account_candles WHERE owner_id=? AND account_id=? AND symbol=? AND timeframe=? ORDER BY bar_time',args).fetchall()]
     tick=None;captured=None;received=0;fetch_rejected=0;fetch_duplicates=0;archived=0
     if mode in ('history','live'):
-        data=await _mt5_worker({'op':'research_'+mode,'use_terminal':True,'path':os.getenv('MT5_PATH',''),'expected_login':identity['login'],'expected_server':identity['server'],'symbol':symbol,'broker_symbol':symbol,'timeframe':tf,**({k:payload[k] for k in ('start','end')} if mode=='history' else {})},timeout_sec=25)
+        data=await _mt5_worker({'op':'research_'+mode,'use_terminal':True,'path':os.getenv('MT5_PATH',''),'expected_login':identity['login'],'expected_server':identity['server'],'symbol':symbol,'broker_symbol':symbol,'timeframe':tf,**({k:payload[k] for k in ('start','end')} if mode=='history' else {})},timeout_sec=240 if mode=='history' else 25)
         clean,quality=inspect_bars(data['bars'],tf);received=len(clean);fetch_rejected=quality['rejected'];fetch_duplicates=quality['duplicates_removed']
         archived+=await _archive_rejected(store,owner,account_id,symbol,tf,quality['rejected_bars'])
         if mode=='history':bars=await store.owner_store._execute_locked(lambda:db_run(clean))

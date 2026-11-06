@@ -33,7 +33,8 @@ export function DataSourcesWorkspace({children}:{children:ReactNode}){
   let tasks;try{tasks=planBatch(selectedMode==='history'&&allAssets?symbols:[symbol],selectedMode==='history'?timeframes:[tf]);}catch(e){setError(e instanceof Error?e.message:'راجع الأصول والأطر');return;}
   if(selectedMode==='history'&&(!start||!end||start>end)){setError('اختر فترة صحيحة قبل الجلب.');return;}
   const ticket=++generation.current;pending.current?.abort();const controller=new AbortController();pending.current=controller;
-  const timeout=setTimeout(()=>controller.abort(),300000+45000*tasks.length); // طلبات كبيرة (سنة M1 ≈ 370 ألف شمعة) تحتاج دقائقconst group=crypto.randomUUID();let completed=0;
+  const timeout=setTimeout(()=>controller.abort(),300000+45000*tasks.length); // طلبات كبيرة (سنة M1 ≈ 370 ألف شمعة) تحتاج دقائق
+  const group=crypto.randomUUID();let completed=0;
   setBusy(true);setError('');setResult(null);setBatchId(group);setBatchRows(tasks.map(task=>({...task,state:'queued'})));
   try{await executeBatch(tasks,async task=>{
    const response=await fetch((process.env.NEXT_PUBLIC_API_URL||'')+'/api/brokers/accounts/'+encodeURIComponent(account)+'/research-market',{method:'POST',headers:{...getAuthHeaders(),'Content-Type':'application/json'},signal:controller.signal,body:JSON.stringify({group_id:group,mode:selectedMode,...task,...(selectedMode==='history'?{start:start+'T00:00:00Z',end:end+'T23:59:59Z'}:{})})});

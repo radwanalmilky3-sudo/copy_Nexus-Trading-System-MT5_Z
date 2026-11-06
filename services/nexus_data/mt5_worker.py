@@ -96,7 +96,27 @@ def main() -> None:
             if op=='research_history':
                 start=datetime.fromisoformat(payload['start'].replace('Z','+00:00'))
                 end=datetime.fromisoformat(payload['end'].replace('Z','+00:00'))
-                rates=mt5.copy_rates_range(broker_symbol,tf,start,end)
+                # MT5 syncs history lazily: a first copy_rates_range over a
+                # never-opened window can return a sliver (observed: 1 bar for
+                # a 55-day window on a demo account that does keep history).
+                # Fetch in 10-day chunks with retries so the terminal is forced
+                # to download each piece before we conclude it is absent.
+                import time as _time
+                from datetime import timedelta as _timedelta
+                collected={}
+                seg_start=start
+                guard=0
+                while seg_start<end and guard<80:
+                    seg_end=min(seg_start+_timedelta(days=10),end);guard+=1
+                    for attempt in range(6):
+                        rates=mt5.copy_rates_range(broker_symbol,tf,seg_start,seg_end)
+                        if rates is not None and len(rates):
+                            for r in rates:
+                                collected[int(r['time'])]=r
+                            break
+                        _time.sleep(0.7)
+                    seg_start=seg_end
+                rates=sorted(collected.values(),key=lambda r:int(r['time'])) if collected else None
             else:
                 rates=mt5.copy_rates_from_pos(broker_symbol,tf,0,100)
             if rates is None: _fail('MT5 history unavailable',6)
