@@ -58,7 +58,9 @@ log "encrypted: $ENC ($(du -h "$ENC" | cut -f1))"
 push_state="LOCAL_ONLY"
 if [ -n "${NEXUS_GH_TOKEN:-}" ]; then
   work=/tmp/nx-backups-worktree
-  git fetch origin backups >> "$LOG_DIR/backup.log" 2>&1 || true
+  # refspec صريح: الاستنساخ الضحل/الجديد لا يُنشئ refs/remotes/origin/backups
+  # تلقائياً — بلا هذا السطر يسقط الدفع على مسار orphan فيُرفض non-fast-forward.
+  git fetch origin backups:refs/remotes/origin/backups >> "$LOG_DIR/backup.log" 2>&1 || true
   rm -rf "$work"
   if git worktree add --detach "$work" origin/backups >> "$LOG_DIR/backup.log" 2>&1 \
      || git worktree add --orphan -b backups "$work" >> "$LOG_DIR/backup.log" 2>&1; then

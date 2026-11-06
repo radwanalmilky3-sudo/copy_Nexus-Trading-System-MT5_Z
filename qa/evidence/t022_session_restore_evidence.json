@@ -1,0 +1,50 @@
+{
+  "cycle": "T-022",
+  "title": "استعادة جلسة جديدة بعد تدوير صندوق آخر — أول إثبات أن خط التشغيل ككود يرفع المنظومة من GitHub وحده",
+  "date": "2026-11-06T12:30:00+00:00",
+  "trigger": "افتُتحت جلسة ZAI جديدة على صندوق بارد مجدداً: /home/z/my-project كان هيكل منصة فقط — المستودع/venv/node_modules/.env/data كلها غائبة. ملف ghcred.sh (الذي كان داخل المستودع) ضاع معه.",
+  "restore_path": {
+    "repo": "git clone من GitHub (main @ 5eb0f3e) — فشل الاستنساخ بدون مصادقة ثم نجح بعد إعادة تزويد PAT من المالك في هذه المحادثة (ghcred.sh خارج المستودع + غلاف gitignored داخل scripts/)",
+    "env": "scripts/nexus_rebuild.sh — أمر واحد: venv-nexus (232 حزمة، torch CPU) + redis 7.4.1 من المصدر + npm ci + بناء إنتاجي BUILD_ID=Jqy3A9BZYnm5gi_0vT0g6 — اكتمل في <10 دقائق",
+    "env_file": ".env مولّد آلياً (21 مفتاحاً، أسرار عشوائية، NEXUS_TRADING_MODE=paper، NEXUS_LLM_PROVIDER=zai بمفتاح GLM من المالك 2026-11-06) — القيم لا تُطبع ولا تُلتزم",
+    "mt5_placeholders_disclosure": "preflight يطلب MT5_LOGIN/MT5_PASSWORD/MT5_SERVER/STREAM_SYMBOLs بلا استثناء لوضع paper؛ فحص الاتصال الفعلي ويندوز-فقط (preflight.py يخرج قبل أي initialize على لينكس) فأُضيفت قيم placeholder صريحة (MT5_LOGIN=0, MT5_PASSWORD=not-used-on-cloud-paper, MT5_SERVER=paper-no-broker, STREAM_SYMBOLS=XAUUSD) — غير مستهلكة على السحابة؛ بيانات MT5 الحقيقية تبقى في .env المحلي لجهاز المالك. إن أراد المالك قيماً حقيقية في .env السحابي فليزودها.",
+    "owner_bootstrap": "POST /api/v2/auth/bootstrap — المستخدم redhwan، ok=true (بيانات الدخول الجديدة سُلّمت للمالك في محادثة Z.ai فقط)"
+  },
+  "code_fixes": [
+    {
+      "file": "scripts/nexus_rebuild.sh",
+      "defect": "pytest ليست في requirements.txt — بعد أي إعادة بناء نظيفة تسقط بوابة pytest بـ'No module named pytest' (اصطُدت فعلياً في هذه الجلسة)",
+      "fix": "كتلة تثبيت pytest/pytest-asyncio مشروطة بغياب pytest، بعد تثبيت requirements — مستقلة عن مسار التثبيت الرئيسي"
+    },
+    {
+      "file": "scripts/backup_nexus.sh",
+      "defect": "git fetch origin backups (بلا refspec) لا يُنشئ refs/remotes/origin/backups على استنساخ ضحل/جديد — يسقط الدفع على مسار orphan فيُرفض non-fast-forward (اصطُد فعلياً: أول نسخة PUSH_FAILED)",
+      "fix": "refspec صريح backups:refs/remotes/origin/backups — المسار orphan يبقى كخط دفاع أخير فقط"
+    }
+  ],
+  "backup": {
+    "result": "BACKUP_OK 20261106-122420 (PUSHED) إلى فرع backups — fast-forward",
+    "encryption": "AES-256-CBC/PBKDF2 بـBACKUP_PASSPHRASE الجديدة (سُلّمت للمالك في المحادثة فقط)",
+    "marker": "logs/last_backup.txt = OK ... PUSHED — heal سيطبع backup=OK"
+  },
+  "quality_gates": {
+    "pytest": "1942 passed, 25 skipped (بيئية — قاعدة فارغة جديدة), 1 xfailed — مطابق للخط الأساسي حرفياً",
+    "node": "216/216 pass (duration 6.8s)",
+    "playwright_live": "5/5 PASS — T1 login 4046ms، 14 شاشة، page_errors=0، console_errors=0، honest-404 noise=0 (qa/evidence/playwright_suite_results.json)",
+    "fleet": "9/9 = 200 (9000-9008) + dashboard :3100 = 200 — إقلاع رسمي run.py --paper يمر preflight بلا تجاوز",
+    "security_headers": "الستة حية: :9000 (no-store) + :3100 (DENY/nosniff/frame-ancestors/referrer/permissions)",
+    "llm_9004": "ONLINE حي — glm-4.5-flash عبر api.z.ai، latency 253ms، redis=true (بعد مهلة الاستقرار 50ث — APR-001 سلوكها كما هي)"
+  },
+  "scheduled_tasks_recreated": {
+    "note": "المهام الثلاث الموثقة (506789/506791/506793) لم تكن موجودة في بيئة هذه الجلسة (total=0) — أُعيد إنشاؤها بالتصميم نفسه",
+    "heal": "509041 — كل 5 دقائق — يفهم الصندوق البارد (استنساخ عند الغياب، إبلاغ المالك عند غياب الاعتماد، لا إعادة بناء ثقيل إلا عند الحاجة)",
+    "channel_watch": "509042 — كل 5 دقائق — دورة القناة كاملة وفق PROTOCOL (READ→ANSWERED، أرشفة الأزواج، 24h rule)",
+    "daily_backup": "509043 — يومياً 04:00 Asia/Aden"
+  },
+  "channel_state_at_close": "inbox = Z004/Z005/Z006/Z008/Z009 كلها NEW بانتظار ACK/DONE من OPENCODE (Z004 عمرها ~16س — تحت عتبة 24س)؛ outbox = Z007 ANSWERED — لا رسائل جديدة من الوكيل المحلي",
+  "honest_notes": [
+    "قاعدة البيانات جديدة فارغة (63 جدولاً بمخطط مطابق عبر apply/rebuild عند الإقلاع) — فقد نسخة 20261105-172202 القديمة قائماً: مفتاحها ضاع مع .env القديم",
+    "بيانات دخول المالك + BACKUP_PASSPHRASE الجديدة في محادثة Z.ai فقط — لا وجود لها في أي ملف ملتزم",
+    "الأسطول الحي لا يبقى بين نداءات المنصة — القيمة الدائمة في: المستودع + خط التشغيل ككود + المهام المجدولة + أدلة البوابات"
+  ]
+}

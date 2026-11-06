@@ -1,5 +1,5 @@
 {
- "executed_at_utc": "2026-11-05T18:59:17.929729+00:00",
+ "executed_at_utc": "2026-11-06T12:21:28.843855+00:00",
  "base": "http://localhost:3100",
  "suite": "qa/playwright/run_suite.py",
  "summary": "5/5 PASS",
@@ -7,7 +7,7 @@
   {
    "test": "T1_login_success",
    "status": "PASS",
-   "actual": "login→/nexus in 4049ms",
+   "actual": "login→/nexus in 4046ms",
    "evidence": "page.url"
   },
   {

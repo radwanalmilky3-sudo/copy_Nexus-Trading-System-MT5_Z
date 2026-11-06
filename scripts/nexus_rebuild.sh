@@ -35,6 +35,12 @@ if ! "$PY" -c "import fastapi, duckdb, redis" >/dev/null 2>&1; then
   "$PY" -m pip install torch --index-url https://download.pytorch.org/whl/cpu -q || true
   "$PY" -m pip install -r /tmp/req-linux.txt -q
 fi
+# أدوات الاختبار ليست في requirements.txt (الدرس من تدوير 2026-11-06: بوابة pytest
+# تسقط ب"No module named pytest" بعد إعادة بناء نظيفة) — تُضمن دائماً.
+if ! "$PY" -c "import pytest" >/dev/null 2>&1; then
+  log "installing test deps (pytest/pytest-asyncio)…"
+  "$PY" -m pip install pytest pytest-asyncio -q
+fi
 log "python deps: OK ($("$PY" -c 'import importlib.metadata as m; print(len(m.distributions()))') packages)"
 
 # ── 2) redis ────────────────────────────────────────────────────────────────
