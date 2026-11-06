@@ -67,7 +67,7 @@ class DataServiceClient:
         if not self.secret:
             raise DataServiceUnavailable('internal data service credential is not configured')
         try:
-            async with new_client(timeout=35.0 if operation=='research_market' else 10.0, transport=self._transport) as client:
+            async with new_client(timeout=300.0 if operation=='research_market' else 10.0, transport=self._transport) as client:
                 response=await client.post(f'{self.base_url}/api/data/broker-settings',
                     headers={'X-Nexus-Internal-Secret':self.secret},
                     json={'operation':operation,'owner_id':owner_id,'payload':payload})
