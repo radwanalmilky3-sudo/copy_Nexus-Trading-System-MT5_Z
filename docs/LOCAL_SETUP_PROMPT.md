@@ -18,7 +18,8 @@
 - Python 3.12 (المطابق لبيئة السحابة 3.12.16): `py -3.12 --version` — إن لم يوجد ثبّته من python.org (فعّل py launcher). ملاحظة: 3.13/3.14 يعملان لكن بتجاوزات موثقة (eventkit/ib_insync + polars[rtcompat] على المعالجات القديمة بلا AVX2) — لا تدخلها إلا إن اضطررت.
 - Node.js 22 LTS: `node -v` (v22.x، npm 10.x)
 - Redis للويندوز: الأفضل خدمة **Memurai Developer** أو redis 5.0.14 (tporadowski) كخدمة اسمها `redis5` أو ملف `C:\redis5\redis-server.exe`. المطلوب: PONG على `127.0.0.1:6379`. (المشروع يستخدم Streams: XADD/XREADGROUP — تحتاج إصدار 5+).
-- اختياري الآن (يمكن لاحقاً): MetaTrader 5 terminal + Ollama محلي — للجسر الحي والذكاء المحلي (خطوات الجسر الكاملة في `docs/EA_BRIDGE.md` داخل المستودع).
+- اختياري لاحقاً: MetaTrader 5 terminal — للجسر الحي (خطواته الكاملة في `docs/EA_BRIDGE.md` داخل المستودع).
+- **لا حاجة لـOllama إطلاقاً** — قرار المالك 2026-11-06: مزود الذكاء سحابي GLM-4.5-Flash (zai) بدل المحلي.
 
 **2) الاستنساخ (المستودع خاص — أول مرة سيطلب Git توكن/دخول عبر Credential Manager):**
 - [يحتاج المالك] أعلمني أن أول clone سيطلب مصادقة لكي أجهّز Personal Access Token بصلاحيات repo (Contents: Read) — لا تطلب التوكن كتابةً في أي ملف، دع نافذة Credential Manager تتكفل.
@@ -53,8 +54,14 @@ cd ..
 venv-nexus\Scripts\python -c "import secrets; print(secrets.token_hex(32)); print(secrets.token_hex(16)); print(secrets.token_hex(16)); print(secrets.token_hex(24))"
 ```
   ووزّعها بالترتيب: NEXUS_SECRET_KEY، NEXUS_JWT_SECRET (64hex)، NEXUS_INTERNAL_API_SECRET، NEXUS_RISK_APPROVAL_SECRET (32hex **مختلف** عن السابق)، BACKUP_PASSPHRASE (48hex).
-- [يحتاج المالك] من المالك مباشرة (اكتبها في .env فقط): `MT5_LOGIN` و`MT5_PASSWORD` و`MT5_SERVER` (حساب **ديمو** MT5) — واجعل `STREAM_SYMBOLS=XAUUSD`. اخيارياً: `ZAI_API_KEY` إن أراد مزود GLM السحابي بدل المحلي.
-- مزود الذكاء: `NEXUS_LLM_PROVIDER=local` مع Ollama المثبت (مثال `NEXUS_LLM_MODEL=qwen2.5:7b`) **أو** `zai` مع `ZAI_API_KEY` — اسأل المالك بنداً واحداً واضحاً.
+- [يحتاج المالك] من المالك مباشرة (تُكتب في .env فقط): `MT5_LOGIN` و`MT5_PASSWORD` و`MT5_SERVER` (حساب **ديمو** MT5) — واجعل `STREAM_SYMBOLS=XAUUSD`. و**ZAI_API_KEY**: مفتاح مزود GLM — **يلصقه المالك بنفسه في .env** ولا يمر عبر أي رسالة أو ملف متتبَّع أو برومبت.
+- مزود الذكاء **محسوم: السحابي GLM-4.5-Flash بدل Ollama** — الأسطر الثلاثة في .env:
+  ```
+  NEXUS_LLM_PROVIDER=zai
+  NEXUS_LLM_MODEL=glm-4.5-flash
+  ZAI_API_KEY=<يلصقه المالك مباشرة هنا>
+  ```
+  لا تثبّت Ollama ولا تفحص :11434 — preflight مع zai+مفتاح يمر دون لمس أي مزود محلي (سلوك موثق منذ T-021).
 - حساب المالك الأول: `NEXUS_ADMIN_PIN` (6 أرقام) + `NEXUS_ADMIN_PASSWORD` (قوي مولد) — **سلّم القيم للمالك في نهاية التركيب كتابعةً في المحادثة فقط**؛ هذه هي القناة المعتمدة لتسليم بيانات الدخول.
 - لا تضع `NEXUS_DATA_SYNTHETIC_FALLBACK=1` (preflight يعتبرها تحذيراً مقصوداً ضد البيانات المزيفة).
 
