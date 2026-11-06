@@ -172,14 +172,16 @@ export default function SystemDiagnostic() {
   const anyDown = bannerMode === 'fault';
   const downCount = services.filter((s) => !s.ok).length;
 
-  // Hide only after a completed check confirmed every service is healthy.
-  if (bannerMode === 'healthy' && !expanded) return null;
+  // Owner decision (2026-11-06): the banner always renders — hiding it left a
+  // dead 124px grid slot above the Risk Gateway (the "empty gap" report).
+  // Healthy state now shows the compact green bar, matching the pre-M1.4 look.
+  // if (bannerMode === 'healthy' && !expanded) return null;
 
   // Honest loading state: never claim "all systems operational" before the
   // first check has completed (UI-01 regression guard).
   if (bannerMode === 'checking') {
     return (
-      <div className="rounded-lg border px-4 py-2.5 mb-3 bg-neon-gold/5 border-neon-gold/30">
+      <div className="flex h-full flex-col justify-center rounded-lg border px-4 py-2.5 bg-neon-gold/5 border-neon-gold/30">
         <div className="flex items-center gap-3">
           <Loader2 className="h-4 w-4 text-neon-gold shrink-0 animate-spin" />
           <span className="text-xs font-semibold flex-1 text-neon-gold">Checking services…</span>
@@ -191,7 +193,7 @@ export default function SystemDiagnostic() {
   return (
     <div
       className={cn(
-        'rounded-lg border px-4 py-2.5 mb-3 transition-all',
+        'flex h-full flex-col justify-center rounded-lg border px-4 py-2.5 transition-all',
         anyDown
           ? 'bg-neon-red/5 border-neon-red/30'
           : 'bg-neon-green/5 border-neon-green/30',

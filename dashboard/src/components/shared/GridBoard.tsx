@@ -1,10 +1,16 @@
 'use client';
 
 import React, { useCallback, useMemo, useRef } from 'react';
-import ReactGridLayout, { type Layout } from 'react-grid-layout';
+import ReactGridLayout, { WidthProvider, type Layout } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import { GripVertical } from 'lucide-react';
+
+/* WidthProvider measures the container via ResizeObserver; a bare
+ * <ReactGridLayout> never gets a width, every horizontal position
+ * computes NaN, React drops those styles and all windows stack at
+ * the origin (the "tables on top of each other" bug). */
+const MeasuredGrid = WidthProvider(ReactGridLayout);
 
 export interface GridBoardItem {
   i: string;
@@ -45,6 +51,7 @@ export default function GridBoard({
       items.map((item) => (
         <div
           key={item.i}
+          dir="rtl"
           className="group relative h-full w-full min-h-0 overflow-hidden"
         >
           <span
@@ -71,20 +78,26 @@ export default function GridBoard({
   );
 
   return (
-    <ReactGridLayout
-      layout={layout}
-      cols={12}
-      rowHeight={rowHeight}
-      margin={[8, 8]}
-      containerPadding={[0, 0]}
-      draggableHandle=".grid-drag-handle"
-      onLayoutChange={handleLayoutChange}
-      onResizeStop={(l) => handleLayoutChange(l)}
-      compactType="vertical"
-      resizeHandles={['se']}
-      className="nexus-grid"
-    >
-      {children}
-    </ReactGridLayout>
+    /* dir="ltr": react-grid-layout anchors items to the left edge; inside the
+     * RTL app shell the whole board mirrors and x=0 lands on the right. The
+     * board measures/positions LTR (matching the owner's reference layout),
+     * while every window content wrapper above stays dir="rtl". */
+    <div dir="ltr" className="w-full">
+      <MeasuredGrid
+        layout={layout}
+        cols={12}
+        rowHeight={rowHeight}
+        margin={[8, 8]}
+        containerPadding={[0, 0]}
+        draggableHandle=".grid-drag-handle"
+        onLayoutChange={handleLayoutChange}
+        onResizeStop={(l) => handleLayoutChange(l)}
+        compactType="vertical"
+        resizeHandles={['se']}
+        className="nexus-grid"
+      >
+        {children}
+      </MeasuredGrid>
+    </div>
   );
 }

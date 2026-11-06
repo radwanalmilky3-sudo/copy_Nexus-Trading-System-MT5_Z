@@ -167,7 +167,7 @@ export default function GatewayDiagnostic() {
 
   return (
     <div className={cn(
-      'rounded-xl border bg-bg-card transition-all',
+      'flex h-full flex-col rounded-xl border bg-bg-card transition-all',
       tiltStatus === 'TILT'
         ? 'border-neon-red/50 shadow-sm shadow-neon-red/10'
         : tiltStatus === 'WARNING' || anyIssue

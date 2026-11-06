@@ -37,17 +37,20 @@ interface DashboardState {
 
 /* M1.4 — Overview board slots (12-col GridBoard). Ids must match the
  * windows rendered in OverviewGrid (nexus/page.tsx); stale persisted
- * layouts are discarded by migrate + the defensive merge in the page. */
+ * layouts are discarded by migrate + the defensive merge in the page.
+ * 2026-11-06 — restored the owner's previous arrangement (screenshot
+ * match): wide chart 9/3 with the side widgets, narrow Live Decision
+ * 3/9 beside Active Positions, ML full width, Risk|Console 6/6. */
 export const DEFAULT_LAYOUT: LayoutItem[] = [
-  { i: 'system-diag', x: 0, y: 0, w: 12, h: 3, minW: 6, minH: 2 },
-  { i: 'gateway-diag', x: 0, y: 3, w: 12, h: 3, minW: 6, minH: 2 },
-  { i: 'live-chart', x: 0, y: 6, w: 8, h: 16, minW: 6, minH: 10 },
-  { i: 'side-widgets', x: 8, y: 6, w: 4, h: 16, minW: 3, minH: 10 },
-  { i: 'decisions', x: 0, y: 22, w: 6, h: 12, minW: 4, minH: 8 },
-  { i: 'positions', x: 6, y: 22, w: 6, h: 12, minW: 4, minH: 8 },
-  { i: 'ml-panel', x: 0, y: 34, w: 12, h: 10, minW: 6, minH: 6 },
-  { i: 'risk', x: 0, y: 44, w: 6, h: 12, minW: 4, minH: 8 },
-  { i: 'console', x: 6, y: 44, w: 6, h: 12, minW: 4, minH: 8 },
+  { i: 'system-diag',   x: 0, y: 0,  w: 12, h: 3,  minW: 6, minH: 2 },
+  { i: 'gateway-diag',  x: 0, y: 3,  w: 12, h: 3,  minW: 6, minH: 2 },
+  { i: 'live-chart',    x: 0, y: 6,  w: 9,  h: 14, minW: 6, minH: 10 },
+  { i: 'side-widgets',  x: 9, y: 6,  w: 3,  h: 14, minW: 3, minH: 10 },
+  { i: 'decisions',     x: 0, y: 20, w: 3,  h: 12, minW: 3, minH: 8 },
+  { i: 'positions',     x: 3, y: 20, w: 9,  h: 12, minW: 4, minH: 8 },
+  { i: 'ml-panel',      x: 0, y: 32, w: 12, h: 10, minW: 6, minH: 6 },
+  { i: 'risk',          x: 0, y: 42, w: 6,  h: 12, minW: 4, minH: 8 },
+  { i: 'console',       x: 6, y: 42, w: 6,  h: 12, minW: 4, minH: 8 },
 ];
 
 export const useDashboardStore = create<DashboardState>()(
@@ -95,7 +98,7 @@ export const useDashboardStore = create<DashboardState>()(
     }),
     {
       name: 'nexus-dashboard',
-      version: 4,
+      version: 6,
       partialize: (state) => ({
         symbol: state.symbol,
         timeframe: state.timeframe,
@@ -110,11 +113,11 @@ export const useDashboardStore = create<DashboardState>()(
         if (state?.symbol && !['XAUUSD', 'BTCUSD'].includes(state.symbol)) {
           state.symbol = 'XAUUSD';
         }
-        // v4: GridBoard slots changed — discard stale/incompatible layouts.
+        // v6: owner's restored arrangement — discard stale/incompatible layouts.
         const defaultIds = DEFAULT_LAYOUT.map((l) => l.i);
         const gl = state?.gridLayout;
         const valid =
-          version >= 4 &&
+          version >= 6 &&
           Array.isArray(gl) &&
           gl.length === defaultIds.length &&
           gl.every(
