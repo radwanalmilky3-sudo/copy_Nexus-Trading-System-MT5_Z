@@ -25,6 +25,7 @@ import type { Timeframe } from '@/types';
 import { NotificationBell } from '@/components/ui/NotificationBell';
 import NewsTickerBar from '@/components/fundamental/NewsTickerBar';
 import UserMenu from '@/components/UserMenu';
+import LiveGoldPrice, { BuildBadge } from '@/components/shared/LiveGoldPrice';
 
 function GatewaySettingsHydrator() {
   useEffect(() => {
@@ -333,6 +334,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <span className="hidden sm:inline px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-amber-400/10 border border-amber-400/30 text-amber-300 tracking-wider select-none">
             DEMO
           </span>
+          <BuildBadge />
         </div>
 
         <div className="h-4 w-px bg-border-primary shrink-0" />
@@ -365,6 +367,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Right controls */}
         <div className="flex items-center gap-1.5 shrink-0">
+          <LiveGoldPrice />
+
+          <div className="h-4 w-px bg-border-primary shrink-0" />
+
           <BalanceDisplay />
 
           <div className="h-4 w-px bg-border-primary" />

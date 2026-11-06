@@ -1,0 +1,22 @@
+[
+  {
+    "check": "build_badge_visible",
+    "result": "PASS",
+    "detail": "count=1 text='build:0d95531'"
+  },
+  {
+    "check": "live_gold_chip_visible",
+    "result": "PASS",
+    "detail": "count=1"
+  },
+  {
+    "check": "live_gold_price_data",
+    "result": "PASS",
+    "detail": "chip='XAUUSD\\n4,043.69'"
+  },
+  {
+    "check": "console_errors_zero",
+    "result": "PASS",
+    "detail": "errors=0: []"
+  }
+]
