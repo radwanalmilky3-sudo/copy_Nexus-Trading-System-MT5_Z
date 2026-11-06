@@ -59,7 +59,18 @@
 4. **الواجهة:** RiskMonitor وLiveDecisionPanel يقرؤون الجداول الجديدة عبر nexus-api بدل الحالة العابرة.
 5. **ترتيب التنفيذ المقترح:** دفعة P0 (جداول + كتابة + قراءة داشبورد) → ثم P1 جدولاً جدولاً مع اختبار لكل دفعة، وكل دفعة commit+push فوري.
 
-## 4) مخاطر يجب حسمها قبل التنفيذ
+## 4) خريطة العرض — أين يظهر كل جدول في شاشات الداشبورد
+
+| الجداول | الشاشة/النافذة | ما يتغير فيها |
+|---|---|---|
+| execution_intents + approvals | Live Decision · تبويب Positions · Risk Monitor | حالة النية قبل التنفيذ، قائمة الموافقات المعلقة مع اعتماد/رفض موثق |
+| risk_limits + risk_snapshots + risk_violations | Risk Monitor · تبويب Risk · Settings (نواة التداول) | حدود مع قيم حية مقابل العتبات، جدول مخالفات مؤرخ، القاطعون يقرؤون من snapshots بدل "غير مؤكد" |
+| circuit_breaker_events + kill_switch_events + anti_tilt_events | Risk Monitor (Circuit Breakers) · تبويب Risk | سجل تفعيل/رفع القواطع وأحداث KILL وanti-tilt بالأدلة |
+| shadow_trades | تبويب Backtest · نافذة P&L | مقارنة الافتراضي مقابل المنفذ (WR/PF)، خيار مصدر "الافتراضي" |
+| market_data_gaps + quality_snapshots | System Diagnostic (details) · تبويب التحليل الأساسي | بند جودة بيانات بفجوات وشهادة صلاحية |
+| reasoning.decision_records + objections + evidence_items | Live Decision (A7 Reasoning) · تبويب Journal | سجل قرارات مؤسسي مرقّم الإصدار مع الاعتراضات والأدلة |
+
+## 5) مخاطر يجب حسمها قبل التنفيذ
 - **لا PostgreSQL الآن:** إدخال قاعدة ثانية يعني كاتباً متزامنين لمنطق واحد — ضد قاعدة الكاتب الأحادي الموثقة.
 - **لا جداول بلا كاتب:** يُمنع إنشاء أي جدول P1/P2 قبل أن يكون الكود الذي يكتبه جاهزاً في نفس الدفعة.
 - **UUID مقابل الأنواع الحالية:** DuckDB يدعم UUID — يُعتمد كما في الوثيقة لسهولة الترحيل مستقبلاً.
