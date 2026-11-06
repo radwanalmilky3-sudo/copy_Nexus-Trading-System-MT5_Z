@@ -531,7 +531,7 @@ bool DoHandshake()
    string body = "{\"mt5_login\":\"" + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) + "\"" +
                  ",\"mt5_broker\":\"" + JsonEscape(AccountInfoString(ACCOUNT_COMPANY)) + "\"" +
                  ",\"mt5_server\":\"" + JsonEscape(AccountInfoString(ACCOUNT_SERVER)) + "\"" +
-                 ",\"terminal_version\":\"" + JsonEscape(TerminalInfoString(TERMINAL_VERSION)) + "\"}";
+                 ",\"terminal_version\":\"" + JsonEscape(TerminalInfoString(TERMINAL_NAME) + " build " + IntegerToString(TerminalInfoInteger(TERMINAL_BUILD))) + "\"}";
    string response;
    int status;
    if(!HttpPost("/api/ea/handshake", body, response, status))
