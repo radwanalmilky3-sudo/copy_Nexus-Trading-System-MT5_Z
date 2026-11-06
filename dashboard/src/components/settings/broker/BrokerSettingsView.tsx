@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { AssetDropDown } from './AssetDropDown';
+import SystemHealthStrip from './SystemHealthStrip';
 import type { BrokerController, BrokerState, Section } from './controller';
 import type { AssetMode, TransitionDraft } from './types';
 
@@ -92,7 +93,21 @@ export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerCont
       </div>}
     </div>}
 
-    {s.section==='connection'&&<div className="space-y-3"><div className="overflow-x-auto rounded border border-border-primary"><table className={tableClass} aria-label="حالة اتصال الحساب"><thead><tr><th scope="col">الحساب</th><th scope="col">الخادم</th><th scope="col">حالة الاتصال</th><th scope="col">آخر تحقق UTC</th></tr></thead><tbody><tr><td>{s.account?.label||'اختر حسابًا'}</td><td dir="ltr">{s.account?.server||'—'}</td><td className={connection?.ok?'text-neon-green':'text-neon-gold'}>{s.symbolsLoading?'جارٍ التحقق…':connection?.ok?'نجح اتصال القراءة — الحساب والخادم متطابقان':connection?'تعذر التحقق من الاتصال':'لم يُفحص بعد'}</td><td dir="ltr">{connection?.at||'—'}</td></tr></tbody></table></div><p>يفحص الموقع الحساب والخادم في منصة MT5 المفتوحة ويقرأ قائمة الأصول. النتيجة تعبّر عن وقت الفحص الموضح، والتداول الآلي غير مفعّل.</p><button type="button" className={button} disabled={!s.account||s.loading||s.symbolsLoading||s.busy} onClick={()=>void c.checkConnection()}>{s.symbolsLoading?'جارٍ الفحص…':'التحقق من اتصال MT5'}</button></div>}
+    {s.section==='connection'&&<div className="space-y-4">
+      <SystemHealthStrip />
+      {!s.account&&!s.loading&&<div className="space-y-2 rounded border border-neon-gold/40 bg-neon-gold/5 p-4 text-sm">
+        <p className="font-bold">لا يوجد حساب مختار بعد — ثلاث خطوات:</p>
+        <ol className="list-decimal space-y-1 pr-5 text-text-secondary">
+          <li>افتح قسم «الوسطاء والحسابات» واختر وسيطًا ثم حسابًا من جدوله.</li>
+          <li>اضغط «حفظ الحساب للعمل عليه» في شريط الاختيار أعلى الصفحة.</li>
+          <li>عد إلى تبويب «الاتصال» واضغط «التحقق من اتصال MT5».</li>
+        </ol>
+        <button type="button" className={`${button} border-neon-gold/50 font-semibold text-neon-gold`} onClick={()=>c.setSection('accounts')}>الانتقال إلى الوسطاء والحسابات</button>
+      </div>}
+      <div className="overflow-x-auto rounded border border-border-primary"><table className={tableClass} aria-label="حالة اتصال الحساب"><thead><tr><th scope="col">الحساب</th><th scope="col">الخادم</th><th scope="col">حالة الاتصال</th><th scope="col">آخر تحقق UTC</th></tr></thead><tbody><tr><td>{s.account?.label||'اختر حسابًا'}</td><td dir="ltr">{s.account?.server||'—'}</td><td className={connection?.ok?'text-neon-green':'text-neon-gold'}>{s.symbolsLoading?'جارٍ التحقق…':connection?.ok?'نجح اتصال القراءة — الحساب والخادم متطابقان':connection?'تعذر التحقق من الاتصال':s.account?'جاهز للفحص — اضغط الزر أدناه':'لم يُفحص بعد'}</td><td dir="ltr">{connection?.at||'—'}</td></tr></tbody></table></div>
+      <p>يفحص الموقع الحساب والخادم في منصة MT5 المفتوحة ويقرأ قائمة الأصول. النتيجة تعبّر عن وقت الفحص الموضح، والتداول الآلي غير مفعّل.</p>
+      <button type="button" className={button} disabled={!s.account||s.loading||s.symbolsLoading||s.busy} onClick={()=>void c.checkConnection()}>{s.symbolsLoading?'جارٍ الفحص…':'التحقق من اتصال MT5'}</button>
+    </div>}
     {['assets','timing','evidence'].includes(s.section)&&!s.account&&!s.loading&&<p>اختر حسابًا أو أنشئ بيانات حسابك أولًا.</p>}
 
     {s.section==='assets'&&s.draft&&<fieldset disabled={s.busy||s.loading} className="space-y-3">
