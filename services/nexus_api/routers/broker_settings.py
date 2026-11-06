@@ -42,6 +42,16 @@ async def research_batch_certificate(account_id:str,actor:CurrentUser,group_id:s
     await _require(db,actor,'source_manager.view')
     return await call(db,'research_batch_certificate',actor,{'account_id':account_id,'group_id':group_id})
 
+class TrainDatasetRequest(BaseModel):
+    group_id:str=Field(min_length=8,max_length=64)
+    name:str=Field(min_length=1,max_length=128)
+
+@router.post('/accounts/{account_id}/research-train-dataset')
+async def create_train_dataset(account_id:str,payload:TrainDatasetRequest,actor:CurrentUser,db:DataServiceClient=Depends(get_data_service)):
+    """Bind a certified batch to a versioned training dataset (rejected if the certificate is invalid)."""
+    await _require(db,actor,'source_manager.edit')
+    return await call(db,'research_train_dataset',actor,{'account_id':account_id,'group_id':payload.group_id,'name':payload.name})
+
 class AnalysisRequest(BaseModel):
     timeframe:Literal['M1','M5','M15','M30','H1','H4','D1']='M15'
     start:int|None=None

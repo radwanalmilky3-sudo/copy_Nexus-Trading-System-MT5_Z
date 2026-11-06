@@ -13,6 +13,7 @@ const offsetLabel=(s?:number)=>s===undefined?'—':s===0?'(الأساس)':(s>0?'
 export function DownloadRunsTable({account,symbol,refresh}:{account:string;symbol:string;refresh:number}){
  const [allRuns,setRuns]=useState<Run[]>([]),[error,setError]=useState(''),[loading,setLoading]=useState(false),[poll,setPoll]=useState(0),[frame,setFrame]=useState('all');
  const [certGroup,setCertGroup]=useState(''),[cert,setCert]=useState<BatchCertificate|null>(null),[certLoading,setCertLoading]=useState(false),[certError,setCertError]=useState('');
+ const [dsName,setDsName]=useState(''),[dsBusy,setDsBusy]=useState(false),[dsResult,setDsResult]=useState<{dataset_id:string;symbols:string[];certificate_status:string;lineage_edges_added?:number;registered?:boolean}|null>(null),[dsError,setDsError]=useState('');
  const assetRuns=allRuns.filter(r=>r.symbol===symbol);
  const runs=assetRuns.filter(r=>frame==='all'||r.timeframe===frame);
  const groups=[...new Set(allRuns.map(r=>r.group_id))].slice(0,20);
@@ -24,6 +25,9 @@ export function DownloadRunsTable({account,symbol,refresh}:{account:string;symbo
  const loadCertificate=(gid:string)=>{if(!account||!gid)return;setCertLoading(true);setCertError('');setCert(null);
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   void fetch((process.env.NEXT_PUBLIC_API_URL||'')+'/api/brokers/accounts/'+encodeURIComponent(account)+'/research-certificate?group_id='+encodeURIComponent(gid),{headers:getAuthHeaders(),signal:controller.signal,cache:'no-store'}).then(async r=>{const body=await r.json().catch(()=>null);if(!r.ok)throw new Error(body?.detail||'');if(!controller.signal.aborted)setCert(body);}).catch(e=>{if(!controller.signal.aborted)setCertError(e instanceof Error&&e.message?String(e.message):'تعذر استخراج شهادة الدفعة.');}).finally(()=>{clearTimeout(timeout);if(!controller.signal.aborted)setCertLoading(false);});};
+ const createTrainDataset=()=>{if(!account||!certGroup||!dsName.trim())return;setDsBusy(true);setDsError('');setDsResult(null);
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),20000);
+  void fetch((process.env.NEXT_PUBLIC_API_URL||'')+'/api/brokers/accounts/'+encodeURIComponent(account)+'/research-train-dataset',{method:'POST',headers:{...getAuthHeaders(),'Content-Type':'application/json'},signal:controller.signal,body:JSON.stringify({group_id:certGroup,name:dsName.trim()})}).then(async r=>{const body=await r.json().catch(()=>null);if(!r.ok)throw new Error(body?.detail||'');if(!controller.signal.aborted)setDsResult(body);}).catch(e=>{if(!controller.signal.aborted)setDsError(typeof e?.message==='string'&&e.message?e.message:'تعذر إنشاء مجموعة التدريب.');}).finally(()=>{clearTimeout(timeout);if(!controller.signal.aborted)setDsBusy(false);});};
  const latest=new Map<string,Run>();for(const r of runs){const key=r.symbol+'/'+r.timeframe;if(r.status==='completed'&&r.mode!=='live'&&!latest.has(key))latest.set(key,r);}
  return <section className="space-y-3 border-t border-border-primary pt-4" aria-label="سجل تنزيل وتحديث البيانات">
  <div className="flex items-center justify-between"><h3 className="font-semibold">سجل عمليات <bdi className="text-neon-cyan">{symbol||'الأصل المختار'}</bdi></h3><button type="button" className="rounded border border-border-primary px-3 py-1 text-xs" onClick={()=>setPoll(n=>n+1)}>تحديث السجل</button></div><p className="text-xs text-text-muted">عمليات الأصل ضمن آخر 200 عملية للحساب · أوقات التشغيل UTC · أوقات الشموع كما وردت من MT5. اكتمال العملية لا يعني اكتمال تغطية الفترة.</p>
@@ -42,6 +46,15 @@ export function DownloadRunsTable({account,symbol,refresh}:{account:string;symbo
    <p className="text-text-muted">الإجماليات: {cert.totals.runs} عملية · {cert.totals.bars} شمعة · {cert.totals.fetch_rejected} مرفوضة · {cert.totals.unclassified_gaps} فاصل غير مصنف</p>
    <div className="overflow-x-auto"><table className="w-full text-right text-xs [&_th]:bg-bg-secondary [&_th]:p-2 [&_td]:p-2 [&_tr]:border-b [&_tr]:border-border-primary" aria-label="محاذاة الحزمة الزمنية"><thead><tr><th>الرمز</th><th>الإطار</th><th>أول شمعة</th><th>آخر شمعة</th><th>الفرق عن الأساس</th><th>التغطية</th><th>المحاذاة</th></tr></thead><tbody>{cert.alignment.map(a=><tr key={a.symbol}><td dir="ltr" className="font-mono">{a.symbol}{a.is_base?' ★':''}</td><td>{a.timeframe||'—'}</td><td dir="ltr">{a.first?.slice(0,16)||'—'}</td><td dir="ltr">{a.last?.slice(0,16)||'—'}</td><td>{offsetLabel(a.last_offset_vs_base_seconds)}</td><td>{a.coverage_pct!==undefined?a.coverage_pct+'%':'—'}</td><td>{a.aligned?'✅':'⚠️'}</td></tr>)}</tbody></table></div>
    {(cert.misaligned_symbols.length>0||cert.low_coverage_symbols.length>0)&&<p className="text-neon-gold">تحفظات: {cert.misaligned_symbols.length?'رموز غير متحاذية ('+cert.misaligned_symbols.join('، ')+'). ':''}{cert.low_coverage_symbols.length?'تغطية أقل من 95% ('+cert.low_coverage_symbols.join('، ')+').':''}</p>}
+   <div className="space-y-1 rounded border border-border-primary p-2" aria-label="إنشاء مجموعة تدريب">
+    <p className="font-semibold text-text-secondary">إنشاء مجموعة تدريب من هذه الدفعة {cert.status==='invalid'?'— مرفوض: الشهادة غير صالحة':'(تُسجَّل مرتبطة بشهادتها وسجل lineage لكل رمز)'}</p>
+    <div className="flex flex-wrap items-center gap-2">
+     <input aria-label="اسم مجموعة التدريب" placeholder="مثال: حزمة الذهب M1 أكتوبر" className="min-w-56 flex-1 rounded border border-border-primary bg-bg-primary px-2 py-1" maxLength={128} value={dsName} onChange={e=>setDsName(e.target.value)} disabled={dsBusy||cert.status==='invalid'} />
+     <button type="button" className="rounded border border-neon-gold px-3 py-1 font-semibold text-neon-gold disabled:opacity-40" disabled={dsBusy||cert.status==='invalid'||!dsName.trim()} onClick={createTrainDataset}>{dsBusy?'جارٍ الإنشاء…':'إنشاء مجموعة تدريب'}</button>
+    </div>
+    {dsError&&<p role="alert" className="text-neon-gold">{dsError}</p>}
+    {dsResult&&<p role="status" className="text-neon-green">أُنشئت المجموعة: <bdi dir="ltr">{dsResult.dataset_id}</bdi> · الرموز: <bdi dir="ltr">{dsResult.symbols.join('، ')||'—'}</bdi> · حالة الشهادة: {dsResult.certificate_status} · وصلات lineage: {dsResult.lineage_edges_added??0}</p>}
+   </div>
    <p className="text-text-muted">{cert.note}</p>
   </div>}
  </div>}

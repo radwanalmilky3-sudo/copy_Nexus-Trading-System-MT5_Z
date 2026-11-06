@@ -376,3 +376,61 @@ async def batch_certificate(store,owner,account_id,group_id):
           'fingerprints':[r.get('output_hash') for r in runs if r.get('output_hash')][:32],
           'note':'شهادة مستنتجة من سجلات العمليات المحفوظة فقط — لا افتراض ولا تعبئة. لا تغطي شيئاً لم يُستورد.'}
     return cert
+
+
+async def create_train_dataset(store,owner,account_id,group_id,name):
+    """Idea 4 — bind an imported batch to a versioned training dataset.
+
+    Requires the batch certificate to exist and not be invalid: an invalid
+    batch never becomes a training set. Registers one dataset row for the
+    group and lineage edges from every clean per-symbol dataset into it, so
+    any future training run can cite exactly which certified inputs it used."""
+    import re as _re
+    name=(name or '').strip()
+    if not name or len(name)>128 or not _re.fullmatch(r'[\w\u0600-\u06FF][\w\u0600-\u06FF \-_.]{0,127}',name):
+        raise ValueError('اسم مجموعة التدريب مطلوب (حتى 128 حرفاً دون رموز خاصة)')
+    cert=await batch_certificate(store,owner,account_id,group_id)
+    if cert['status']=='invalid':
+        raise ValueError('رفض الإنشاء: شهادة الدفعة غير صالحة. أصلح الفحوص الفاشلة ثم أعد الاستيراد.')
+    dataset_id='trainset:'+account_id+':'+group_id
+    symbols=sorted({a['symbol'] for a in cert.get('alignment',[])})
+    timeframes=sorted({a.get('timeframe') for a in cert.get('alignment',[]) if a.get('timeframe')})
+    def read_window():
+        conn=store.owner_store._conn;_ledger(conn)
+        row=conn.execute('SELECT MIN(started_at),MAX(started_at) FROM research_account_runs WHERE owner_id=? AND account_id=? AND record_json LIKE ?',(owner,account_id,'%'+group_id+'%')).fetchone()
+        return row
+    lo,hi=await store.owner_store._execute_locked(read_window)
+    metadata={'group_id':group_id,'account_id':account_id,'kind':'training_group',
+              'symbols':symbols,'timeframes':timeframes,'runs_window_utc':[lo,hi],
+              'certificate':{'status':cert['status'],'checks':cert['checks'],'issued_at':cert['issued_at'],
+                             'fingerprints':cert.get('fingerprints',[])[:16]},
+              'created_by':owner,'server_time_utc':datetime.now(timezone.utc).isoformat()}
+    def _persist():
+        conn=store.owner_store._conn
+        conn.execute('BEGIN TRANSACTION')
+        try:
+            conn.execute('INSERT INTO datasets(dataset_id,dataset_name,owner,source_system,storage_uri,grain,sensitivity,metadata_json) VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(dataset_id) DO NOTHING',
+                         (dataset_id,name,owner,'research_train_group',f'group:{group_id}','multi','account',
+                          json.dumps(metadata,ensure_ascii=False,sort_keys=True,default=str)))
+            existing=conn.execute('SELECT dataset_id FROM datasets WHERE dataset_id=?',(dataset_id,)).fetchone()
+            edges=0
+            if existing:
+                for a in cert.get('alignment',[]):
+                    sym=a['symbol'];tf=a.get('timeframe') or 'M15'
+                    upstream=f'research:{account_id}:{sym}:{tf}'
+                    edge_id='trainlin:'+hashlib.sha256((dataset_id+upstream).encode('utf-8')).hexdigest()[:20]
+                    cur=conn.execute('SELECT 1 FROM lineage WHERE lineage_id=?',(edge_id,)).fetchone()
+                    if not cur:
+                        conn.execute('INSERT INTO lineage(lineage_id,upstream_dataset_id,downstream_dataset_id,transformation_name,transformation_version,run_started_at,run_finished_at,metadata_json) VALUES(?,?,?,?,?,?,?,?)',
+                                     (edge_id,upstream,dataset_id,'train_group_binding','v1',lo,hi,json.dumps({'group_id':group_id,'symbol':sym,'timeframe':tf},ensure_ascii=False,sort_keys=True,default=str)))
+                        edges+=1
+            conn.execute('COMMIT')
+            return edges
+        except BaseException:
+            conn.execute('ROLLBACK');raise
+    edges=await store.owner_store._execute_locked(_persist)
+    row=await store.owner_store._execute_locked(lambda:(lambda c:(c.execute('SELECT dataset_id,dataset_name,owner,source_system,storage_uri,grain,sensitivity,metadata_json FROM datasets WHERE dataset_id=?',(dataset_id,)).fetchone()))(store.owner_store._conn))
+    return {'dataset_id':dataset_id,'name':name,'symbols':symbols,'timeframes':timeframes,
+            'certificate_status':cert['status'],'lineage_edges_added':edges,
+            'metadata':metadata,'registered':row is not None,
+            'note':'مجموعة تدريب مرتبطة بشهادة الدفعة؛ التنفيذ والتدريب يتمان في nexus_ml عند جدولة التدريب.'}

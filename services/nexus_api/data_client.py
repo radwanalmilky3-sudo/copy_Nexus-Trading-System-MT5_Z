@@ -61,7 +61,7 @@ class DataServiceClient:
         return rows
 
     async def broker_settings(self, operation: str, owner_id: str, payload: dict[str, Any]) -> Any:
-        allowed={'list_profiles','create_profile','create_account','get_account','get_identity','save_settings','list_events','research_market','research_runs','research_batch_certificate','research_analysis','research_report','sync_sessions'}
+        allowed={'list_profiles','create_profile','create_account','get_account','get_identity','save_settings','list_events','research_market','research_runs','research_batch_certificate','research_train_dataset','research_analysis','research_report','sync_sessions'}
         if operation not in allowed:
             raise ValueError('Unsupported broker settings operation')
         if not self.secret:
