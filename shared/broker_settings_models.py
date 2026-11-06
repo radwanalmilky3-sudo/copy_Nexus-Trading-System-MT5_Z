@@ -28,6 +28,10 @@ class AccountCreate(StrictModel):
 class AssetPreference(StrictModel):
     broker_symbol: Name
     mode: Literal['disabled', 'analysis', 'trade'] = 'disabled'
+    # Per-asset analysis/execution timeframe. 'auto' defers to the fleet's
+    # session-aware auto-TF selection (NEXUS_OPERATIONAL_TF); explicit values
+    # pin the asset to one timeframe. Default keeps old payloads valid.
+    timeframe: Literal['auto', 'M1', 'M5', 'M15', 'H1', 'H4', 'D1'] = 'auto'
 
 
 class SupportTransitionDraft(StrictModel):

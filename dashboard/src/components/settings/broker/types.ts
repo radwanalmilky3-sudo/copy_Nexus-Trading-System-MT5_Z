@@ -1,4 +1,5 @@
 export type AssetMode = 'disabled' | 'analysis' | 'trade';
+export type AssetTimeframe = 'auto' | 'M1' | 'M5' | 'M15' | 'H1' | 'H4' | 'D1';
 export interface TransitionDraft {
   from_offset_seconds: number | null; to_offset_seconds: number | null;
   session_start_date: string | null; effective_at_utc: string | null;
@@ -6,7 +7,7 @@ export interface TransitionDraft {
   support_reply: string; evidence_received_at: string | null;
 }
 export interface SessionObservation {server:string;broker_symbol:string;captured_at_utc:string;observed_offset_seconds:number;source:string;windows:{day:number;start_seconds:number;end_seconds:number}[]}
-export interface AccountSettings { assets: {broker_symbol:string;mode:AssetMode}[]; transition:TransitionDraft;session_observation?:SessionObservation|null;session_observations?:SessionObservation[]|null }
+export interface AccountSettings { assets: {broker_symbol:string;mode:AssetMode;timeframe?:AssetTimeframe}[]; transition:TransitionDraft;session_observation?:SessionObservation|null;session_observations?:SessionObservation[]|null }
 export interface SessionSync {account:BrokerAccount;imported:string[];skipped:string[];captured_at_utc:string;historical_authority:false}
 export interface AccountCreate {profile_id:string;label:string;server:string;login:string;account_kind:'demo'|'live'}
 export interface BrokerAccount {

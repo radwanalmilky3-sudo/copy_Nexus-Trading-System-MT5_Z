@@ -1,4 +1,4 @@
-import type { AccountCreate, AccountSettings, AssetMode, BrokerAPI, BrokerAccount, BrokerEvent, BrokerProfile, BrokerSymbol, TransitionDraft } from './types';
+import type { AccountCreate, AccountSettings, AssetMode, AssetTimeframe, BrokerAPI, BrokerAccount, BrokerEvent, BrokerProfile, BrokerSymbol, TransitionDraft } from './types';
 export type Section='accounts'|'connection'|'assets'|'timing'|'evidence';
 export interface BrokerState {
   selectedProfileId:string;editor:'profile'|'account'|null;
@@ -73,6 +73,7 @@ export function createBrokerController(api:BrokerAPI){
       if(!symbol||symbol.length>128||state.draft.assets.length>=256||state.draft.assets.some(a=>a.broker_symbol===symbol)){emit({error:'أدخل رمزًا فريدًا صالحًا؛ الحد 256 أصلًا.'});return;}
       emit({draft:{...state.draft,assets:[...state.draft.assets,{broker_symbol:symbol,mode:'disabled'}]},dirty:true,error:'',notice:''});},
     setAssetMode(symbol:string,mode:AssetMode){if(state.draft&&!state.busy)emit({draft:{...state.draft,assets:state.draft.assets.map(a=>a.broker_symbol===symbol?{...a,mode}:a)},dirty:true,notice:''});},
+    setAssetTimeframe(symbol:string,timeframe:AssetTimeframe){if(state.draft&&!state.busy)emit({draft:{...state.draft,assets:state.draft.assets.map(a=>a.broker_symbol===symbol?{...a,timeframe}:a)},dirty:true,notice:''});},
     removeAsset(symbol:string){if(state.draft&&!state.busy)emit({draft:{...state.draft,assets:state.draft.assets.filter(a=>a.broker_symbol!==symbol)},dirty:true,notice:''});},
     /* Gold-correlation analysis pack (owner request 2026-11-06): the asset
      * set required alongside XAUUSD for correlated analysis. Only symbols
