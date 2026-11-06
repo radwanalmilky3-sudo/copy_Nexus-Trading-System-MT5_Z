@@ -74,6 +74,37 @@ export function createBrokerController(api:BrokerAPI){
       emit({draft:{...state.draft,assets:[...state.draft.assets,{broker_symbol:symbol,mode:'disabled'}]},dirty:true,error:'',notice:''});},
     setAssetMode(symbol:string,mode:AssetMode){if(state.draft&&!state.busy)emit({draft:{...state.draft,assets:state.draft.assets.map(a=>a.broker_symbol===symbol?{...a,mode}:a)},dirty:true,notice:''});},
     removeAsset(symbol:string){if(state.draft&&!state.busy)emit({draft:{...state.draft,assets:state.draft.assets.filter(a=>a.broker_symbol!==symbol)},dirty:true,notice:''});},
+    /* Gold-correlation analysis pack (owner request 2026-11-06): the asset
+     * set required alongside XAUUSD for correlated analysis. Only symbols
+     * actually discovered from the owner's MT5 terminal are added — never
+     * fabricated names — each as analysis-only; the batch is a single emit. */
+    addGoldCorrelationPack(){if(checkIdentity()||!state.draft||state.busy)return;
+      if(!state.symbols.length){emit({error:'تحقق من اتصال MT5 أولًا (تبويب الاتصال) حتى نطابق الحزمة على رموز وسيطك المتاحة فعلًا.'});return;}
+      const available=new Map(state.symbols.map(sym=>[sym.name,sym]));
+      const roles:{role:string;candidates:string[]}[]=[
+        {role:'الذهب — الأساس',candidates:['XAUUSD']},
+        {role:'الفضة',candidates:['XAGUSD','SILVER']},
+        {role:'مؤشر الدولار',candidates:['DXY','USDX','USDIDX']},
+        {role:'النفط',candidates:['USOIL','WTI','XTIUSD','USCRUDE']},
+        {role:'اليورو/دولار',candidates:['EURUSD']},
+        {role:'الدولار/ين',candidates:['USDJPY']},
+        {role:'مؤشر S&P 500',candidates:['US500','SPX500']},
+        {role:'النحاس',candidates:['XCUUSD','COPPER']},
+        {role:'البلاتين',candidates:['XPTUSD']},
+        {role:'البيتكوين',candidates:['BTCUSD']},
+      ];
+      const assets=[...state.draft.assets];const added:string[]=[];const missing:string[]=[];
+      for(const {role,candidates} of roles){
+        const hit=candidates.map(cand=>available.get(cand)).find(Boolean);
+        if(!hit){missing.push(`${role} (${candidates.join('/')})`);continue;}
+        if(assets.some(a=>a.broker_symbol===hit.name))continue;
+        if(assets.length>=256)break;
+        assets.push({broker_symbol:hit.name,mode:'analysis'});added.push(hit.name);
+      }
+      if(!added.length){emit({notice:missing.length?'لا رمز إضافيًا من حزمة ترابط الذهب: كل المتاح منها موجود في مسودتك، وغير المتاح لدى وسيطك: '+missing.join('؛ '):'حزمة ترابط الذهب موجودة بالكامل في مسودتك بالفعل.'});return;}
+      emit({draft:{...state.draft,assets},dirty:true,error:'',
+        notice:`أُضيفت ${added.length} أصلًا كـ«للتحليل فقط» (${added.join('، ')}).${missing.length?' غير متاح لدى وسيطك: '+missing.join('؛ '):''} راجع القائمة ثم احفظ صراحة.`});
+    },
     fillSupport(){if(state.account?.server!=='OneRoyal-Demo')return;controller.patchTransition({from_offset_seconds:10800,to_offset_seconds:7200,session_start_date:'2026-11-02',effective_at_utc:null,during_market_closure:'yes',next_open_utc:null,evidence_received_at:null,
       support_reply:'بحسب رد دعم OneRoyal الذي نقله المستخدم: سيتم تغيير توقيت خادم OneRoyal-Demo من GMT+3 إلى GMT+2 أثناء إغلاق السوق، ويبدأ العمل بالتوقيت الجديد مع افتتاح جلسة الاثنين 2 نوفمبر 2026. ساعة التحويل الدقيقة غير محددة.'});},
     async compareLatest(){if(checkIdentity()||!state.account||state.busy)return;const ticket=epoch,id=state.account.account_id;emit({busy:true,error:'',notice:''});
