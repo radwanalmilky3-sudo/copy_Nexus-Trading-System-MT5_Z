@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { CalendarClock, Search, ShieldCheck } from 'lucide-react';
+import { Archive, BarChart3, CalendarClock, Newspaper, Search, ShieldCheck } from 'lucide-react';
 import NeonCard from '../shared/NeonCard';
 import { useDashboardStore } from '@/stores/dashboardStore';
-import { apiClient } from '@/lib/api-client';
+import { apiClient, getAuthHeaders } from '@/lib/api-client';
 import type { CalendarEvent, NewsItem } from '@/types/trading';
 import type { BlackoutDTO, NewsTickerItemDTO } from '@/types/fundamental';
+import MultiAssetImpactPanel from '@/components/fundamental/MultiAssetImpactPanel';
 import {
   filterNewsItems,
   impactValue,
@@ -16,6 +17,28 @@ import {
   type ImpactFilter,
   type PeriodFilter,
 } from '@/components/fundamental/news-presentation';
+
+type Section = 'news' | 'calendar' | 'impact' | 'archive';
+
+type ArchiveRow = {
+  id: string;
+  headline: string;
+  source: string;
+  sentiment: 'positive' | 'negative' | 'neutral' | 'unknown';
+  publishedAt: string;
+  relevance: string;
+};
+
+const archSentiment = (value: unknown): ArchiveRow['sentiment'] => {
+  if (value == null || value === '') return 'unknown';
+  const score = typeof value === 'number' ? value : Number(value);
+  if (!Number.isFinite(score)) return 'unknown';
+  if (Math.abs(score) <= 0.2) return 'neutral';
+  return score > 0 ? 'positive' : 'negative';
+};
+
+const archText = (value: unknown): string =>
+  value == null || value === '' ? '—' : String(value);
 
 function impactAr(v: string) {
   return { HIGH: 'مرتفع', MEDIUM: 'متوسط', LOW: 'منخفض' }[impactValue(v)];
@@ -69,6 +92,43 @@ export default function NewsFeed() {
   const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [now, setNow] = useState(Date.now());
+  const [section, setSection] = useState<Section>('news');
+  const [archive, setArchive] = useState<ArchiveRow[]>([]);
+  const [archiveState, setArchiveState] = useState<'loading' | 'ready' | 'error'>('loading');
+
+  useEffect(() => {
+    if (section !== 'archive') return;
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/api/research-lab/news`, {
+          cache: 'no-store',
+          headers: getAuthHeaders(),
+        });
+        if (!res.ok) throw new Error('archive fetch failed');
+        const payload = await res.json();
+        if (cancelled) return;
+        const raw: unknown[] = Array.isArray(payload) ? payload : Array.isArray(payload?.rows) ? payload.rows : [];
+        setArchive(raw.map((item) => {
+          const x = item as Record<string, unknown>;
+          return {
+            id: archText(x.news_id),
+            headline: archText(x.headline),
+            source: archText(x.source),
+            sentiment: archSentiment(x.sentiment),
+            publishedAt: archText(x.published_at),
+            relevance: archText(Array.isArray(x.symbols) ? x.symbols.map(String).join(', ') : x.impact),
+          };
+        }));
+        setArchiveState('ready');
+      } catch {
+        if (!cancelled) setArchiveState('error');
+      }
+    };
+    load();
+    const t = setInterval(load, 60_000);
+    return () => { cancelled = true; clearInterval(t); };
+  }, [section]);
 
   useEffect(() => {
     const timer = setInterval(() => setNow(Date.now()), 10_000);
@@ -150,6 +210,25 @@ export default function NewsFeed() {
   return (
     <div dir="rtl">
       <NeonCard title={`الأخبار والتقويم — الشاشة الموحدة (${symbol})`} glow="cyan" noPadding className="h-full flex flex-col">
+        <div className="flex flex-wrap items-center gap-2 border-b border-border-primary/20 bg-slate-900/40 px-3 py-2">
+          {([
+            ['news', 'الأخبار', Newspaper],
+            ['calendar', 'التقويم الاقتصادي', CalendarClock],
+            ['impact', 'الأثر حسب الأصل', BarChart3],
+            ['archive', 'أرشيف البحث', Archive],
+          ] as const).map(([key, label, Icon]) => (
+            <button
+              key={key}
+              onClick={() => setSection(key)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition ${section === key ? 'bg-sky-600 text-white' : 'border border-sky-200 bg-white text-sky-900 hover:bg-sky-50'}`}
+              aria-pressed={section === key}
+            >
+              <Icon className="h-3.5 w-3.5" />
+              {label}
+            </button>
+          ))}
+        </div>
+
         {blackout.state !== 'clear' && (
           <div className="border-b border-amber-400 bg-amber-50 px-4 py-3 text-xs font-semibold text-amber-950">
             حالة الأمان: {blackout.reason_ar ?? 'حالة التقويم غير واضحة؛ فتح تعرّض جديد محظور احترازيًا.'}
@@ -163,6 +242,7 @@ export default function NewsFeed() {
           </div>
         )}
 
+        {(section === 'news' || section === 'calendar') && (
         <div className="flex flex-wrap items-center gap-2 border-b border-border-primary/20 px-3 py-2 text-[10px] text-text-muted">
           <span>التأثير</span>
           {(['ALL','HIGH','MEDIUM','LOW'] as ImpactFilter[]).map(v => (
@@ -204,6 +284,7 @@ export default function NewsFeed() {
             />
           </span>
         </div>
+        )}
 
         <div className="flex flex-wrap gap-3 border-b border-border-primary/20 px-3 py-1.5 text-[10px] text-slate-600">
           <span>آخر تحديث: {banners.lastUpdateLabel ?? '—'}</span>
@@ -231,7 +312,7 @@ export default function NewsFeed() {
           </div>
         )}
 
-        {loaded && (viewState === 'ready' || viewState === 'stale' || viewState === 'empty' || viewState === 'unavailable') && (
+        {loaded && section === 'news' && (viewState === 'ready' || viewState === 'stale' || viewState === 'empty' || viewState === 'unavailable') && (
           <div className="space-y-3 p-3">
             <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
               <section className="border border-sky-200 bg-white text-slate-900">
@@ -292,33 +373,8 @@ export default function NewsFeed() {
 
             <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
               <section className="border border-sky-200 bg-white text-slate-900">
-                <h3 className="flex items-center gap-2 border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950"><CalendarClock className="h-4 w-4" /> التقويم الاقتصادي</h3>
-                <div className="max-h-[420px] overflow-auto">
-                  <table className="w-full min-w-[720px] text-right text-xs">
-                    <thead className="sticky top-0 bg-sky-50 text-sky-900">
-                      <tr>{['الحدث','العملة','الأهمية','الفعلي','المتوقع','السابق','الوقت','المصدر'].map(x => <th key={x} className="px-3 py-2 font-semibold">{x}</th>)}</tr>
-                    </thead>
-                    <tbody>
-                      {filteredCalendar.length === 0 ? <tr><td colSpan={8} className="p-4 text-center text-slate-600">لا توجد أحداث مطابقة للفلاتر.</td></tr> : filteredCalendar.map(event => (
-                        <tr key={event.id} className="border-t border-sky-100">
-                          <td className="px-3 py-2 font-medium">{event.event_name}</td>
-                          <td className="px-3 py-2">{event.currency}</td>
-                          <td className="px-3 py-2">{impactAr(event.impact)}</td>
-                          <td className="px-3 py-2"><b>{event.actual ?? '—'}</b></td>
-                          <td className="px-3 py-2">{event.forecast ?? '—'}</td>
-                          <td className="px-3 py-2">{event.previous ?? '—'}</td>
-                          <td className="px-3 py-2">{new Date(event.timestamp).toLocaleString('ar')}</td>
-                          <td className="px-3 py-2">{event.source ?? 'مصدر تقويم'} • {event.data_origin ?? 'REAL'}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-
-              <section className="border border-sky-200 bg-white text-slate-900">
                 <h3 className="flex items-center gap-2 border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950"><ShieldCheck className="h-4 w-4" /> الشريط النشط (تنبيهات عالية الأهمية)</h3>
-                <div className="max-h-[420px] divide-y divide-sky-100 overflow-y-auto">
+                <div className="max-h-[280px] divide-y divide-sky-100 overflow-y-auto">
                   {ticker.length === 0 ? <div className="p-4 text-xs text-slate-600">لا توجد تنبيهات نشطة.</div> : ticker.slice(0, 20).map(x => (
                     <div key={x.ticker_item_id} className="p-3">
                       <div className="flex flex-wrap items-center gap-2 text-[10px]">
@@ -332,6 +388,69 @@ export default function NewsFeed() {
                 </div>
               </section>
             </div>
+          </div>
+        )}
+
+        {loaded && section === 'calendar' && (viewState === 'ready' || viewState === 'stale' || viewState === 'empty' || viewState === 'unavailable') && (
+          <div className="space-y-3 p-3">
+            <section className="border border-sky-200 bg-white text-slate-900">
+              <h3 className="flex items-center gap-2 border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950"><CalendarClock className="h-4 w-4" /> التقويم الاقتصادي</h3>
+              <div className="max-h-[560px] overflow-auto">
+                <table className="w-full min-w-[720px] text-right text-xs">
+                  <thead className="sticky top-0 bg-sky-50 text-sky-900">
+                    <tr>{['الحدث','العملة','الأهمية','الفعلي','المتوقع','السابق','الوقت','المصدر'].map(x => <th key={x} className="px-3 py-2 font-semibold">{x}</th>)}</tr>
+                  </thead>
+                  <tbody>
+                    {filteredCalendar.length === 0 ? <tr><td colSpan={8} className="p-4 text-center text-slate-600">لا توجد أحداث مطابقة للفلاتر.</td></tr> : filteredCalendar.map(event => (
+                      <tr key={event.id} className="border-t border-sky-100">
+                        <td className="px-3 py-2 font-medium">{event.event_name}</td>
+                        <td className="px-3 py-2">{event.currency}</td>
+                        <td className="px-3 py-2">{impactAr(event.impact)}</td>
+                        <td className="px-3 py-2"><b>{event.actual ?? '—'}</b></td>
+                        <td className="px-3 py-2">{event.forecast ?? '—'}</td>
+                        <td className="px-3 py-2">{event.previous ?? '—'}</td>
+                        <td className="px-3 py-2">{new Date(event.timestamp).toLocaleString('ar')}</td>
+                        <td className="px-3 py-2">{event.source ?? 'مصدر تقويم'} • {event.data_origin ?? 'REAL'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        )}
+
+        {section === 'impact' && (
+          <div className="p-3"><MultiAssetImpactPanel /></div>
+        )}
+
+        {section === 'archive' && (
+          <div className="space-y-3 p-3">
+            <section className="border border-sky-200 bg-white text-slate-900">
+              <h3 className="flex items-center gap-2 border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950"><Archive className="h-4 w-4" /> الأرشيف البحثي — الأخبار المرتبطة بالأصل والفترة</h3>
+              <p className="border-b border-sky-100 bg-sky-50/60 px-3 py-1.5 text-[10px] text-slate-600">التصفية حسب وسوم المصدر ووقت النشر UTC — المصدر: nexus-data.news_articles. توفر الأرشيف لا يثبت حداثته أو اكتماله؛ عرض موحّد يخدم نفس الشاشة دون الرجوع لمختبر البحث.</p>
+              <div className="max-h-[560px] overflow-auto">
+                <table className="w-full min-w-[720px] text-right text-xs">
+                  <thead className="sticky top-0 bg-sky-50 text-sky-900">
+                    <tr>{['الخبر','المصدر','الأصول المتأثرة','وقت النشر UTC','النبرة'].map(x => <th key={x} className="px-3 py-2 font-semibold">{x}</th>)}</tr>
+                  </thead>
+                  <tbody>
+                    {archiveState === 'loading' && <tr><td colSpan={5} className="p-4 text-center text-slate-600">جارٍ التحميل…</td></tr>}
+                    {archiveState === 'error' && <tr><td colSpan={5} className="p-4 text-center text-amber-700">تعذر قراءة أرشيف الأخبار — لا تُعرض بيانات بديلة.</td></tr>}
+                    {archiveState === 'ready' && archive.length === 0 && <tr><td colSpan={5} className="p-4 text-center text-slate-600">لا توجد أخبار مطابقة ضمن السجلات المقروءة.</td></tr>}
+                    {archiveState === 'ready' && archive.map(r => (
+                      <tr key={r.id} className="border-t border-sky-100">
+                        <td className="px-3 py-2 font-medium">{r.headline}</td>
+                        <td className="px-3 py-2">{r.source}</td>
+                        <td className="px-3 py-2">{r.relevance}</td>
+                        <td className="px-3 py-2">{r.publishedAt}</td>
+                        <td className="px-3 py-2">{r.sentiment === 'positive' ? 'إيجابية' : r.sentiment === 'negative' ? 'سلبية' : r.sentiment === 'neutral' ? 'محايدة' : 'غير محددة'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
           </div>
         )}
       </NeonCard>
