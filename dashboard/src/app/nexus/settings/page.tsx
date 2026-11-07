@@ -1409,8 +1409,8 @@ function SettingsPageInner() {
               icon={section.icon} color={section.color}
               expanded={expanded} setExpanded={setExpanded}
             >
-              {/* شبكة عمودين: استغلال العرض بدل صف واحد مهدر لكل إعداد */}
-              <div className="grid gap-x-8 gap-y-3 md:grid-cols-2">
+              {/* شبكة بطاقات مدمجة: صفر فجوات أفقية، 3 أعمدة على الشاشات العريضة */}
+              <div className="grid items-start gap-2 sm:grid-cols-2 2xl:grid-cols-3">
                 {section.fields.map((f) => (
                   <FieldRow
                     key={f.key}
@@ -1809,12 +1809,10 @@ function SectionCard({
 function FieldRow({ field, value, onChange }: { field: SettingField; value: any; onChange: (v: any) => void }) {
   const isUnset = value === undefined || value === null;
   return (
-    <div className="flex items-start gap-4">
-      <div className="flex-1 min-w-0">
+    <div className="flex flex-col gap-1.5 rounded border border-border-primary/60 bg-bg-secondary/30 px-3 py-2">
+      <div className="flex items-center justify-between gap-2">
         <div className="text-[10px] font-mono font-bold text-text-secondary">{field.label}</div>
-        <div className="text-[9px] font-mono text-text-muted mt-0.5 leading-relaxed">{field.description}</div>
-      </div>
-      <div className="flex w-36 shrink-0 items-start gap-1.5">
+        <div className="flex w-36 shrink-0 items-start gap-1.5">
         {field.type === 'boolean' ? (
           <>
             <button
@@ -1890,6 +1888,10 @@ function FieldRow({ field, value, onChange }: { field: SettingField; value: any;
           </div>
         )}
       </div>
+      </div>
+      {field.description && (
+        <div className="text-[9px] font-mono text-text-muted leading-relaxed">{field.description}</div>
+      )}
     </div>
   );
 }
