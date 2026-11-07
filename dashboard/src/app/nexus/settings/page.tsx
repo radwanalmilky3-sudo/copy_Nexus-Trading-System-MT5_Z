@@ -1147,14 +1147,8 @@ function SettingsPageInner() {
           <SectionCard
             id="env" label="بيئة النظام (.env)" icon={FileCog} color="text-neon-gold"
             expanded={expanded} setExpanded={setExpanded}
+            hint="قيم ملف .env على القرص — الحفظ ينشئ .env.bak ثم يكتب ذريًا، والتغييرات لا تُفعَّل إلا بعد إعادة تشغيل كاملة (بإذن المشغّل) — الأسرار (PIN · MT5 · مفاتيح API) لا تُعرض ولا تُعدَّل من هنا إطلاقًا"
           >
-            <p className="mb-3 rounded-lg border border-border-primary bg-bg-input px-3 py-2 text-xs leading-relaxed text-text-muted">
-              هذه قيم ملف <span dir="ltr">.env</span> المحفوظ على قرص التشغيل. عند الحفظ تُنشأ نسخة احتياطية
-              باسم <span dir="ltr">.env.bak</span> أولًا ثم يُكتب الملف ذريًا. التغييرات{' '}
-              <b>لا تُفعَّل إلا بعد إعادة تشغيل النظام كاملًا</b> — وإعادة التشغيل حاليًا{' '}
-              <b>غير مسموحة دون إذن المشغّل</b>. أما الأسرار (PIN · MT5 · مفاتيح API …) فلا تُعرض ولا تُعدَّل
-              من هذه الواجهة إطلاقًا.
-            </p>
 
             <div className="mb-1 flex items-center gap-2 rounded-lg border border-neon-cyan/30 bg-neon-cyan/5 px-3 py-2">
               <Shield className="h-3.5 w-3.5 shrink-0 text-neon-cyan" />
@@ -1285,12 +1279,8 @@ function SettingsPageInner() {
           <SectionCard
             id="local" label="وضع التشغيل" icon={Globe} color="text-text-secondary"
             expanded={expanded} setExpanded={setExpanded}
+            hint="PAPER/LIVE لا يُغيّران من هنا — الحالة تُجلب من الخادم (‎/api/system/mode) ولا يُعتمد أي تغيير إلا بعد تأكيد الخادم (الصلاحية/PIN)"
           >
-            <p className="mb-3 rounded-lg border border-border-primary bg-bg-input px-3 py-2 text-xs leading-relaxed text-text-muted">
-              وضع PAPER/LIVE والتداول الآلي لا يُغيّران من الإعدادات المحلية — الحالة المعروضة تُجلب من الخادم
-              (‎/api/system/mode). عناصر التحكم في هذه البطاقة مباشرة، ولا يُعتمد أي تغيير إلا بعد تأكيد الخادم
-              (الصلاحية/PIN).
-            </p>
             <div className="flex items-center justify-between gap-3 py-1.5">
               <div className="flex-1 min-w-0">
                 <div className="text-[10px] font-mono font-bold text-text-secondary">وضع التداول</div>
@@ -1326,11 +1316,8 @@ function SettingsPageInner() {
           <SectionCard
             id="session_gate" label="بوابة الجلسات الفعلية" icon={Shield} color="text-neon-cyan"
             expanded={expanded} setExpanded={setExpanded}
+            hint="تُفرض على مستوى الخادم بساعة الخادم: تُحدد جلسات التداول المسموحة — تُحفظ بزر «حفظ» وتُطبَّق فورًا دون إعادة تشغيل"
           >
-            <p className="mb-3 rounded-lg border border-border-primary bg-bg-input px-3 py-2 text-xs leading-relaxed text-text-muted">
-              بوابة تُفرض على مستوى الخادم بساعة الخادم: تُحدد الجلسات المسموح فيها بالتداول، ويُسمح بخلاف ذلك خارجها.
-              العناصر أدناه قابلة للتعديل وتُحفظ مع زر «حفظ» وتُطبَّق فورًا دون إعادة تشغيل.
-            </p>
 
             <FieldRow
               field={{
