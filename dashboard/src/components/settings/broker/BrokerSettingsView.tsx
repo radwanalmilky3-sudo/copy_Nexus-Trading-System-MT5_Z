@@ -35,8 +35,10 @@ export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerCont
   const canLeave=()=>!s.dirty||window.confirm('لديك تعديلات غير محفوظة لهذا الحساب. هل تريد تجاهلها والمتابعة؟');
   const patch=(key:keyof TransitionDraft,value:unknown)=>c.patchTransition({[key]:value});
   return <section dir="rtl" className="mx-auto w-full max-w-[1400px] space-y-4 p-4 text-text-primary" aria-label="إعدادات الوسيط والحسابات">
-    <h2 className="text-lg font-bold">الوسيط والحسابات — حساب الموقع الحالي</h2>
-    <p className="rounded border border-neon-gold/30 bg-neon-gold/5 p-3 text-sm">هذه إعدادات خاصة بمستخدم الموقع وحساب الوسيط المختار. الحفظ دائم كمسودة، لكنه لا يربط MT5 ولا يفعّل التداول. التنفيذ غير موصول.</p>
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <h2 className="text-lg font-bold shrink-0">الوسيط والحسابات — حساب الموقع الحالي</h2>
+      <p className="min-w-0 max-w-3xl flex-1 rounded border border-neon-gold/30 bg-neon-gold/5 px-3 py-1.5 text-xs">إعدادات مستخدم الموقع وحساب الوسيط المختار — حفظ دائم كمسودة، لا يربط MT5 ولا يفعّل التداول.</p>
+    </div>
     <div className="flex items-end gap-3 overflow-x-auto rounded-lg border border-border-primary bg-bg-secondary/30 p-3">
       <label className="min-w-48 flex-1 space-y-2 text-sm">الوسيط المختار
         <select className={input} aria-label="الوسيط المختار" value={s.selectedProfileId} disabled={s.busy||s.loading} onChange={e=>{if(canLeave())c.selectProfile(e.target.value);}}>

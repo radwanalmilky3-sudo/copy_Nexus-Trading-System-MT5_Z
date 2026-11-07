@@ -1632,18 +1632,37 @@ function FundamentalSourceHealthTab({
 
   return (
     <div className="mx-auto w-full max-w-[1400px] p-4" dir="rtl">
-      <div className="mb-4 flex flex-wrap items-start justify-between gap-3 border border-border-primary bg-bg-secondary/50 p-4">
-        <div>
+      <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2 border border-border-primary bg-bg-secondary/50 p-3">
+        <div className="shrink-0">
           <div className="flex items-center gap-2">
             <Activity className="h-4 w-4 text-neon-cyan" />
             <h2 className="text-[13px] font-mono font-bold text-text-primary">إدارة مصادر التحليل الأساسي</h2>
           </div>
-          <p className="mt-1 max-w-3xl text-[10px] font-mono leading-5 text-text-muted">
-            مراقبة مباشرة للمصادر التي تغذي MACRO وMONETARY وCROSS-ASSET وGEOPOLITICS وFLOWS.
-            هذه الشاشة للعرض والتشخيص فقط؛ لا تعرض مفاتيح API ولا تغيّر الإعدادات السرية.
+          <p className="mt-1 max-w-md text-[10px] font-mono leading-4 text-text-muted">
+            عرض وتشخيص فقط؛ لا تعرض مفاتيح API ولا تغيّر الإعدادات السرية.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
+          {([
+            ['إجمالي المصادر', counts.total, 'neutral'],
+            ['سليم', counts.healthy, 'healthy'],
+            ['يتطلب إعدادًا', counts.configRequired, 'config'],
+            ['متدهور', counts.degraded, 'degraded'],
+            ['غير معروف', counts.unknown, 'unknown'],
+            ['غير متاح', counts.offline, 'offline'],
+          ] as const).map(([label, value, tone]) => {
+            const toneClass = {
+              neutral: 'border-border-primary text-text-primary',
+              healthy: 'border-neon-green/30 text-neon-green',
+              config: 'border-yellow-400/30 text-yellow-400',
+              degraded: 'border-orange-400/30 text-orange-300',
+              unknown: 'border-border-secondary text-text-secondary',
+              offline: 'border-neon-red/30 text-neon-red',
+            }[tone];
+            return <span key={label} className={cn('rounded border bg-bg-secondary/50 px-2 py-1 text-[10px] font-mono', toneClass)}>{label}: <b>{value}</b></span>;
+          })}
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
           <span className="text-[9px] font-mono text-text-muted">
             آخر تحديث: {updatedAt ? updatedAt.toLocaleString('ar') : '—'}
           </span>
@@ -1659,16 +1678,7 @@ function FundamentalSourceHealthTab({
         </div>
       </div>
 
-      <div className="mb-4 grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-6">
-        <SourceMetric label="إجمالي المصادر" value={counts.total} tone="neutral" />
-        <SourceMetric label="سليم" value={counts.healthy} tone="healthy" />
-        <SourceMetric label="يتطلب إعدادًا" value={counts.configRequired} tone="config" />
-        <SourceMetric label="متدهور" value={counts.degraded} tone="degraded" />
-        <SourceMetric label="غير معروف" value={counts.unknown} tone="unknown" />
-        <SourceMetric label="غير متاح/متصل" value={counts.offline} tone="offline" />
-      </div>
-
-      <div className="mb-3 flex flex-wrap items-center gap-2 border border-border-primary bg-bg-secondary/40 p-3">
+      <div className="mb-3 flex flex-wrap items-center gap-2 border border-border-primary bg-bg-secondary/40 px-3 py-2">
         <div className="relative min-w-[260px] flex-1">
           <Search className="absolute right-2.5 top-2 h-3.5 w-3.5 text-text-muted" />
           <input
@@ -1739,23 +1749,6 @@ function FundamentalSourceHealthTab({
       <div className="mt-3 border border-yellow-500/20 bg-yellow-500/5 px-3 py-2 text-[9px] font-mono leading-5 text-text-muted">
         <span className="font-bold text-yellow-400">قاعدة الأمان:</span> المصدر غير المتاح أو الذي يتطلب إعدادًا يبقى خارج التحليل الحي ولا يتحول تلقائيًا إلى قيمة محايدة أو بيانات تجريبية.
       </div>
-    </div>
-  );
-}
-
-function SourceMetric({ label, value, tone }: { label: string; value: number; tone: 'neutral' | 'healthy' | 'config' | 'degraded' | 'unknown' | 'offline' }) {
-  const toneClass = {
-    neutral: 'border-border-primary text-text-primary',
-    healthy: 'border-neon-green/30 text-neon-green',
-    config: 'border-yellow-400/30 text-yellow-400',
-    degraded: 'border-orange-400/30 text-orange-300',
-    unknown: 'border-border-secondary text-text-secondary',
-    offline: 'border-neon-red/30 text-neon-red',
-  }[tone];
-  return (
-    <div className={cn('border bg-bg-secondary/50 px-3 py-2', toneClass)}>
-      <div className="text-[9px] font-mono text-text-muted">{label}</div>
-      <div className="mt-1 text-lg font-mono font-bold">{value}</div>
     </div>
   );
 }

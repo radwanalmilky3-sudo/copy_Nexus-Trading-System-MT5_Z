@@ -216,19 +216,30 @@ export default function SourceConnectionManager() {
 
   return (
     <div className="mx-auto w-full max-w-[1500px] p-4" dir="rtl">
-      <div className="mb-4 flex flex-wrap items-start justify-between gap-3 border border-border-primary bg-bg-secondary/50 p-4">
-        <div>
+      <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2 border border-border-primary bg-bg-secondary/50 p-3">
+        <div className="shrink-0">
           <div className="flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-neon-cyan" />
             <h2 className="text-[13px] font-mono font-bold text-text-primary">إدارة واتصال مصادر التحليل الأساسي</h2>
           </div>
-          <p className="mt-1 max-w-4xl text-[10px] font-mono leading-5 text-text-muted">
-            إدارة Free-First للمصادر: المجاني الرسمي هو المسار الأساسي، والمصادر التجارية اختيارية فقط.
-            المصادر الرسمية لا تُحذف، ويمكن تعطيلها. مفاتيح API لا تُعرض بعد الحفظ وتُخزّن على Windows باستخدام DPAPI للمستخدم الحالي.
+          <p className="mt-1 max-w-md text-[10px] font-mono leading-4 text-text-muted">
+            إدارة Free-First: المجاني الرسمي مسار أساسي؛ المفاتيح لا تُعرض بعد الحفظ (DPAPI).
           </p>
-          <div className="mt-1 text-[9px] font-mono text-text-muted">Secret backend: {secretBackend || '—'}</div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
+          {([
+            ['إجمالي المصادر', counts.total, ''],
+            ['مجانية', counts.free, 'text-neon-green border-neon-green/30'],
+            ['سليم', counts.healthy, 'text-neon-green border-neon-green/30'],
+            ['يتطلب إعدادًا', counts.config, 'text-yellow-400 border-yellow-400/30'],
+            ['معطل', counts.disabled, 'text-neon-red border-neon-red/30'],
+            ['مهيأ للتحليل', counts.analysis, 'text-neon-cyan border-neon-cyan/30'],
+          ] as const).map(([label, value, tone]) => (
+            <span key={label} className={cn('rounded border bg-bg-secondary/50 px-2 py-1 text-[10px] font-mono', tone || 'text-text-primary border-border-primary')}>{label}: <b>{value}</b></span>
+          ))}
+          <span className="text-[9px] font-mono text-text-muted">Secret backend: {secretBackend || '—'}</span>
+        </div>
+        <div className="flex shrink-0 gap-2">
           <button onClick={load} disabled={loading} className="flex items-center gap-1.5 border border-neon-cyan/30 bg-neon-cyan/10 px-3 py-1.5 text-[10px] font-mono font-bold text-neon-cyan">
             <RefreshCcw className={cn('h-3 w-3', loading && 'animate-spin')} /> تحديث
           </button>
@@ -238,18 +249,9 @@ export default function SourceConnectionManager() {
         </div>
       </div>
 
-      <div className="mb-4 grid grid-cols-2 gap-2 md:grid-cols-6">
-        <Metric label="إجمالي المصادر" value={counts.total} />
-        <Metric label="مصادر مجانية" value={counts.free} tone="green" />
-        <Metric label="اتصال سليم" value={counts.healthy} tone="green" />
-        <Metric label="يتطلب إعدادًا" value={counts.config} tone="yellow" />
-        <Metric label="معطل" value={counts.disabled} tone="red" />
-        <Metric label="مهيأ للتحليل" value={counts.analysis} tone="cyan" />
-      </div>
-
       {message && <div className="mb-3 border border-border-primary bg-bg-secondary px-3 py-2 text-[10px] font-mono text-text-secondary">{message}</div>}
 
-      <div className="mb-3 flex flex-wrap gap-2 border border-border-primary bg-bg-secondary/40 p-3">
+      <div className="mb-3 flex flex-wrap gap-2 border border-border-primary bg-bg-secondary/40 px-3 py-2">
         <div className="relative min-w-[280px] flex-1">
           <Search className="absolute right-2.5 top-2 h-3.5 w-3.5 text-text-muted" />
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="ابحث باسم المصدر أو المعرّف أو الرابط..." className="w-full border border-border-primary bg-bg-tertiary py-1.5 pr-8 pl-3 text-[10px] font-mono text-text-secondary outline-none" />
@@ -296,11 +298,6 @@ export default function SourceConnectionManager() {
       {editor && <Editor form={form} setForm={setForm} isNew={editor === 'new'} secretConfigured={editor !== 'new' && editor.secret_configured} onClose={closeEditor} onSave={() => saveSource(false)} onSaveTest={() => saveSource(true)} />}
     </div>
   );
-}
-
-function Metric({ label, value, tone = 'normal' }: { label: string; value: number; tone?: 'normal'|'green'|'yellow'|'red'|'cyan' }) {
-  const c = tone === 'green' ? 'text-neon-green border-neon-green/30' : tone === 'yellow' ? 'text-yellow-400 border-yellow-400/30' : tone === 'red' ? 'text-neon-red border-neon-red/30' : tone === 'cyan' ? 'text-neon-cyan border-neon-cyan/30' : 'text-text-primary border-border-primary';
-  return <div className={cn('border bg-bg-secondary/50 px-3 py-2', c)}><div className="text-[9px] font-mono text-text-muted">{label}</div><div className="mt-1 text-lg font-mono font-bold">{value}</div></div>;
 }
 
 function Editor({ form, setForm, isNew, secretConfigured, onClose, onSave, onSaveTest }: {
