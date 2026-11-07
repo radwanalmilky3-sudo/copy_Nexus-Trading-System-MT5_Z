@@ -1294,36 +1294,40 @@ function SettingsPageInner() {
             expanded={expanded} setExpanded={setExpanded}
             hint="PAPER/LIVE لا يُغيّران من هنا — الحالة تُجلب من الخادم (‎/api/system/mode) ولا يُعتمد أي تغيير إلا بعد تأكيد الخادم (الصلاحية/PIN)"
           >
-            <div className="flex items-center justify-between gap-3 py-1.5">
-              <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-mono font-bold text-text-secondary">وضع التداول</div>
-                <div className="text-[9px] font-mono text-text-muted mt-0.5 leading-relaxed">
-                  الحالة المعتمدة من الخادم (GET /api/system/mode).
+            <div className="grid gap-2 sm:grid-cols-2">
+              <div className="flex items-center justify-between gap-3 rounded border border-border-primary/60 bg-bg-secondary/30 px-3 py-2">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] font-mono font-bold text-text-secondary">وضع التداول</div>
+                  <div className="text-[9px] font-mono text-text-muted mt-0.5 leading-relaxed">
+                    الحالة المعتمدة من الخادم (GET /api/system/mode).
+                  </div>
+                </div>
+                <ModeBadge mode={systemMode} />
+              </div>
+              <div className="flex items-center justify-between gap-3 rounded border border-border-primary/60 bg-bg-secondary/30 px-3 py-2">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] font-mono font-bold text-text-secondary">التداول الآلي (Auto-Trade)</div>
+                  <div className="text-[9px] font-mono text-text-muted mt-0.5 leading-relaxed">
+                    التفعيل/الإيقاف يتحقق منه الخادم (صلاحية + PIN) قبل التطبيق.
+                  </div>
+                </div>
+                <div className="shrink-0">
+                  <AutoTradeToggle compact />
                 </div>
               </div>
-              <ModeBadge mode={systemMode} />
             </div>
-            <div className="flex items-center justify-between gap-3 py-1.5">
-              <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-mono font-bold text-text-secondary">التداول الآلي (Auto-Trade)</div>
-                <div className="text-[9px] font-mono text-text-muted mt-0.5 leading-relaxed">
-                  التفعيل/الإيقاف يتحقق منه الخادم (صلاحية + PIN) قبل التطبيق.
-                </div>
-              </div>
-              <div className="shrink-0">
-                <AutoTradeToggle compact />
-              </div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              <FieldRow
+                field={{ key: 'soundAlerts', label: 'تنبيهات صوتية', type: 'boolean', description: 'صوت عند تنفيذ الصفقات والإشارات.' }}
+                value={local.soundAlerts}
+                onChange={(v) => setLocalField('soundAlerts', v)}
+              />
+              <FieldRow
+                field={{ key: 'desktopNotifications', label: 'إشعارات سطح المكتب', type: 'boolean', description: 'إشعارات النظام عندما تكون التبويب غير نشط.' }}
+                value={local.desktopNotifications}
+                onChange={(v) => setLocalField('desktopNotifications', v)}
+              />
             </div>
-            <FieldRow
-              field={{ key: 'soundAlerts', label: 'تنبيهات صوتية', type: 'boolean', description: 'صوت عند تنفيذ الصفقات والإشارات.' }}
-              value={local.soundAlerts}
-              onChange={(v) => setLocalField('soundAlerts', v)}
-            />
-            <FieldRow
-              field={{ key: 'desktopNotifications', label: 'إشعارات سطح المكتب', type: 'boolean', description: 'إشعارات النظام عندما تكون التبويب غير نشط.' }}
-              value={local.desktopNotifications}
-              onChange={(v) => setLocalField('desktopNotifications', v)}
-            />
           </SectionCard>
 
           <SectionCard
@@ -1332,18 +1336,19 @@ function SettingsPageInner() {
             hint="تُفرض على مستوى الخادم بساعة الخادم: تُحدد جلسات التداول المسموحة — تُحفظ بزر «حفظ» وتُطبَّق فورًا دون إعادة تشغيل"
           >
 
-            <FieldRow
-              field={{
-                key: 'off_hours_allowed',
-                label: 'السماح خارج الجلسات (OFF_HOURS)',
-                type: 'boolean',
-                description: 'ON = لا تُحجب الجلسات خارج القائمة أدناه. OFF = تُرفض أي صفقة خارج الجلسات المحددة.',
-              }}
-              value={draftOffHours}
-              onChange={(v) => setRuntimeField('off_hours_allowed', Boolean(v))}
-            />
+            <div className="grid gap-2 lg:grid-cols-2 items-start">
+              <FieldRow
+                field={{
+                  key: 'off_hours_allowed',
+                  label: 'السماح خارج الجلسات (OFF_HOURS)',
+                  type: 'boolean',
+                  description: 'ON = لا تُحجب الجلسات خارج القائمة أدناه. OFF = تُرفض أي صفقة خارج الجلسات المحددة.',
+                }}
+                value={draftOffHours}
+                onChange={(v) => setRuntimeField('off_hours_allowed', Boolean(v))}
+              />
 
-            <div className="py-1.5">
+              <div className="rounded border border-border-primary/60 bg-bg-secondary/30 px-3 py-2">
               <div className="flex items-center justify-between gap-3">
                 <span className="text-[10px] font-mono font-bold text-text-secondary">الجلسات المسموحة (allowed_sessions)</span>
                 <span className="text-[9px] font-mono text-text-muted">{draftSessions.length}/{SESSION_CHOICES.length}</span>
@@ -1372,6 +1377,7 @@ function SettingsPageInner() {
               </div>
               <div className="mt-1.5 text-[9px] font-mono text-text-muted leading-relaxed">
                 القيم بالإنجليزية لأن الخادم يقارنها كما هي (SYDNEY · TOKYO · LONDON · NEW_YORK · OVERLAP).
+              </div>
               </div>
             </div>
 
