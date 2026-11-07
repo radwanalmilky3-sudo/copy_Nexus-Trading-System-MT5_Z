@@ -11,7 +11,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 const require=createRequire(import.meta.url);
 function load(path){
   const code=ts.transpileModule(readFileSync(path,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText;
-  const context={exports:{},AbortController,structuredClone,console,require:(name)=>{
+  const context={exports:{},AbortController,structuredClone,console,process:{env:{}},require:(name)=>{
     if(!name.startsWith('.'))return require(name);
     const p=resolve(dirname(path),name);return load(existsSync(p+'.tsx')?p+'.tsx':p+'.ts');
   }};vm.runInNewContext(code,context);return context.exports;

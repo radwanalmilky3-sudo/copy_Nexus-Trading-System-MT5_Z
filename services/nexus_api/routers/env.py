@@ -190,9 +190,11 @@ _SPECS: list[dict[str, Any]] = [
     _spec("REDIS_URL", "str", "عنوان Redis",
           category="readonly", editable=False),
     _spec("MT5_LOGIN", "str", "رقم حساب MT5",
-          category="readonly", editable=False),
-    _spec("MT5_SERVER", "str", "خادم MT5",
-          category="readonly", editable=False),
+          max_length=32),
+    _spec("MT5_SERVER", "str", "خادم MT5 (مثل OneRoyal-Demo)",
+          max_length=64),
+    _spec("MT5_PATH", "str", "مسار terminal64.exe — إلزامي لفحص «التحقق من اتصال MT5» في الإعدادات",
+          max_length=260),
     _spec("NEXUS_MT5_SESSION_EXPORT_PATH", "str", "مسار تصدير جلسات MT5",
           category="readonly", editable=False),
     _spec("NEXUS_BROKER_CALENDAR_POLICY_PATH", "str", "مسار سياسة التقويم",
@@ -520,6 +522,71 @@ async def update_env_setting(
         "status": "saved",
         "key": key,
         "value": value,
+        "backup": str(backup),
+        "restart_required": True,
+    }
+
+
+# ── Write-only MT5 platform password (POST /api/system/mt5-password) ──────────
+#
+# ``MT5_PASSWORD`` stays in ``SECRET_KEYS``: it is never read, listed, echoed
+# or writable through the generic allow-list endpoint. This dedicated route is
+# the single exception — a one-directional sink: it accepts the password,
+# validates it, backs ``.env`` up and atomically rewrites the
+# ``MT5_PASSWORD=`` line. The response (and every log line) carries the key
+# name only — never the value. Reading it back requires a full system restart,
+# same as every other ``.env`` change.
+
+_MT5_PASSWORD_MAX_LEN = 128
+
+
+class Mt5PasswordUpdate(BaseModel):
+    password: str
+
+
+@router.post("/mt5-password")
+async def update_mt5_password(
+    req: Mt5PasswordUpdate,
+    actor: CurrentUser,
+    db: DataServiceClient = Depends(get_data_service),
+):
+    """Write-only save of the MT5 platform password into ``.env``.
+
+    The value is validated, backed up and written atomically, then discarded —
+    it is never stored in memory beyond the request, never logged and never
+    returned. A same-permission gate (``trading.settings``) runs before any
+    file work, mirroring the generic endpoint.
+    """
+    await _require(db, actor, "trading.settings")
+
+    password = req.password.strip()
+    if not password:
+        _reject("كلمة المرور فارغة")
+    if len(password) > _MT5_PASSWORD_MAX_LEN:
+        _reject(f"كلمة المرور طويلة جداً (الحد الأقصى {_MT5_PASSWORD_MAX_LEN} حرفاً)")
+    if any(ord(ch) < 32 or ord(ch) == 127 for ch in password):
+        _reject("كلمة المرور تحتوي على أحرف غير مسموحة (أسطر أو أحرف تحكم)")
+    if any(ch in " \t\"'" for ch in password):
+        # Whitespace or quote characters would interact badly with dotenv
+        # unquoted-value parsing; MT5 passwords never require them.
+        _reject("كلمة المرور لا يجوز أن تحتوي مسافات أو علامات تنصيص")
+
+    path = _env_path()
+    backup = _backup_env(path)          # failure ⇒ 503, file untouched
+    try:
+        _write_value(path, "MT5_PASSWORD", password)
+    except HTTPException:
+        raise
+    except OSError:
+        logger.error("env.mt5_password_write_failed")
+        raise HTTPException(503, "تعذّر حفظ ملف الإعدادات") from None
+
+    # Audit: the event happened — nothing about the value itself.
+    logger.info("env.mt5_password_written")
+    _prune_backups(path, "MT5_PASSWORD")
+    return {
+        "status": "saved",
+        "key": "MT5_PASSWORD",
         "backup": str(backup),
         "restart_required": True,
     }

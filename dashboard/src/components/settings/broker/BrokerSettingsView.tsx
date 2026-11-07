@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { AssetDropDown } from './AssetDropDown';
+import PlatformConnectionCard from './PlatformConnectionCard';
 import SystemHealthStrip from './SystemHealthStrip';
 import type { BrokerController, BrokerState, Section } from './controller';
 import type { AssetMode, AssetTimeframe, TransitionDraft } from './types';
@@ -95,6 +96,7 @@ export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerCont
 
     {s.section==='connection'&&<div className="space-y-4">
       <SystemHealthStrip />
+      <PlatformConnectionCard />
       {!s.account&&!s.loading&&<div className="space-y-2 rounded border border-neon-gold/40 bg-neon-gold/5 p-4 text-sm">
         <p className="font-bold">لا يوجد حساب مختار بعد — ثلاث خطوات:</p>
         <ol className="list-decimal space-y-1 pr-5 text-text-secondary">
