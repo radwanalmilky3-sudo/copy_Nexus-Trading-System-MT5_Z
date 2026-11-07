@@ -120,7 +120,7 @@ export default function GatewayDiagnostic() {
         setMemoryError(null);
       } catch (error) {
         setData(prev => ({ ...prev, session_perf: undefined }));
-        setMemoryError(error instanceof Error ? error.message : 'Trade memory unavailable');
+        setMemoryError(error instanceof Error ? error.message : 'ذاكرة التداول غير متاحة');
       }
 
       // Risk settings for min_rr + tokyo conviction
@@ -139,7 +139,7 @@ export default function GatewayDiagnostic() {
     } catch {
       setRiskUnavailable(true);
       setData(prev => ({ ...prev, risk: undefined, tilt: undefined, session_perf: undefined }));
-      setMemoryError('Gateway unavailable; session metrics cannot be verified');
+      setMemoryError('البوابة غير متاحة؛ لا يمكن التحقق من مقاييس الجلسات');
     } finally {
       setLoading(false);
     }
@@ -161,9 +161,9 @@ export default function GatewayDiagnostic() {
   const anyIssue = tiltStatus !== 'NORMAL' || activeBreakers.length > 0 ||
     (data.session_perf ?? []).some(s => s.kelly !== null && s.kelly < 0);
 
-  const summary = tiltStatus === 'UNKNOWN' ? 'Risk status unavailable — not verified' : anyIssue
-    ? `${activeBreakers.length > 0 ? `${activeBreakers.length} breaker${activeBreakers.length > 1 ? 's' : ''} active` : 'warnings present'}`
-    : 'Gateway nominal';
+  const summary = tiltStatus === 'UNKNOWN' ? 'حالة الخطر غير متاحة — غير مُتحقق' : anyIssue
+    ? `${activeBreakers.length > 0 ? `${activeBreakers.length} ${activeBreakers.length > 2 ? 'قواطع' : 'قاطع'} نشط` : 'تحذيرات قائمة'}`
+    : 'البوابة طبيعية';
 
   return (
     <div className={cn(
@@ -182,7 +182,7 @@ export default function GatewayDiagnostic() {
           tiltStatus === 'WARNING' ? 'text-neon-gold' : 'text-neon-purple',
         )} />
         <span className="text-xs font-bold uppercase tracking-wider text-text-secondary flex-1">
-          Risk Gateway
+          بوابة الخطر
         </span>
         <span className={cn(
           'text-[10px] font-mono',
@@ -203,7 +203,7 @@ export default function GatewayDiagnostic() {
           onClick={() => setExpanded(e => !e)}
           className="text-[10px] font-mono text-text-muted hover:text-text-secondary transition-colors"
         >
-          {expanded ? 'collapse' : 'expand'}
+          {expanded ? 'طي' : 'توسيع'}
         </button>
       </div>
 
@@ -225,20 +225,20 @@ export default function GatewayDiagnostic() {
             tiltStatus === 'TILT' ? 'text-neon-red' :
             tiltStatus === 'WARNING' ? 'text-neon-gold' : 'text-text-secondary',
           )}>
-            Tilt: {tiltStatus}
+            الميل: {tiltStatus}
           </span>
           {consecutiveLosses > 0 && (
-            <span className="font-mono text-text-muted">({consecutiveLosses}L streak)</span>
+            <span className="font-mono text-text-muted">({consecutiveLosses} {consecutiveLosses > 2 ? 'خسائر' : 'خسارة'} متتالية)</span>
           )}
           {cooldown > 0 && (
-            <span className="font-mono text-neon-red">{cooldown.toFixed(0)}min CD</span>
+            <span className="font-mono text-neon-red">{cooldown.toFixed(0)} د تهدئة</span>
           )}
         </div>
 
         {/* Min RR */}
         <div className="flex items-center gap-1.5">
           <TrendingUp className="h-3.5 w-3.5 text-text-muted" />
-          <span className="text-text-muted">Min R:R</span>
+          <span className="text-text-muted">أدنى عائد:مخاطرة</span>
           <span className="font-mono font-semibold text-neon-blue">
             {data.min_rr?.toFixed(1) ?? '1.5'}:1
           </span>
@@ -247,7 +247,7 @@ export default function GatewayDiagnostic() {
         {/* TOKYO conviction */}
         <div className="flex items-center gap-1.5">
           <Minus className="h-3.5 w-3.5 text-neon-gold" />
-          <span className="text-text-muted">Tokyo gate</span>
+          <span className="text-text-muted">بوابة طوكيو</span>
           <span className="font-mono font-semibold text-neon-gold">
             {((data.tokyo_conviction ?? 0.85) * 100).toFixed(0)}%
           </span>
@@ -270,14 +270,14 @@ export default function GatewayDiagnostic() {
       {/* Expanded — session Kelly table */}
       {expanded && (data.session_perf ?? []).length > 0 && (
         <div className="px-4 pb-4 space-y-1 border-t border-border-primary pt-3">
-          <p className="text-[10px] font-mono uppercase text-text-muted mb-2">Session Kelly Fractions</p>
+          <p className="text-[10px] font-mono uppercase text-text-muted mb-2">نِسَب كيلي للجلسات</p>
           {[...(data.session_perf ?? [])]
             .sort((a, b) => (b.kelly ?? -Infinity) - (a.kelly ?? -Infinity))
             .map(s => <SessionRow key={s.session} s={s} />)
           }
           <p className="text-[10px] font-mono text-text-muted mt-2 leading-relaxed">
-            Kelly &lt; 0 = negative EV (system loses money on average in that session).
-            TOKYO gate raised to 85% conviction to compensate.
+            كيلي &lt; 0 = قيمة متوقعة سالبة (النظام يخسر في المتوسط في تلك الجلسة).
+            رُفعت بوابة طوكيو إلى 85% ثقة للتعويض.
           </p>
         </div>
       )}
@@ -285,7 +285,7 @@ export default function GatewayDiagnostic() {
       {/* Expanded — active violations */}
       {expanded && activeBreakers.length > 0 && (
         <div className="px-4 pb-4 border-t border-border-primary pt-3 space-y-1">
-          <p className="text-[10px] font-mono uppercase text-text-muted mb-2">Active Breakers</p>
+          <p className="text-[10px] font-mono uppercase text-text-muted mb-2">القواطع النشطة</p>
           {activeBreakers.map(b => (
             <div key={b.name} className="flex items-start gap-2 text-xs px-2.5 py-1.5 rounded-lg bg-neon-red/8">
               <AlertTriangle className="h-3.5 w-3.5 text-neon-red shrink-0 mt-0.5" />
@@ -306,10 +306,10 @@ export default function GatewayDiagnostic() {
               'h-1.5 w-1.5 rounded-full',
               tilt ? 'bg-neon-green' : 'bg-neon-red',
             )} />
-            Anti-tilt state: {tilt ? 'persisted via Redis' : 'no data from backend'}
+            حالة مضاد الميل: {tilt ? 'مثبتة في Redis' : 'لا بيانات من الخادم'}
             {tilt && (
               <span className="ml-2">
-                · {tilt.session_wins}W / {tilt.session_losses}L this session
+                · {tilt.session_wins} ربح / {tilt.session_losses} خسارة في هذه الجلسة
               </span>
             )}
           </div>

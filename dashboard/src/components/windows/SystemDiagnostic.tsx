@@ -184,7 +184,7 @@ export default function SystemDiagnostic() {
       <div className="flex h-full flex-col justify-center rounded-lg border px-4 py-2.5 bg-neon-gold/5 border-neon-gold/30">
         <div className="flex items-center gap-3">
           <Loader2 className="h-4 w-4 text-neon-gold shrink-0 animate-spin" />
-          <span className="text-xs font-semibold flex-1 text-neon-gold">Checking services…</span>
+          <span className="text-xs font-semibold flex-1 text-neon-gold">جارٍ فحص الخدمات…</span>
         </div>
       </div>
     );
@@ -208,8 +208,8 @@ export default function SystemDiagnostic() {
 
         <span className={cn('text-xs font-semibold flex-1', anyDown ? 'text-neon-red' : 'text-neon-green')}>
           {anyDown
-            ? `${downCount} service${downCount > 1 ? 's' : ''} offline — trading paused`
-            : 'All systems operational'}
+            ? `${downCount} ${downCount > 2 ? 'خدمات' : 'خدمة'} غير متصلة — التداول متوقف`
+            : 'جميع الأنظمة تعمل'}
         </span>
 
         {lastChecked && (
@@ -230,7 +230,7 @@ export default function SystemDiagnostic() {
           onClick={() => setExpanded(!expanded)}
           className="text-[10px] font-mono text-text-muted hover:text-text-secondary transition-colors"
         >
-          {expanded ? 'hide' : 'details'}
+          {expanded ? 'إخفاء' : 'التفاصيل'}
         </button>
       </div>
 
@@ -262,12 +262,12 @@ export default function SystemDiagnostic() {
 
           {services.some((s) => s.name === 'nexus-data (MT5 feed)' && !s.ok) && (
             <div className="col-span-full mt-1 text-[10px] font-mono text-neon-gold/80 leading-relaxed">
-              nexus-data crash fix applied (MT5 COM single-thread). Restart <code>python run.py</code> to reload.
+              إصلاح انهيار nexus-data مطبَّق (MT5 COM أحادي الخيط). أعد تشغيل <code>python run.py</code> لإعادة التحميل.
             </div>
           )}
           {services.some((s) => s.name === 'MetaTrader 5' && !s.ok) && (
             <div className="col-span-full mt-1 text-[10px] font-mono text-neon-gold/80 leading-relaxed">
-              Open MetaTrader 5 terminal and confirm MT5_LOGIN / MT5_SERVER in .env match your broker.
+              افتح طرفية MetaTrader 5 وتأكد أن MT5_LOGIN / MT5_SERVER في .env يطابقان وسيطك.
             </div>
           )}
         </div>

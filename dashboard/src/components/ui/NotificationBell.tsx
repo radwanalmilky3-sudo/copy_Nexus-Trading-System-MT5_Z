@@ -89,7 +89,7 @@ export function NotificationBell() {
             ? 'text-neon-purple bg-neon-purple/10'
             : 'text-text-muted hover:text-text-primary hover:bg-bg-card'
         )}
-        title="Notificaciones"
+        title="الإشعارات"
       >
         {unread > 0
           ? <BellRing className="h-3.5 w-3.5 animate-pulse" />
@@ -118,11 +118,11 @@ export function NotificationBell() {
             {/* Header */}
             <div className="flex items-center gap-2 px-3 py-2 border-b border-border-primary bg-bg-secondary/80">
               <Bell className="h-3 w-3 text-neon-purple" />
-              <span className="text-[10px] font-mono font-bold text-text-secondary tracking-wider">ALERTAS</span>
+              <span className="text-[10px] font-mono font-bold text-text-secondary tracking-wider">التنبيهات</span>
               <div className="flex items-center gap-1 ml-auto">
                 {connected
-                  ? <><Wifi className="h-2.5 w-2.5 text-neon-green" /><span className="text-[8px] font-mono text-neon-green">live</span></>
-                  : <><WifiOff className="h-2.5 w-2.5 text-neon-red" /><span className="text-[8px] font-mono text-neon-red">offline</span></>
+                  ? <><Wifi className="h-2.5 w-2.5 text-neon-green" /><span className="text-[8px] font-mono text-neon-green">مباشر</span></>
+                  : <><WifiOff className="h-2.5 w-2.5 text-neon-red" /><span className="text-[8px] font-mono text-neon-red">منقطع</span></>
                 }
               </div>
               <button
@@ -138,7 +138,7 @@ export function NotificationBell() {
               {alerts.length === 0 ? (
                 <div className="flex flex-col items-center gap-2 py-8 text-text-muted">
                   <Bell className="h-6 w-6 opacity-20" />
-                  <span className="text-[10px] font-mono">Sin alertas recientes</span>
+                  <span className="text-[10px] font-mono">لا تنبيهات حديثة</span>
                 </div>
               ) : (
                 alerts.slice(0, 20).map((a, i) => (
@@ -151,7 +151,7 @@ export function NotificationBell() {
             {alerts.length > 0 && (
               <div className="px-3 py-1.5 border-t border-border-primary/50 bg-bg-secondary/40">
                 <span className="text-[8px] font-mono text-text-muted">
-                  {alerts.length} alerta{alerts.length !== 1 ? 's' : ''} · SSE {connected ? 'conectado' : 'reconectando…'}
+                  {alerts.length} تنبيه · البث الحي {connected ? 'متصل' : 'يُعاد الاتصال…'}
                 </span>
               </div>
             )}
