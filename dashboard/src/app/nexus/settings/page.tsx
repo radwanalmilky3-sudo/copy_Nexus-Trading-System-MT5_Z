@@ -1196,6 +1196,8 @@ function SettingsPageInner() {
                 {group.items.length === 0 && (
                   <span className="text-[9px] font-mono text-text-muted">— لا توجد متغيرات في هذه المجموعة.</span>
                 )}
+                {/* شبكة متجاوبة: استغلال المساحة الأفقية بدل عمود واحد مهدر */}
+                <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3 items-start">
                 {group.items.map((v) => {
                   const draft = envDraft(v);
                   const changed = draft !== (v.value ?? '');
@@ -1232,7 +1234,7 @@ function SettingsPageInner() {
                       </div>
                       <div className="text-[9px] font-mono text-text-muted leading-relaxed">{v.description}</div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <div className="w-full max-w-[300px]">{envInput(v, draft, locked)}</div>
+                        <div className="min-w-[140px] flex-1">{envInput(v, draft, locked)}</div>
                         <button
                           type="button"
                           disabled={!changed || locked}
@@ -1258,6 +1260,7 @@ function SettingsPageInner() {
                     </div>
                   );
                 })}
+                </div>
               </div>
             ))}
 
@@ -1406,14 +1409,17 @@ function SettingsPageInner() {
               icon={section.icon} color={section.color}
               expanded={expanded} setExpanded={setExpanded}
             >
-              {section.fields.map((f) => (
-                <FieldRow
-                  key={f.key}
-                  field={f}
-                  value={runtime[f.key] !== undefined ? runtime[f.key] : runtimeDefaults[f.key]}
-                  onChange={(v) => setRuntimeField(f.key, v)}
-                />
-              ))}
+              {/* شبكة عمودين: استغلال العرض بدل صف واحد مهدر لكل إعداد */}
+              <div className="grid gap-x-8 gap-y-3 md:grid-cols-2">
+                {section.fields.map((f) => (
+                  <FieldRow
+                    key={f.key}
+                    field={f}
+                    value={runtime[f.key] !== undefined ? runtime[f.key] : runtimeDefaults[f.key]}
+                    onChange={(v) => setRuntimeField(f.key, v)}
+                  />
+                ))}
+              </div>
             </SectionCard>
           ))}
 

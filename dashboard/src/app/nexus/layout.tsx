@@ -95,11 +95,11 @@ function GatewaySettingsHydrator() {
 }
 
 const NAV_ITEMS = [
-  { href: '/nexus',                       label: 'Trading',    icon: LayoutDashboard },
-  { href: '/nexus/strategies',             label: 'Strategies', icon: BrainCircuit },
-  { href: '/nexus/models',                 label: 'Models',     icon: Cpu },
-  { href: '/nexus/history',                label: 'History',    icon: History },
-  { href: '/nexus/settings',               label: 'Settings',   icon: Settings },
+  { href: '/nexus',                       label: 'التداول',      icon: LayoutDashboard },
+  { href: '/nexus/strategies',             label: 'الاستراتيجيات', icon: BrainCircuit },
+  { href: '/nexus/models',                 label: 'النماذج',      icon: Cpu },
+  { href: '/nexus/history',                label: 'السجل',        icon: History },
+  { href: '/nexus/settings',               label: 'الإعدادات',    icon: Settings },
 ];
 
 function ModeToggle() {

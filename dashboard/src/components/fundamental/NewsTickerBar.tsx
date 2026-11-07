@@ -196,13 +196,20 @@ export default function NewsTickerBar() {
     setMuteUntil(until); try { if (until) localStorage.setItem(MUTE_UNTIL_KEY,String(until)); else localStorage.removeItem(MUTE_UNTIL_KEY); } catch {}
   };
 
-  if (!settings?.enabled || filtered.length === 0) return null;
+  // حضور دائم: الشريط لا يختفي — عند غياب العناصر يعرض حالة صادقة واضحة
+  // (لا بيانات مزيفة أبداً). يختفي فقط إذا عطّله المستخدم صراحة من الإعدادات.
+  if (!settings?.enabled) return null;
   const seconds = settings.speed === 'slow' ? 55 : settings.speed === 'fast' ? 22 : 36;
   const content = filtered.length > 1 ? [...filtered, ...filtered] : filtered;
   const muted = muteUntil > Date.now();
 
   return <div dir="rtl" className={`${settings.position === 'bottom' ? 'fixed bottom-0 left-0 right-0 z-50' : 'relative z-20'} border-b border-sky-300 bg-sky-50 shadow-sm`}>
     <style jsx>{`@keyframes nexusTicker{from{transform:translateX(0)}to{transform:translateX(50%)}} .ticker-track{animation:nexusTicker ${seconds}s linear infinite;width:max-content}.ticker-wrap:hover .ticker-track{animation-play-state:${settings.pause_on_hover?'paused':'running'}} @media(prefers-reduced-motion:reduce){.ticker-track{animation:none}}`}</style>
+    {filtered.length === 0 && <div className="flex h-9 items-center gap-2 border-b border-sky-200 bg-sky-50 px-3 text-[11px] text-sky-950" role="status">
+      <Radio className="h-3.5 w-3.5 shrink-0" />
+      <span className="font-bold">الأخبار الحية:</span>
+      <span>لا عناصر نشطة الآن — يظهر الشريط تلقائيًا عند توفر أخبار أو أحداث تقويم ضمن عتبة الأهمية المضبوطة في الإعدادات.</span>
+    </div>}
     <div className="ticker-wrap flex h-9 items-center overflow-hidden"><div className="flex h-full shrink-0 items-center gap-2 border-l border-sky-300 bg-sky-100 px-3 text-[11px] font-bold text-sky-950"><Radio className="h-3.5 w-3.5"/> الأخبار الحية<button onClick={toggleSessionMute} className="rounded p-1 hover:bg-sky-200" aria-label={muted?'تشغيل الصوت':'كتم الصوت'}>{muted?<VolumeX className="h-3.5 w-3.5"/>:<Volume2 className="h-3.5 w-3.5"/>}</button></div><div className="min-w-0 flex-1 overflow-hidden"><div className="ticker-track flex h-9 items-center whitespace-nowrap">{content.map((item,idx)=><div key={`${item.ticker_item_id}-${idx}`} className={`mx-1 flex h-7 items-center gap-2 rounded border px-2 text-[11px] ${severityClass[item.severity]}`}>{item.severity==='critical'?<AlertTriangle className="h-3 w-3"/>:<BellRing className="h-3 w-3"/>}<span className={`rounded px-1.5 py-0.5 text-[9px] font-bold ${badgeClass[item.severity]}`}>{item.severity.toUpperCase()}</span>{item.asset_id&&<span className="font-mono font-bold">{item.asset_id}</span>}<span className="max-w-[620px] overflow-hidden text-ellipsis font-medium">{item.headline_ar}</span>{item.actual_value!=null&&<span className="font-mono">فعلي {String(item.actual_value)}</span>}{item.forecast_value!=null&&<span className="font-mono">متوقع {String(item.forecast_value)}</span>}{item.direction&&<span className={`rounded border px-1.5 py-0.5 ${directionClass(item.direction)}`}>{directionAr(item.direction)}</span>}{item.confidence!=null&&<span className="font-mono">ثقة {Math.round(item.confidence)}%</span>}{item.blackout_state&&item.blackout_state!=='clear'&&<span className="rounded bg-red-100 px-1.5 py-0.5 font-bold text-red-800">BLACKOUT</span>}{item.acknowledged?<span className="flex items-center gap-1 rounded border border-emerald-300 bg-emerald-50 px-1.5 py-0.5 text-emerald-800"><CheckCircle2 className="h-3 w-3"/>تم الاطلاع</span>:<button onClick={()=>void acknowledge(item.ticker_item_id)} className="rounded border border-sky-300 bg-white px-1.5 py-0.5 text-sky-900 hover:bg-sky-100">تأكيد</button>}<span className="text-slate-500">{item.source_label??item.source_id??'—'}</span></div>)}</div></div></div>
   </div>;
 }
