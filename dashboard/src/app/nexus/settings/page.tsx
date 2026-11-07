@@ -1034,23 +1034,24 @@ function SettingsPageInner() {
             hint="احفظ إعداداتك كملف JSON وحمّل قالبًا محفوظًا أو افتح ملفًا من جهازك — القوالب تعبئة النموذج فقط، لا يُكتب أي شيء فعليًا إلا بعد «حفظ الكل»"
           >
 
-            {templatesPath && (
-              <div className="mb-3 flex items-center gap-2 rounded-lg border border-neon-gold/30 bg-neon-gold/5 px-3 py-2">
-                <FolderOpen className="h-3.5 w-3.5 shrink-0 text-neon-gold" />
-                <span className="text-[9px] font-mono text-neon-gold" dir="ltr">{templatesPath}</span>
-                <span className="text-[9px] font-mono text-text-muted shrink-0">→ مسار حفظ القوالب</span>
-              </div>
-            )}
-
-            {/* Save current settings as a named template file */}
-            <div className="flex flex-wrap items-center gap-2 py-1.5">
+            {/* Compact template controls — one wrapping flow, no half-empty rows */}
+            <div className="flex flex-wrap items-center gap-2">
+              {templatesPath && (
+                <div
+                  title="مسار حفظ القوالب"
+                  className="flex items-center gap-1.5 rounded-lg border border-neon-gold/30 bg-neon-gold/5 px-2.5 py-1.5"
+                >
+                  <FolderOpen className="h-3.5 w-3.5 shrink-0 text-neon-gold" />
+                  <span className="text-[9px] font-mono text-neon-gold" dir="ltr">{templatesPath}</span>
+                </div>
+              )}
               <input
                 type="text"
                 value={templateName}
                 onChange={(e) => setTemplateName(e.target.value)}
                 maxLength={64}
                 placeholder="اسم القالب الجديد (حروف/أرقام/مسافات)"
-                className="flex-1 min-w-[180px] rounded border border-border-primary bg-bg-input px-2.5 py-1.5 text-[10px] font-mono text-text-primary placeholder:text-text-muted focus:border-neon-purple/50 focus:outline-none"
+                className="w-[190px] rounded border border-border-primary bg-bg-input px-2.5 py-1.5 text-[10px] font-mono text-text-primary placeholder:text-text-muted focus:border-neon-purple/50 focus:outline-none"
                 dir="rtl"
               />
               <button
@@ -1060,14 +1061,10 @@ function SettingsPageInner() {
               >
                 <Save className="h-3 w-3" /> حفظ الإعدادات الحالية كقالب
               </button>
-            </div>
-
-            {/* Load a stored template file into the form */}
-            <div className="flex flex-wrap items-center gap-2 py-1.5">
               <select
                 value={selectedTemplate}
                 onChange={(e) => setSelectedTemplate(e.target.value)}
-                className="flex-1 min-w-[180px] rounded border border-border-primary bg-bg-input px-2 py-1.5 text-[10px] font-mono text-text-primary focus:border-neon-cyan/50 focus:outline-none"
+                className="w-[190px] rounded border border-border-primary bg-bg-input px-2 py-1.5 text-[10px] font-mono text-text-primary focus:border-neon-cyan/50 focus:outline-none"
                 dir="rtl"
               >
                 <option value="">— اختر قالبًا محفوظًا —</option>
@@ -1090,9 +1087,6 @@ function SettingsPageInner() {
               >
                 <Upload className="h-3 w-3" /> تحميل إلى النموذج
               </button>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2 py-1.5">
               <button
                 type="button"
                 onClick={() => void applyTemplateFile('optimal.json')}
