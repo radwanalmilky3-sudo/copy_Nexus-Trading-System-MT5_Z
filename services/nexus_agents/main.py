@@ -97,12 +97,17 @@ async def _get_llm_health() -> dict[str, Any]:
             probe = await llm_health(timeout=max(LLM_HEALTH_TIMEOUT_SEC, 6.0))
         except Exception as exc:
             probe = {"status": "offline", "error": str(exc)}
+        probe_status = str(probe.get("status", "offline")).lower()
+        # "rate_limited" = authenticated 429 from the cloud provider: the
+        # endpoint and key are fine, the account is momentarily throttled.
+        # The agent call path already paces + backs off on 429, so the
+        # service stays ready (DEGRADED) instead of flapping to 503 OFFLINE.
         online = (
-            str(probe.get("status", "offline")).lower() == "healthy"
+            probe_status in ("healthy", "rate_limited")
             and bool(probe.get("model_available", False))
         )
         entry = {
-            "status": "ONLINE" if online else "OFFLINE",
+            "status": ("ONLINE" if probe_status == "healthy" else "DEGRADED") if online else "OFFLINE",
             "online": online,
             "url": str(probe.get("endpoint") or ""),
             "model": str(probe.get("required_model") or provider_model()),

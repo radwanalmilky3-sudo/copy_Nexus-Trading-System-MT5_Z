@@ -221,6 +221,26 @@ async def zai_health(*, timeout: float = 8.0) -> dict[str, Any]:
                 "latency_ms": latency,
                 "error": "",
             }
+        if resp.status_code == 429:
+            # A 429 means the request was authenticated and reached the model
+            # — the endpoint is reachable, the key is valid, the account is
+            # merely throttled.  Report rate_limited (NOT offline/degraded-
+            # unavailable) so callers can keep the service ready; the agent
+            # call path already backs off on 429 via brain_budget.
+            retry_after: float | None = None
+            raw_retry = resp.headers.get("Retry-After", "").strip()
+            if raw_retry.replace(".", "", 1).isdigit():
+                retry_after = float(raw_retry)
+            return {
+                "provider": "zai",
+                "status": "rate_limited",
+                "endpoint": base,
+                "required_model": required,
+                "model_available": True,
+                "latency_ms": latency,
+                "error": f"HTTP 429 rate limited by Z.ai (retry_after={raw_retry or 'n/a'})",
+                "retry_after_s": retry_after,
+            }
         return {
             "provider": "zai",
             "status": "degraded",
