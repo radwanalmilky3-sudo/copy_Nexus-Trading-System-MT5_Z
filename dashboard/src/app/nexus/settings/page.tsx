@@ -19,7 +19,7 @@ import AdminAlertsCenter from '@/components/settings/AdminAlertsCenter';
 import BrokerSettingsTab from '@/components/settings/broker/BrokerSettingsTab';
 import { EaBridgeView } from '@/components/ea/EABridgeView';
 import ResearchLabShell from '@/components/research-lab/ResearchLabShell';
-import { ProgressView } from '@/components/project/ProgressView';
+import GitDevLogView from '@/components/project/GitDevLogView';
 import AuditProgressView from '@/components/audit/AuditProgressView';
 import type { SourceHealthDTO } from '@/types/fundamental';
 
@@ -1594,7 +1594,7 @@ function ProjectDevTabs() {
       {subButton('progress', 'متابعة التطوير')}
       {subButton('audit', 'نتائج التدقيق')}
     </div>
-    {devTab === 'progress' ? <ProgressView /> : <AuditProgressView />}
+    {devTab === 'progress' ? <GitDevLogView /> : <AuditProgressView />}
   </div>;
 }
 
