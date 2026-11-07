@@ -781,48 +781,17 @@ async def _handle_feature_event(msg_id: str, raw: dict[str, str]) -> None:
             except Exception:
                 logger.debug("dynamic_tf update skipped", exc_info=True)
 
-        # Only signal on the live operational TF to avoid triple-firing.
-        operational_tf = await _get_operational_timeframe()
-        if timeframe and timeframe != operational_tf:
-            await _redis.xack(RedisStream.FEATURE_STREAM, CONSUMER_GROUP, msg_id)
-            return
-
-        now = time.time()
-        last = _last_signal_ts.get(symbol, 0.0)
-        if last and (now - last) < SIGNAL_COOLDOWN_SEC:
-            await _redis.xack(RedisStream.FEATURE_STREAM, CONSUMER_GROUP, msg_id)
-            return
-
-        # Decide: this symbol's ML ensemble (if trained) or rule-based fallback
-        ensemble = _get_symbol_ensemble(symbol, operational_tf)
-        any_model_loaded = any(ensemble.models_status().values())
-
-        if any_model_loaded:
-            # Use trained ML models for THIS symbol
-            feature_array = ensemble.build_feature_array(features_dict)
-            signal: EnsembleSignal = ensemble.predict(feature_array)
-            signal_source = "ml_ensemble"
-        elif _rule_based is not None:
-            # Fallback: rule-based signal from real technical indicators
-            signal = _rule_based.predict(features_dict)
-            signal_source = "rule_based"
-        else:
-            # Should never happen — both are None
-            logger.error("No signal generator available — skipping event %s", msg_id)
-            await _redis.xack(RedisStream.FEATURE_STREAM, CONSUMER_GROUP, msg_id)
-            return
-
-        direction_map = {"BUY": Verdict.BUY, "SELL": Verdict.SELL}
-        verdict = direction_map.get(signal.direction, Verdict.NO_TRADE)
-
         # Filter to numeric-only for SignalEvent (Pydantic expects dict[str, float])
         numeric_features = {k: v for k, v in features_dict.items() if isinstance(v, (int, float))}
 
         # Accumulate feature history for model training on EVERY processed bar —
-        # not just bars that happen to produce an actionable BUY/SELL verdict.
-        # Gating this behind the NO_TRADE return starved the walk-forward
-        # trainer's min_train_samples threshold for weeks (rule-based/ensemble
-        # signals are NO_TRADE most of the time by design).
+        # not just bars that produce an actionable verdict, and crucially on
+        # every published timeframe, not just the live operational TF. Gating
+        # this behind the operational-TF filter starved the walk-forward
+        # trainer's min_train_samples threshold whenever the dynamic TF
+        # selector (e.g. NEW_YORK → M5) diverged from the publisher's TF
+        # (NEXUS_OHLCV_TIMEFRAME, default M15): every event was acked-and-
+        # dropped before reaching this block, so training samples stayed at 0.
         try:
             from datetime import datetime, timezone
             close = float(features_dict.get("close", 0))
@@ -869,6 +838,41 @@ async def _handle_feature_event(msg_id: str, raw: dict[str, str]) -> None:
                 await pipe.execute()
         except Exception:
             logger.warning("Failed to accumulate next-bar feature history for %s/%s", symbol, timeframe, exc_info=True)
+
+        # Only signal on the live operational TF to avoid triple-firing.
+        # (Intentionally placed AFTER history accumulation above.)
+        operational_tf = await _get_operational_timeframe()
+        if timeframe and timeframe != operational_tf:
+            await _redis.xack(RedisStream.FEATURE_STREAM, CONSUMER_GROUP, msg_id)
+            return
+
+        now = time.time()
+        last = _last_signal_ts.get(symbol, 0.0)
+        if last and (now - last) < SIGNAL_COOLDOWN_SEC:
+            await _redis.xack(RedisStream.FEATURE_STREAM, CONSUMER_GROUP, msg_id)
+            return
+
+        # Decide: this symbol's ML ensemble (if trained) or rule-based fallback
+        ensemble = _get_symbol_ensemble(symbol, operational_tf)
+        any_model_loaded = any(ensemble.models_status().values())
+
+        if any_model_loaded:
+            # Use trained ML models for THIS symbol
+            feature_array = ensemble.build_feature_array(features_dict)
+            signal: EnsembleSignal = ensemble.predict(feature_array)
+            signal_source = "ml_ensemble"
+        elif _rule_based is not None:
+            # Fallback: rule-based signal from real technical indicators
+            signal = _rule_based.predict(features_dict)
+            signal_source = "rule_based"
+        else:
+            # Should never happen — both are None
+            logger.error("No signal generator available — skipping event %s", msg_id)
+            await _redis.xack(RedisStream.FEATURE_STREAM, CONSUMER_GROUP, msg_id)
+            return
+
+        direction_map = {"BUY": Verdict.BUY, "SELL": Verdict.SELL}
+        verdict = direction_map.get(signal.direction, Verdict.NO_TRADE)
 
         if verdict == Verdict.NO_TRADE:
             await _redis.xack(RedisStream.FEATURE_STREAM, CONSUMER_GROUP, msg_id)
