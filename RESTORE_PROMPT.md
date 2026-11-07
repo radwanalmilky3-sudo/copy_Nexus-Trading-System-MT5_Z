@@ -56,7 +56,8 @@ venv-nexus\Scripts\python -c "import secrets; print(secrets.token_hex(32)); prin
   NEXUS_LLM_MODEL=glm-4.5-flash
   ZAI_API_KEY=<يلصقه المالك بنفسه في .env — لا يمر عبر رسائل أو ملفات متتبعة>
   ```
-- MT5: `MT5_LOGIN=2000020618` · `MT5_SERVER=OneRoyal-Demo` · [يحتاج المالك] `MT5_PASSWORD` (ديمو) · `STREAM_SYMBOLS=XAUUSD`
+- MT5: `MT5_LOGIN=2000020618` · `MT5_SERVER=OneRoyal-Demo` · [يحتاج المالك] `MT5_PASSWORD` (ديمو) · `STREAM_SYMBOLS=XAUUSD` · `MT5_PATH=C:\Program Files\MetaTrader 5\terminal64.exe` (إلزامي لفحص «التحقق من اتصال MT5» في الإعدادات — بدونه يرفع 503 دائماً).
+- **فخ معروف (-6 Authorization failed)**: إن فشل إرفاق بايثون بالطرفية بهذا الخطأ فالسبب غالباً أن `terminal64.exe` فُتح **بصلاحيات مسؤول** أو من جلسة مختلفة — أعد فتح الطرفية كاملة الصلاحيات العادية بنفس مستخدم ويندوز ثم أعد المحاولة، أو أدخل `MT5_PASSWORD` في .env ليتم تسجيل الدخول برمجياً بدل الإرفاق.
 - لا تضع `NEXUS_DATA_SYNTHETIC_FALLBACK=1` إطلاقاً (preflight يعدّها تحذيراً مقصوداً ضد البيانات المزيفة).
 
 **6) أول إقلاع:**
