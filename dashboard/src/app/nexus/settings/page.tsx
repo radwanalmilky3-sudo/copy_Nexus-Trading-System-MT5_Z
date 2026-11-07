@@ -212,10 +212,19 @@ function SettingsPageInner() {
   // Runtime settings (from Redis via API)
   const [runtime, setRuntime] = useState<Record<string, any>>({});
   const [runtimeOrig, setRuntimeOrig] = useState<Record<string, any>>({});
+  // Live ref for the 30s poll: unsaved edits on screen must never be clobbered
+  // by the server copy (in-flight edits were silently lost every 30s before).
+  const runtimeDirtyRef = useRef(false);
   // Server-side defaults for keys the user has not stored yet (optional
   // `defaults` sibling of `settings`). Display-only: never merged into
   // `runtime`, so runtimeChanged/save keep pushing only real edits.
   const [runtimeDefaults, setRuntimeDefaults] = useState<Record<string, any>>({});
+
+  // Track unsaved edits for the poll guard (JSON compare is fine at this size).
+  useEffect(() => {
+    runtimeDirtyRef.current =
+      Object.keys(runtime).length > 0 && JSON.stringify(runtime) !== JSON.stringify(runtimeOrig);
+  }, [runtime, runtimeOrig]);
 
   // Authoritative PAPER/LIVE mode (GET /api/system/mode). null = unknown
   // (still loading, or the fetch failed) — never guessed or optimistically set.
@@ -681,8 +690,13 @@ function SettingsPageInner() {
           payload && typeof payload.settings === 'object' && payload.settings !== null &&
           !Array.isArray(payload.settings)
         ) {
-          setRuntime(payload.settings);
-          setRuntimeOrig(payload.settings);
+          if (runtimeDirtyRef.current) {
+            // Unsaved edits on screen — keep them; do NOT clobber with the
+            // server copy. (The save flow re-syncs runtimeOrig on success.)
+          } else {
+            setRuntime(payload.settings);
+            setRuntimeOrig(payload.settings);
+          }
           setRuntimeLoadError(null);
         } else {
           setRuntimeLoadError('استجابة غير متوقعة من الخادم — لا يمكن قراءة الإعدادات التشغيلية.');
