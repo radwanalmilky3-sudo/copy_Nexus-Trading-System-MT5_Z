@@ -1031,11 +1031,8 @@ function SettingsPageInner() {
           <SectionCard
             id="templates" label="قوالب الإعدادات (Templates)" icon={FolderOpen} color="text-neon-gold"
             expanded={expanded} setExpanded={setExpanded}
+            hint="احفظ إعداداتك كملف JSON وحمّل قالبًا محفوظًا أو افتح ملفًا من جهازك — القوالب تعبئة النموذج فقط، لا يُكتب أي شيء فعليًا إلا بعد «حفظ الكل»"
           >
-            <p className="mb-3 rounded-lg border border-border-primary bg-bg-input px-3 py-2 text-xs leading-relaxed text-text-muted">
-              احفظ إعداداتك الحالية كملف JSON على الكمبيوتر، وحمّل قالبًا محفوظًا أو افتح ملفًا من جهازك.
-              القوالب <b>تعبئة النموذج فقط</b> — لا يُكتب أي شيء فعليًا إلا بعد ضغط «حفظ الكل».
-            </p>
 
             {templatesPath && (
               <div className="mb-3 flex items-center gap-2 rounded-lg border border-neon-gold/30 bg-neon-gold/5 px-3 py-2">
@@ -1777,10 +1774,11 @@ function SourceStatusBadge({ status }: { status: string }) {
 // ── Sub-components ─────────────────────────────────────────────────────────────
 
 function SectionCard({
-  id, label, icon: Icon, color, expanded, setExpanded, children,
+  id, label, icon: Icon, color, expanded, setExpanded, hint, children,
 }: {
   id: string; label: string; icon: React.ElementType; color: string;
   expanded: Record<string, boolean>; setExpanded: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  hint?: string;
   children: React.ReactNode;
 }) {
   const isExp = expanded[id] !== false;
@@ -1791,10 +1789,18 @@ function SectionCard({
         className="w-full flex items-center gap-2.5 px-4 py-2.5 bg-bg-secondary/60 hover:bg-bg-secondary transition-colors"
       >
         <Icon className={cn('h-3.5 w-3.5', color)} />
-        <span className="text-[11px] font-mono font-bold text-text-secondary">{label.toUpperCase()}</span>
+        <span className="text-[11px] font-mono font-bold text-text-secondary shrink-0">{label.toUpperCase()}</span>
+        {hint && (
+          <span
+            title={hint}
+            className="hidden md:inline flex-1 min-w-0 truncate text-[9px] font-mono text-text-muted text-right"
+          >
+            {hint}
+          </span>
+        )}
         {isExp
-          ? <ChevronDown className="h-3 w-3 text-text-muted ml-auto" />
-          : <ChevronRight className="h-3 w-3 text-text-muted ml-auto" />
+          ? <ChevronDown className={cn('h-3 w-3 text-text-muted shrink-0', !hint && 'ml-auto')} />
+          : <ChevronRight className={cn('h-3 w-3 text-text-muted shrink-0', !hint && 'ml-auto')} />
         }
       </button>
       {isExp && (
