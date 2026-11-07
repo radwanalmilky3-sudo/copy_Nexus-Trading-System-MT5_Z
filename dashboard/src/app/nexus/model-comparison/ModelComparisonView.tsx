@@ -239,7 +239,7 @@ export function ModelComparisonView() {
           )}
         >
           {trainingAll ? <RefreshCw className="h-3 w-3 animate-spin" /> : <Play className="h-3 w-3" />}
-          {trainingAll ? 'جارٍ تدريب الكل…' : 'تدريب كل النماذج (Train All)'}
+          {trainingAll ? 'جارٍ تدريب الكل…' : 'تدريب كل النماذج'}
         </button>
       </div>
       {trainError && (

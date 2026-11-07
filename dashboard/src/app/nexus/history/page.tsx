@@ -24,10 +24,10 @@ const API = process.env.NEXT_PUBLIC_API_URL || '';
 type FilterPeriod = '1d' | '1w' | '1m' | '3m' | 'all';
 
 const PERIOD_OPTIONS: { value: FilterPeriod; label: string }[] = [
-  { value: '1d', label: '24H' },
-  { value: '1w', label: '1W' },
-  { value: '1m', label: '1M' },
-  { value: '3m', label: '3M' },
+  { value: '1d', label: 'يوم' },
+  { value: '1w', label: 'أسبوع' },
+  { value: '1m', label: 'شهر' },
+  { value: '3m', label: '3 أشهر' },
   { value: 'all', label: 'الكل' },
 ];
 
@@ -106,7 +106,7 @@ const TRADE_COLUMNS: VirtualColumn<TradeRow>[] = [
   },
   {
     key: 'symbol',
-    header: 'Symbol',
+    header: 'الرمز',
     width: '72px',
     dir: 'ltr',
     render: (t) => <span className="text-[10px] font-semibold text-text-primary">{t.symbol}</span>,
@@ -218,7 +218,7 @@ export default function HistoryPage() {
     : '(0 صف)';
 
   const exportCSV = () => {
-    const headers = ['Time', 'Symbol', 'Side', 'Volume', 'Entry', 'Exit', 'P&L $', 'Pips', 'R:R', 'Duration', 'Session', 'Agent'];
+    const headers = ['الوقت', 'الرمز', 'الجهة', 'الحجم', 'الدخول', 'الخروج', 'P&L $', 'النقاط', 'R:R', 'المدة', 'الجلسة', 'الوكيل'];
     const rows = trades.map((t) => [
       t.closed_at || t.opened_at || '', t.symbol, t.side, t.size,
       t.entry_price, t.exit_price, t.pnl_usd?.toFixed(2), t.pnl_pips?.toFixed(1),
@@ -239,7 +239,7 @@ export default function HistoryPage() {
       <div dir="rtl" className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <History className="h-5 w-5 text-neon-purple" />
-          <h1 className="text-lg font-bold text-text-primary">سجل التداول (Trade History)</h1>
+          <h1 className="text-lg font-bold text-text-primary">سجل التداول</h1>
           {loading && <RefreshCw className="h-3.5 w-3.5 animate-spin text-text-muted" />}
         </div>
         <button
@@ -275,7 +275,7 @@ export default function HistoryPage() {
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-muted" />
           <input
             type="text"
-            placeholder="تصفية حسب Symbol..."
+            placeholder="تصفية حسب الرمز..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             dir="ltr"
@@ -293,8 +293,8 @@ export default function HistoryPage() {
       {/* Stats row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
         {[
-          { label: 'إجمالي trades', value: stats ? String(stats.total_trades) : '—', color: 'text-text-primary' },
-          { label: 'Win Rate', value: stats?.total_trades ? `${stats.win_rate.toFixed(1)}%` : '—', color: stats ? (stats.win_rate >= 50 ? 'text-neon-green' : 'text-neon-red') : 'text-text-muted' },
+          { label: 'إجمالي الصفقات', value: stats ? String(stats.total_trades) : '—', color: 'text-text-primary' },
+          { label: 'نسبة الفوز', value: stats?.total_trades ? `${stats.win_rate.toFixed(1)}%` : '—', color: stats ? (stats.win_rate >= 50 ? 'text-neon-green' : 'text-neon-red') : 'text-text-muted' },
           { label: 'صافي P&L', value: stats ? formatCurrency(stats.total_pnl) : '—', color: stats ? (stats.total_pnl >= 0 ? 'text-neon-green' : 'text-neon-red') : 'text-text-muted' },
           { label: 'متوسط المدة', value: stats?.total_trades ? formatDuration(stats.avg_duration_s) : '—', color: 'text-neon-cyan' },
         ].map((stat) => (

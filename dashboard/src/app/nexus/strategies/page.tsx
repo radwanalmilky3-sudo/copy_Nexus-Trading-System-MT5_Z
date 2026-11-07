@@ -32,7 +32,7 @@ type SortKey = 'profit_factor' | 'win_rate' | 'sharpe' | 'max_dd_pct' | 'net_pnl
 
 const STATUS_META: Record<string, { label: string; color: string; icon: typeof Play }> = {
   active:        { label: 'نشط',        color: 'text-neon-green bg-neon-green/10 border-neon-green/30',   icon: Zap },
-  backtested:    { label: 'backtested', color: 'text-neon-gold  bg-neon-gold/10  border-neon-gold/30',    icon: BarChart3 },
+  backtested:    { label: 'مُختبر خلفياً', color: 'text-neon-gold  bg-neon-gold/10  border-neon-gold/30',    icon: BarChart3 },
   investigating: { label: 'قيد البحث',   color: 'text-neon-cyan  bg-neon-cyan/10  border-neon-cyan/30',    icon: Eye },
   rejected:      { label: 'مرفوض',      color: 'text-neon-red   bg-neon-red/10   border-neon-red/30',     icon: AlertCircle },
   paused:        { label: 'موقوف',      color: 'text-text-muted bg-bg-tertiary   border-border-primary/20', icon: Pause },
@@ -42,7 +42,7 @@ const STATUS_META: Record<string, { label: string; color: string; icon: typeof P
 const FILTER_LABELS: Record<string, string> = {
   all: 'الكل',
   active: 'نشط',
-  backtested: 'backtested',
+  backtested: 'مُختبر خلفياً',
   investigating: 'قيد البحث',
   rejected: 'مرفوض',
 };
@@ -366,7 +366,7 @@ export default function StrategiesPage() {
       <div className="flex items-center gap-3">
         <FlaskConical className="h-5 w-5 text-neon-purple" />
         <div className="flex-1">
-          <h1 className="text-lg font-bold text-text-primary">مختبر أبحاث الاستراتيجيات (Strategy Research Lab)</h1>
+          <h1 className="text-lg font-bold text-text-primary">مختبر أبحاث الاستراتيجيات</h1>
           <p className="text-[11px] text-text-muted">
             خط الأبحاث الحيّ · يقترح الذكاء الاصطناعي ← backtest ← تقييم ← ترقية
           </p>
@@ -437,12 +437,12 @@ export default function StrategiesPage() {
 
         <span className="text-[9px] text-text-muted font-mono uppercase">الترتيب (Sort):</span>
         {([
-          { key: 'profit_factor', label: 'P.Factor' },
-          { key: 'win_rate',      label: 'Win Rate' },
-          { key: 'sharpe',        label: 'Sharpe' },
-          { key: 'max_dd_pct',    label: 'Max DD' },
-          { key: 'net_pnl_pct',   label: 'PnL' },
-          { key: 'total_trades',  label: 'Trades' },
+          { key: 'profit_factor', label: 'عامل الربح' },
+          { key: 'win_rate',      label: 'نسبة الفوز' },
+          { key: 'sharpe',        label: 'شارب' },
+          { key: 'max_dd_pct',    label: 'أقصى تراجع' },
+          { key: 'net_pnl_pct',   label: 'الربح' },
+          { key: 'total_trades',  label: 'الصفقات' },
         ] as { key: SortKey; label: string }[]).map(({ key, label }) => (
           <button
             key={key}
@@ -463,7 +463,7 @@ export default function StrategiesPage() {
       {rules && (
         <div className="flex flex-wrap items-center gap-3 px-3 py-2 rounded-lg border border-border-primary/15 bg-bg-secondary/30">
           <Shield className="h-3.5 w-3.5 text-neon-gold shrink-0" />
-          <span className="text-[10px] text-text-muted">عتبات الترقية (Promotion thresholds):</span>
+          <span className="text-[10px] text-text-muted">عتبات الترقية:</span>
           {[
             { label: 'PF', value: `≥${rules.min_profit_factor?.toFixed(1)}` },
             { label: 'Win', value: `≥${((rules.min_win_rate ?? 0) * 100).toFixed(0)}%` },
