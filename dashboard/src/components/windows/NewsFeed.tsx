@@ -210,7 +210,7 @@ export default function NewsFeed() {
   return (
     <div dir="rtl">
       <NeonCard title={`الأخبار والتقويم — الشاشة الموحدة (${symbol})`} glow="cyan" noPadding className="h-full flex flex-col">
-        <div className="flex flex-wrap items-center gap-2 border-b border-border-primary/20 bg-slate-900/40 px-3 py-2">
+        <div className="flex flex-wrap items-center gap-2 border-b border-border-primary/20 bg-bg-tertiary/60 px-3 py-2">
           {([
             ['news', 'الأخبار', Newspaper],
             ['calendar', 'التقويم الاقتصادي', CalendarClock],
@@ -220,7 +220,7 @@ export default function NewsFeed() {
             <button
               key={key}
               onClick={() => setSection(key)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition ${section === key ? 'bg-sky-600 text-white' : 'border border-sky-200 bg-white text-sky-900 hover:bg-sky-50'}`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition ${section === key ? 'bg-neon-cyan/85 text-bg-primary' : 'border border-border-primary bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'}`}
               aria-pressed={section === key}
             >
               <Icon className="h-3.5 w-3.5" />
@@ -230,13 +230,13 @@ export default function NewsFeed() {
         </div>
 
         {blackout.state !== 'clear' && (
-          <div className="border-b border-amber-400 bg-amber-50 px-4 py-3 text-xs font-semibold text-amber-950">
+          <div className="border-b border-amber-500/40 bg-amber-500/10 px-4 py-3 text-xs font-semibold text-amber-300">
             حالة الأمان: {blackout.reason_ar ?? 'حالة التقويم غير واضحة؛ فتح تعرّض جديد محظور احترازيًا.'}
           </div>
         )}
 
         {(viewState === 'stale' || banners.reasonAr) && (
-          <div className="border-b border-amber-300 bg-amber-50 px-4 py-2 text-xs leading-5 text-amber-950">
+          <div className="border-b border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs leading-5 text-amber-300">
             {banners.reasonAr ?? STATE_MESSAGE[viewState] ?? STATE_MESSAGE.unavailable}
             {banners.staleWarning && <div className="mt-1 font-semibold">{banners.staleWarning}</div>}
           </div>
@@ -246,19 +246,19 @@ export default function NewsFeed() {
         <div className="flex flex-wrap items-center gap-2 border-b border-border-primary/20 px-3 py-2 text-[10px] text-text-muted">
           <span>التأثير</span>
           {(['ALL','HIGH','MEDIUM','LOW'] as ImpactFilter[]).map(v => (
-            <button key={v} onClick={() => setImpact(v)} className={`px-2 py-1 ${impact===v?'bg-sky-600 text-white':'border border-sky-200 bg-white text-sky-900'}`}>
+            <button key={v} onClick={() => setImpact(v)} className={`px-2 py-1 ${impact===v?'bg-neon-cyan/85 text-bg-primary':'border border-border-primary bg-bg-secondary text-text-secondary'}`}>
               {v === 'ALL' ? 'الكل' : impactAr(v)}
             </button>
           ))}
           <span className="mr-3">الفترة</span>
           {(['ALL','1H','24H','7D'] as PeriodFilter[]).map(v => (
-            <button key={v} onClick={() => setPeriod(v)} className={`px-2 py-1 ${period===v?'bg-sky-600 text-white':'border border-sky-200 bg-white text-sky-900'}`}>
+            <button key={v} onClick={() => setPeriod(v)} className={`px-2 py-1 ${period===v?'bg-neon-cyan/85 text-bg-primary':'border border-border-primary bg-bg-secondary text-text-secondary'}`}>
               {v === 'ALL' ? 'الكل' : v}
             </button>
           ))}
           <span className="mr-3">الرمز</span>
           {(['ALL','SYMBOL'] as const).map(v => (
-            <button key={v} onClick={() => setSymbolFilter(v)} className={`px-2 py-1 ${symbolFilter===v?'bg-sky-600 text-white':'border border-sky-200 bg-white text-sky-900'}`}>
+            <button key={v} onClick={() => setSymbolFilter(v)} className={`px-2 py-1 ${symbolFilter===v?'bg-neon-cyan/85 text-bg-primary':'border border-border-primary bg-bg-secondary text-text-secondary'}`}>
               {v === 'ALL' ? 'الكل' : symbol}
             </button>
           ))}
@@ -266,15 +266,15 @@ export default function NewsFeed() {
           <select
             value={sourceFilter}
             onChange={e => setSourceFilter(e.target.value)}
-            className="border border-sky-200 bg-white px-2 py-1 text-sky-900"
+            className="border border-border-primary bg-bg-secondary px-2 py-1 text-text-secondary"
             aria-label="تصفية حسب مصدر الخبر"
           >
             <option value="ALL">الكل</option>
             {sourceOptions.map(src => <option key={src} value={src}>{src}</option>)}
           </select>
-          {sourceFilter !== 'ALL' && <button onClick={() => setSourceFilter('ALL')} className="px-2 py-1 border border-sky-200 bg-white text-sky-900">إلغاء التصفية</button>}
-          <span className="mr-auto flex items-center gap-2 border border-sky-200 bg-white px-2 py-1">
-            <Search className="h-3.5 w-3.5 text-sky-600" />
+          {sourceFilter !== 'ALL' && <button onClick={() => setSourceFilter('ALL')} className="px-2 py-1 border border-border-primary bg-bg-secondary text-text-secondary">إلغاء التصفية</button>}
+          <span className="mr-auto flex items-center gap-2 border border-border-primary bg-bg-secondary px-2 py-1">
+            <Search className="h-3.5 w-3.5 text-neon-cyan" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -286,13 +286,13 @@ export default function NewsFeed() {
         </div>
         )}
 
-        <div className="flex flex-wrap gap-3 border-b border-border-primary/20 px-3 py-1.5 text-[10px] text-slate-600">
+        <div className="flex flex-wrap gap-3 border-b border-border-primary/20 px-3 py-1.5 text-[10px] text-text-secondary">
           <span>آخر تحديث: {banners.lastUpdateLabel ?? '—'}</span>
           <span>أول إتاحة: {banners.firstAvailableLabel ?? '—'}</span>
         </div>
 
         {banners.sourceIssues.length > 0 && (
-          <div className="border-b border-sky-200 bg-sky-50 px-4 py-2 text-[11px] leading-5 text-sky-950">
+          <div className="border-b border-border-primary bg-bg-tertiary px-4 py-2 text-[11px] leading-5 text-text-primary">
             <b>وضع المصادر:</b>
             <ul className="mt-1 list-disc pr-4">
               {banners.sourceIssues.map((line) => <li key={line}>{line}</li>)}
@@ -302,23 +302,18 @@ export default function NewsFeed() {
 
         {!loaded && viewState === 'loading' && <div className="p-6 text-center text-xs text-text-muted">{STATE_MESSAGE.loading}</div>}
         {loaded && (viewState === 'empty' || viewState === 'unavailable' || viewState === 'offline') && !banners.reasonAr && (
-          <div className={`p-6 text-center text-xs ${viewState === 'offline' || viewState === 'unavailable' ? 'text-amber-700' : 'text-text-muted'}`}>
+          <div className={`p-6 text-center text-xs ${viewState === 'offline' || viewState === 'unavailable' ? 'text-amber-300' : 'text-text-muted'}`}>
             {STATE_MESSAGE[viewState]}
-          </div>
-        )}
-        {loaded && banners.reasonAr && (viewState === 'empty' || viewState === 'unavailable' || viewState === 'offline') && (
-          <div className={`p-6 text-center text-xs ${viewState === 'offline' || viewState === 'unavailable' ? 'text-amber-700' : 'text-text-muted'}`}>
-            {banners.reasonAr}
           </div>
         )}
 
         {loaded && section === 'news' && (viewState === 'ready' || viewState === 'stale' || viewState === 'empty' || viewState === 'unavailable') && (
           <div className="space-y-3 p-3">
             <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
-              <section className="border border-sky-200 bg-white text-slate-900">
-                <h3 className="border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950">الأخبار الحقيقية</h3>
-                <div className="max-h-[460px] divide-y divide-sky-100 overflow-y-auto">
-                  {searchedNews.length === 0 ? <div className="p-4 text-xs text-slate-600">لا توجد أخبار مطابقة للفلاتر أو البحث.</div> : searchedNews.map(item => {
+              <section className="border border-border-primary bg-bg-secondary text-text-primary">
+                <h3 className="border-b border-border-primary/40 bg-bg-tertiary px-3 py-2 text-sm font-semibold text-text-primary">الأخبار الحقيقية</h3>
+                <div className="max-h-[460px] divide-y divide-border-primary/40 overflow-y-auto">
+                  {searchedNews.length === 0 ? <div className="p-4 text-xs text-text-secondary">لا توجد أخبار مطابقة للفلاتر أو البحث.</div> : searchedNews.map(item => {
                     const extra = item as NewsItem & ExtraNews;
                     const rel = extra.asset_relevance;
                     const xau = rel?.XAUUSD;
@@ -328,17 +323,17 @@ export default function NewsFeed() {
                       <button
                         key={item.id}
                         onClick={() => setSelectedId(item.id)}
-                        className={`block w-full p-3 text-right transition ${selectedNow ? 'bg-sky-50' : 'hover:bg-sky-50/60'}`}
+                        className={`block w-full p-3 text-right transition ${selectedNow ? 'bg-bg-tertiary' : 'hover:bg-bg-tertiary/60'}`}
                       >
                         <div className="flex items-start justify-between gap-3">
                           <h4 className="text-xs font-semibold leading-5">{item.headline}</h4>
-                          <span className="shrink-0 border border-sky-200 px-1.5 py-0.5 text-[9px]">{impactAr(item.impact)}</span>
+                          <span className="shrink-0 border border-border-primary px-1.5 py-0.5 text-[9px]">{impactAr(item.impact)}</span>
                         </div>
-                        <div className="mt-2 flex flex-wrap gap-2 text-[10px] text-slate-600">
+                        <div className="mt-2 flex flex-wrap gap-2 text-[10px] text-text-secondary">
                           <span>{item.source}</span><span>•</span><span>{ago(item.timestamp, now)}</span><span>•</span><span>{sentimentAr(item.sentiment)}</span><span>•</span><span>الأصل: {item.data_origin ?? 'REAL'}</span>
-                          {extra.is_commercial_noise === true && <span className="rounded bg-amber-100 px-1.5 py-0.5 text-amber-900">مستبعد من التحليل المالي</span>}
+                          {extra.is_commercial_noise === true && <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-amber-300">مستبعد من التحليل المالي</span>}
                         </div>
-                        <div className="mt-1 flex flex-wrap gap-2 text-[10px] text-slate-500">
+                        <div className="mt-1 flex flex-wrap gap-2 text-[10px] text-text-muted">
                           <span>FinBERT: {item.finbert_state === 'available' && typeof item.finbert_score === 'number' ? item.finbert_score.toFixed(3) : 'غير متاح'} — النبرة لا تساوي اتجاه الذهب.</span>
                           {extra.topic != null && <span>• الموضوع: {s(extra.topic)}</span>}
                           {extra.novelty_score != null && <span>• الجِدّة: {num(extra.novelty_score)}</span>}
@@ -351,38 +346,38 @@ export default function NewsFeed() {
                 </div>
               </section>
 
-              <section className="border border-sky-200 bg-white text-slate-900">
-                <h3 className="border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950">تفاصيل الخبر المختار</h3>
-                {!selected ? <div className="p-5 text-xs text-slate-600">اختر خبرًا لعرض التفاصيل.</div> : (
+              <section className="border border-border-primary bg-bg-secondary text-text-primary">
+                <h3 className="border-b border-border-primary/40 bg-bg-tertiary px-3 py-2 text-sm font-semibold text-text-primary">تفاصيل الخبر المختار</h3>
+                {!selected ? <div className="p-5 text-xs text-text-secondary">اختر خبرًا لعرض التفاصيل.</div> : (
                   <div className="space-y-4 p-4">
                     <div>
-                      <div className="text-[11px] text-slate-500">ماذا حدث؟</div>
-                      <div className="mt-1 text-sm font-semibold leading-7 text-slate-900">{selected.headline}</div>
+                      <div className="text-[11px] text-text-muted">ماذا حدث؟</div>
+                      <div className="mt-1 text-sm font-semibold leading-7 text-text-primary">{selected.headline}</div>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="border border-sky-100 bg-sky-50 p-2"><span className="text-slate-500">المصدر</span><div className="mt-1 font-medium">{selected.source}</div></div>
-                      <div className="border border-sky-100 bg-sky-50 p-2"><span className="text-slate-500">الموضوع</span><div className="mt-1 font-medium">{s(selectedExtra?.topic)}</div></div>
-                      <div className="border border-sky-100 bg-sky-50 p-2"><span className="text-slate-500">FinBERT</span><div className="mt-1 font-medium">{selected.finbert_state === 'available' && typeof selected.finbert_score === 'number' ? `${selected.finbert_state} · ${selected.finbert_score.toFixed(3)}` : s(selected.finbert_state ?? 'غير متاح')}</div></div>
-                      <div className="border border-sky-100 bg-sky-50 p-2"><span className="text-slate-500">أصل البيانات</span><div className="mt-1 font-medium">{s(selected.data_origin ?? 'REAL')}</div></div>
+                      <div className="border border-border-primary/40 bg-bg-tertiary p-2"><span className="text-text-muted">المصدر</span><div className="mt-1 font-medium">{selected.source}</div></div>
+                      <div className="border border-border-primary/40 bg-bg-tertiary p-2"><span className="text-text-muted">الموضوع</span><div className="mt-1 font-medium">{s(selectedExtra?.topic)}</div></div>
+                      <div className="border border-border-primary/40 bg-bg-tertiary p-2"><span className="text-text-muted">FinBERT</span><div className="mt-1 font-medium">{selected.finbert_state === 'available' && typeof selected.finbert_score === 'number' ? `${selected.finbert_state} · ${selected.finbert_score.toFixed(3)}` : s(selected.finbert_state ?? 'غير متاح')}</div></div>
+                      <div className="border border-border-primary/40 bg-bg-tertiary p-2"><span className="text-text-muted">أصل البيانات</span><div className="mt-1 font-medium">{s(selected.data_origin ?? 'REAL')}</div></div>
                     </div>
-                    <div className="border border-sky-200 bg-white p-3 text-xs leading-6 text-slate-700"><b>قاعدة الأمان:</b> المشاعر ليست اتجاهًا للذهب. اتجاه الأصل لا يُعرض إلا من محرك Asset Impact الحتمي.</div>
+                    <div className="border border-border-primary bg-bg-secondary p-3 text-xs leading-6 text-text-secondary"><b>قاعدة الأمان:</b> المشاعر ليست اتجاهًا للذهب. اتجاه الأصل لا يُعرض إلا من محرك Asset Impact الحتمي.</div>
                   </div>
                 )}
               </section>
             </div>
 
             <div className="grid gap-3 xl:grid-cols-[1.4fr_1fr]">
-              <section className="border border-sky-200 bg-white text-slate-900">
-                <h3 className="flex items-center gap-2 border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950"><ShieldCheck className="h-4 w-4" /> الشريط النشط (تنبيهات عالية الأهمية)</h3>
-                <div className="max-h-[280px] divide-y divide-sky-100 overflow-y-auto">
-                  {ticker.length === 0 ? <div className="p-4 text-xs text-slate-600">لا توجد تنبيهات نشطة.</div> : ticker.slice(0, 20).map(x => (
+              <section className="border border-border-primary bg-bg-secondary text-text-primary">
+                <h3 className="flex items-center gap-2 border-b border-border-primary/40 bg-bg-tertiary px-3 py-2 text-sm font-semibold text-text-primary"><ShieldCheck className="h-4 w-4" /> الشريط النشط (تنبيهات عالية الأهمية)</h3>
+                <div className="max-h-[280px] divide-y divide-border-primary/40 overflow-y-auto">
+                  {ticker.length === 0 ? <div className="p-4 text-xs text-text-secondary">لا توجد تنبيهات نشطة.</div> : ticker.slice(0, 20).map(x => (
                     <div key={x.ticker_item_id} className="p-3">
                       <div className="flex flex-wrap items-center gap-2 text-[10px]">
-                        <span className="rounded bg-sky-100 px-1.5 py-0.5 font-bold text-sky-800">{s(x.severity).toUpperCase()}</span>
+                        <span className="rounded bg-neon-cyan/10 px-1.5 py-0.5 font-bold text-text-secondary">{s(x.severity).toUpperCase()}</span>
                         {x.asset_id && <span>{x.asset_id}</span>}
-                        <span className="text-slate-500">{s(x.status)}</span>
+                        <span className="text-text-muted">{s(x.status)}</span>
                       </div>
-                      <div className="mt-1 text-xs leading-5 text-slate-800">{x.headline_ar}</div>
+                      <div className="mt-1 text-xs leading-5 text-text-primary">{x.headline_ar}</div>
                     </div>
                   ))}
                 </div>
@@ -393,16 +388,16 @@ export default function NewsFeed() {
 
         {loaded && section === 'calendar' && (viewState === 'ready' || viewState === 'stale' || viewState === 'empty' || viewState === 'unavailable') && (
           <div className="space-y-3 p-3">
-            <section className="border border-sky-200 bg-white text-slate-900">
-              <h3 className="flex items-center gap-2 border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950"><CalendarClock className="h-4 w-4" /> التقويم الاقتصادي</h3>
+            <section className="border border-border-primary bg-bg-secondary text-text-primary">
+              <h3 className="flex items-center gap-2 border-b border-border-primary/40 bg-bg-tertiary px-3 py-2 text-sm font-semibold text-text-primary"><CalendarClock className="h-4 w-4" /> التقويم الاقتصادي</h3>
               <div className="max-h-[560px] overflow-auto">
                 <table className="w-full min-w-[720px] text-right text-xs">
-                  <thead className="sticky top-0 bg-sky-50 text-sky-900">
+                  <thead className="sticky top-0 bg-bg-tertiary text-text-secondary">
                     <tr>{['الحدث','العملة','الأهمية','الفعلي','المتوقع','السابق','الوقت','المصدر'].map(x => <th key={x} className="px-3 py-2 font-semibold">{x}</th>)}</tr>
                   </thead>
                   <tbody>
-                    {filteredCalendar.length === 0 ? <tr><td colSpan={8} className="p-4 text-center text-slate-600">لا توجد أحداث مطابقة للفلاتر.</td></tr> : filteredCalendar.map(event => (
-                      <tr key={event.id} className="border-t border-sky-100">
+                    {filteredCalendar.length === 0 ? <tr><td colSpan={8} className="p-4 text-center text-text-secondary">لا توجد أحداث مطابقة للفلاتر.</td></tr> : filteredCalendar.map(event => (
+                      <tr key={event.id} className="border-t border-border-primary/40">
                         <td className="px-3 py-2 font-medium">{event.event_name}</td>
                         <td className="px-3 py-2">{event.currency}</td>
                         <td className="px-3 py-2">{impactAr(event.impact)}</td>
@@ -426,20 +421,20 @@ export default function NewsFeed() {
 
         {section === 'archive' && (
           <div className="space-y-3 p-3">
-            <section className="border border-sky-200 bg-white text-slate-900">
-              <h3 className="flex items-center gap-2 border-b border-sky-100 bg-sky-50 px-3 py-2 text-sm font-semibold text-sky-950"><Archive className="h-4 w-4" /> الأرشيف البحثي — الأخبار المرتبطة بالأصل والفترة</h3>
-              <p className="border-b border-sky-100 bg-sky-50/60 px-3 py-1.5 text-[10px] text-slate-600">التصفية حسب وسوم المصدر ووقت النشر UTC — المصدر: nexus-data.news_articles. توفر الأرشيف لا يثبت حداثته أو اكتماله؛ عرض موحّد يخدم نفس الشاشة دون الرجوع لمختبر البحث.</p>
+            <section className="border border-border-primary bg-bg-secondary text-text-primary">
+              <h3 className="flex items-center gap-2 border-b border-border-primary/40 bg-bg-tertiary px-3 py-2 text-sm font-semibold text-text-primary"><Archive className="h-4 w-4" /> الأرشيف البحثي — الأخبار المرتبطة بالأصل والفترة</h3>
+              <p className="border-b border-border-primary/40 bg-bg-tertiary/60 px-3 py-1.5 text-[10px] text-text-secondary">التصفية حسب وسوم المصدر ووقت النشر UTC — المصدر: nexus-data.news_articles. توفر الأرشيف لا يثبت حداثته أو اكتماله؛ عرض موحّد يخدم نفس الشاشة دون الرجوع لمختبر البحث.</p>
               <div className="max-h-[560px] overflow-auto">
                 <table className="w-full min-w-[720px] text-right text-xs">
-                  <thead className="sticky top-0 bg-sky-50 text-sky-900">
+                  <thead className="sticky top-0 bg-bg-tertiary text-text-secondary">
                     <tr>{['الخبر','المصدر','الأصول المتأثرة','وقت النشر UTC','النبرة'].map(x => <th key={x} className="px-3 py-2 font-semibold">{x}</th>)}</tr>
                   </thead>
                   <tbody>
-                    {archiveState === 'loading' && <tr><td colSpan={5} className="p-4 text-center text-slate-600">جارٍ التحميل…</td></tr>}
-                    {archiveState === 'error' && <tr><td colSpan={5} className="p-4 text-center text-amber-700">تعذر قراءة أرشيف الأخبار — لا تُعرض بيانات بديلة.</td></tr>}
-                    {archiveState === 'ready' && archive.length === 0 && <tr><td colSpan={5} className="p-4 text-center text-slate-600">لا توجد أخبار مطابقة ضمن السجلات المقروءة.</td></tr>}
+                    {archiveState === 'loading' && <tr><td colSpan={5} className="p-4 text-center text-text-secondary">جارٍ التحميل…</td></tr>}
+                    {archiveState === 'error' && <tr><td colSpan={5} className="p-4 text-center text-amber-300">تعذر قراءة أرشيف الأخبار — لا تُعرض بيانات بديلة.</td></tr>}
+                    {archiveState === 'ready' && archive.length === 0 && <tr><td colSpan={5} className="p-4 text-center text-text-secondary">لا توجد أخبار مطابقة ضمن السجلات المقروءة.</td></tr>}
                     {archiveState === 'ready' && archive.map(r => (
-                      <tr key={r.id} className="border-t border-sky-100">
+                      <tr key={r.id} className="border-t border-border-primary/40">
                         <td className="px-3 py-2 font-medium">{r.headline}</td>
                         <td className="px-3 py-2">{r.source}</td>
                         <td className="px-3 py-2">{r.relevance}</td>

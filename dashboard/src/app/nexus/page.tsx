@@ -61,16 +61,16 @@ const BacktestPanel = dynamic(() => import('@/components/windows/BacktestPanel')
 const FundamentalWorkspace = dynamic(() => import('@/components/fundamental/FundamentalWorkspace'), { ssr: false, loading: WindowSkeleton });
 
 const SUB_TABS = [
-  { id: 'overview',      label: 'نظرة عامة (Overview)',      icon: LineChart },
-  { id: 'positions',     label: 'المراكز (Positions)',       icon: TrendingUp },
-  { id: 'risk',          label: 'المخاطرة (Risk)',           icon: Shield },
-  { id: 'news',          label: 'الأخبار (News)',            icon: Newspaper },
-  { id: 'agents',        label: 'الوكلاء (Agents)',          icon: BrainCircuit },
-  { id: 'intelligence',  label: 'الذكاء (Intelligence)',     icon: Brain },
+  { id: 'overview',      label: 'نظرة عامة',      icon: LineChart },
+  { id: 'positions',     label: 'المراكز',       icon: TrendingUp },
+  { id: 'risk',          label: 'المخاطرة',           icon: Shield },
+  { id: 'news',          label: 'الأخبار',            icon: Newspaper },
+  { id: 'agents',        label: 'الوكلاء',          icon: BrainCircuit },
+  { id: 'intelligence',  label: 'الذكاء',     icon: Brain },
   { id: 'fundamental',   label: 'التحليل الأساسي', icon: BrainCircuit },
-  { id: 'journal',       label: 'السجل (Journal)',           icon: BookOpen },
-  { id: 'backtest',      label: 'الاختبار الخلفي (Backtest)', icon: FlaskConical },
-  { id: 'console',       label: 'وحدة التحكم (Console)',      icon: Terminal },
+  { id: 'journal',       label: 'سجل الصفقات',           icon: BookOpen },
+  { id: 'backtest',      label: 'الاختبار الخلفي', icon: FlaskConical },
+  { id: 'console',       label: 'وحدة التحكم',      icon: Terminal },
 ] as const;
 
 type SubTabId = (typeof SUB_TABS)[number]['id'];
