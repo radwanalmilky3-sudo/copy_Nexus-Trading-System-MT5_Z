@@ -536,3 +536,95 @@ button:focus-visible {
 }
 .cell-flash-up { animation: nexus-flash-up 0.9s ease-out; }
 .cell-flash-down { animation: nexus-flash-down 0.9s ease-out; }
+
+/* ============================================================
+   LIGHT THEME — owner-requested dual theme (2026-11-07)
+   Same token NAMES, warm-cream light values. Dark stays the
+   :root default; toggling `html.light` flips every surface that
+   uses the design tokens. Gold identity preserved on cream.
+   ============================================================ */
+html.light {
+  color-scheme: light;
+
+  --bg-primary: #faf6ee;
+  --bg-secondary: #f3eddf;
+  --bg-tertiary: #ece4d2;
+  --bg-card: #fbf7ef;
+  --bg-card-hover: #f3ecdc;
+  --bg-hover: #e7dfc9;
+  --bg-active: #ded4b8;
+  --bg-input: #fffdf7;
+  --bg-overlay: rgba(250, 246, 238, 0.9);
+
+  --neon-green: #059669;
+  --neon-green-dim: rgba(5, 150, 105, 0.14);
+  --neon-green-subtle: rgba(5, 150, 105, 0.07);
+
+  --neon-red: #dc2626;
+  --neon-red-dim: rgba(220, 38, 38, 0.14);
+  --neon-red-subtle: rgba(220, 38, 38, 0.07);
+
+  --neon-violet: #b45309;
+  --neon-violet-dim: rgba(180, 83, 9, 0.14);
+  --neon-violet-subtle: rgba(180, 83, 9, 0.07);
+  --neon-purple: #b45309;
+  --neon-purple-dim: rgba(180, 83, 9, 0.14);
+
+  --neon-cyan: #b45309;
+  --neon-cyan-dim: rgba(180, 83, 9, 0.14);
+
+  --neon-gold: #b45309;
+  --neon-gold-dim: rgba(180, 83, 9, 0.14);
+
+  --neon-blue: #57534e;
+  --neon-blue-dim: rgba(87, 83, 78, 0.14);
+  --neon-orange: #c2620a;
+  --neon-pink: #b45309;
+
+  --gradient-sidebar: linear-gradient(180deg, #faf6ee 0%, #f3eddf 100%);
+
+  --text-primary: #1c1917;
+  --text-secondary: #57534e;
+  --text-muted: #78716c;
+  --text-accent: #b45309;
+
+  --border-default: rgba(28, 25, 23, 0.14);
+  --border-primary: rgba(28, 25, 23, 0.14);
+  --border-secondary: rgba(28, 25, 23, 0.09);
+  --border-neon: rgba(180, 83, 9, 0.3);
+  --border-accent: #b45309;
+  --border-glow: rgba(180, 83, 9, 0.45);
+
+  --gradient-card: linear-gradient(180deg, #fbf7ef 0%, #f3eddf 100%);
+  --gradient-header: linear-gradient(90deg, #faf6ee 0%, #f3eddf 50%, #faf6ee 100%);
+  --gradient-profit: linear-gradient(90deg, rgba(5, 150, 105, 0) 0%, rgba(5, 150, 105, 0.07) 50%, rgba(5, 150, 105, 0) 100%);
+  --gradient-loss: linear-gradient(90deg, rgba(220, 38, 38, 0) 0%, rgba(220, 38, 38, 0.07) 50%, rgba(220, 38, 38, 0) 100%);
+
+  --shadow-card: 0 1px 3px rgba(28, 25, 23, 0.12);
+  --shadow-elevated: 0 4px 16px rgba(28, 25, 23, 0.15);
+
+  --chart-grid: #e7e0d0;
+  --chart-crosshair: #78716c;
+  --chart-volume: rgba(180, 83, 9, 0.18);
+  --chart-ma20: #d97706;
+  --chart-ma50: #92610a;
+  --chart-bb: rgba(180, 83, 9, 0.25);
+
+  --background: #faf6ee;
+  --foreground: #1c1917;
+  --card: #fbf7ef;
+  --card-foreground: #1c1917;
+  --popover: #fffdf7;
+  --popover-foreground: #1c1917;
+  --primary: #b45309;
+  --primary-foreground: #fffdf7;
+  --secondary: #ece4d2;
+  --secondary-foreground: #1c1917;
+  --muted: #ece4d2;
+  --muted-foreground: #57534e;
+  --accent: #e7dfc9;
+  --accent-foreground: #43301a;
+  --border: rgba(28, 25, 23, 0.14);
+  --input: rgba(28, 25, 23, 0.18);
+  --ring: rgba(180, 83, 9, 0.5);
+}

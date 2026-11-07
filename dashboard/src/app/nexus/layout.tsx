@@ -23,6 +23,7 @@ import { resyncSystemState } from '@/lib/system-state';
 import { useDashboardStore } from '@/stores/dashboardStore';
 import type { Timeframe } from '@/types';
 import { NotificationBell } from '@/components/ui/NotificationBell';
+import ThemeToggle from '@/components/layout/ThemeToggle';
 import NewsTickerBar from '@/components/fundamental/NewsTickerBar';
 import UserMenu from '@/components/UserMenu';
 import LiveGoldPrice, { BuildBadge } from '@/components/shared/LiveGoldPrice';
@@ -371,6 +372,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="h-4 w-px bg-border-primary" />
 
           <ModeToggle />
+
+          <div className="h-4 w-px bg-border-primary" />
+
+          <ThemeToggle />
 
           <div className="h-4 w-px bg-border-primary" />
 
