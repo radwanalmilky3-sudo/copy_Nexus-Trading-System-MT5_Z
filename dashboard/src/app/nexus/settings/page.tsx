@@ -601,11 +601,10 @@ function SettingsPageInner() {
         <select
           dir="ltr"
           disabled={disabled}
-          value={known ? draft : ''}
+          value={known ? draft : '0'}
           onChange={(e) => commit(e.target.value)}
           className={cn(base, 'cursor-pointer')}
         >
-          {!known && <option value="">{placeholder ?? 'غير معرّف في الملف'}</option>}
           <option value="1">نعم (1)</option>
           <option value="0">لا (0)</option>
         </select>
@@ -619,11 +618,10 @@ function SettingsPageInner() {
         <select
           dir="ltr"
           disabled={disabled}
-          value={known ? draft : ''}
+          value={known ? draft : (choices[0] ?? '')}
           onChange={(e) => commit(e.target.value)}
           className={cn(base, 'cursor-pointer')}
         >
-          {!known && <option value="">{placeholder ?? 'غير معرّف في الملف'}</option>}
           {choices.map((choice) => (
             <option key={choice} value={choice}>{choice}</option>
           ))}
