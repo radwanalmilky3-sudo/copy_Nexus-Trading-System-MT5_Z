@@ -241,6 +241,7 @@ def _collect_run_py_pids() -> set[int]:
             check=False,
             capture_output=True,
             text=True,
+            errors="replace",
         )
         for line in result.stdout.splitlines():
             parts = line.split("|", 2)
@@ -252,6 +253,7 @@ def _collect_run_py_pids() -> set[int]:
             check=False,
             capture_output=True,
             text=True,
+            errors="replace",
         )
         for line in result.stdout.splitlines():
             parts = line.strip().split(None, 2)
