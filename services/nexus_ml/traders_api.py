@@ -2223,7 +2223,7 @@ async def _build_lifecycle_episodes_from_memory() -> list[dict]:
     """Convert TradeMemory records into lifecycle training episodes."""
     try:
         mem = get_trade_memory()
-        records = mem._records  # list[TradeRecord]
+        records = mem._trades  # list[TradeRecord]
         episodes = []
         r = await _get_redis()
         for rec in records:
@@ -2275,8 +2275,8 @@ async def _retrain_lifecycle_if_enough_data() -> None:
     """Retrain lifecycle model when enough TradeMemory records are available."""
     try:
         mem = get_trade_memory()
-        if len(mem._records) < 10:
-            logger.info("lifecycle retrain skipped — only %d records", len(mem._records))
+        if len(mem._trades) < 10:
+            logger.info("lifecycle retrain skipped — only %d records", len(mem._trades))
             return
         episodes = await _build_lifecycle_episodes_from_memory()
         if not episodes:
