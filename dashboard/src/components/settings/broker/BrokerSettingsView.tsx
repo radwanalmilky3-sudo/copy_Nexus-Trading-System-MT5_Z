@@ -26,7 +26,7 @@ function FieldTable({children,label}:{children:React.ReactNode;label:string}){
 }
 const utcValue=(v:string|null)=>v?v.replace(/Z$/,''):'';
 const utcInput=(v:string)=>v?v+'Z':null;
-const tabs:{id:Section;label:string}[]=[{id:'accounts',label:'الوسطاء والحسابات'},{id:'connection',label:'الاتصال'},{id:'assets',label:'الأصول'},{id:'timing',label:'الجلسات والتوقيت'},{id:'evidence',label:'الأدلة والسجل'}];
+const tabs:{id:Section;label:string}[]=[{id:'connection',label:'الاتصال'},{id:'assets',label:'الأصول'},{id:'timing',label:'الجلسات والتوقيت'},{id:'evidence',label:'الأدلة والسجل'}];
 
 export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerController;state:BrokerState}){
   const t=s.draft?.transition;
@@ -63,50 +63,15 @@ export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerCont
     {s.notice&&<p role="status" className="rounded border border-neon-green/40 p-3 text-sm">{s.notice}</p>}
     <nav className="flex gap-2 overflow-x-auto rounded-lg border border-border-primary bg-bg-secondary/30 p-2" aria-label="أقسام الوسيط">{tabs.map(tab=>{const active=s.section===tab.id;return <button key={tab.id} type="button" data-tab={tab.id} className={`${button} inline-flex min-h-12 flex-1 shrink-0 items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon-cyan ${active?'border-neon-cyan bg-neon-cyan/15 font-semibold text-neon-cyan shadow-[0_0_12px_rgba(34,211,238,0.18)]':'text-text-muted'}`} aria-pressed={active} aria-current={active?'page':undefined} onClick={()=>c.setSection(tab.id)}><TabIcon section={tab.id}/><span>{tab.label}</span></button>;})}</nav>
 
-    {s.section==='accounts'&&<div className="space-y-5">
-      <div className="flex items-center justify-between"><h3 className="font-bold">الوسطاء الخاصون بحسابك</h3><button type="button" className={button} disabled={s.busy||s.loading} onClick={()=>{if(canLeave())c.setEditor('profile');}}>إضافة وسيط</button></div>
-      <div className="overflow-x-auto rounded border border-border-primary"><table className={tableClass} aria-label="جدول الوسطاء"><thead><tr><th scope="col">الوسيط</th><th scope="col">الاسم التعريفي</th><th scope="col">عدد الحسابات</th><th scope="col">الإجراء</th></tr></thead><tbody>
-        {s.profiles.map(p=><tr key={p.profile_id} aria-selected={p.profile_id===s.selectedProfileId} className={p.profile_id===s.selectedProfileId?'bg-neon-cyan/10':''}><td>{p.broker_name}</td><td>{p.name}</td><td>{p.accounts.length}</td><td><button type="button" className={button} disabled={s.busy||s.loading} onClick={()=>{if(p.profile_id!==s.selectedProfileId&&canLeave())c.selectProfile(p.profile_id);}}>{p.profile_id===s.selectedProfileId?'الوسيط المختار':'عرض الحسابات'}</button></td></tr>)}
-        {!s.profiles.length&&<tr><td colSpan={4}>لا يوجد وسيط محفوظ بعد. اضغط «إضافة وسيط» للبدء.</td></tr>}
-      </tbody></table></div>
-      <div className="flex items-center justify-between"><h3 className="font-bold">حسابات {profile?.broker_name||'الوسيط المختار'}</h3><button type="button" className={button} disabled={!profile||s.busy||s.loading} onClick={()=>{if(canLeave()){c.setAccountForm({profile_id:s.selectedProfileId});c.setEditor('account');}}}>إضافة حساب</button></div>
-      <div className="overflow-x-auto rounded border border-border-primary"><table className={tableClass} aria-label="جدول حسابات الوسيط"><thead><tr><th scope="col">اسم الحساب</th><th scope="col">الخادم</th><th scope="col">رقم الحساب</th><th scope="col">النوع</th><th scope="col">الإجراء</th></tr></thead><tbody>
-        {profile?.accounts.map(a=><tr key={a.account_id} aria-selected={a.account_id===s.account?.account_id} className={a.account_id===s.account?.account_id?'bg-neon-cyan/10':''}><td>{a.label}</td><td dir="ltr">{a.server}</td><td dir="ltr">{a.masked_login}</td><td>{a.account_kind==='live'?'حقيقي':'تجريبي'}</td><td><button type="button" className={button} disabled={s.busy||s.loading} onClick={()=>{if(a.account_id!==s.account?.account_id&&canLeave())void c.selectAccount(a.account_id);}}>{a.account_id===s.account?.account_id?'الحساب المختار':'اختيار الحساب'}</button></td></tr>)}
-        {!profile?.accounts.length&&<tr><td colSpan={5}>{profile?'لا توجد حسابات لهذا الوسيط. اضغط «إضافة حساب».':'اختر وسيطًا لعرض حساباته.'}</td></tr>}
-      </tbody></table></div>
-      {s.editor&&<div role="region" aria-label={s.editor==='profile'?'إضافة وسيط':'إضافة حساب'} className="rounded border border-neon-cyan/40 p-4"><div className="mb-3 flex justify-end"><button type="button" className={button} disabled={s.busy} onClick={()=>c.setEditor(null)}>إغلاق نموذج الإضافة</button></div>
-      {s.editor==='profile'&&
-      <form className="space-y-3 rounded border border-border-primary p-4" onSubmit={e=>{e.preventDefault();void c.createProfile();}}>
-        <h3 className="font-bold">إضافة ملف وسيط خاص بك</h3>
-        {field('الاسم التعريفي للوسيط',<input className={input} required maxLength={128} value={s.profileForm.name} onChange={e=>c.setProfileForm({name:e.target.value})}/>)}
-        {field('اسم الوسيط',<input className={input} required maxLength={128} value={s.profileForm.broker_name} onChange={e=>c.setProfileForm({broker_name:e.target.value})}/>)}
-        <button className={button} disabled={s.busy||s.loading} type="submit">حفظ ملف الوسيط</button>
-      </form>}
-      {s.editor==='account'&&
-      <form className="space-y-3 rounded border border-border-primary p-4" onSubmit={e=>{e.preventDefault();void c.createAccount();}}>
-        <h3 className="font-bold">إضافة بيانات حساب — دون تسجيل اتصال</h3>
-        {field('الوسيط',<select className={input} required value={s.accountForm.profile_id} onChange={e=>c.setAccountForm({profile_id:e.target.value})}><option value="">اختر وسيطًا</option>{s.profiles.map(p=><option key={p.profile_id} value={p.profile_id}>{p.broker_name} · {p.name}</option>)}</select>)}
-        {field('اسم الحساب',<input className={input} required maxLength={128} value={s.accountForm.label} onChange={e=>c.setAccountForm({label:e.target.value})}/>)}
-        {field('اسم خادم الوسيط',<input className={input} required dir="ltr" maxLength={128} placeholder="OneRoyal-Demo" value={s.accountForm.server} onChange={e=>c.setAccountForm({server:e.target.value})}/>)}
-        {field('رقم حساب الوسيط — بيانات تعريف فقط',<input className={input} required dir="ltr" inputMode="numeric" pattern="[0-9]{1,32}" maxLength={32} autoComplete="off" value={s.accountForm.login} onChange={e=>c.setAccountForm({login:e.target.value})}/>)}
-        {field('نوع الحساب',<select className={input} value={s.accountForm.account_kind} onChange={e=>c.setAccountForm({account_kind:e.target.value as 'demo'|'live'})}><option value="demo">تجريبي</option><option value="live">حقيقي — لا يفعّل التداول الحقيقي</option></select>)}
-        <p className="text-xs text-text-muted">لا تدخل كلمة مرور. الحسابات منفصلة حسب مستخدم الموقع، ولا نبدّل حساب المنصة الحالية.</p>
-        <button className={button} disabled={s.busy||s.loading||!s.profiles.length} type="submit">حفظ بيانات الحساب</button>
-      </form>}
-      </div>}
-    </div>}
-
     {s.section==='connection'&&<div className="space-y-4">
       <SystemHealthStrip />
       <PlatformConnectionCard />
       {!s.account&&!s.loading&&<div className="space-y-2 rounded border border-neon-gold/40 bg-neon-gold/5 p-4 text-sm">
-        <p className="font-bold">لا يوجد حساب مختار بعد — ثلاث خطوات:</p>
+        <p className="font-bold">لا يوجد حساب مختار بعد — خطوتان:</p>
         <ol className="list-decimal space-y-1 pr-5 text-text-secondary">
-          <li>افتح قسم «الوسطاء والحسابات» واختر وسيطًا ثم حسابًا من جدوله.</li>
-          <li>اضغط «حفظ الحساب للعمل عليه» في شريط الاختيار أعلى الصفحة.</li>
-          <li>عد إلى تبويب «الاتصال» واضغط «التحقق من اتصال MT5».</li>
+          <li>اختر الحساب من شريط الاختيار أعلى الصفحة واضغط «حفظ الحساب للعمل عليه».</li>
+          <li>اضغط «التحقق من اتصال MT5» هنا.</li>
         </ol>
-        <button type="button" className={`${button} border-neon-gold/50 font-semibold text-neon-gold`} onClick={()=>c.setSection('accounts')}>الانتقال إلى الوسطاء والحسابات</button>
       </div>}
       <div className="overflow-x-auto rounded border border-border-primary"><table className={tableClass} aria-label="حالة اتصال الحساب"><thead><tr><th scope="col">الحساب</th><th scope="col">الخادم</th><th scope="col">حالة الاتصال</th><th scope="col">آخر تحقق UTC</th></tr></thead><tbody><tr><td>{s.account?.label||'اختر حسابًا'}</td><td dir="ltr">{s.account?.server||'—'}</td><td className={connection?.ok?'text-neon-green':'text-neon-gold'}>{s.symbolsLoading?'جارٍ التحقق…':connection?.ok?'نجح اتصال القراءة — الحساب والخادم متطابقان':connection?'تعذر التحقق من الاتصال':s.account?'جاهز للفحص — اضغط الزر أدناه':'لم يُفحص بعد'}</td><td dir="ltr">{connection?.at||'—'}</td></tr></tbody></table></div>
       <p>يفحص الموقع الحساب والخادم في منصة MT5 المفتوحة ويقرأ قائمة الأصول. النتيجة تعبّر عن وقت الفحص الموضح، والتداول الآلي غير مفعّل.</p>

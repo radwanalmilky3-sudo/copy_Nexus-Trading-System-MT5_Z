@@ -7,7 +7,7 @@ export interface BrokerState {
   symbols:BrokerSymbol[];symbolsLoading:boolean;connectionCheck:{accountId:string;ok:boolean;at:string}|null;
   profileForm:{name:string;broker_name:string};accountForm:AccountCreate;
 }
-const initial=():BrokerState=>({selectedProfileId:'',editor:null,profiles:[],account:null,draft:null,latest:null,events:[],symbols:[],symbolsLoading:false,connectionCheck:null,loading:false,busy:false,error:'',notice:'',section:'accounts',dirty:false,conflict:false,
+const initial=():BrokerState=>({selectedProfileId:'',editor:null,profiles:[],account:null,draft:null,latest:null,events:[],symbols:[],symbolsLoading:false,connectionCheck:null,loading:false,busy:false,error:'',notice:'',section:'connection',dirty:false,conflict:false,
   profileForm:{name:'',broker_name:''},accountForm:{profile_id:'',label:'',server:'',login:'',account_kind:'demo'}});
 function message(error:unknown):string{
   const code=(error as {status?:number})?.status;

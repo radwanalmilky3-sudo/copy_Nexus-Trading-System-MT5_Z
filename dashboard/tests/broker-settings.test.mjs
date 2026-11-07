@@ -102,18 +102,16 @@ test('creation responses do not clear fields edited after submission',async()=>{
  assert.equal(c.getSnapshot().accountForm.label,'Next');assert.equal(c.getSnapshot().accountForm.login,'456');
 });
 
-test('linked broker tables filter accounts and switching broker clears stale account responses',async()=>{
+test('switching broker clears stale account responses (accounts CRUD UI removed — owner 2026-11-07; controller semantics pinned)',async()=>{
  const f=fixture(),c=f.c;
  const original=f.api.listProfiles;
  f.api.listProfiles=async()=>[...(await original()),{profile_id:'other',name:'Second',broker_name:'Other broker',accounts:[]}];
  await c.load();await c.selectAccount('a');
- assert.match(html(c),/جدول الوسطاء/);assert.match(html(c),/جدول حسابات الوسيط/);
  let finish;f.api.getAccount=()=>new Promise(r=>finish=r);
  const reading=c.selectAccount('b');c.selectProfile('other');finish(f.accounts.b);await reading;
  assert.equal(c.getSnapshot().selectedProfileId,'other');assert.equal(c.getSnapshot().account,null);
  assert.equal(c.getSnapshot().accountForm.profile_id,'other');
  assert.doesNotMatch(html(c),/Demo A|Demo B/);
- assert.match(html(c),/لا توجد حسابات لهذا الوسيط/);
 });
 
 test('timing and account history render as labelled tables',async()=>{
@@ -123,15 +121,16 @@ test('timing and account history render as labelled tables',async()=>{
  c.setSection('connection');assert.match(html(c),/aria-label="حالة اتصال الحساب"/);
 });
 
-test('settings tabs render an icon and identify the active tab',async()=>{
+test('settings tabs render an icon and identify the active tab (accounts chip removed — owner 2026-11-07, default section is connection)',async()=>{
  const f=fixture(),c=f.c;await c.load();
  const markup=html(c);
  assert.match(markup,/aria-label="أقسام الوسيط"/);
  assert.match(markup,/aria-current="page"/);
  assert.match(markup,/aria-hidden="true"/);
- assert.match(markup,/data-tab="accounts"/);
+ assert.match(markup,/data-tab="connection"[^>]*aria-current="page"/);
+ assert.doesNotMatch(markup,/data-tab="accounts"/);
  c.setSection('timing');
  const timing=html(c);
  assert.match(timing,/data-tab="timing"[^>]*aria-current="page"/);
- assert.doesNotMatch(timing,/data-tab="accounts"[^>]*aria-current="page"/);
+ assert.doesNotMatch(timing,/data-tab="accounts"/);
 });
