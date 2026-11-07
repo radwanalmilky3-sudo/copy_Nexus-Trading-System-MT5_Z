@@ -76,7 +76,7 @@ const RUNTIME_SECTIONS: SettingSection[] = [
       { key: 'sl_atr_multiplier',     label: 'وقف الخسارة (SL × ATR)', type: 'number', min: 1.0, max: 5.0, step: 0.1, description: 'أدنى وقف خسارة Stop-Loss كمضاعف لمؤشر ATR.' },
       { key: 'tp_atr_multiplier',     label: 'جني الأرباح (TP × ATR)', type: 'number', min: 2.0, max: 10.0, step: 0.5, description: 'هدف جني الأرباح Take-Profit كمضاعف لمؤشر ATR.' },
       { key: 'min_rr_ratio',          label: 'أدنى RR',                type: 'number', min: 1.0, max: 5.0, step: 0.1, description: 'أدنى نسبة Risk/Reward مقبولة لدخول الصفقة.' },
-      { key: 'max_hold_bars',         label: 'أقصى شموع بالصفقة',      type: 'number', min: 1, max: 48, step: 1, unit: 'bars', description: 'إغلاق زمني للصفقة عند تجاوز هذا الحد.' },
+      { key: 'max_hold_bars',         label: 'أقصى شموع بالصفقة',      type: 'number', min: 1, max: 50, step: 1, unit: 'bars', description: 'إغلاق زمني للصفقة عند تجاوز هذا الحد.' },
       { key: 'cooling_off_streak',    label: 'توقف بعد خسائر متتالية', type: 'number', min: 2, max: 10, step: 1, unit: 'خسارة', description: 'عدد الخسائر المتتالية الذي يفعّل التوقف المؤقت.' },
       { key: 'sl_floor_atr_mult',     label: 'حد SL الأدنى × ATR',     type: 'number', min: 1.0, max: 5.0, step: 0.1, description: 'الحد الأدنى المطلق للـ SL كمضاعف ATR (افتراضي 2.5) لمنع وقفات ضيقة جدًا.' },
       { key: 'entry_displacement_atr_mult', label: 'أقصى انزياح دخول × ATR', type: 'number', min: 0.5, max: 5.0, step: 0.1, description: 'يرفض الدخول إذا تحرك السعر N×ATR لاتجاه الإشارة مسبقًا (افتراضي 2.0).' },
