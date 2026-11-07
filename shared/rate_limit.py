@@ -12,7 +12,11 @@ Approved scopes and defaults (requests per window):
 scope           /min  surface
 ==============  ====  --------------------------------------------------
 admin           30    admin management routes (auth keeps its own guards)
-risk            20    routers/risk.py
+risk            120   routers/risk.py (20→120: the local dashboard runs 5+
+                      independent /api/risk/* pollers — SystemConsole,
+                      RiskMonitor, useSystemHealth, GatewayDiagnostic — all
+                      keyed to the same loopback identity; 20/min tripped 429s
+                      on healthy fleets. Remote clients keep per-IP buckets.)
 edit_close      60    positions close/modify mutations
 ea              240   routers/ea.py bridge
 ml              6     ml heavy POST actions only (status reads stay open)
@@ -39,7 +43,7 @@ from fastapi import Depends, HTTPException, Request, status
 
 DEFAULT_LIMITS: dict[str, int] = {
     "admin": 30,
-    "risk": 20,
+    "risk": 120,
     "edit_close": 60,
     "ea": 240,
     "ml": 6,
