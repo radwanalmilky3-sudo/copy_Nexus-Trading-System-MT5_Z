@@ -1,5 +1,6 @@
-import ResearchLabShell from '@/components/research-lab/ResearchLabShell';
+import { redirect } from 'next/navigation';
 
-export default function ResearchLabPage() {
-  return <ResearchLabShell />;
+// المسار القديم — مختبر البحث أصبح تبويباً داخل الإعدادات.
+export default function ResearchLabRedirect() {
+  redirect('/nexus/settings?tab=research_lab');
 }

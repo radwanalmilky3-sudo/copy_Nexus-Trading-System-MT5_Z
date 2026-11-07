@@ -16,6 +16,10 @@ import { AutoTradeToggle } from '@/components/trade-controls';
 import SourceConnectionManager from '@/components/settings/SourceConnectionManager';
 import AdminAlertsCenter from '@/components/settings/AdminAlertsCenter';
 import BrokerSettingsTab from '@/components/settings/broker/BrokerSettingsTab';
+import { EaBridgeView } from '@/components/ea/EABridgeView';
+import ResearchLabShell from '@/components/research-lab/ResearchLabShell';
+import { ProgressView } from '@/components/project/ProgressView';
+import AuditProgressView from '@/components/audit/AuditProgressView';
 import type { SourceHealthDTO } from '@/types/fundamental';
 
 const API = process.env.NEXT_PUBLIC_API_URL || '';
@@ -161,7 +165,7 @@ const RUNTIME_SECTIONS: SettingSection[] = [
   },
 ];
 
-type SettingsTab = 'general' | 'fundamental_sources' | 'users_alerts' | 'brokers' | 'news_ticker';
+type SettingsTab = 'general' | 'fundamental_sources' | 'users_alerts' | 'brokers' | 'news_ticker' | 'ea_bridge' | 'research_lab' | 'project';
 
 type SourceFilter = 'all' | 'healthy' | 'config_required' | 'degraded' | 'unknown' | 'offline';
 
@@ -184,7 +188,19 @@ const SOURCE_STATUS_AR: Record<string, string> = {
 // Names are English on purpose: they are the values the server compares.
 const SESSION_CHOICES = ['SYDNEY', 'TOKYO', 'LONDON', 'NEW_YORK', 'OVERLAP'] as const;
 
+const SETTINGS_TAB_KEYS: readonly SettingsTab[] = ['general', 'brokers', 'ea_bridge', 'research_lab', 'fundamental_sources', 'users_alerts', 'news_ticker', 'project'];
+
 export default function SettingsPage() {
+  // دعم الوصول المباشر بالتبويب عبر الرابط (?tab=) — تستخدمه إعادة توجيه
+  // المسارات القديمة (progress/audit-progress/research-lab/ea-bridge).
+  return (
+    <React.Suspense fallback={<p role="status">جارٍ تحميل الإعدادات…</p>}>
+      <SettingsPageInner />
+    </React.Suspense>
+  );
+}
+
+function SettingsPageInner() {
   // Runtime settings (from Redis via API)
   const [runtime, setRuntime] = useState<Record<string, any>>({});
   const [runtimeOrig, setRuntimeOrig] = useState<Record<string, any>>({});
@@ -238,7 +254,11 @@ export default function SettingsPage() {
   const [envRestartPending, setEnvRestartPending] = useState(false);
 
   // UI state
-  const [activeTab, setActiveTab] = useState<SettingsTab>('general');
+  const [activeTab, setActiveTab] = useState<SettingsTab>(() => {
+    // التبويب الأولي من الرابط (?tab=) إن كان صالحاً — وإلا «الإعدادات العامة».
+    const requested = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search).get('tab');
+    return (SETTINGS_TAB_KEYS as readonly string[]).includes(requested ?? '') ? (requested as SettingsTab) : 'general';
+  });
   const [sourceHealth, setSourceHealth] = useState<SourceHealthDTO[]>([]);
   const [sourceHealthLoading, setSourceHealthLoading] = useState(false);
   const [sourceHealthError, setSourceHealthError] = useState<string | null>(null);
@@ -921,6 +941,14 @@ export default function SettingsPage() {
             className={cn('border-b-2 px-4 py-2.5 text-[11px] font-mono font-bold transition-colors',activeTab==='brokers'?'border-neon-cyan text-neon-cyan':'border-transparent text-text-muted')}>
             الوسيط والحسابات
           </button>
+          <button type="button" onClick={()=>setActiveTab('ea_bridge')}
+            className={cn('border-b-2 px-4 py-2.5 text-[11px] font-mono font-bold transition-colors',activeTab==='ea_bridge'?'border-neon-cyan text-neon-cyan':'border-transparent text-text-muted')}>
+            جسر MT5
+          </button>
+          <button type="button" onClick={()=>setActiveTab('research_lab')}
+            className={cn('border-b-2 px-4 py-2.5 text-[11px] font-mono font-bold transition-colors',activeTab==='research_lab'?'border-neon-cyan text-neon-cyan':'border-transparent text-text-muted')}>
+            مختبر البيانات والبحث
+          </button>
           <button type="button" onClick={()=>setActiveTab('news_ticker')}
             className={cn('flex items-center gap-2 border-b-2 px-4 py-2.5 text-[11px] font-mono font-bold transition-colors',activeTab==='news_ticker'?'border-neon-gold text-neon-gold':'border-transparent text-text-muted hover:text-text-secondary')}>
             <BellRing className="h-3.5 w-3.5" />
@@ -960,6 +988,18 @@ export default function SettingsPage() {
           >
             <Bell className="h-3.5 w-3.5" />
             مركز المستخدمين والتنبيهات
+          </button>
+          <button
+            onClick={() => setActiveTab('project')}
+            className={cn(
+              'flex items-center gap-2 border-b-2 px-4 py-2.5 text-[11px] font-mono font-bold transition-colors',
+              activeTab === 'project'
+                ? 'border-neon-cyan text-neon-cyan'
+                : 'border-transparent text-text-muted hover:text-text-secondary'
+            )}
+          >
+            <Activity className="h-3.5 w-3.5" />
+            المشروع والتدقيق
           </button>
         </div>
       </div>
@@ -1496,6 +1536,16 @@ export default function SettingsPage() {
 </div>
       ) : activeTab === 'brokers' ? (
 <BrokerSettingsTab />
+      ) : activeTab === 'ea_bridge' ? (
+<div className="w-full p-2">
+  <EaBridgeView />
+</div>
+      ) : activeTab === 'research_lab' ? (
+<div className="w-full p-2">
+  <ResearchLabShell />
+</div>
+      ) : activeTab === 'project' ? (
+<ProjectDevTabs />
       ) : activeTab === 'fundamental_sources' ? (
 <SourceConnectionManager />
       ) : (
@@ -1503,6 +1553,33 @@ export default function SettingsPage() {
       )}
     </div>
   );
+}
+
+// تبويب «المشروع والتدقيق» — يدمج شاشتَي المطوّر (متابعة التطوير + نتائج
+// التدقيق) اللتين كانتا تزحمتان الشريط العلوي في موضع واحد.
+function ProjectDevTabs() {
+  const [devTab, setDevTab] = useState<'progress' | 'audit'>('progress');
+  const subButton = (id: 'progress' | 'audit', label: string) => (
+    <button
+      onClick={() => setDevTab(id)}
+      className={cn(
+        'rounded border px-4 py-1.5 text-[11px] font-mono font-bold transition-colors',
+        devTab === id
+          ? 'border-neon-cyan bg-neon-cyan/15 text-neon-cyan'
+          : 'border-transparent text-text-muted hover:text-text-secondary'
+      )}
+      aria-pressed={devTab === id}
+    >
+      {label}
+    </button>
+  );
+  return <div className="space-y-3">
+    <div className="flex gap-2 px-4" role="tablist" aria-label="أقسام المشروع والتدقيق">
+      {subButton('progress', 'متابعة التطوير')}
+      {subButton('audit', 'نتائج التدقيق')}
+    </div>
+    {devTab === 'progress' ? <ProgressView /> : <AuditProgressView />}
+  </div>;
 }
 
 function FundamentalSourceHealthTab({

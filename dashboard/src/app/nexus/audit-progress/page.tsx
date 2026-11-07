@@ -1,5 +1,6 @@
-import AuditProgressView from '@/components/audit/AuditProgressView';
+import { redirect } from 'next/navigation';
 
-export default function AuditProgressPage() {
-  return <AuditProgressView />;
+// المسار القديم — دُمج في الإعدادات ← تبويب «المشروع والتدقيق».
+export default function AuditProgressRedirect() {
+  redirect('/nexus/settings?tab=project');
 }

@@ -98,13 +98,8 @@ const NAV_ITEMS = [
   { href: '/nexus',                       label: 'Trading',    icon: LayoutDashboard },
   { href: '/nexus/strategies',             label: 'Strategies', icon: BrainCircuit },
   { href: '/nexus/models',                 label: 'Models',     icon: Cpu },
-  { href: '/nexus/model-comparison',       label: 'Compare',    icon: Trophy },
   { href: '/nexus/history',                label: 'History',    icon: History },
-  { href: '/nexus/ea-bridge',              label: 'جسر MT5',    icon: Cable },
   { href: '/nexus/settings',               label: 'Settings',   icon: Settings },
-  { href: '/nexus/progress',                label: 'متابعة التطوير', icon: Activity },
-  { href: '/nexus/research-lab',            label: 'مختبر البحث', icon: BrainCircuit },
-  { href: '/nexus/audit-progress',          label: 'نتائج التدقيق', icon: Shield },
 ];
 
 function ModeToggle() {
