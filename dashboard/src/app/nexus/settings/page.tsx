@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   Settings, Save, RotateCcw, Cpu, Shield, Zap, Brain, Bot,
   ChevronDown, ChevronRight, AlertTriangle, Globe, Database, Bell, BellRing, FlaskConical,
@@ -254,11 +255,17 @@ function SettingsPageInner() {
   const [envRestartPending, setEnvRestartPending] = useState(false);
 
   // UI state
-  const [activeTab, setActiveTab] = useState<SettingsTab>(() => {
-    // التبويب الأولي من الرابط (?tab=) إن كان صالحاً — وإلا «الإعدادات العامة».
-    const requested = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search).get('tab');
-    return (SETTINGS_TAB_KEYS as readonly string[]).includes(requested ?? '') ? (requested as SettingsTab) : 'general';
-  });
+  const [activeTab, setActiveTab] = useState<SettingsTab>('general');
+  // قراءة الرابط (?tab=) مرة واحدة عند الإقلاع — تستخدمها إعادة توجيه المسارات
+  // القديمة (progress/audit-progress/research-lab/ea-bridge) للوصول المباشر.
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const requested = searchParams.get('tab');
+    if (requested && (SETTINGS_TAB_KEYS as readonly string[]).includes(requested)) {
+      setActiveTab(requested as SettingsTab);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [sourceHealth, setSourceHealth] = useState<SourceHealthDTO[]>([]);
   const [sourceHealthLoading, setSourceHealthLoading] = useState(false);
   const [sourceHealthError, setSourceHealthError] = useState<string | null>(null);
