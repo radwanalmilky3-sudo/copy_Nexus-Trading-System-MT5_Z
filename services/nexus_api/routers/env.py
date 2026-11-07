@@ -156,7 +156,7 @@ _SPECS: list[dict[str, Any]] = [
     _spec("NEXUS_LLM_HEALTH_TIMEOUT_SEC", "int", "مهلة صحة الـ LLM (ثوانٍ)",
           min=5, max=120),
     _spec("NEXUS_LLM_PROVIDER", "enum", "مزود الذكاء الاصطناعي",
-          choices=["deepseek", "openai", "gemini", "local"]),
+          choices=["local", "zai"]),  # mirrors shared/llm_factory.SUPPORTED_PROVIDERS
     _spec("NEXUS_LLM_MODEL", "str", "اسم النموذج (مثل qwen2.5:3b)", max_length=64),
     _spec("NEXUS_LOCAL_LLM_URL", "str", "عنوان خادم Ollama المحلي", max_length=200),
     _spec("NEXUS_LOCAL_MODEL", "str", "نموذج Ollama المحلي", max_length=64),

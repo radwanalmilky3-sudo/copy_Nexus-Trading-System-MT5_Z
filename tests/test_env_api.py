@@ -100,7 +100,7 @@ async def test_get_returns_values_categories_and_never_leaks_secrets(monkeypatch
         "NEXUS_DATA_SYNTHETIC_FALLBACK=1\r\n"
         "NEXUS_TRADING_MODE=paper\r\n"
         "NEXUS_ML_PRIORITY=1\r\n"
-        "NEXUS_LLM_PROVIDER=deepseek\r\n"
+        "NEXUS_LLM_PROVIDER=zai\r\n"
         f"{secret_key}={secret_value}\r\n"
         "SOME_UNRELATED_KEY=keep-me\r\n",
     )
@@ -134,8 +134,8 @@ async def test_get_returns_values_categories_and_never_leaks_secrets(monkeypatch
     assert mode["category"] == "readonly" and mode["editable"] is False
 
     provider = by_key["NEXUS_LLM_PROVIDER"]
-    assert provider["value"] == "deepseek"
-    assert provider["choices"] == ["deepseek", "openai", "gemini", "local"]
+    assert provider["value"] == "zai"
+    assert provider["choices"] == ["local", "zai"]  # mirrors shared/llm_factory.SUPPORTED_PROVIDERS
 
     ml_priority = by_key["NEXUS_ML_PRIORITY"]
     assert ml_priority["value"] == "1"
@@ -173,7 +173,7 @@ async def test_post_writes_int_bool_enum_with_backup_and_crlf_preserved(monkeypa
         "# header comment\r\n"
         "NEXUS_MIN_VERDICT_CONVICTION=70\r\n"
         "NEXUS_DISABLE_RESEARCH=0\r\n"
-        "NEXUS_LLM_PROVIDER=deepseek   # keep this comment\r\n"
+        "NEXUS_LLM_PROVIDER=local   # keep this comment\r\n"
         "NEXUS_DATA_SYNTHETIC_FALLBACK=0\r\n"
         "# tail comment\r\n",
     )
@@ -201,10 +201,10 @@ async def test_post_writes_int_bool_enum_with_backup_and_crlf_preserved(monkeypa
 
     # enum
     resp = await env.update_env_setting(
-        env.EnvUpdate(key="NEXUS_LLM_PROVIDER", value="gemini"),
+        env.EnvUpdate(key="NEXUS_LLM_PROVIDER", value="zai"),
         actor="tester", db=PermissiveDB(),
     )
-    assert resp["value"] == "gemini"
+    assert resp["value"] == "zai"
     assert resp["restart_required"] is True
     backups = sorted(tmp_path.glob(".env.bak.*"))
     assert len(backups) >= 1
@@ -213,7 +213,7 @@ async def test_post_writes_int_bool_enum_with_backup_and_crlf_preserved(monkeypa
     text = (tmp_path / ".env").read_bytes().decode("utf-8")
     assert "NEXUS_MIN_VERDICT_CONVICTION=85\r\n" in text
     assert "NEXUS_DISABLE_RESEARCH=1\r\n" in text
-    assert "NEXUS_LLM_PROVIDER=gemini   # keep this comment\r\n" in text
+    assert "NEXUS_LLM_PROVIDER=zai   # keep this comment\r\n" in text
     # comments / other lines / CRLF preserved, order unchanged
     assert "# header comment" in text and "# tail comment" in text
     assert "NEXUS_DATA_SYNTHETIC_FALLBACK=0\r\n" in text
@@ -281,7 +281,7 @@ async def test_post_rejects_invalid_values_with_400(monkeypatch, tmp_path, key, 
     original = _write_env(
         tmp_path / ".env",
         "NEXUS_MIN_VERDICT_CONVICTION=70\r\nIBKR_PORT=7496\r\n"
-        "NEXUS_LLM_PROVIDER=deepseek\r\nNEXUS_DISABLE_RESEARCH=0\r\n"
+        "NEXUS_LLM_PROVIDER=zai\r\nNEXUS_DISABLE_RESEARCH=0\r\n"
         "NEXUS_LLM_MODEL=qwen\r\nNEXUS_ENV=development\r\n"
         "NEXUS_RESEARCH_SYMBOL=EURUSD\r\n",
     )
@@ -368,7 +368,7 @@ class _FrozenClock:
 async def test_two_saves_in_the_same_second_keep_two_distinct_backups(monkeypatch, tmp_path):
     original = _write_env(
         tmp_path / ".env",
-        "NEXUS_MIN_VERDICT_CONVICTION=70\r\nNEXUS_LLM_PROVIDER=deepseek\r\n",
+        "NEXUS_MIN_VERDICT_CONVICTION=70\r\nNEXUS_LLM_PROVIDER=zai\r\n",
     )
     monkeypatch.setattr(env, "_env_path", lambda: tmp_path / ".env")
     monkeypatch.setattr(env, "datetime", _FrozenClock)  # force the collision
@@ -378,7 +378,7 @@ async def test_two_saves_in_the_same_second_keep_two_distinct_backups(monkeypatc
         actor="tester", db=PermissiveDB(),
     )
     second = await env.update_env_setting(
-        env.EnvUpdate(key="NEXUS_LLM_PROVIDER", value="gemini"),
+        env.EnvUpdate(key="NEXUS_LLM_PROVIDER", value="zai"),
         actor="tester", db=PermissiveDB(),
     )
 
@@ -388,7 +388,7 @@ async def test_two_saves_in_the_same_second_keep_two_distinct_backups(monkeypatc
     assert Path(first["backup"]).read_bytes() == original, "backup is taken before the write"
     text = (tmp_path / ".env").read_bytes().decode("utf-8")
     assert "NEXUS_MIN_VERDICT_CONVICTION=80\r\n" in text
-    assert "NEXUS_LLM_PROVIDER=gemini\r\n" in text
+    assert "NEXUS_LLM_PROVIDER=zai\r\n" in text
 
 
 @pytest.mark.asyncio
