@@ -198,10 +198,10 @@ export default function DashboardPage() {
             </WindowBoundary>
           )}
         </div>
-        <div style={{ display: activeTab === 'intelligence' ? 'block' : 'none' }} className="p-2 sm:p-3 w-full max-w-[1800px] mx-auto">
+        <div style={{ display: activeTab === 'intelligence' ? 'block' : 'none' }} className="p-2 sm:p-3 w-full max-w-[1600px] mx-auto">
           {visited.has('intelligence') && <IntelligenceGrid />}
         </div>
-        <div style={{ display: activeTab === 'fundamental' ? 'block' : 'none' }} className="w-full max-w-[1900px] mx-auto">
+        <div style={{ display: activeTab === 'fundamental' ? 'block' : 'none' }} className="w-full max-w-[1600px] mx-auto">
           {visited.has('fundamental') && (
             <WindowBoundary label="FundamentalWorkspace">
               <FundamentalWorkspace />
