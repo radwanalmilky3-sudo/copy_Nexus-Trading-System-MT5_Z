@@ -86,7 +86,7 @@ export default function LiveChart() {
 
   return (
     <NeonCard
-      title="Market Chart"
+      title="الشارت السعري"
       glow="cyan"
       noPadding
       icon={

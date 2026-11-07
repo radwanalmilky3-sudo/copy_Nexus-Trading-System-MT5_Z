@@ -209,7 +209,7 @@ export function TradeSettingsPanel() {
           <button
             onClick={resetDay}
             disabled={resetting}
-            title="Re-baseline del día: pérdida diaria a 0, reanuda trades aunque se haya pasado el riesgo"
+            title="إعادة ضبط اليوم: تصفير الخسارة اليومية، ويستأنف الصفقات حتى لو تم تجاوز سقف الخطر"
             className="flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-bold border bg-neon-gold/10 border-neon-gold/40 text-neon-gold hover:bg-neon-gold/20 transition-all"
           >
             <RotateCcw className={cn('h-3.5 w-3.5', resetting && 'animate-spin')} />

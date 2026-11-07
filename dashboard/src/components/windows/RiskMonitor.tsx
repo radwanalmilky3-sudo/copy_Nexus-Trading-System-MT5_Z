@@ -239,7 +239,7 @@ export function RiskMonitor({ className = '' }: { className?: string }) {
 
   return (
     <NeonCard
-      title="Risk Monitor"
+      title="مراقب الخطر"
       icon={<ShieldAlert size={14} />}
       accentColor="orange"
       pulseBorder={anyViolation || Boolean(limitHit)}
@@ -289,7 +289,7 @@ export function RiskMonitor({ className = '' }: { className?: string }) {
               title={
                 resetArmed
                   ? 'اضغط مجددًا خلال 5 ثوان لتأكيد تصفير اليوم'
-                  : 'Re-basea el día: limpia pérdida diaria, contadores, breakers, anti-tilt, bloqueos direccionales y pausa ergódica — تنتظر ضغطة ثانية للتأكيد'
+                  : 'إعادة ضبط اليوم: يصفّر الخسارة اليومية والعدادات والقواطع ومضاد الميل وعمليات المنع الاتجاهية وتوقف إرغوديك — تنتظر ضغطة ثانية للتأكيد'
               }
               aria-label={resetArmed ? 'اضغط مجددًا لتأكيد تصفير اليوم' : 'تصفير اليوم — يتطلب تأكيدًا بضغطة ثانية'}
               className={cn(

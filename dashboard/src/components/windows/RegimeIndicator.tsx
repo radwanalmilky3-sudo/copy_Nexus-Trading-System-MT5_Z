@@ -573,7 +573,7 @@ export default function RegimeIndicator({ compact = false, className = '' }: { c
 
   return (
     <NeonCard
-      title="Market Regime"
+      title="حالة السوق"
       icon={<Eye className="h-4 w-4" />}
       glow="purple"
       className={`${compact ? '' : 'h-full'} flex flex-col min-h-0 ${className}`}

@@ -157,7 +157,7 @@ export default function AgentConsole() {
 
   return (
     <NeonCard
-      title="Agent Console"
+      title="وحدة الوكلاء"
       glow="purple"
       noPadding
       icon={

@@ -113,7 +113,7 @@ export default function AutonomousMLPanel() {
 
   return (
     <NeonCard
-      title="Autonomous ML Pipeline"
+      title="مسار التعلم الآلي المستقل"
       icon={<Bot className="h-4 w-4" />}
       glow="green"
       className="h-full flex flex-col"

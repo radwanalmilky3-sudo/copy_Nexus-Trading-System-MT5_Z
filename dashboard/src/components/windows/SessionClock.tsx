@@ -137,7 +137,7 @@ export default function SessionClock({ compact = false, className = '' }: { comp
 
   return (
     <NeonCard
-      title="Session Clock"
+      title="ساعة الجلسة"
       glow="cyan"
       noPadding
       icon={

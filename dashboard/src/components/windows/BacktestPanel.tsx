@@ -220,7 +220,7 @@ export default function BacktestPanel() {
         <span className="text-[12px] font-mono font-bold text-text-secondary tracking-wider">BACKTESTING</span>
         <span
           className="text-[9px] font-mono text-text-muted"
-          title="Walk-forward filter replay over closed trades: it re-asks which trades pass your filters. It does NOT re-simulate entries/exits on candles. PnL and costs shown are the realized values already embedded in each recorded trade; no extra commission/slippage model is applied."
+          title="إعادة تشغيل فلاتر walk-forward على الصفقات المغلقة: يعيد تقييم أي الصفقات تجتاز فلاترك، ولا يعيد محاكاة الدخول/الخروج على الشموع. قيم PnL والتكاليف المعروضة هي القيم المحققة المسجلة أصلاً في كل صفقة؛ لا نموذج عمولات/انزلاق إضافي."
         >
           filter replay over closed trades · no candle re-simulation
         </span>
@@ -490,13 +490,13 @@ export default function BacktestPanel() {
                 </div>
                 <div className="p-3">
                   {breakdownTab === 'session' && (
-                    <BreakdownTable data={result.by_session} title="POR SESIÓN" />
+                    <BreakdownTable data={result.by_session} title="حسب الجلسة" />
                   )}
                   {breakdownTab === 'strategy' && (
-                    <BreakdownTable data={result.by_strategy} title="POR ESTRATEGIA" />
+                    <BreakdownTable data={result.by_strategy} title="حسب الاستراتيجية" />
                   )}
                   {breakdownTab === 'direction' && (
-                    <BreakdownTable data={result.by_direction} title="POR DIRECCIÓN" />
+                    <BreakdownTable data={result.by_direction} title="حسب الاتجاه" />
                   )}
                   {breakdownTab === 'hour' && (
                     <div>

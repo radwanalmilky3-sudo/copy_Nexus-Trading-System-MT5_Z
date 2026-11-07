@@ -32,7 +32,7 @@ export function ManualTradePanel({
   }, [symbol, lots, sl, tp, currentBid]);
 
   return (
-    <NeonCard title="Manual Trade" accentColor="cyan" isLive>
+    <NeonCard title="تداول يدوي" accentColor="cyan" isLive>
       {/* Price display */}
       <div className="flex items-center justify-between mb-4">
         <div className="text-center">

@@ -1048,7 +1048,7 @@ function SettingsPageInner() {
 
           {/* ── Settings templates (JSON files on disk) ── */}
           <SectionCard
-            id="templates" label="قوالب الإعدادات (Templates)" icon={FolderOpen} color="text-neon-gold"
+            id="templates" label="قوالب الإعدادات" icon={FolderOpen} color="text-neon-gold"
             expanded={expanded} setExpanded={setExpanded}
             hint="احفظ إعداداتك كملف JSON وحمّل قالبًا محفوظًا أو افتح ملفًا من جهازك — القوالب تعبئة النموذج فقط، لا يُكتب أي شيء فعليًا إلا بعد «حفظ الكل»"
           >
@@ -1520,7 +1520,7 @@ function SettingsPageInner() {
 
           {/* ── Connection status (moved into the side panel — no dead space) ── */}
           <SectionCard
-            id="connection" label="الاتصال (Conexión)" icon={Database} color="text-text-muted"
+            id="connection" label="الاتصال" icon={Database} color="text-text-muted"
             expanded={expanded} setExpanded={setExpanded}
           >
             <div className="flex items-center justify-between py-1.5">

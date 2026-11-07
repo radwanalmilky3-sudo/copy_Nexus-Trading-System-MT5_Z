@@ -116,7 +116,7 @@ export default function GenAIBrief() {
     if (!ts) return;
     const u = () => {
       const diff = Math.floor((Date.now() - new Date(ts).getTime()) / 60000);
-      setAge(diff < 1 ? 'ahora' : diff < 60 ? `${diff}m` : `${Math.floor(diff / 60)}h`);
+      setAge(diff < 1 ? 'الآن' : diff < 60 ? `${diff}m` : `${Math.floor(diff / 60)}h`);
     };
     u();
     const t = setInterval(u, 30_000);
@@ -161,7 +161,7 @@ export default function GenAIBrief() {
           <button
             onClick={triggerBrief}
             disabled={triggering}
-            title="Generar brief ahora"
+            title="توليد الموجز الآن"
             className="p-1 rounded text-text-muted hover:text-neon-purple hover:bg-neon-purple/10 transition-colors disabled:opacity-50"
           >
             <RefreshCw className={cn('h-3 w-3', triggering && 'animate-spin')} />

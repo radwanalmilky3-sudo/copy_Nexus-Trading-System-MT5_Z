@@ -211,7 +211,7 @@ export default function AgentFlowchart() {
 
   return (
     <NeonCard
-      title="Agent Pipeline"
+      title="مسار الوكلاء"
       glow="purple"
       noPadding
       icon={

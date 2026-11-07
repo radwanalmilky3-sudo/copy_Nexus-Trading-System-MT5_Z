@@ -308,7 +308,7 @@ export default function ActivePositions() {
 
   return (
     <NeonCard
-      title="Active Positions"
+      title="المراكز النشطة"
       glow="green"
       noPadding
       icon={

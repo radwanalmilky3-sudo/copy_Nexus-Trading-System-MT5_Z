@@ -83,7 +83,7 @@ export function SystemHealth({ compact = false, className = '' }: { compact?: bo
 
   return (
     <NeonCard
-      title="System Health"
+      title="صحة النظام"
       icon={<Activity size={compact ? 14 : 16} />}
       accentColor="blue"
       scrollable={compact}
