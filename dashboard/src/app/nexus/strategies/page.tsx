@@ -52,10 +52,11 @@ function formatPct(v: number, mult100 = false): string {
   return `${val >= 0 ? '+' : ''}${val.toFixed(1)}%`;
 }
 
-function KPICell({ label, value, good, sub }: { label: string; value: string; good: boolean; sub?: string }) {
+function KPICell({ value, good, sub }: { value: string; good: boolean; sub?: string }) {
+  // Owner decision 2026-11-07: drop in-card KPI labels — the grid column
+  // headers above the cards already carry them (no duplication).
   return (
-    <div className="flex flex-col gap-0.5">
-      <span className="text-[9px] font-mono text-text-muted uppercase">{label}</span>
+    <div className="flex flex-col gap-0.5 justify-center">
       <span dir="ltr" className={cn('text-sm font-bold font-mono', good ? 'text-neon-green' : 'text-neon-red')}>{value}</span>
       {sub && <span className="text-[9px] text-text-muted truncate">{sub}</span>}
     </div>
@@ -140,12 +141,12 @@ function StrategyRow({
         </div>
 
         {/* KPIs */}
-        <KPICell label="Win Rate" value={`${wr.toFixed(1)}%`} good={wr >= 55} />
-        <KPICell label="P.Factor" value={(strategy.profit_factor || 0).toFixed(2)} good={(strategy.profit_factor || 0) >= 1.5} />
-        <KPICell label="Sharpe" value={(strategy.sharpe || 0).toFixed(2)} good={(strategy.sharpe || 0) >= 1.0} />
-        <KPICell label="Max DD" value={`${(strategy.max_dd_pct || 0).toFixed(1)}%`} good={(strategy.max_dd_pct || 0) <= 10} />
-        <KPICell label="Avg RR" value={(strategy.avg_rr || 0).toFixed(2)} good={(strategy.avg_rr || 0) >= 1.5} />
-        <KPICell label="Net PnL" value={formatPct(strategy.net_pnl_pct || 0)} good={(strategy.net_pnl_pct || 0) > 0} />
+        <KPICell value={`${wr.toFixed(1)}%`} good={wr >= 55} />
+        <KPICell value={(strategy.profit_factor || 0).toFixed(2)} good={(strategy.profit_factor || 0) >= 1.5} />
+        <KPICell value={(strategy.sharpe || 0).toFixed(2)} good={(strategy.sharpe || 0) >= 1.0} />
+        <KPICell value={`${(strategy.max_dd_pct || 0).toFixed(1)}%`} good={(strategy.max_dd_pct || 0) <= 10} />
+        <KPICell value={(strategy.avg_rr || 0).toFixed(2)} good={(strategy.avg_rr || 0) >= 1.5} />
+        <KPICell value={formatPct(strategy.net_pnl_pct || 0)} good={(strategy.net_pnl_pct || 0) > 0} />
 
         {/* Actions */}
         <div className="flex items-center gap-1 justify-end">
