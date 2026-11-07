@@ -201,15 +201,16 @@ export function EaBridgeView() {
   return (
     <div dir="rtl" className="min-h-full p-3 sm:p-5 space-y-4 bg-bg-primary text-text-primary">
       <header className="flex items-center gap-2.5">
-        <Cable className="h-5 w-5 text-neon-purple" />
-        <div>
-          <h1 className="text-base font-bold">جسر MT5 — توكنات الإكسبيرت وطابور الأوامر</h1>
-          <p className="text-[11px] text-text-muted leading-relaxed">
-            أنشئ توكنًا لكل طرف MetaTrader 5، ثم ضعه في مدخلات NexusBridgeEA. التوكن يُعرض
-            <span className="text-neon-gold font-medium"> مرة واحدة فقط </span>
-            ويُخزَّن على الخادم كبصمة SHA-256 لا رجعة فيها.
-          </p>
-        </div>
+        <Cable className="h-5 w-5 shrink-0 text-neon-purple" />
+        <h1 className="text-base font-bold shrink-0">جسر MT5 — توكنات الإكسبيرت وطابور الأوامر</h1>
+        <p
+          title="أنشئ توكنًا لكل طرف MetaTrader 5، ثم ضعه في مدخلات NexusBridgeEA. التوكن يُعرض مرة واحدة فقط ويُخزَّن على الخادم كبصمة SHA-256 لا رجعة فيها."
+          className="hidden md:block flex-1 min-w-0 truncate text-[11px] text-text-muted"
+        >
+          أنشئ توكنًا لكل طرف MetaTrader 5، ثم ضعه في مدخلات NexusBridgeEA. التوكن يُعرض
+          <span className="text-neon-gold font-medium"> مرة واحدة فقط </span>
+          ويُخزَّن على الخادم كبصمة SHA-256 لا رجعة فيها.
+        </p>
       </header>
 
       {error && (
