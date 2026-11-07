@@ -44,6 +44,8 @@ interface SettingSection {
   icon: React.ElementType;
   color: string;
   fields: SettingField[];
+  /** 2xl grid override — match column count to field count so no row carries an empty dead column (owner: exploit space, no wasted rows). */
+  gridCols?: string;
 }
 
 const RUNTIME_SECTIONS: SettingSection[] = [
@@ -52,6 +54,7 @@ const RUNTIME_SECTIONS: SettingSection[] = [
     label: 'نواة التداول (Trading Core)',
     icon: Zap,
     color: 'text-neon-green',
+    gridCols: '2xl:grid-cols-4',
     fields: [
       { key: 'trading_mode_type',     label: 'وضع التداول',            type: 'select',  options: ['scalping', 'swing'], description: 'وضع التداول النشط: scalping للتجزئة أو swing للتمويض الربحي.' },
       { key: 'auto_tf_selection',     label: 'اختيار TF تلقائي',       type: 'boolean', description: 'اختيار الإطار الزمني TF للاستغناء ديناميكيًا حسب الجلسة النشطة.' },
@@ -84,6 +87,7 @@ const RUNTIME_SECTIONS: SettingSection[] = [
     label: 'الإشارات والجودة (Signals & Quality)',
     icon: Cpu,
     color: 'text-neon-purple',
+    gridCols: '2xl:grid-cols-4',
     fields: [
       { key: 'quality_score_threshold', label: 'حد Quality score', type: 'number', min: 0, max: 90, step: 5, description: 'حد أدنى يدوي للـ Score. 0 = يعتمد العتبة الديناميكية من TradeMemory (0-100).' },
       { key: 'min_conviction_override', label: 'تجاوز Conviction', type: 'number', min: 0, max: 0.90, step: 0.01, description: '0 = ديناميكي حسب الجلسة. تُثبَّت القيمة إذا كانت أكبر من 0.' },
@@ -113,6 +117,7 @@ const RUNTIME_SECTIONS: SettingSection[] = [
     label: 'الإشعارات (Notifications)',
     icon: Bell,
     color: 'text-neon-purple',
+    gridCols: '2xl:grid-cols-4',
     fields: [
       { key: 'notif_enable_browser',   label: 'إشعارات المتصفح',      type: 'boolean', description: 'إشعارات نظام التشغيل عندما تكون التبويب غير نشط.' },
       { key: 'notif_blackout',         label: 'إشعارات Blackout',      type: 'boolean', description: 'الإشعار عند تفعيل أو تعطيل حجب أخبار عالية التأثير Blackout.' },
@@ -136,6 +141,7 @@ const RUNTIME_SECTIONS: SettingSection[] = [
     label: 'ذاكرة الصفقات (Trade Memory)',
     icon: Brain,
     color: 'text-neon-purple',
+    gridCols: '2xl:grid-cols-2',
     fields: [
       { key: 'trade_memory_window',       label: 'حجم ذاكرة الصفقات',  type: 'number', min: 20, max: 500, step: 10, unit: 'trades', description: 'عدد الصفقات الحديثة المحفوظة لحساب العتبات الديناميكية (افتراضي 100).' },
       { key: 'cooling_off_duration_sec',  label: 'مدة Cooling-off',    type: 'number', min: 60, max: 3600, step: 60, unit: 's', description: 'ثوانٍ التوقف بعد بلوغ سلسلة الخسائر المتتالية (افتراضي 300 = 5 دقائق).' },
@@ -146,6 +152,7 @@ const RUNTIME_SECTIONS: SettingSection[] = [
     label: 'الاختبار الخلفي (Backtesting)',
     icon: FlaskConical,
     color: 'text-neon-cyan',
+    gridCols: '2xl:grid-cols-2',
     fields: [
       { key: 'backtest_initial_equity',   label: 'رأس المال الابتدائي', type: 'number', min: 500, max: 500000, step: 500, unit: '$', description: 'الرأس المال الافتراضي عند فتح لوحة Backtest.' },
       { key: 'backtest_default_symbol',   label: 'الرمز الافتراضي',      type: 'select', options: ['XAUUSD', 'EURUSD', 'BTCUSD', 'US500'], description: 'الرمز المحدد مسبقًا عند فتح لوحة Backtest.' },
@@ -1387,8 +1394,8 @@ function SettingsPageInner() {
               icon={section.icon} color={section.color}
               expanded={expanded} setExpanded={setExpanded}
             >
-              {/* شبكة بطاقات مدمجة: صفر فجوات أفقية، 3 أعمدة على الشاشات العريضة */}
-              <div className="grid items-start gap-2 sm:grid-cols-2 2xl:grid-cols-3">
+              {/* شبكة بطاقات مدمجة: عدد الأعمدة يطابق عدد الحقول — لا صف يحمل عمودًا ميتًا */}
+              <div className={cn('grid items-start gap-2 sm:grid-cols-2', section.gridCols ?? '2xl:grid-cols-3')}>
                 {section.fields.map((f) => (
                   <FieldRow
                     key={f.key}
