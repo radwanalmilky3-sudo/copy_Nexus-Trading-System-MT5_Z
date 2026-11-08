@@ -37,6 +37,27 @@ DATA_URL = os.getenv("NEXUS_DATA_URL", "http://localhost:9001")
 
 _HISTORY_KEY_TPL = "nexus:features:history:{symbol}"
 _MIN_SAMPLES_DEFAULT = 500
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _load_env() -> None:
+    """Load .env (NEXUS_INTERNAL_API_SECRET etc.) — run.py does this for the
+    fleet, but this script is usually invoked from a bare console."""
+    env_path = ROOT / ".env"
+    if not env_path.is_file():
+        return
+    for raw in env_path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip())
+
+
+def _internal_headers() -> dict[str, str]:
+    """nexus-ml mutating endpoints require the service-to-service secret."""
+    secret = os.getenv("NEXUS_INTERNAL_API_SECRET", "").strip()
+    return {"X-Nexus-Internal-Secret": secret} if secret else {}
 
 
 # ── Feature computation from OHLCV ───────────────────────────────────────────
@@ -115,10 +136,11 @@ async def main(symbol: str, min_samples: int, dry_run: bool) -> None:
                     "count": candle_count,
                 })
                 if not resp.is_success:
-                    # Try nexus-data directly
+                    # Try nexus-data directly — live route is /api/data/ohlcv
+                    # (returns a bare OHLCV list, capped by `limit`).
                     resp = await client.get(
-                        f"{DATA_URL}/candles/{symbol}/H1",
-                        params={"count": candle_count},
+                        f"{DATA_URL}/api/data/ohlcv/{symbol}/H1",
+                        params={"limit": candle_count},
                     )
                 if not resp.is_success:
                     print(f"[bootstrap] ERROR: could not fetch candles (HTTP {resp.status_code})")
@@ -128,7 +150,7 @@ async def main(symbol: str, min_samples: int, dry_run: bool) -> None:
 
                 candles_raw = resp.json()
                 if isinstance(candles_raw, dict):
-                    candles_raw = candles_raw.get("candles", candles_raw.get("data", []))
+                    candles_raw = candles_raw.get("candles", candles_raw.get("data", candles_raw.get("bars", [])))
 
             if not candles_raw:
                 print("[bootstrap] No candles returned — cannot bootstrap")
@@ -166,7 +188,7 @@ async def main(symbol: str, min_samples: int, dry_run: bool) -> None:
         # spans ~10 months (5000-candle ceiling on nexus-data).
         async with httpx.AsyncClient(timeout=60.0) as client:
             train_url = f"{ML_URL}/api/ml/train"
-            resp = await client.post(train_url, json={
+            resp = await client.post(train_url, headers=_internal_headers(), json={
                 "symbols": [symbol],
                 "train_months": 4,
                 "val_months": 1,
@@ -192,4 +214,5 @@ if __name__ == "__main__":
     parser.add_argument("--dry-run", action="store_true",
                         help="Show what would be done without writing to Redis")
     args = parser.parse_args()
+    _load_env()
     asyncio.run(main(args.symbol, args.min_samples, args.dry_run))
