@@ -1284,7 +1284,7 @@ def test_page_titles_and_labels_are_in_arabic():
         "الإشارات والجودة (Signals & Quality)",
         "بوابة الجلسات الفعلية",
         "وضع التشغيل",
-        "الاتصال (Conexión)",
+        "الاتصال",
         "العتبات الديناميكية (TradeMemory)",
     ):
         assert title in page, f"Arabic section title missing: {title}"
