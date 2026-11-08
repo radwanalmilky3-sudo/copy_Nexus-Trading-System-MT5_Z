@@ -22,6 +22,8 @@ dump.rdb
 backups/
 data/
 models_store/
+# local notes containing real account credentials — never commit
+scripts/quickstart.md
 
 # secrets
 .env
