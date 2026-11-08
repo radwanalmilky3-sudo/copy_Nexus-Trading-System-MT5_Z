@@ -237,6 +237,15 @@ def main() -> None:
             if info is None:
                 _fail("MT5 account_info returned None", 7)
             out = {"ok": True, "account": info._asdict()}
+        elif op == "symbol_info":
+            info = mt5.symbol_info(broker_symbol)
+            if info is None:
+                _fail(f"MT5 returned no symbol_info for {broker_symbol!r}", 4)
+            out = {
+                "ok": True,
+                "symbol_info": dict(info._asdict()),
+                "captured_at": datetime.now(timezone.utc).isoformat(),
+            }
         elif op == "symbols":
             account = mt5.account_info()
             if account is None or str(account.login)!=str(payload.get('expected_login')) or account.server!=payload.get('expected_server'):

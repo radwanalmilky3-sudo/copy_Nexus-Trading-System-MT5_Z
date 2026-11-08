@@ -454,6 +454,50 @@ class DataStore:
                 completed_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        # Symbol metadata snapshots (NEXUS data dictionary:
+        # broker.symbol_property_snapshots adapted to DuckDB). Append-only:
+        # each capture inserts a new row; captured_at distinguishes them.
+        # is_available=False records "symbol known but MT5 provided no data"
+        # — absence is never stored as zero (NULL-default principle).
+        self._conn.execute("""
+            CREATE TABLE IF NOT EXISTS symbol_property_snapshots (
+                symbol               VARCHAR   NOT NULL,
+                broker_symbol        VARCHAR   NOT NULL,
+                description          VARCHAR,
+                path                 VARCHAR,
+                digits               INTEGER,
+                point                DOUBLE,
+                spread               INTEGER,
+                spread_float         DOUBLE,
+                trade_contract_size  DOUBLE,
+                tick_value           DOUBLE,
+                tick_size            DOUBLE,
+                volume_min           DOUBLE,
+                volume_max           DOUBLE,
+                volume_step          DOUBLE,
+                margin_initial       DOUBLE,
+                margin_maintenance   DOUBLE,
+                swap_long            DOUBLE,
+                swap_short           DOUBLE,
+                swap_mode            INTEGER,
+                trade_mode           INTEGER,
+                trade_calc_mode      INTEGER,
+                filling_mode         INTEGER,
+                order_mode           INTEGER,
+                execution_mode       INTEGER,
+                currency_base        VARCHAR,
+                currency_profit      VARCHAR,
+                currency_margin      VARCHAR,
+                is_available         BOOLEAN   NOT NULL DEFAULT TRUE,
+                source_build         INTEGER,
+                raw                  JSON,
+                captured_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        self._conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_symbol_snapshots_sym_ts
+            ON symbol_property_snapshots (symbol, captured_at DESC)
+        """)
         self._conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_ticks_symbol_ts
             ON ticks (symbol, timestamp DESC)
@@ -1193,6 +1237,73 @@ class DataStore:
                     out.append((chunk_start, chunk_end))
                     chunk_start = chunk_end + timedelta(seconds=tf)
         return out
+
+    # ── Symbol metadata snapshots ────────────────────────────────────────
+
+    _SNAPSHOT_COLUMNS = (
+        "symbol", "broker_symbol", "description", "path", "digits", "point",
+        "spread", "spread_float", "trade_contract_size", "tick_value",
+        "tick_size", "volume_min", "volume_max", "volume_step",
+        "margin_initial", "margin_maintenance", "swap_long", "swap_short",
+        "swap_mode", "trade_mode", "trade_calc_mode", "filling_mode",
+        "order_mode", "execution_mode", "currency_base", "currency_profit",
+        "currency_margin", "is_available", "source_build", "raw",
+    )
+
+    async def insert_symbol_snapshot(self, info: dict[str, Any]) -> None:
+        """Persist one symbol_info snapshot (append-only)."""
+        raw = {k: v for k, v in info.items()
+               if k not in self._SNAPSHOT_COLUMNS and not k.startswith("_")}
+        row = {
+            "symbol": info.get("logical_symbol") or info.get("symbol") or info.get("name"),
+            "broker_symbol": info.get("broker_symbol") or info.get("name"),
+            "description": info.get("description"),
+            "path": info.get("path"),
+            "digits": info.get("digits"),
+            "point": info.get("point"),
+            "spread": info.get("spread"),
+            "spread_float": info.get("spread_float"),
+            "trade_contract_size": info.get("trade_contract_size"),
+            "tick_value": info.get("tick_value"),
+            "tick_size": info.get("tick_size"),
+            "volume_min": info.get("volume_min"),
+            "volume_max": info.get("volume_max"),
+            "volume_step": info.get("volume_step"),
+            "margin_initial": info.get("margin_initial"),
+            "margin_maintenance": info.get("margin_maintenance"),
+            "swap_long": info.get("swap_long"),
+            "swap_short": info.get("swap_short"),
+            "swap_mode": info.get("swap_mode"),
+            "trade_mode": info.get("trade_mode"),
+            "trade_calc_mode": info.get("trade_calc_mode"),
+            "filling_mode": info.get("filling_mode"),
+            "order_mode": info.get("order_mode"),
+            "execution_mode": info.get("execution_mode"),
+            "currency_base": info.get("currency_base"),
+            "currency_profit": info.get("currency_profit"),
+            "currency_margin": info.get("currency_margin"),
+            "is_available": bool(info.get("is_available", True)),
+            "source_build": info.get("build"),
+            "raw": json.dumps(raw, default=str) if raw else None,
+        }
+        cols = ", ".join(self._SNAPSHOT_COLUMNS)
+        placeholders = ", ".join(["?"] * len(self._SNAPSHOT_COLUMNS))
+        values = tuple(row.get(c) for c in self._SNAPSHOT_COLUMNS)
+        await self._run(
+            f"INSERT INTO symbol_property_snapshots ({cols}) VALUES ({placeholders})",
+            values,
+        )
+
+    async def get_latest_symbol_snapshots(self) -> list[dict[str, Any]]:
+        """Latest snapshot per symbol."""
+        cols = ", ".join(self._SNAPSHOT_COLUMNS)
+        rows = await self._fetch(
+            "SELECT " + cols + " FROM symbol_property_snapshots s "
+            "WHERE captured_at = (SELECT MAX(captured_at) FROM symbol_property_snapshots "
+            "WHERE symbol = s.symbol) ORDER BY symbol",
+            (),
+        )
+        return [dict(zip(self._SNAPSHOT_COLUMNS, r)) for r in rows]
 
     async def record_backfill_run(
         self,

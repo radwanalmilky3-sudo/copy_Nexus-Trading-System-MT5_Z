@@ -495,6 +495,39 @@ class MT5Connector:
         data = await _mt5_worker({"op":"symbols", "use_terminal":True, "path":path, "limit":limit, 'expected_login':expected_login, 'expected_server':expected_server}, timeout_sec=20.0)
         return data["symbols"]
 
+    async def get_symbol_info(self, symbol: str) -> dict[str, Any]:
+        """Full symbol metadata snapshot (digits, spread, contract size, margin, swap...)."""
+        self._ensure_connected()
+        logical = symbol.upper().replace("/", "")
+        resolved = self.resolve_symbol(logical)
+        if ISOLATED_MT5:
+            data = await _mt5_worker({
+                "op": "symbol_info",
+                "login": self._login,
+                "password": self._password,
+                "server": self._server,
+                "path": self._path,
+                "symbol": logical,
+                "broker_symbol": resolved,
+            }, timeout_sec=10.0)
+            info = dict(data["symbol_info"])
+        else:
+            await self._ensure_symbol_selected(resolved)
+
+            def _fetch():
+                assert mt5 is not None
+                if not mt5.symbol_select(resolved, True):
+                    raise ValueError(f"MT5 symbol_select failed for {resolved!r}")
+                info = mt5.symbol_info(resolved)
+                if info is None:
+                    raise ValueError(f"MT5 returned no symbol_info for {resolved!r}")
+                return info._asdict()
+
+            info = await _mt5(_fetch)
+        info["logical_symbol"] = logical
+        info["broker_symbol"] = resolved
+        return info
+
     async def stream_ticks(
         self,
         symbols: list[str],

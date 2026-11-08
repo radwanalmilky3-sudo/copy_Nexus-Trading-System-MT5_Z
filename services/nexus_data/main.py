@@ -867,6 +867,22 @@ async def mt5_symbols(expected_login: str, expected_server: str, x_nexus_interna
     except Exception as exc:
         raise HTTPException(503, "MT5 symbol list unavailable") from exc
 
+
+@app.get("/api/data/symbols/{symbol}/snapshot")
+async def symbol_snapshot(symbol: str, x_nexus_internal_secret: str | None = Header(default=None)) -> dict[str, Any]:
+    """Capture and persist one symbol_info metadata snapshot from MT5."""
+    if not x_nexus_internal_secret or x_nexus_internal_secret != os.getenv("NEXUS_INTERNAL_API_SECRET", ""):
+        raise HTTPException(401, "internal authorization required")
+    symbol = symbol.upper().replace("/", "")
+    try:
+        info = await mt5.get_symbol_info(symbol)
+    except Exception as exc:
+        raise HTTPException(503, f"MT5 symbol_info unavailable for {symbol}") from exc
+    info["is_available"] = True
+    await data_store.insert_symbol_snapshot(info)
+    info.pop("raw", None) if isinstance(info.get("raw"), str) else None
+    return {"ok": True, "snapshot": {k: v for k, v in info.items() if not isinstance(v, (bytes, bytearray))}}
+
 @app.get("/health")
 async def health_check() -> dict[str, Any]:
     redis_ok = await redis_client.health_check()
