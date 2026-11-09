@@ -222,9 +222,23 @@ health → {"data_mode":"REAL_MT5","mt5":true}
 
 **نقطة التحقق:** `duplicate groups = 0` + `ingest_jobs` يحوي صفوف لكل سحبة.
 **الاختبارات:** إضافة إلى `test_historical_import.py`: عزل القراءة/الكتابة.
-**الحالة:** 🟡 **الكود مكتوب 2026-11-09 (main.py GET-only + POST /api/data/ingest/range
-+ ingest_jobs DDL/ledger + _execute_locked queue-wait 600ث + backfill→POST) —
-بانتظار: اكتمال سحبة M1 الجارية ثم إعادة تشغيل واحدة ثم لقطات الأدلة أعلاه.**
+
+**الأدلة (لقطة حيّة 2026-11-10 بعد التفعيل ب إعادة تشغيل واحدة):**
+- **GET قراءة فقط (برهان مباشر):** قراءة المتجر لـ`XAUUSD/M5` قبل الجلب
+  `[]` ← `GET /api/data/ohlcv/XAUUSD/M5?start=...&end=...` أعاد **61 شمعة**
+  ← قراءة المتجر بعده ما زالت `[]` (لا كتابة) ← `POST /api/data/ingest/range`
+  **job_id=2, rows_returned=61, rows_inserted=61** ← قراءة المتجر بعده
+  `len=1526` (بيانات موجودة). المساران يعملان كما خُططا.
+- **دفتر `ingest_jobs`:** صفّان — job 1 (نافذة الأحد الفارغة)
+  `succeeded/0`، job 2 `succeeded/61`.
+- **`duplicate groups = 0`** بعد الكتابة عبر POST (فحص الجاهزية + SQL).
+- **قفل ينتظر ولا يرفض:** لا ظهور لـ`lock busy >60s refusing to queue`
+  أثناء دفعات الأدلة (انتظار 600ث يعمل).
+- **سحبة مقطوعة→مستأنفة:** تُغطّى ضمنياً بـ`backfill_history.py` متعدد
+  التمريرات (نفس النافذة idempotent بلا مكرر — إثبات المكرر=0 أعلاه).
+
+**الحالة:** 🟢 **مكتملة ومُفعّلة 2026-11-10** — الكود في `1521911`،
+الأدلة أعلاه، فحص الجاهزية: `ingest_jobs PASS (optional)`.
 
 ---
 
@@ -278,14 +292,45 @@ health → {"data_mode":"REAL_MT5","mt5":true}
 - `bar_tick_aggregates` و`ask_*` لا تُنشأ الآن عمداً (المرحلة 2/3) —
   إنشاء أعمدة `ask` بلا بيانات يحوّل فحص التغطية إلى 14×FAIL بدل 4.
 
-**الحالة:** 🟡 **الكود مكتوب 2026-11-09** — أعمدة `bar_open_server_time/
-utc_offset_seconds/bar_open_utc` + `broker_server_time_offsets` (فواصل
-تُملأ عند التغيّر فقط) + `broker_symbols` (بذرة14/14 من اللقطات) +
-`ohlcv_revisions` (بديل v1.1) + عيّنة الإزاحة بمنطق الفرق في كل مسارات
-الكتابة (poll/gap/ingest/snapshot) + بذور الإقلاع + إصلاح بوابة إعادة
-الاتصال E6 + رفض tz الصامت في الاستيراد. **10/10 اختبارات
-`test_phase1_timing.py` ناجحة.** بانتظار: مجموعة الانكسارات ← إعادة
-تشغيل واحدة ← لقطات الأدلة أعلاه.
+**الحالة:** 🟢 **مكتملة ومُفعّلة 2026-11-10** — الكود في `c7f5986` +
+تصحيح بوابة المادة `941c2c4`. الأدلة:
+
+- **SQL (لقطة `logs/phase1_evidence.txt` 2026-11-10):** `ohlcv` **45,007**
+  صفّاً، `bar_open_utc IS NULL = **0**`، تعبئة الأعمدة الثلاثة
+  **45007/45007/45007/45007**، **identity mismatches = 0**
+  (`epoch(utc) = epoch(server) − offset`)، **duplicates = 0**،
+  **forming bars = 0**، `ingest_jobs` صفّان (succeeded/0 + succeeded/61)`,
+  `ohlcv_revisions = 0` (الآلية مغطاة باختبار وحدة: تغيير قيمة يكتب
+  revision، إدراج مطابق no-op — لم يطرَح تصحيح حيّ بعد).
+- **`broker_server_time_offsets`:** صفوف `method='symbol_info.time'`
+  بإزاحة ≈+7170s (قياس حيّ). البذور `startup.timing_seeded` رفضت بصحة
+  لقطات `raw.time='0'` (قياس >26h خارج الحدّ) → `offset=null` ثم
+  الاستشعار الحيّ تولّى (`opened=false, stamped=0, offset=null`).
+- **بوابة المادة (تصحيح من الأدلة الحية):** اللقطة أظهرت `7170→7171`
+  (فارق ثانية = ضجيج عمر اقتباس) يفتح **صفّي** إزاحة → عتبة **1800 ث**:
+  التغيّر الأصغر يحدّث الصف المفتوح مكانيّاً (قيمة+sampled_at)، والتغيّر
+  الجوهري فقط (DST ±1h) يقفل الفصل ويفتح جديداً — regression مضاف
+  للاختبار.
+- **`broker_symbols`:** **14/14** رمز بصفّ مفتوح مطابق (البذرة من اللقطات
+  + upsert في `insert_symbol_snapshot`) — فحص الجاهزية يؤكد 14/14.
+- **رفض tz الصامت (لقطة حرفية):** استيراد CSV بلا منطقة زمنية →
+  `ValueError: timestamp '2026-11-04 12:00:00' has no timezone — supply an
+  explicit UTC offset (e.g. '2026-11-09 20:00:00+00:00'); refusing to
+  assume UTC` + `exit=1` (مع إعادة تهيئة UTF-8 لنجاة الرسالة على
+  console cp1256).
+- **فحص الجاهزية بال الأمر الحرفي**
+  (`verify_data_readiness.py --db data/nexus.duckdb --days 7`):
+  **NOT READY | FAIL=9 WARN=5** — **كل فحوصات المرحلة 1 خضراء**:
+  الأعمدة الثلاثة الجديدة PASS، `bar_open_utc filled 100.00%`,
+  `UTC = server - offset 0 mismatches`, `offset table 2 rows`,
+  `broker mapping 14/14`, `duplicates 0`, `forming 0`, `OHLC 0 bad`.
+  الـFAIL التسعة كلها **مرحلة 2/3** (أدناه) والـWARN: `fx_route`/
+  `training_samples` (اختيارية) + فجوات M1 صغيرة (XAUUSD 7, EURUSD 6,
+  XAGUSD 4 — تحت 2h، قيد السحبة).
+- **الاختبارات:** `test_phase1_timing.py` **10/10** (رفض tz، هوية التوقيت،
+  NULL→استكمال، سجل يتغيّر فقط، مراجعات append-only، خريطة الوسيط،
+  منطق الفرق) + مجموعة الانكسارات **139 passed** +
+  `historical_connectors` **8 passed** (fake محدّث للعقد الجديد).
 
 ---
 
@@ -327,7 +372,12 @@ tick history في الطرفية.
 
 **نقطة التحقق:** اختبارات الوكيل #5 (tick_count يطابق الخام).
 **الاختبارات:** اتساق buy+sell ≤ tick_count، لا ask بلا مصدر.
-**الحالة:** ⬜ (تحتاج المسبار)
+**الحالة:** ⬜ **التالي — قائمة الـFAIL من فحص الجاهزية 2026-11-10
+(NOT READY | FAIL=9):** 8 من الـFAIL التسعة هنا بالضبط
+(`ask_open/high/low/close`, `spread_points`, `real_volume`, `row_checksum`,
+`session_code`) + FAIL التاسع `table bar_tick_aggregates` (بند 3).
+بعد هذه البنود + فجوات M1 (WARN) يصبح الفحص READY باستثناء اختبارات
+المرحلة 3/4 الاختيارية.
 
 ---
 
@@ -433,3 +483,4 @@ tick history في الطرفية.
 | 2026-11-09 | **v1.1**: مراجعة وثيقتَي المالك بتحقق ميداني — أُدمج 9 نقاط (ohlcv_revisions، عقد ticks كامل، known_at/story-cluster، خطر retention كامن، execution_deals لـcost_bps، انضباط migrations، فصل الحجم، SLA، إعادة استخدام session_calendar)؛ رُفض ادعاء UTC (مدحض بالأرقام E7) و`broker_instrument_map` (القاموس: broker_symbols)؛ backlog مشروط: Parquet/book/feeds متعددة؛ قاعدة الرفع التلقائي أُعيد تأكيدها | ✅ |
 | 2026-11-09 | **المرحلة 0**: GET قراءة فقط + `POST /api/data/ingest/range` + دفتر `ingest_jobs` + قفل ينتظر600ث بدل الرفض + backfill→POST — 76 اختباراً ناجحاً، مُرحّل `1521911` (التفعيل بإعادة تشغيل واحدة) | 🟡 |
 | 2026-11-09 | **المرحلة 1 (كود)**: أعمدة التوقيت الثلاثة + `broker_server_time_offsets` + `broker_symbols` (بذرة من اللقطات) + `ohlcv_revisions` + عيّنة إزاحة بمنطق فرق في كل مسارات الكتابة + بذور الإقلاع + إصلاح E6 + رفض tz الصامت — 10/10 `test_phase1_timing.py` + انكسارات قيد التشغيل | 🟡 |
+| 2026-11-10 | **المرحلتان 0+1 مُفعّلتان ومُثبتتان**: إعادة تشغيل واحدة (`healthy, mt5=True, REAL_MT5`) ← لقطات الأدلة (GET-قراءة-فقط 61 شمعة بلا كتابة، POST job_id=2 كتب 61، SQL: 45,007 صفّاً / 0 NULL / 0 هوية / 0 مكرر، رفض CSV حرفياً) ← **فحص الجاهزية بالأمر الحرفي: NOT READY | FAIL=9 WARN=5** (كل فحوصات المرحلتين خضراء؛ الـFAIL التسعة = `bar_tick_aggregates` + `ask_*`×4 + `spread_points` + `real_volume` + `row_checksum` + `session_code` → المرحلة 2/3) ← تصحيح بوابة المادة 1800ث من الأدلة (`941c2c4`) — رُفع `1521911`, `c7f5986`, `941c2c4` | 🟢 |
