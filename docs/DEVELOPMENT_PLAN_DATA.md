@@ -1,8 +1,10 @@
-# خطة تطوير خط بيانات NEXUS — النسخة 1.0 (2026-11-09)
+# خطة تطوير خط بيانات NEXUS — النسخة 1.1 (2026-11-09)
 
 > **هذه الوثيقة = الذاكرة الدائمة للتطوير.** تُحدَّث بعد كل مرحلة بإضافة
 > الاثبات (لقطة مخرجات فعلية) وتحديث خانة الحالة، ثم تُرفع إلى GitHub.
 > لا تُعلن مرحلة "مكتملة" بدون لقطة اثبات مسجّلة في هذا الملف.
+> **v1.1:** دمج انتقائي لوثيقتَي المالك (أمر الوكيل + الخطة الشاملة 2.0)
+> بعد تحقق ميداني من ادعاءاتهما في الكود — انظر "المراجعة الخارجية".
 
 ---
 
@@ -12,7 +14,51 @@
 2. `GET` قراءة فقط؛ السحب يتم عبر مسار كتابة صريح مُسجَّل في `ingest_jobs`.
 3. أي وقت مستورد **يُرفض بلا منطقة زمنية صريحة** (يُحوَّل إلى UTC كتابةً).
 4. تعديلات الخدمة تُكتب أولاً، ثم تُفعَّل بإعادة تشغيل واحدة، ثم تُلتقط لقطة التحقق.
-5. كل commit يحمل وصف التعديل، ويُدفع إلى `origin/main` فوراً (قاعدة ثابتة).
+5. كل commit يحمل وصف التعديل، ويُدفع إلى `origin/main` فوراً (قاعدة ثابتة
+   أكّدها المالك 2026-11-09: **الرفع التلقائي يبقى** — وثيقة أمر الوكيل
+   ("لا push بدون موافقة") ملغاة في هذا الجانب وتحدد المحتوى التقني فقط).
+6. migrations: additive/idempotent أولاً، backup + اختبار restore قبل التطبيق
+   على قاعدة حية، وسجل migration id/version/checksum/rollback (انضباط مقبول
+   من وثيقة الخطة الشاملة).
+
+---
+
+## المراجعة الخارجية (وثيقتا المالك 2026-11-09) — ما أُدمج وما رُفض
+
+> تقييم بعد **تحقق ميداني من كل ادعاء في الكود أو المسبار** (لا قبول افتراضي).
+
+### تحققات حاسمة
+
+| الادعاء | الدليل الفعلي | الحكم |
+|---|---|---|
+| التصحيح يغيّر الصف بدل حفظ النسخة | `duckdb_store.py:613-615`: "updated **in place** with revision+1" — القيم القديمة تضيع | ✅ صحيح → `ohlcv_revisions` أُضيف للمرحلة 1 |
+| حروف ticks ناقصة | جدول `ticks` = bid/ask/spread/timestamp **بالثوانٍ فقط** (لا time_msc/flags/volume_real) | ✅ صحيح → عقد ticks أُضيف للمرحلة 2 |
+| ثوابت retention (7د ticks/365د ohlcv) | موجودة (`:36-38`) لكن `prune_old_data` (`:1681`) **لا يُستدعى في أي ملف** | ⚠️ خطر كامن: سياسة **غير مفعّلة** — تُوثَّق ولا تُفعَّل قبل قرار المالك |
+| ملفات contracts/validators/session_calendar موجودة | كلها موجودة و`session_calendar.py` **مُوصَل فعلاً** (`main.py:391-402`) | ✅ إعادة استخدام لا بناء جديد |
+| "MT5 يوفّر الوقت وفق UTC" | **المسبار E7 يدحضها**: `tick.time − now_utc ≈ +7167..7516 ث` (≈ +2h) | ❌ مرفوض — نحتفظ بـ`utc_offset_seconds` والوقت الخام معاً |
+| `broker_instrument_map` كجدول جديد | القاموس (جدول 40) اسمه `broker.broker_symbols` | ❌ نستخدم اسم القاموس: `broker_symbols` |
+
+### ما أُدمج (9 نقاط)
+
+1. **`ohlcv_revisions`** append-only (old/new values + available_at + fetch_run) → المرحلة 1
+2. **عقد ticks كامل**: `time_msc, flags, last, volume, volume_real` + مفتاح idempotent (feed+time_msc) → المرحلة 2
+3. **نموذج الوقت** `known_at/available_at` صريح + مراجعات القيم الاقتصادية (actual/forecast/revision بـknown_at) → المرحلة 3
+4. **story cluster**: إعادة النشر ≠ تأكيد مستقل (dedup قبل الربط) → المرحلة 3
+5. **توثيق خطر الاحتفاظ**: `prune_old_data` غير مستدعى — لا يُفعَّل قبل موافقة صريحة → المرحلة 4
+6. **بيانات التنفيذ** `history_deals/orders` (tickets/time_msc/commission/swap/profit) لحساب `cost_bps` فعلياً → المرحلة 5
+7. **انضباط migrations** (additive/idempotent/backup/rollback) → قواعد التنفيذ #6
+8. **فصل الحجم**: `tick_volume`/`real_volume`/`volume_type` مع إبقاء `volume` legacy دون تغيير معناه → المرحلة 2
+9. **عتبات SLA بعد baseline** لكل رمز/فريم — لا أرقام عامة مخترعة → المرحلة 4
+
+### ما رُفض أو أُجّل (بحجة)
+
+- **ادعاء UTC** — مرفوض بالأرقام (E7). 
+- **`broker_instrument_map`** — نستخدم اسم القاموس `broker_symbols`.
+- **مرحلة الاكتشاف في الوثيقة** — منجزة أصلاً (E1–E8 + مسبار).
+- **مشروط/ مؤجَّل (backlog):** أرشيف Parquet، Market Depth (`book_get`)،
+  مطابقة feeds متعددة (`feed_reconciliation`)، `execution_quotes`، تعميم
+  `asset_id/feed_id` متعدد الوسطاء — كلها مشروطة بوجود وسيط ثانٍ أو أرشيف
+  فعلي أو تنفيذ حي. لا تدخل المراحل الحالية.
 
 ---
 
@@ -199,12 +245,19 @@ health → {"data_mode":"REAL_MT5","mt5":true}
    والتحويل إلى UTC قبل الكتابة.
 6. `run.py`/`main.py` — إصلاح بوابة إعادة الاتصال (E6): إعادة محاولة اتصال MT5
    عند `consecutive_failures` حتى لو لم يسبق الاتصال الناجح.
+7. **`ohlcv_revisions` (مُضاف v1.1)** — جدول append-only:
+   `(symbol, timeframe, timestamp, revision_no, old_open..old_volume,
+   new_open..new_volume, available_at, fetch_run_id, reason)` — يُملأ من
+   `_apply_ohlcv_upsert` عند كل تعارض يغيّر القيم (الحالي يحدّث الصف
+   inplace ويضيّع النسخة القديمة — موثّق `duckdb_store.py:613-615`).
 
 **الاثبات المطلوب (لقطات):**
 - `SELECT COUNT(*) FROM ohlcv WHERE bar_open_utc IS NULL` → 0 (للفترة المستوردة).
 - جدول `broker_server_time_offsets` يحوي قيمة الإزاحة المقيسة من المسبار.
 - `broker_symbols` → 14/14 رمز بحقل وسيط مؤكَّد.
 - اختبار CSV برقم بلا منطقة زمنية → **رفض** (لقطة رسالة الخطأ).
+- **v1.1:** إعادة سحبة لنفس النافذة بقيمة مصححة → `ohlcv_revisions` يحوي
+  النسخة القديمة+الجديدة و`revision` يزداد (لقطة صفّين مقارنين).
 
 **نقطة التحقق:** `epoch(bar_open_utc) = epoch(server) - utc_offset` لكل صف،
 وزيادة/نقصان الإزاحة عند حدود DST موثّقة.
@@ -231,12 +284,23 @@ tick history في الطرفية.
    tick_count, buy_tick_count, sell_tick_count, first_time_msc, last_time_msc,
    max_gap_ms, spread_min, spread_max, spread_avg)` — سحبة بأيام متتالية.
 4. `scripts/backfill_history.py` — `--with-ticks` يفعّل جلب Ask/Ticks بعد تثبيت الشموع.
+5. **عقد ticks كامل (مُضاف v1.1)** — توسيع جدول `ticks` القائم
+   (الموجود: bid/ask/spread/timestamp بالثوانٍ فقط):
+   `time_msc BIGINT, flags INT, last, volume, volume_real, source_time_utc,
+   received_at_utc, fetch_run_id` + مفتاح idempotent
+   `(symbol, time_msc, flags)` — لا يُحذف tick ولا يُدمج داخل الثانية.
+6. **فصل أنواع الحجم (مُضاف v1.1)** — أعمدة `tick_volume` (الأصل من MT5),
+   `real_volume` (NULL إذا غير متاح — **لا يُحوَّل إلى صفر**), `volume_type`
+   — مع إبقاء العمود legacy `volume` كما هو بلا تغيير معنى (يُعلَّم أنّه
+   tick_volume) لعدم كسر المستهلكين الحاليين.
 
 **الاثبات المطلوب (لقطات):**
 - `SUM(tick_count)` من `bar_tick_aggregates` = عدد صفوف `copy_ticks_range` الخام
   لنفس النافذة (لقطة عدّين مقارنين).
 - `COUNT(ask_close)/COUNT(*) ≥95%` لكل رمز ذي ticks متوفرة.
 - رموز بلا عمق → `ask_source='unavailable'` (لقطة استعلام).
+- **v1.1:** عدّ `ticks` الخام لنافذة = `SUM(tick_count)` + اختبار idempotence
+  (إعادة استيراد نفس النافذة → عدد صفوف ticks بلا تغيّر).
 
 **نقطة التحقق:** اختبارات الوكيل #5 (tick_count يطابق الخام).
 **الاختبارات:** اتساق buy+sell ≤ tick_count، لا ask بلا مصدر.
@@ -262,11 +326,18 @@ tick history في الطرفية.
    (مع إبقاء القديم متوافقاً)، + مصدر بديل صالح.
 3. عرض دمج للتدريب (view): `feature_available_at = COALESCE(retrieved_at, event_time)`
    — **الخبر لا يُستخدم قبل وصوله فعلياً** (منع التسرّب).
+4. **story cluster + known_at (مُضاف v1.1)**: `news_story_clusters(cluster_id,
+   original_source, independent_source_count)` — إعادة النشر تُجمَّع ولا
+   تُعدّ تأكيدات مستقلة؛ + `known_at` صريح لكل خبر/قيمة اقتصادية، وعمود
+   `revision` مع `revision_known_at` لقيم التقويم (actual/forecast/previous)
+   — **لا تدخل مراجعة لم تكن منشورة بعد وقت القرار**.
 
 **الاثبات المطلوب (لقطات):**
 - `COUNT(news_articles WHERE retrieved_at > first bar using it)` = 0 عبر عرض الدمج.
 - لقطة أخبار مرتبطة بـ XAUUSD داخل نافذة حدث NFP مع blackout مفعّل.
 - `blackout` يمنع عينات التدريب داخل ±15 دقيقة من حدث بتأثير عالٍ.
+- **v1.1:** خبر معاد نشره من 3 مواقع → cluster واحد `independent_source_count=1`
+  (لقطة) + اختبار سلبي: revision اقتصادي وصل بعد القرار → غير ظاهر في العينة.
 
 **نقطة التحقق:** فحص الوكيل #11 (لا تسرّب) + اختبار سلبي (خبر وصل بعد الشمعة → لا يظهر).
 **الاختبارات:** "فحص أن وقت الإتاحة ≤ وقت القرار" + فحص blackout.
@@ -285,6 +356,16 @@ tick history في الطرفية.
    `ohlcv_backfill_runs` + جودة الفحوصات.
 3. `test_historical_import.py` — الاختبارات الستة كاملة (tz، الشمعة المتكونة،
    عدد متوقع − فجوات مسجّلة، ربط broker_symbols 14/14، tick_count=خام، تغيّر الإزاحة).
+4. **إعادة استخدام تقويم الجلسات (مُضاف v1.1)** — `quality/session_calendar.py`
+   موجود ومُوصَل (`main.py:391-402`)؛ نبني `session_code` وتصنيف الفجوات
+   فوق `classify_interval` الحالي بدل جدول مكرر.
+5. **خطر الاحتفاظ الموثّق (مُضاف v1.1)** — `TICK_RETENTION_DAYS=7` و
+   `OHLCV_RETENTION_DAYS=365` موجودان مع `DELETE FROM ticks` في
+   `prune_old_data` (`duckdb_store.py:36-38,1681`) **ولا يُستدعى من أي ملف**
+   (grep شامل). القرار: تُوثَّق السياسة هنا، **ولا تُفعَّل حذف ticks قبل
+   وجود أرشيف Parquet وموافقة صريحة** — وإلا ضاع تاريخ الـ ticks خلال أسبوع.
+6. **عتبات SLA بعد baseline (مُضاف v1.1)**: تُقاس التغطية/التأخير لكل
+   رمز/فريم أولاً، ثم تُوضع العتبات — لا نسب عامة مخترعة.
 
 **الاثبات المطلوب (لقطات):**
 - `verify_data_readiness.py --days 7` → **SUMMARY: READY** (لقطة كاملة).
@@ -306,6 +387,16 @@ tick history في الطرفية.
 3. تحقّق: `feature_available_at ≤ decision_time` و`label_end_time < اختبار`.
 
 **الاثبات المطلوب:** لقطة عدّ التسرّب = 0 + عدّ العينات لكل split.
+
+**تعديلات مُضافة v1.1 (بيانات التنفيذ الفعلية):**
+4. `execution_deals/execution_orders` — سحبة `history_deals_get`/
+   `history_orders_get` من MT5 (ticket, time_msc, price, volume, commission,
+   swap, profit, reason) → حساب `cost_bps` الفعلي (spread+عمولة+سواب)
+   بدل تقديره من الشمعة. مشروط: حساب demo يملك صفقات تاريخية تكفي.
+
+**الاثبات المطلوب (v1.1):** `cost_bps` في `training_samples` مشتق من صفقة
+حقيقية معروفة (لقطة: صفقة + الحساب المطابق ±0.1 bps).
+
 **الحالة:** ⬜ — **تنتظر قرار المالك** (هل تُحفظ الميزات اليوم في DuckDB أم الذاكرة؟ E2 تشير للذاكرة).
 
 ---
@@ -316,3 +407,4 @@ tick history في الطرفية.
 |--------|---------|--------|
 | 2026-11-09 | إنشاء الخطة v1.0 + لقطات E1-E6, E8 (حالة قبل التطوير) | ⬜ البدء |
 | 2026-11-09 | E7: مسبار read-only مكتمل لكل الـ14 — offset≈+2h، ticks متوفرة 12/14 (XAUUSD/BTCUSD=0)، عملات مختلطة، صفر NOT FOUND | ✅ |
+| 2026-11-09 | **v1.1**: مراجعة وثيقتَي المالك بتحقق ميداني — أُدمج 9 نقاط (ohlcv_revisions، عقد ticks كامل، known_at/story-cluster، خطر retention كامن، execution_deals لـcost_bps، انضباط migrations، فصل الحجم، SLA، إعادة استخدام session_calendar)؛ رُفض ادعاء UTC (مدحض بالأرقام E7) و`broker_instrument_map` (القاموس: broker_symbols)؛ backlog مشروط: Parquet/book/feeds متعددة؛ قاعدة الرفع التلقائي أُعيد تأكيدها | ✅ |
