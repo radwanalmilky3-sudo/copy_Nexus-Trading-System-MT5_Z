@@ -93,7 +93,14 @@ def bar_window(symbol: str, tf: str, start: datetime, end: datetime, secret: str
 
 
 def store_count(symbol: str, tf: str, secret: str) -> int:
-    _status, body = get_json(PROV_URL.format(symbol=symbol, tf=tf), secret)
+    try:
+        _status, body = get_json(PROV_URL.format(symbol=symbol, tf=tf), secret)
+    except HTTPError as exc:
+        if exc.code == 404:
+            return 0  # provenance 404 == nothing persisted yet for this pair
+        raise
+    except Exception as exc:  # provenance must never abort a sweep
+        return -1
     # provenance embeds counts directly; keiner extra requests per window
     for key in ('"bar_count":', '"row_count":', '"count":'):
         i = body.find(key)
@@ -106,7 +113,8 @@ def store_count(symbol: str, tf: str, secret: str) -> int:
     return -1  # parser miss; provenance format != expected
 
 
-def fill(symbol: str, tf: str, days: float, secret: str, passes: int = 2) -> None:
+def fill(symbol: str, tf: str, days: float, secret: str, passes: int = 2,
+         sleep_sec: float = 10.0) -> None:
     step = timedelta(days=TF_WINDOW_DAYS.get(tf, 40))
     tf_sec = TF_SEC[tf]
     end = datetime.now(timezone.utc) - timedelta(seconds=tf_sec)  # drop forming bar
@@ -127,9 +135,11 @@ def fill(symbol: str, tf: str, days: float, secret: str, passes: int = 2) -> Non
         print(f"  pass {pas}: {windows} windows, {fetched} bars returned "
               f"(cumulative {total})", flush=True)
         print(f"  store_bars={store_count(symbol, tf, secret)}", flush=True)
-        if pas < passes and total:
-            print(f"  sleeping 10s before pass {pas + 1} (MT5 history sync)", flush=True)
-            time.sleep(10.0)
+        if pas < passes:
+            # Always wait between passes — even a 0-bar pair needs the gap so
+            # the terminal can finish its background history download.
+            print(f"  sleeping {sleep_sec:g}s before pass {pas + 1} (MT5 history sync)", flush=True)
+            time.sleep(sleep_sec)
 
 
 def main() -> int:
@@ -144,6 +154,10 @@ def main() -> int:
     parser.add_argument("--symbols", default="XAUUSD,XAUUSDs,XAUUSDr,BTCUSD,BTCSOL,BTCm,ETHUSD,SOLASH,GBPCAD,EURGBP")
     parser.add_argument("--timeframes", default="M1,M5,M15,M30,H1,H4,D1")
     parser.add_argument("--days", type=float, default=365.0)
+    parser.add_argument("--passes", type=int, default=2,
+                        help="fetch passes per symbol/timeframe (heals lazy-sync slivers)")
+    parser.add_argument("--sleep", type=float, default=10.0,
+                        help="seconds to wait between passes (MT5 background download)")
     args = parser.parse_args()
 
     symbols = [s.strip().upper() for s in args.symbols.split(",") if s.strip()]
@@ -151,7 +165,7 @@ def main() -> int:
     for sym in symbols:
         for tf in tfs:
             try:
-                fill(sym, tf, args.days, secret)
+                fill(sym, tf, args.days, secret, passes=args.passes, sleep_sec=args.sleep)
             except Exception as exc:  # per-pair failures must not stop the sweep
                 print(f"[{sym}/{tf}] FAILED: {type(exc).__name__}: {exc}", flush=True)
     return 0
