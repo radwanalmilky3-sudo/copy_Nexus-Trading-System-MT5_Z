@@ -1100,14 +1100,13 @@ async def get_ohlcv(
                 provider_rows = await mt5.get_ohlcv_range(
                     symbol, timeframe, range_start, range_end, limit=limit,
                 )
-                await _persist_closed_ohlcv(provider_rows, source="mt5_range")
-                rows = await data_store.query_ohlcv(
-                    symbol=symbol, timeframe=timeframe, start=start, end=end, limit=limit,
-                )
-                if rows:
-                    if await pair_blocked(data_store, symbol, timeframe):
-                        raise HTTPException(503, 'OHLCV quality quarantine unresolved')
-                    return list(reversed(rows))
+                # Phase 0 (development plan): GET is READ-ONLY — a display
+                # read must never mutate the store. Closed bars from the
+                # provider are returned directly; persistence happens only
+                # through POST /api/data/ingest/range (backfill sweeps) or
+                # the internal mt5_poll / gap-backfill publishers.
+                if provider_rows:
+                    return usable_bars(provider_rows)
             except HTTPException:
                 raise
             except Exception as exc:
@@ -1147,6 +1146,83 @@ async def get_ohlcv(
         return _synthetic_ohlcv(symbol, timeframe, limit)
 
     raise HTTPException(404, f"No OHLCV data for {symbol}/{timeframe}")
+
+
+# ── Ingest (explicit write path — development plan Phase 0) ──────────────────
+
+class IngestRangeRequest(BaseModel):
+    symbol: str
+    timeframe: str
+    start: str
+    end: str
+    limit: int = 5000
+
+
+@app.post("/api/data/ingest/range")
+async def ingest_range(
+    payload: IngestRangeRequest,
+    x_nexus_internal_secret: str | None = Header(default=None),
+) -> dict[str, Any]:
+    """Fetch one OHLCV window from MT5 and persist it — journaled in ingest_jobs.
+
+    Phase 0 separation: GET /api/data/ohlcv is read-only; sweeps (backfill
+    scripts) call this endpoint instead, so every persisted window leaves an
+    auditable job row (kind, symbol, timeframe, window, status, rows, error)
+    that can be inspected and resumed without re-reading provider state.
+    """
+    _verify_internal_secret(x_nexus_internal_secret)
+    symbol = payload.symbol.upper().replace("/", "")
+    timeframe = payload.timeframe.upper()
+    if timeframe not in SUPPORTED_TIMEFRAMES:
+        raise HTTPException(
+            400,
+            f"Unsupported timeframe '{timeframe}'. Use one of {SUPPORTED_TIMEFRAMES}",
+        )
+    try:
+        start_dt = datetime.fromisoformat(payload.start.replace("Z", "+00:00"))
+        end_dt = datetime.fromisoformat(payload.end.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise HTTPException(400, "start and end must be ISO 8601 timestamps") from exc
+    if start_dt.tzinfo is None or end_dt.tzinfo is None:
+        raise HTTPException(400, "start and end must carry an explicit timezone offset")
+    start_dt = start_dt.astimezone(timezone.utc)
+    end_dt = end_dt.astimezone(timezone.utc)
+    if start_dt > end_dt:
+        raise HTTPException(400, "start must be less than or equal to end")
+    if not mt5.connected:
+        raise HTTPException(503, "MT5 is not connected")
+
+    job_id = await data_store.ingest_job_start(
+        "ohlcv_range", symbol, timeframe, start_dt, end_dt,
+    )
+    try:
+        provider_rows = await mt5.get_ohlcv_range(
+            symbol, timeframe, start_dt, end_dt, limit=payload.limit,
+        )
+    except Exception as exc:
+        if _is_empty_range_answer(exc):
+            # Weekend / market break: an expected empty window, journaled as
+            # succeeded with 0 rows so it is never mistaken for a failure.
+            await data_store.ingest_job_finish(job_id, "succeeded", rows=0, error=None)
+            return {"ok": True, "job_id": job_id, "rows_returned": 0,
+                    "rows_inserted": 0, "empty": True}
+        await data_store.ingest_job_finish(
+            job_id, "failed", rows=0, error=f"{type(exc).__name__}: {exc}"[:500],
+        )
+        if not mt5.connected:
+            raise HTTPException(503, "MT5 disconnected during ingest") from exc
+        # 5xx so retrying sweep clients back off and re-request the window.
+        raise HTTPException(502, f"provider range fetch failed: {type(exc).__name__}") from exc
+    try:
+        inserted = await data_store.insert_ohlcv_batch(provider_rows, source="mt5_range")
+    except Exception as exc:
+        await data_store.ingest_job_finish(
+            job_id, "failed", rows=0, error=f"{type(exc).__name__}: {exc}"[:500],
+        )
+        raise
+    await data_store.ingest_job_finish(job_id, "succeeded", rows=inserted, error=None)
+    return {"ok": True, "job_id": job_id, "rows_returned": len(provider_rows),
+            "rows_inserted": inserted}
 
 
 @app.get("/api/data/ohlcv/{symbol}/{timeframe}/provenance")

@@ -222,7 +222,9 @@ health → {"data_mode":"REAL_MT5","mt5":true}
 
 **نقطة التحقق:** `duplicate groups = 0` + `ingest_jobs` يحوي صفوف لكل سحبة.
 **الاختبارات:** إضافة إلى `test_historical_import.py`: عزل القراءة/الكتابة.
-**الحالة:** ⬜
+**الحالة:** 🟡 **الكود مكتوب 2026-11-09 (main.py GET-only + POST /api/data/ingest/range
++ ingest_jobs DDL/ledger + _execute_locked queue-wait 600ث + backfill→POST) —
+بانتظار: اكتمال سحبة M1 الجارية ثم إعادة تشغيل واحدة ثم لقطات الأدلة أعلاه.**
 
 ---
 

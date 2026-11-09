@@ -1,13 +1,14 @@
 """
 backfill_history.py - inject historical OHLCV into nexus-data's DuckDB.
 
-Mechanism: while nexus-data holds the DuckDB write lock and is connected to
-MT5, a range query on /api/data/ohlcv moves bars from MT5 into the store
-(_persist_closed_ohlcv -> insert_ohlcv_batch). This script walks newest ->
-oldest in windows small enough for a single call, then runs a second pass so
-windows that came back sparse on the first try (MT5 lazy-syncs history: a
-never-opened window returns a sliver until the terminal downloads it) are
-re-fetched and completed.
+Mechanism (development plan Phase 0): while nexus-data holds the DuckDB
+write lock and is connected to MT5, each window is POSTed to the explicit
+write path /api/data/ingest/range (read-only GET no longer persists), which
+journals the window in ingest_jobs and persists via the idempotent
+revision-aware upsert. The script walks newest -> oldest in windows small
+enough for a single call, then runs extra passes so windows that came back
+sparse (MT5 lazy-syncs history: a never-opened window returns a sliver
+until the terminal downloads it) are re-fetched and completed.
 
 Usage:
     .\\venv-nexus\\Scripts\\python.exe scripts\\backfill_history.py
@@ -16,13 +17,13 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 try:  # cp1256-safe output regardless of the calling console
@@ -32,7 +33,7 @@ except Exception:
     pass
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA_URL = "http://127.0.0.1:9001/api/data/ohlcv"
+INGEST_URL = "http://127.0.0.1:9001/api/data/ingest/range"
 PROV_URL = "http://127.0.0.1:9001/api/data/ohlcv/{symbol}/{tf}/provenance"
 
 TF_SEC = {"M1": 60, "M5": 300, "M15": 900, "M30": 1800, "H1": 3600, "H4": 14400, "D1": 86400}
@@ -62,42 +63,51 @@ def get_json(url: str, secret: str, timeout: float = 60.0):
 
 
 def bar_window(symbol: str, tf: str, start: datetime, end: datetime, secret: str) -> int:
-    """Fetch one [start, end) window; every response is persisted server-side.
+    """Persist one [start, end) window through the explicit write path.
 
-    Returns the number of bars contained in the response body. Transient
-    failures (DuckDB lock-busy 500s, client read timeouts while MT5 syncs a
-    cold symbol, connection resets) retry with backoff and degrade to 0 bars
-    rather than aborting the sweep — later passes revisit the window.
+    POST /api/data/ingest/range journals the window in ingest_jobs and
+    persists it with the idempotent revision-aware upsert, so a retry after
+    a timeout never duplicates rows. Returns the number of bars the
+    provider returned for the window. Transient failures (DuckDB lock-busy
+    5xx, client read timeouts while MT5 syncs a cold symbol, connection
+    resets) retry with backoff and degrade to 0 bars rather than aborting
+    the sweep — later passes revisit the window.
     """
-    q = urlencode({
+    payload = json.dumps({
+        "symbol": symbol,
+        "timeframe": tf,
         "start": start.isoformat(),
         "end": end.isoformat(),
-        "limit": "5000",
-    })
-    url = f"{DATA_URL}/{symbol}/{tf}?{q}"
-    req = Request(url, headers={"X-Nexus-Internal-Secret": secret})
-    empty_confirmed = 0  # consecutive 404s (2 => window genuinely empty)
+        "limit": 5000,
+    }).encode("utf-8")
+    req = Request(
+        INGEST_URL,
+        data=payload,
+        method="POST",
+        headers={"Content-Type": "application/json", "X-Nexus-Internal-Secret": secret},
+    )
     attempts = 0
     while attempts < 5:
         attempts += 1
         try:
             with urlopen(req, timeout=FETCH_TIMEOUT_SEC) as resp:
-                body = resp.read().decode("utf-8")
-            return body.count('"timestamp"')
+                body = json.loads(resp.read().decode("utf-8"))
+            return int(body.get("rows_returned", 0))
         except HTTPError as exc:
-            exc.read()
-            if exc.code == 404:
-                empty_confirmed += 1
-                if empty_confirmed >= 2:
-                    return 0  # weekend or no data (retry once first)
-                time.sleep(2.0)
-                continue
+            detail = exc.read().decode("utf-8", errors="replace")[:200]
+            if exc.code in (404, 405) and "Not Found" in detail:
+                # Route missing => nexus-data is running pre-Phase-0 code.
+                # Fail loudly instead of silently importing zero bars.
+                raise RuntimeError(
+                    "POST /api/data/ingest/range not found — restart nexus-data "
+                    "so the Phase 0 write path is active"
+                )
             print(f"  [window {start:%Y-%m-%d}] HTTP {exc.code}: retrying", flush=True)
             if 500 <= exc.code < 600:
                 time.sleep(8.0)  # lock-busy storm: back off, don't abort
                 continue
             raise
-        except (URLError, TimeoutError, OSError) as exc:
+        except (URLError, TimeoutError, OSError, ValueError) as exc:
             print(f"  [window {start:%Y-%m-%d}] {type(exc).__name__}: retrying", flush=True)
             time.sleep(5.0)
     print(f"  [window {start:%Y-%m-%d}] giving up after {attempts} attempts", flush=True)

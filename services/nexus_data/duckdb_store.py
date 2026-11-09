@@ -498,6 +498,33 @@ class DataStore:
             CREATE INDEX IF NOT EXISTS idx_symbol_snapshots_sym_ts
             ON symbol_property_snapshots (symbol, captured_at DESC)
         """)
+        # Ingest job ledger (development plan Phase 0): every explicit
+        # write-path sweep (POST /api/data/ingest/range) journals one row so
+        # it is auditable and resumable. Lifecycle: running -> succeeded|failed.
+        # Append-only in spirit: finished rows are never rewritten except the
+        # running row's own finish transition.
+        self._conn.execute("""
+            CREATE SEQUENCE IF NOT EXISTS seq_ingest_jobs
+        """)
+        self._conn.execute("""
+            CREATE TABLE IF NOT EXISTS ingest_jobs (
+                id           BIGINT    NOT NULL DEFAULT nextval('seq_ingest_jobs'),
+                kind         VARCHAR   NOT NULL,
+                symbol       VARCHAR,
+                timeframe    VARCHAR,
+                window_start TIMESTAMP WITH TIME ZONE,
+                window_end   TIMESTAMP WITH TIME ZONE,
+                status       VARCHAR   NOT NULL,
+                rows         BIGINT    NOT NULL DEFAULT 0,
+                error        VARCHAR,
+                started_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                finished_at  TIMESTAMP WITH TIME ZONE
+            )
+        """)
+        self._conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_ingest_jobs_sym_tf_started
+            ON ingest_jobs (symbol, timeframe, started_at DESC)
+        """)
         self._conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_ticks_symbol_ts
             ON ticks (symbol, timestamp DESC)
@@ -1305,6 +1332,48 @@ class DataStore:
         )
         return [dict(zip(self._SNAPSHOT_COLUMNS, r)) for r in rows]
 
+    # ── Ingest job ledger (development plan Phase 0) ────────────────────
+
+    async def ingest_job_start(
+        self,
+        kind: str,
+        symbol: str | None,
+        timeframe: str | None,
+        window_start: datetime | None,
+        window_end: datetime | None,
+    ) -> int:
+        """Open one ingest job and return its id (status='running')."""
+        def _exec() -> int:
+            assert self._conn is not None
+            row = self._conn.execute(
+                "INSERT INTO ingest_jobs "
+                "(kind, symbol, timeframe, window_start, window_end, status) "
+                "VALUES (?, ?, ?, ?, ?, 'running') RETURNING id",
+                (
+                    kind, symbol, timeframe,
+                    self._as_utc(window_start) if window_start else None,
+                    self._as_utc(window_end) if window_end else None,
+                ),
+            ).fetchone()
+            return int(row[0]) if row else -1
+
+        return await self._execute_locked(_exec)
+
+    async def ingest_job_finish(
+        self,
+        job_id: int,
+        status: str,
+        *,
+        rows: int = 0,
+        error: str | None = None,
+    ) -> None:
+        """Close an ingest job with its terminal status ('succeeded'|'failed')."""
+        await self._run(
+            "UPDATE ingest_jobs SET status = ?, rows = ?, error = ?, "
+            "finished_at = CURRENT_TIMESTAMP WHERE id = ? AND status = 'running'",
+            (status, int(rows), error, int(job_id)),
+        )
+
     async def record_backfill_run(
         self,
         symbol: str,
@@ -1702,18 +1771,40 @@ class DataStore:
         2026-11-06 hardening: the asyncio lock must never wedge the whole
         service. A cancelled/timed-out holder used to leave everything queued
         behind it forever (login, ledger, certificates all froze). Now: a
-        hard acquire deadline (60s), release guaranteed by the context
-        manager even when the waiter is cancelled, and the culprit is named
-        in the log when the queue is long."""
+        hard acquire deadline, release guaranteed by the context manager
+        even when the waiter is cancelled, and the culprit is named in the
+        log when the queue is long.
+
+        Phase 0 (development plan 2026-11-09): waiters QUEUE instead of
+        refusing at 60s. Large batch writes legitimately hold the lock for
+        minutes and the old refusal produced 500-storms on every concurrent
+        reader (evidence E5). Now: poll up to 10 minutes total, log a
+        warning at ~60s naming the holder, and only then give up — a
+        genuinely wedged lock still surfaces instead of freezing forever.
+        """
         loop = asyncio.get_running_loop()
-        try:
-            await asyncio.wait_for(self._connection_lock.acquire(), timeout=60.0)
-        except asyncio.TimeoutError:
-            held = getattr(self, '_lock_holder', '<unknown>')
-            raise RuntimeError(
-                f'DuckDB owner-store lock busy >60s (held by {held}) — '
-                'refusing to queue; the long operation must finish or be cancelled'
-            ) from None
+        deadline_sec = 600.0
+        poll_sec = 5.0
+        waited = 0.0
+        warned = False
+        while True:
+            try:
+                await asyncio.wait_for(self._connection_lock.acquire(), timeout=poll_sec)
+                break
+            except asyncio.TimeoutError:
+                waited += poll_sec
+                held = getattr(self, '_lock_holder', '<unknown>')
+                if not warned and waited >= 60.0:
+                    warned = True
+                    await log.awarning(
+                        'duckdb.lock_wait_long',
+                        waited_s=int(waited), held_by=held,
+                    )
+                if waited >= deadline_sec:
+                    raise RuntimeError(
+                        f'DuckDB owner-store lock busy >{int(deadline_sec)}s (held by {held}) — '
+                        'gave up after queueing; the long operation must finish or be cancelled'
+                    ) from None
         self._lock_holder = getattr(operation, '__name__', repr(operation)[:60])
         try:
             return await self._execute_locked_inner(operation, loop)
