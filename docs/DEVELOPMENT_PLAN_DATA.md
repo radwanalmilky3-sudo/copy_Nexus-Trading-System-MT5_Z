@@ -84,7 +84,45 @@ RuntimeError: DuckDB owner-store lock busy >60s (held by _exec) ?
 ```
 **لا يعيد الاتصال تلقائياً بعد السقوط** (بوابة `if mt5.connected` في main.py ~680).
 
-### E7 — نتائج الاستيراد الفعلية (Before للجودة)
+### E7 — مسبار القياس (خطوة صفر، read-only) — نتائج فعلية 2026-11-09
+
+سكربت `scripts/probe_mt5_capabilities.py` (مسبار المالك، لا يكتب شيئاً)
+اتصل بالطرفية مباشرة (`server: OneRoyal-Demo`) وأخرج لكل الرموز الـ14:
+
+```
+XAUUSD  digits=2 point=0.01 tick_size=0.01 tick_value=1.0   contract=100   profit=USD margin=USD offset_s=7167 ticks_7d=0       M1_7d=6886
+XAGUSD  digits=3 point=0.001 ...               tick_value=5.0   contract=5000  profit=USD margin=USD offset_s=7274 ticks_7d=1374282 M1_7d=6882
+BTCUSD  digits=2 ... tick_value=0.01 contract=1     profit=USD margin=USD offset_s=7300 ticks_7d=0       M1_7d=10076
+ETHUSD  ...  contract=10    profit=USD margin=USD offset_s=7407 ticks_7d=2294243 M1_7d=9976
+DXY     ...  contract=100   profit=USD margin=USD offset_s=7446 ticks_7d=173363  M1_7d=6269
+EURUSD  ...  contract=100000 profit=USD margin=EUR offset_s=7460 ticks_7d=493393 M1_7d=7132
+GBPUSD  ...  contract=100000 profit=USD margin=GBP offset_s=7471 ticks_7d=568016 M1_7d=0
+USDJPY  ...  tick_value=0.6326711375427053 contract=100000 profit=JPY margin=USD offset_s=7479 ticks_7d=628947 M1_7d=893
+USDCHF  ...  tick_value=1.2183087438018543 contract=100000 profit=CHF margin=USD offset_s=7492 ticks_7d=656667 M1_7d=903
+AUDUSD  ...  contract=100000 profit=USD margin=AUD offset_s=7503 ticks_7d=392847 M1_7d=7140
+USDCAD  ...  tick_value=0.7076339551077019 contract=100000 profit=CAD margin=USD offset_s=7509 ticks_7d=387633 M1_7d=7138
+US30    digits=1 point=0.1 contract=1 profit=USD margin=USD offset_s=7516 ticks_7d=2086153 M1_7d=851
+US500   digits=1 point=0.1 contract=1 profit=USD margin=USD offset_s=7171 ticks_7d=1746511 M1_7d=6886
+WTI     digits=3 point=0.001 contract=1000 profit=USD margin=USD offset_s=7172 ticks_7d=1268371 M1_7d=0
+```
+
+**قراءات حاسمة:**
+1. **offset_s ≈ 7167–7516 (≈ +2h)** — خادم أوروبي UTC+2؛ الإزاحة تتغيّر مع
+   توقيت الصيف → `broker_server_time_offsets` إلزامي (المرحلة 1).
+2. **ticks_7d: 12/14 رمزاً يملكون عمقاً هائلاً** (173 ألف – 2.29 مليون tick/7 أيام)
+   → تجميع `bar_tick_aggregates` وAsk ممكن. **لكن XAUUSD=0 وBTCUSD=0** —
+   تاريخ الـ ticks لهما لم يُنزَّل بعد في الطرفية → تُعلَّم `ask_source='unavailable'`
+   ولا تُقدَّر، وتُعاد المحاولة بعد مزامنة الـ tick history.
+3. **NOT FOUND: لا شيء** — أسماء الـ14 كلها دقيقة عند الوسيط → جدول
+   `broker_symbols` يوثّق الربط (لا تطبيع مطلوب الآن).
+4. **عملات مختلطة**: profit/margin ∈ {USD, EUR, GBP, JPY, CHF, AUD, CAD}
+   → 8/14 رمزاً يحتاجون تحويل عملات (`fx_route`) لحساب الأرباح بالـ USD.
+5. **M1_7d=0 لـ GBPUSD وWTI** و893-903 فقط لـ USDJPY/USDCHF — المزامنة
+   الكسولة للـ M1 ناقصة لهذه الرموز (يُعالج بتمريرات الشفاء الحالية).
+6. **الحجم**: ~1.4–2.3 مليون tick/7 أيام/رمز → 90 يوماً ≈ 30 مليون صف لرمز
+   واحد → تقسيم شهري/منفصل لجدول الـ ticks قرار إلزامي (كما لاحظ المالك).
+
+### E8 — نتائج الاستيراد الفعلية (Before للجودة)
 
 ```
 import_symbol_metadata.py → captured=14 failed=0 (XAUUSD digits=2 contract=100 ...
@@ -105,7 +143,7 @@ health → {"data_mode":"REAL_MT5","mt5":true}
 |---|---------|--------|-------------|
 | 0 | فصل القراءة/الكتابة + ingest_jobs + طابور كتابة واحد | ⬜ لم تبدأ | — |
 | 1 | التوقيت والهوية (offsets, broker_symbols, UTC) | ⬜ لم تبدأ | — |
-| 2 | Ask/Ticks/Spread/RealVolume (مشروطة بالمسبار) | ⬜ تنتظر المسبار | E3 |
+| 2 | Ask/Ticks/Spread/RealVolume (مشروطة بالمسبار) | 🟡 المسبار منجز E7 — جاهزة للكود | E7 |
 | 3 | ربط الأخبار/التقويم بالشموع | ⬜ تنتظر إصلاح المصادر | E4 |
 | 4 | الجودة والتتبع + اختبارات الوكيل الستة | ⬜ | E1,E5 |
 | 5 | طبقة التدريب المحفوظة (training_samples) | ⬜ تحتاج تأكيد المالك | E2 |
@@ -179,9 +217,10 @@ health → {"data_mode":"REAL_MT5","mt5":true}
 
 **الهدف:** Ask لكل شمعة + تجميع ticks قابل للتدقيق — **ما دام عمق التاريخ يسمح**.
 
-**الشرط المسبق:** لقطة مسبار `copy_ticks_range` لكل رمز:
-`ticks_7d`, `offset_s`, `profit_cur`, `margin_cur` — إن كان `ticks_7d=0`
-فالقسم المتعلق بذلك الرمز يُعلَّم `unavailable` ولا يُقدَّر.
+**الشرط المسبق:** ~~لقطة مسبار `copy_ticks_range` لكل رمز~~ ✅ **منجز (E7,
+2026-11-09):** 12/14 رمزاً بعمق 173k–2.29M tick/7 أيام؛ **XAUUSD وBTCUSD
+ticks_7d=0** → يُعلَّمان `ask_source='unavailable'` ويُعاد فحصهما بعد مزامنة
+tick history في الطرفية.
 
 **تعديلات الكود:**
 1. `mt5_worker.py` — op جديد `ticks_range` (day-chunked، `COPY_TICKS_ALL`).
@@ -275,4 +314,5 @@ health → {"data_mode":"REAL_MT5","mt5":true}
 
 | التاريخ | التحديث | الحالة |
 |--------|---------|--------|
-| 2026-11-09 | إنشاء الخطة v1.0 + لقطات E1-E7 (حالة قبل التطوير) | ⬜ البدء |
+| 2026-11-09 | إنشاء الخطة v1.0 + لقطات E1-E6, E8 (حالة قبل التطوير) | ⬜ البدء |
+| 2026-11-09 | E7: مسبار read-only مكتمل لكل الـ14 — offset≈+2h، ticks متوفرة 12/14 (XAUUSD/BTCUSD=0)، عملات مختلطة، صفر NOT FOUND | ✅ |
