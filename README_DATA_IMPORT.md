@@ -78,6 +78,55 @@ python run.py --services nexus-data,nexus-features,nexus-api
 
 ---
 
+### مجموعة الأصول المعتمدة (14 رمزاً) والأعماق
+
+مجموعة مركزة بالذهب للتدريب متعدد الأصول (معتمدة من المالك):
+
+| # | الرمز | الأصل |
+|---|-------|-------|
+| 1 | XAUUSD | الذهب |
+| 2 | XAGUSD | الفضة |
+| 3 | BTCUSD | بيتكوين |
+| 4 | ETHUSD | إيثريوم |
+| 5 | DXY | مؤشر الدولار |
+| 6 | EURUSD | يورو/دولار |
+| 7 | GBPUSD | باوند/دولار |
+| 8 | USDJPY | دولار/ين |
+| 9 | USDCHF | دولار/فرنك |
+| 10 | AUDUSD | أسترالي/دولار |
+| 11 | USDCAD | دولار/كندي |
+| 12 | US30 | مؤشر داو جونز |
+| 13 | US500 | مؤشر S&P 500 |
+| 14 | WTI | نفط خام |
+
+**الأعماق المعتمدة:**
+```powershell
+# المرحلة 1 — M1 لـ90 يوماً
+.\venv-nexus\Scripts\python.exe scripts\backfill_history.py --symbols XAUUSD,XAGUSD,BTCUSD,ETHUSD,DXY,EURUSD,GBPUSD,USDJPY,USDCHF,AUDUSD,USDCAD,US30,US500,WTI --timeframes M1 --days 90
+
+# المرحلة 2 — بقية الفريمات لـ365 يوماً
+.\venv-nexus\Scripts\python.exe scripts\backfill_history.py --symbols XAUUSD,XAGUSD,BTCUSD,ETHUSD,DXY,EURUSD,GBPUSD,USDJPY,USDCHF,AUDUSD,USDCAD,US30,US500,WTI --timeframes M5,M15,M30,H1,H4,D1 --days 365
+```
+
+> الرموز غير الموجودة في Market Watch تُضاف تلقائياً عند أول طلب
+> (`symbol_select` داخل worker) — لا حاجة لتفعيل يدوي.
+
+### لقطات خصائص الرموز (symbol_info → DuckDB)
+
+جدول `symbol_property_snapshots` (append-only، متوافق مع القاموس
+`broker.symbol_property_snapshots`) يُملأ عبر:
+
+```powershell
+.\venv-nexus\Scripts\python.exe scripts\import_symbol_metadata.py                # الرموز الـ14
+.\venv-nexus\Scripts\python.exe scripts\import_symbol_metadata.py --symbols XAUUSD,BTCUSD
+```
+
+كل استدعاء يلتقط لقطة جديدة (`captured_at` يفرّق بينها): digits, point,
+spread, contract size, tick sizes, volume/margin/swap limits, trade_mode...
+النقطة: `GET /api/data/symbols/{symbol}/snapshot` (internal secret مطلوب).
+
+---
+
 ### الخيار الثاني: استيراد ملف CSV/JSON
 
 إذا كنت تفضّل العمل بملف محلي:
@@ -188,9 +237,11 @@ curl http://localhost:3100/api/system-diagnostics
 
 | الملف | الوصف |
 |------|-------|
-| `scripts/import_historical_data.py` | السكربت الرئيسي لإدخال البيانات |
+| `scripts/backfill_history.py` | سحب التاريخ من MT5 عبر نهاية الـ range (طرقتان للمزامنة الكسولة) |
+| `scripts/import_symbol_metadata.py` | التقاط لقطات symbol_info للرموز الـ14 → `symbol_property_snapshots` |
+| `scripts/sample_import_month.py` | استيراد عينة شهر واحدة بكتابة مباشرة (الخدمة متوقفة) |
 | `scripts/test_historical_import.py` | فحص صحة البيانات المدخلة |
 | `run.py` | تشغيل الأسطول الكامل |
 | `bootstrap_ensemble.py` | تهيئة ML + البيانات التدريبية |
-| `services/nexus_data/mt5_worker.py` | خادم MT5 المعزول |
+| `services/nexus_data/mt5_worker.py` | خادم MT5 المعزول (ops: research_history / symbol_info / ...) |
 | `data/nexus.duckdb` | قاعدة البيانات التاريخية |

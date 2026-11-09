@@ -883,6 +883,15 @@ async def symbol_snapshot(symbol: str, x_nexus_internal_secret: str | None = Hea
     info.pop("raw", None) if isinstance(info.get("raw"), str) else None
     return {"ok": True, "snapshot": {k: v for k, v in info.items() if not isinstance(v, (bytes, bytearray))}}
 
+
+@app.get("/api/data/symbols/snapshots")
+async def latest_symbol_snapshots(x_nexus_internal_secret: str | None = Header(default=None)) -> dict[str, Any]:
+    """Latest persisted symbol_info snapshot per symbol (verification read)."""
+    if not x_nexus_internal_secret or x_nexus_internal_secret != os.getenv("NEXUS_INTERNAL_API_SECRET", ""):
+        raise HTTPException(401, "internal authorization required")
+    rows = await data_store.get_latest_symbol_snapshots()
+    return {"count": len(rows), "snapshots": rows}
+
 @app.get("/health")
 async def health_check() -> dict[str, Any]:
     redis_ok = await redis_client.health_check()
