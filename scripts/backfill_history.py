@@ -64,7 +64,10 @@ def get_json(url: str, secret: str, timeout: float = 60.0):
 def bar_window(symbol: str, tf: str, start: datetime, end: datetime, secret: str) -> int:
     """Fetch one [start, end) window; every response is persisted server-side.
 
-    Returns the number of bars contained in the response body.
+    Returns the number of bars contained in the response body. Transient
+    failures (DuckDB lock-busy 500s, client read timeouts while MT5 syncs a
+    cold symbol, connection resets) retry with backoff and degrade to 0 bars
+    rather than aborting the sweep — later passes revisit the window.
     """
     q = urlencode({
         "start": start.isoformat(),
@@ -73,22 +76,31 @@ def bar_window(symbol: str, tf: str, start: datetime, end: datetime, secret: str
     })
     url = f"{DATA_URL}/{symbol}/{tf}?{q}"
     req = Request(url, headers={"X-Nexus-Internal-Secret": secret})
-    for attempt in range(2):  # 404 => window still empty (weekend or lazy-sync)
+    empty_confirmed = 0  # consecutive 404s (2 => window genuinely empty)
+    attempts = 0
+    while attempts < 5:
+        attempts += 1
         try:
             with urlopen(req, timeout=FETCH_TIMEOUT_SEC) as resp:
                 body = resp.read().decode("utf-8")
             return body.count('"timestamp"')
         except HTTPError as exc:
-            body = exc.read().decode("utf-8", errors="replace")[:200]
-            if exc.code == 404 and attempt == 0:
-                continue
-            print(f"  [window {start:%Y-%m-%d}] HTTP {exc.code}: {body}", flush=True)
+            exc.read()
             if exc.code == 404:
-                return 0
+                empty_confirmed += 1
+                if empty_confirmed >= 2:
+                    return 0  # weekend or no data (retry once first)
+                time.sleep(2.0)
+                continue
+            print(f"  [window {start:%Y-%m-%d}] HTTP {exc.code}: retrying", flush=True)
+            if 500 <= exc.code < 600:
+                time.sleep(8.0)  # lock-busy storm: back off, don't abort
+                continue
             raise
-        except URLError as exc:
-            print(f"  [window {start:%Y-%m-%d}] network error: {exc}; retrying", flush=True)
-            time.sleep(3.0)
+        except (URLError, TimeoutError, OSError) as exc:
+            print(f"  [window {start:%Y-%m-%d}] {type(exc).__name__}: retrying", flush=True)
+            time.sleep(5.0)
+    print(f"  [window {start:%Y-%m-%d}] giving up after {attempts} attempts", flush=True)
     return 0
 
 
