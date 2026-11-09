@@ -164,6 +164,15 @@ def is_closed_bar(
     return timestamp + timedelta(seconds=timeframe_seconds(timeframe)) <= now
 
 
+# Rows per multi-row statement in the Phase 2 bulk writers. executemany
+# commits + fsyncs the WAL once PER ROW (~60 rows/s — evidence 2026-11-10:
+# a one-hour tick window wedged the store lock for 20+ minutes and starved
+# every reader); one statement per chunk runs a single transaction
+# (~16k rows/s measured). 2000 rows x 13 params = 26k, well under the
+# 65k-parameter ceiling probed in DuckDB.
+_BULK_CHUNK = 2000
+
+
 def _ohlcv_canonical_line(
     symbol: str,
     timeframe: str,
@@ -427,6 +436,24 @@ class DataStore:
         self._conn.execute(
             "ALTER TABLE ohlcv ADD COLUMN IF NOT EXISTS bar_open_utc TIMESTAMP WITH TIME ZONE"
         )
+        # Phase 2 (development plan 2026-11-10): ask-side + volume-type
+        # columns. Every one of them stays NULL until a source actually
+        # provides it (NULL-default — an ask is never invented): ask_* comes
+        # only from stored raw ticks (ask_source='ticks'), spread_points /
+        # real_volume / tick_volume come free with copy_rates on the ingest
+        # path. MT5 reports real_volume=0 for instruments without exchange
+        # volume → stored as NULL, never as a fake zero. volume_type records
+        # what the legacy `volume` column holds for the row ('tick' for MT5).
+        for _col, _ddl in (
+            ("ask_open", "DOUBLE"), ("ask_high", "DOUBLE"),
+            ("ask_low", "DOUBLE"), ("ask_close", "DOUBLE"),
+            ("ask_source", "VARCHAR"), ("spread_points", "DOUBLE"),
+            ("real_volume", "DOUBLE"), ("tick_volume", "DOUBLE"),
+            ("volume_type", "VARCHAR"),
+        ):
+            self._conn.execute(
+                f"ALTER TABLE ohlcv ADD COLUMN IF NOT EXISTS {_col} {_ddl}"
+            )
         # Migration for DBs created before tick provenance existed.
         # Pre-migration tick rows keep quality NULL (NULL-default principle).
         self._conn.execute(
@@ -444,6 +471,25 @@ class DataStore:
         # Phase-2 PIT: tick availability timestamp (NULL = legacy, unknown).
         self._conn.execute(
             "ALTER TABLE ticks ADD COLUMN IF NOT EXISTS available_at TIMESTAMP WITH TIME ZONE"
+        )
+        # Phase 2 (development plan v1.1): full tick contract. Legacy live
+        # rows keep time_msc/flags NULL (NULL-default); historical imports
+        # fill every column. The unique index on (symbol, time_msc, flags)
+        # is the idempotence key: re-importing the same window is a no-op.
+        # NULLs are distinct in DuckDB, so legacy rows never collide.
+        for _col, _ddl in (
+            ("time_msc", "BIGINT"), ("flags", "INTEGER"), ("last", "DOUBLE"),
+            ("volume", "DOUBLE"), ("volume_real", "DOUBLE"),
+            ("source_time_utc", "TIMESTAMP WITH TIME ZONE"),
+            ("received_at_utc", "TIMESTAMP WITH TIME ZONE"),
+            ("fetch_run_id", "BIGINT"),
+        ):
+            self._conn.execute(
+                f"ALTER TABLE ticks ADD COLUMN IF NOT EXISTS {_col} {_ddl}"
+            )
+        self._conn.execute(
+            "CREATE UNIQUE INDEX IF NOT EXISTS idx_ticks_key "
+            "ON ticks (symbol, time_msc, flags)"
         )
         # Per-series manifest: row count + canonical content hash, refreshed
         # after each ohlcv write for the affected (symbol, timeframe).
@@ -470,6 +516,32 @@ class DataStore:
                 bars_inserted  INTEGER   NOT NULL DEFAULT 0,
                 provider       VARCHAR   NOT NULL DEFAULT 'mt5',
                 completed_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        # Phase 2 (development plan 2026-11-10): per-bar tick aggregation,
+        # rebuilt from the raw ticks table (the audit trail) whenever a tick
+        # window is ingested. bar_open_utc keys it (ticks and ohlcv.timestamp
+        # share the terminal clock, so bucketing happens on the broker clock
+        # and the UTC key is carried over from the ohlcv row). Invariants the
+        # readiness check enforces: tick_count >= 0 and
+        # buy_tick_count + sell_tick_count <= tick_count (a tick flagged
+        # both/neither direction counts only in tick_count).
+        self._conn.execute("""
+            CREATE TABLE IF NOT EXISTS bar_tick_aggregates (
+                symbol           VARCHAR   NOT NULL,
+                timeframe        VARCHAR   NOT NULL,
+                bar_open_utc     TIMESTAMP WITH TIME ZONE NOT NULL,
+                tick_count       BIGINT    NOT NULL,
+                buy_tick_count   BIGINT    NOT NULL DEFAULT 0,
+                sell_tick_count  BIGINT    NOT NULL DEFAULT 0,
+                first_time_msc   BIGINT,
+                last_time_msc    BIGINT,
+                max_gap_ms       BIGINT,
+                spread_min       DOUBLE,
+                spread_max       DOUBLE,
+                spread_avg       DOUBLE,
+                computed_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (symbol, timeframe, bar_open_utc)
             )
         """)
         # Symbol metadata snapshots (NEXUS data dictionary:
@@ -1747,6 +1819,318 @@ class DataStore:
             "VALUES (?, ?, ?, CURRENT_TIMESTAMP, NULL, ?)",
             (instrument_code, broker_symbol, server_code, bool(is_tradable)),
         )
+
+    # ── Phase 2: raw ticks, per-bar tick aggregates, rate enrichment ─────────
+
+    async def latest_symbol_point(self, symbol: str) -> float | None:
+        """Most recent snapshot's price point for *symbol* (NULL if none).
+
+        spread_points = (ask - bid) / point, so the point size comes from
+        symbol metadata — every mapped symbol has a snapshot holding it.
+        """
+        row = await self._fetch(
+            "SELECT point FROM symbol_property_snapshots "
+            "WHERE symbol = ? ORDER BY captured_at DESC LIMIT 1",
+            (symbol,),
+        )
+        try:
+            return float(row[0][0]) if row and row[0][0] is not None else None
+        except (TypeError, ValueError, IndexError):
+            return None
+
+    async def insert_ticks_batch(
+        self,
+        symbol: str,
+        rows: Sequence[tuple[Any, ...]],
+        *,
+        utc_offset_seconds: int | None = None,
+        fetch_run_id: int | None = None,
+    ) -> int:
+        """Persist raw ticks idempotently (Phase 2 contract, v1.1).
+
+        Each row is (time_msc, bid, ask, last, volume, volume_real, flags,
+        spread_points). The (symbol, time_msc, flags) unique index makes a
+        re-import of the same window a no-op — no tick is ever deleted and
+        sub-second ticks stay distinct (time_msc, never a per-second merge).
+
+        timestamp = broker clock (time_msc/1000 — the same terminal clock
+        as ohlcv.timestamp, so ticks and bars bucket together);
+        source_time_utc = broker clock minus the measured shift (NULL when
+        none was measured — never guessed); received_at_utc = now;
+        volume/volume_real keep exactly what the broker reported (0 stays
+        0 here — it is what the terminal sent). spread_points comes from
+        the caller as (ask-bid)/point; 0 when the point size is unknown
+        (ticks.spread is NOT NULL DEFAULT 0, the live path's convention).
+
+        Returns the number of rows actually inserted (0 on a re-import).
+        """
+        if not rows:
+            return 0
+
+        def _exec() -> int:
+            assert self._conn is not None
+            lo = min(int(r[0]) for r in rows)
+            hi = max(int(r[0]) for r in rows)
+            before = self._conn.execute(
+                "SELECT COUNT(*) FROM ticks WHERE symbol = ? "
+                "AND time_msc >= ? AND time_msc <= ?",
+                (symbol, lo, hi),
+            ).fetchone()
+            offset = int(utc_offset_seconds) if utc_offset_seconds is not None else None
+            payload: list[tuple[Any, ...]] = []
+            for time_msc, bid, ask, last, volume, volume_real, flags, spread in rows:
+                ts = datetime.fromtimestamp(int(time_msc) / 1000, tz=timezone.utc)
+                payload.append((
+                    symbol, float(bid), float(ask), float(spread or 0.0), ts,
+                    int(time_msc), int(flags), float(last),
+                    float(volume), float(volume_real),
+                    (ts - timedelta(seconds=offset)) if offset is not None else None,
+                    datetime.now(timezone.utc),
+                    int(fetch_run_id) if fetch_run_id is not None else None,
+                ))
+            # Chunked multi-row INSERT: one transaction + one WAL flush per
+            # chunk (see _BULK_CHUNK — per-row executemany wedged the lock).
+            for i in range(0, len(payload), _BULK_CHUNK):
+                chunk = payload[i:i + _BULK_CHUNK]
+                ph = ", ".join(
+                    ["(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"] * len(chunk)
+                )
+                flat = [v for row in chunk for v in row]
+                self._conn.execute(
+                    "INSERT INTO ticks (symbol, bid, ask, spread, timestamp, "
+                    "    time_msc, flags, last, volume, volume_real, "
+                    "    source_time_utc, received_at_utc, fetch_run_id) "
+                    "VALUES " + ph + " ON CONFLICT DO NOTHING",
+                    flat,
+                )
+            after = self._conn.execute(
+                "SELECT COUNT(*) FROM ticks WHERE symbol = ? "
+                "AND time_msc >= ? AND time_msc <= ?",
+                (symbol, lo, hi),
+            ).fetchone()
+            return int(after[0]) - int(before[0])
+
+        return await self._execute_locked(_exec)
+
+    async def aggregate_ticks_for_window(
+        self,
+        symbol: str,
+        timeframe: str,
+        window_start: datetime,
+        window_end: datetime,
+    ) -> dict[str, int]:
+        """Rebuild bar_tick_aggregates + ohlcv.ask_* for one window (Phase 2).
+
+        Raw ticks are the truth: existing aggregate rows for the window's
+        bars are deleted and recomputed (re-running the same window changes
+        nothing), then every window bar that has ticks gets its aggregate
+        row plus ohlcv.ask_open/high/low/close with ask_source='ticks'.
+        Bars in the window without a single usable tick keep NULL ask AND
+        NULL ask_source — an ask is never guessed. Bars outside the window
+        are untouched.
+
+        Bucketing happens on the broker clock (ticks.time_msc and
+        ohlcv.timestamp are both terminal time; no offset needed) and the
+        UTC key is carried over from the ohlcv row. The read range extends
+        one timeframe past window_end so the last window bar sees its full
+        tick set even though windows are day-aligned, not bar-aligned.
+
+        Returns {"ticks", "sum_tick_count", "bars", "bars_with_ask"}:
+        ticks = raw rows read for the window, sum_tick_count = SUM over the
+        window's aggregate rows (the two must reconcile — plan evidence),
+        bars = aggregate rows, bars_with_ask = window bars carrying ask.
+        """
+        tf_sec = timeframe_seconds(timeframe)
+        start_sec = int(window_start.timestamp())
+        end_sec = int(window_end.timestamp())
+        start_msc = start_sec * 1000
+        tick_end_msc = (end_sec + tf_sec) * 1000
+
+        def _exec() -> dict[str, int]:
+            assert self._conn is not None
+            # Bucket expression shared by every statement below.
+            agg_sql = """
+                WITH raw AS (
+                    SELECT time_msc, ask, spread, flags,
+                           CAST(time_msc / (1000 * ?) AS BIGINT) * ? AS bucket_sec
+                    FROM ticks
+                    WHERE symbol = ? AND time_msc IS NOT NULL
+                      AND time_msc >= ? AND time_msc < ?
+                ),
+                b AS (
+                    SELECT *,
+                           time_msc - LAG(time_msc) OVER (
+                               PARTITION BY bucket_sec ORDER BY time_msc) AS gap
+                    FROM raw
+                ),
+                agg AS (
+                    SELECT bucket_sec,
+                           COUNT(*) AS tick_count,
+                           COUNT(*) FILTER (
+                               WHERE (flags & 1) <> 0 AND (flags & 2) = 0) AS buy_n,
+                           COUNT(*) FILTER (
+                               WHERE (flags & 2) <> 0 AND (flags & 1) = 0) AS sell_n,
+                           MIN(time_msc) AS first_msc,
+                           MAX(time_msc) AS last_msc,
+                           MAX(gap) AS max_gap,
+                           MIN(spread) AS spread_min,
+                           MAX(spread) AS spread_max,
+                           AVG(spread) AS spread_avg
+                    FROM b
+                    GROUP BY bucket_sec
+                ),
+                ask_agg AS (
+                    SELECT bucket_sec,
+                           min_by(ask, time_msc) AS ask_open,
+                           MAX(ask) AS ask_high,
+                           MIN(ask) AS ask_low,
+                           max_by(ask, time_msc) AS ask_close
+                    FROM b
+                    WHERE ask > 0
+                    GROUP BY bucket_sec
+                )
+                SELECT agg.bucket_sec, agg.tick_count, agg.buy_n, agg.sell_n,
+                       agg.first_msc, agg.last_msc, agg.max_gap,
+                       agg.spread_min, agg.spread_max, agg.spread_avg,
+                       ask_agg.ask_open, ask_agg.ask_high, ask_agg.ask_low,
+                       ask_agg.ask_close
+                FROM agg
+                LEFT JOIN ask_agg USING (bucket_sec)
+            """
+            agg_params = (tf_sec, tf_sec, symbol, start_msc, tick_end_msc)
+
+            # 1) previous aggregates for these window bars → rebuild from scratch
+            self._conn.execute(
+                "DELETE FROM bar_tick_aggregates WHERE symbol = ? AND timeframe = ? "
+                "AND bar_open_utc IN ("
+                "  SELECT bar_open_utc FROM ohlcv WHERE symbol = ? AND timeframe = ? "
+                "  AND CAST(epoch(timestamp) AS BIGINT) >= ? "
+                "  AND CAST(epoch(timestamp) AS BIGINT) < ? "
+                "  AND bar_open_utc IS NOT NULL)",
+                (symbol, timeframe, symbol, timeframe, start_sec, end_sec),
+            )
+            # 2) one aggregate row per window bar that has ticks
+            self._conn.execute(
+                "INSERT INTO bar_tick_aggregates (symbol, timeframe, bar_open_utc, "
+                "    tick_count, buy_tick_count, sell_tick_count, first_time_msc, "
+                "    last_time_msc, max_gap_ms, spread_min, spread_max, spread_avg) "
+                "SELECT ?, ?, o.bar_open_utc, x.tick_count, x.buy_n, x.sell_n, "
+                "       x.first_msc, x.last_msc, x.max_gap, "
+                "       x.spread_min, x.spread_max, x.spread_avg "
+                "FROM (" + agg_sql + ") x "
+                "JOIN ohlcv o ON o.symbol = ? AND o.timeframe = ? "
+                "  AND CAST(epoch(o.timestamp) AS BIGINT) = x.bucket_sec "
+                "  AND CAST(epoch(o.timestamp) AS BIGINT) >= ? "
+                "  AND CAST(epoch(o.timestamp) AS BIGINT) < ? "
+                "  AND o.bar_open_utc IS NOT NULL",
+                (symbol, timeframe, *agg_params, symbol, timeframe, start_sec, end_sec),
+            )
+            # 3) stamp ask on those bars (source only when ask exists)
+            self._conn.execute(
+                "UPDATE ohlcv o SET "
+                "    ask_open = x.ask_open, ask_high = x.ask_high, "
+                "    ask_low = x.ask_low, ask_close = x.ask_close, "
+                "    ask_source = CASE WHEN x.ask_close IS NOT NULL "
+                "                     THEN 'ticks' ELSE NULL END "
+                "FROM (" + agg_sql + ") x "
+                "WHERE o.symbol = ? AND o.timeframe = ? "
+                "  AND CAST(epoch(o.timestamp) AS BIGINT) = x.bucket_sec "
+                "  AND CAST(epoch(o.timestamp) AS BIGINT) >= ? "
+                "  AND CAST(epoch(o.timestamp) AS BIGINT) < ?",
+                (*agg_params, symbol, timeframe, start_sec, end_sec),
+            )
+            raw_ticks = self._conn.execute(
+                "SELECT COUNT(*) FROM ticks WHERE symbol = ? AND time_msc IS NOT NULL "
+                "AND time_msc >= ? AND time_msc < ?",
+                (symbol, start_msc, tick_end_msc),
+            ).fetchone()
+            summed = self._conn.execute(
+                "SELECT COALESCE(SUM(tick_count), 0), COUNT(*) "
+                "FROM bar_tick_aggregates WHERE symbol = ? AND timeframe = ? "
+                "AND bar_open_utc IN ("
+                "  SELECT bar_open_utc FROM ohlcv WHERE symbol = ? AND timeframe = ? "
+                "  AND CAST(epoch(timestamp) AS BIGINT) >= ? "
+                "  AND CAST(epoch(timestamp) AS BIGINT) < ?)",
+                (symbol, timeframe, symbol, timeframe, start_sec, end_sec),
+            ).fetchone()
+            with_ask = self._conn.execute(
+                "SELECT COUNT(*) FROM ohlcv WHERE symbol = ? AND timeframe = ? "
+                "AND ask_close IS NOT NULL "
+                "AND CAST(epoch(timestamp) AS BIGINT) >= ? "
+                "AND CAST(epoch(timestamp) AS BIGINT) < ?",
+                (symbol, timeframe, start_sec, end_sec),
+            ).fetchone()
+            return {
+                "ticks": int(raw_ticks[0]),
+                "sum_tick_count": int(summed[0]),
+                "bars": int(summed[1]),
+                "bars_with_ask": int(with_ask[0]),
+            }
+
+        return await self._execute_locked(_exec)
+
+    async def apply_rate_enrichment(
+        self,
+        symbol: str,
+        timeframe: str,
+        rows: Sequence[dict[str, Any]],
+    ) -> int:
+        """Stamp copy_rates extras onto stored bars (Phase 2).
+
+        rows: {timestamp, spread_points, real_volume, tick_volume}. MT5
+        reports real_volume=0 for instruments without exchange volume —
+        that means "not provided" and is stored as NULL (never a fake
+        zero, plan v1.1). volume_type='tick' records that the legacy
+        `volume` column holds tick_volume for this row. Bars not yet
+        stored are skipped (callers insert bars first).
+
+        Returns how many bars in the touched range carry spread_points.
+        """
+        if not rows:
+            return 0
+
+        def _exec() -> int:
+            assert self._conn is not None
+            payload: list[tuple[Any, ...]] = []
+            for r in rows:
+                rv = r.get("real_volume")
+                try:
+                    rv_f = float(rv) if rv is not None else None
+                except (TypeError, ValueError):
+                    rv_f = None
+                if rv_f is not None and rv_f <= 0:
+                    rv_f = None  # broker's "not provided" — keep NULL
+                payload.append((
+                    r.get("spread_points"), rv_f, r.get("tick_volume"),
+                    r["timestamp"],
+                ))
+            # One UPDATE...FROM VALUES statement per chunk: the same
+            # per-row-executemany trap as insert_ticks_batch (one commit +
+            # WAL fsync per row) would hold the lock for the whole window.
+            for i in range(0, len(payload), _BULK_CHUNK):
+                chunk = payload[i:i + _BULK_CHUNK]
+                ph = ", ".join(["(?, ?, ?, ?)"] * len(chunk))
+                flat = [v for row in chunk for v in row]
+                self._conn.execute(
+                    "UPDATE ohlcv o SET spread_points = t.s, "
+                    "    real_volume = t.rv, tick_volume = t.tv, "
+                    "    volume_type = 'tick' "
+                    "FROM (VALUES " + ph + ") AS t(s, rv, tv, ts) "
+                    "WHERE o.symbol = ? AND o.timeframe = ? "
+                    "  AND o.timestamp = t.ts",
+                    (*flat, symbol, timeframe),
+                )
+            stamps = sorted(int(r["timestamp"].timestamp()) for r in rows)
+            counted = self._conn.execute(
+                "SELECT COUNT(*) FROM ohlcv WHERE symbol = ? AND timeframe = ? "
+                "AND spread_points IS NOT NULL "
+                "AND CAST(epoch(timestamp) AS BIGINT) >= ? "
+                "AND CAST(epoch(timestamp) AS BIGINT) <= ?",
+                (symbol, timeframe, stamps[0], stamps[-1]),
+            ).fetchone()
+            return int(counted[0])
+
+        return await self._execute_locked(_exec)
 
     async def record_backfill_run(
         self,

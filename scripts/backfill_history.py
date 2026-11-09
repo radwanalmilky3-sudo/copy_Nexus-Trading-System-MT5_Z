@@ -34,6 +34,7 @@ except Exception:
 
 ROOT = Path(__file__).resolve().parent.parent
 INGEST_URL = "http://127.0.0.1:9001/api/data/ingest/range"
+TICKS_URL = "http://127.0.0.1:9001/api/data/ingest/ticks"
 PROV_URL = "http://127.0.0.1:9001/api/data/ohlcv/{symbol}/{tf}/provenance"
 
 TF_SEC = {"M1": 60, "M5": 300, "M15": 900, "M30": 1800, "H1": 3600, "H4": 14400, "D1": 86400}
@@ -164,6 +165,84 @@ def fill(symbol: str, tf: str, days: float, secret: str, passes: int = 2,
             time.sleep(sleep_sec)
 
 
+def tick_window(symbol: str, tfs: list[str], start: datetime, end: datetime,
+                secret: str) -> dict:
+    """Persist raw ticks for one window via POST /api/data/ingest/ticks.
+
+    Same retry discipline as bar_window (Phase 0): transient failures back
+    off instead of aborting the sweep, a missing route fails loudly instead
+    of silently importing nothing. Returns the JSON body — an empty window
+    answers {"ticks_returned": 0, ...}.
+    """
+    payload = json.dumps({
+        "symbol": symbol,
+        "timeframes": tfs,
+        "start": start.isoformat(),
+        "end": end.isoformat(),
+    }).encode("utf-8")
+    req = Request(
+        TICKS_URL,
+        data=payload,
+        method="POST",
+        headers={"Content-Type": "application/json", "X-Nexus-Internal-Secret": secret},
+    )
+    attempts = 0
+    while attempts < 5:
+        attempts += 1
+        try:
+            with urlopen(req, timeout=FETCH_TIMEOUT_SEC) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")[:200]
+            if exc.code in (404, 405) and "Not Found" in detail:
+                raise RuntimeError(
+                    "POST /api/data/ingest/ticks not found — restart nexus-data "
+                    "so the Phase 2 tick write path is active"
+                )
+            print(f"  [ticks {start:%Y-%m-%d}] HTTP {exc.code}: retrying", flush=True)
+            if 500 <= exc.code < 600:
+                time.sleep(8.0)  # lock-busy storm: back off, don't abort
+                continue
+            raise
+        except (URLError, TimeoutError, OSError, ValueError) as exc:
+            print(f"  [ticks {start:%Y-%m-%d}] {type(exc).__name__}: retrying", flush=True)
+            time.sleep(5.0)
+    print(f"  [ticks {start:%Y-%m-%d}] giving up after {attempts} attempts", flush=True)
+    return {"ticks_returned": 0, "ticks_inserted": 0, "aggregates": {}}
+
+
+def fill_ticks(symbol: str, tfs: list[str], days: float, secret: str,
+               empty_stop: int = 5) -> None:
+    """Sweep raw ticks newest -> oldest in day windows (Phase 2).
+
+    Broker tick history is contiguous from the oldest available tick, so the
+    sweep stops after `empty_stop` consecutive empty windows instead of
+    spawning a worker per empty day for the rest of the range. One window
+    fetches the ticks once and rebuilds ask/aggregates for every requested
+    timeframe (idempotent — a re-run inserts 0 new ticks).
+    """
+    end = datetime.now(timezone.utc)
+    start_all = end - timedelta(days=days)
+    print(f"== ticks {symbol} ({','.join(tfs)}): {days:g}d day-windows, "
+          f"stop after {empty_stop} empty", flush=True)
+    cursor = end
+    empty = 0
+    windows = 0
+    got = 0
+    while cursor > start_all and empty < empty_stop:
+        win_start = max(cursor - timedelta(days=1), start_all)
+        body = tick_window(symbol, tfs, win_start, cursor, secret)
+        n = int(body.get("ticks_returned", 0) or 0)
+        ins = int(body.get("ticks_inserted", 0) or 0)
+        windows += 1
+        got += n
+        print(f"  {win_start:%Y-%m-%d}: {n} ticks ({ins} new)", flush=True)
+        empty = 0 if n else empty + 1
+        cursor = win_start
+    stop = "empty-depth stop" if empty >= empty_stop else "range covered"
+    print(f"  done ({stop}): {windows} windows, {got} ticks returned", flush=True)
+
+
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
     load_env()
@@ -180,6 +259,11 @@ def main() -> int:
                         help="fetch passes per symbol/timeframe (heals lazy-sync slivers)")
     parser.add_argument("--sleep", type=float, default=10.0,
                         help="seconds to wait between passes (MT5 background download)")
+    parser.add_argument("--with-ticks", action="store_true",
+                        help="after candle sweeps: ingest raw ticks per symbol "
+                             "and rebuild ask/bar_tick_aggregates (Phase 2)")
+    parser.add_argument("--tick-empty-stop", type=int, default=5,
+                        help="stop a tick sweep after this many consecutive empty day-windows")
     args = parser.parse_args()
 
     symbols = [s.strip().upper() for s in args.symbols.split(",") if s.strip()]
@@ -190,6 +274,11 @@ def main() -> int:
                 fill(sym, tf, args.days, secret, passes=args.passes, sleep_sec=args.sleep)
             except Exception as exc:  # per-pair failures must not stop the sweep
                 print(f"[{sym}/{tf}] FAILED: {type(exc).__name__}: {exc}", flush=True)
+        if args.with_ticks:
+            try:
+                fill_ticks(sym, tfs, args.days, secret, empty_stop=args.tick_empty_stop)
+            except Exception as exc:  # per-symbol failures must not stop the sweep
+                print(f"[{sym} ticks] FAILED: {type(exc).__name__}: {exc}", flush=True)
     return 0
 
 

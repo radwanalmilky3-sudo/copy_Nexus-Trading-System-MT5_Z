@@ -227,10 +227,41 @@ def main() -> None:
                         "open": float(r["open"]), "high": float(r["high"]),
                         "low": float(r["low"]), "close": float(r["close"]),
                         "volume": float(r["tick_volume"]),
+                        # Phase 2: spread (points) and real volume come free
+                        # with copy_rates — callers that ignore them are
+                        # unaffected (additive keys).
+                        "spread": int(r["spread"]),
+                        "real_volume": float(r["real_volume"]),
                         "timestamp": datetime.fromtimestamp(r["time"], tz=timezone.utc).isoformat(),
                     }
                     for r in rates
                 ],
+            }
+        elif op == "ticks_range":
+            # Phase 2: raw tick history for one window (COPY_TICKS_ALL).
+            # Columnar output keeps JSON small for day-sized chunks; an empty
+            # window (weekend / no tick history for this symbol) is a valid
+            # answer, not a failure — the caller decides what empty means.
+            start = datetime.fromisoformat(str(payload["start"]).replace("Z", "+00:00"))
+            end = datetime.fromisoformat(str(payload["end"]).replace("Z", "+00:00"))
+            if start.tzinfo is None:
+                start = start.replace(tzinfo=timezone.utc)
+            if end.tzinfo is None:
+                end = end.replace(tzinfo=timezone.utc)
+            if start > end:
+                _fail("start must be less than or equal to end", 5)
+            ticks = mt5.copy_ticks_range(broker_symbol, start, end, mt5.COPY_TICKS_ALL)
+            rows = [] if ticks is None else list(ticks)
+            out = {
+                "ok": True,
+                "count": len(rows),
+                "time_msc": [int(t["time_msc"]) for t in rows],
+                "bid": [float(t["bid"]) for t in rows],
+                "ask": [float(t["ask"]) for t in rows],
+                "last": [float(t["last"]) for t in rows],
+                "volume": [float(t["volume"]) for t in rows],
+                "volume_real": [float(t["volume_real"]) for t in rows],
+                "flags": [int(t["flags"]) for t in rows],
             }
         elif op == "account":
             info = mt5.account_info()

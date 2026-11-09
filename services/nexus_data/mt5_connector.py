@@ -385,7 +385,7 @@ class MT5Connector:
             for r in rates[-count:]
         ]
 
-    async def get_ohlcv_range(
+    async def _fetch_rate_rows(
         self,
         symbol: str,
         timeframe: str,
@@ -393,8 +393,14 @@ class MT5Connector:
         end: datetime,
         *,
         limit: int = 5000,
-    ) -> list[OHLCV]:
-        """Fetch completed historical bars for an inclusive API date range."""
+    ) -> list[dict[str, Any]]:
+        """Raw completed-bar rows for [start, end), oldest-first (Phase 2).
+
+        Shared fetch behind get_ohlcv_range / get_ohlcv_range_enriched: same
+        validation, forming-bar drop and limit as before, but keeps the
+        copy_rates extras (spread in points, real_volume) that the plain
+        OHLCV projection used to drop on the floor.
+        """
         self._ensure_connected()
         if timeframe not in _TIMEFRAMES:
             raise ValueError(f"Unsupported timeframe: {timeframe}")
@@ -415,17 +421,20 @@ class MT5Connector:
                 "start": start.astimezone(timezone.utc).isoformat(),
                 "end": end.astimezone(timezone.utc).isoformat(),
             }, timeout_sec=30.0)
-            bars = [
-                OHLCV(
-                    symbol=logical, timeframe=timeframe,
-                    open=float(r["open"]), high=float(r["high"]),
-                    low=float(r["low"]), close=float(r["close"]),
-                    volume=float(r["volume"]),
-                    timestamp=datetime.fromisoformat(r["timestamp"]),
-                )
+            rows = [
+                {
+                    "timestamp": datetime.fromisoformat(r["timestamp"]),
+                    "open": float(r["open"]), "high": float(r["high"]),
+                    "low": float(r["low"]), "close": float(r["close"]),
+                    "volume": float(r["volume"]),
+                    # None when the worker predates the Phase 2 keys — the
+                    # enrichment then stays NULL instead of a fabricated 0.
+                    "spread": float(r["spread"]) if r.get("spread") is not None else None,
+                    "real_volume": float(r["real_volume"]) if r.get("real_volume") is not None else None,
+                }
                 for r in data["bars"]
             ]
-            return bars[-limit:]
+            return rows[-limit:]
 
         await self._ensure_symbol_selected(resolved)
         tf = _TF_MAP[timeframe]
@@ -442,15 +451,113 @@ class MT5Connector:
         if now_epoch - int(rates[-1]["time"]) < _TIMEFRAME_SECONDS[timeframe]:
             rates = rates[:-1]
         return [
-            OHLCV(
-                symbol=logical, timeframe=timeframe,
-                open=float(r["open"]), high=float(r["high"]),
-                low=float(r["low"]), close=float(r["close"]),
-                volume=float(r["tick_volume"]),
-                timestamp=datetime.fromtimestamp(r["time"], tz=timezone.utc),
-            )
+            {
+                "timestamp": datetime.fromtimestamp(r["time"], tz=timezone.utc),
+                "open": float(r["open"]), "high": float(r["high"]),
+                "low": float(r["low"]), "close": float(r["close"]),
+                "volume": float(r["tick_volume"]),
+                "spread": float(r["spread"]),
+                "real_volume": float(r["real_volume"]),
+            }
             for r in rates[-limit:]
         ]
+
+    @staticmethod
+    def _rate_row_to_ohlcv(symbol: str, timeframe: str, row: dict[str, Any]) -> OHLCV:
+        return OHLCV(
+            symbol=symbol.upper().replace("/", ""),
+            timeframe=timeframe,
+            open=row["open"], high=row["high"], low=row["low"],
+            close=row["close"], volume=row["volume"],
+            timestamp=row["timestamp"],
+        )
+
+    async def get_ohlcv_range(
+        self,
+        symbol: str,
+        timeframe: str,
+        start: datetime,
+        end: datetime,
+        *,
+        limit: int = 5000,
+    ) -> list[OHLCV]:
+        """Fetch completed historical bars for an inclusive API date range."""
+        rows = await self._fetch_rate_rows(
+            symbol, timeframe, start, end, limit=limit,
+        )
+        return [self._rate_row_to_ohlcv(symbol, timeframe, r) for r in rows]
+
+    async def get_ohlcv_range_enriched(
+        self,
+        symbol: str,
+        timeframe: str,
+        start: datetime,
+        end: datetime,
+        *,
+        limit: int = 5000,
+    ) -> tuple[list[OHLCV], list[dict[str, Any]]]:
+        """Bars plus the copy_rates extras for the same window (Phase 2).
+
+        One MT5 fetch serves both: the OHLCV list for the idempotent upsert
+        and per-bar {timestamp, spread_points, real_volume, tick_volume}
+        rows for ohlcv enrichment (spread in points, real volume as MT5
+        reports it — 0 means "not provided" and becomes NULL downstream).
+        """
+        rows = await self._fetch_rate_rows(
+            symbol, timeframe, start, end, limit=limit,
+        )
+        bars = [self._rate_row_to_ohlcv(symbol, timeframe, r) for r in rows]
+        enrich = [
+            {
+                "timestamp": r["timestamp"],
+                "spread_points": r["spread"],
+                "real_volume": r["real_volume"],
+                "tick_volume": r["volume"],
+            }
+            for r in rows
+        ]
+        return bars, enrich
+
+    async def get_ticks_range(
+        self, symbol: str, start: datetime, end: datetime,
+    ) -> dict[str, list[Any]]:
+        """Raw ticks for [start, end) as columnar lists (Phase 2 contract).
+
+        Keys mirror copy_ticks_range (COPY_TICKS_ALL): time_msc, bid, ask,
+        last, volume, volume_real, flags. An empty window returns empty
+        lists — tick history may simply not exist for this symbol; that is a
+        valid answer, not an error.
+        """
+        self._ensure_connected()
+        if start.tzinfo is None:
+            start = start.replace(tzinfo=timezone.utc)
+        if end.tzinfo is None:
+            end = end.replace(tzinfo=timezone.utc)
+        if start > end:
+            raise ValueError("invalid tick range: start must be <= end")
+        logical = symbol.upper().replace("/", "")
+        resolved = self.resolve_symbol(logical)
+        cols = ("time_msc", "bid", "ask", "last", "volume", "volume_real", "flags")
+        if ISOLATED_MT5:
+            data = await _mt5_worker({
+                "op": "ticks_range", "login": self._login,
+                "password": self._password, "server": self._server,
+                "path": self._path, "symbol": logical,
+                "broker_symbol": resolved,
+                "start": start.astimezone(timezone.utc).isoformat(),
+                "end": end.astimezone(timezone.utc).isoformat(),
+            }, timeout_sec=180.0)
+            return {c: list(data.get(c) or []) for c in cols}
+
+        await self._ensure_symbol_selected(resolved)
+
+        def _fetch():
+            assert mt5 is not None
+            return mt5.copy_ticks_range(resolved, start, end, mt5.COPY_TICKS_ALL)
+
+        ticks = await _mt5(_fetch)
+        rows = [] if ticks is None else list(ticks)
+        return {c: [t[c] for t in rows] for c in cols}
 
     async def get_account_info(self) -> dict[str, Any]:
         self._ensure_connected()

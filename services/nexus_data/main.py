@@ -1277,6 +1277,16 @@ class IngestRangeRequest(BaseModel):
     limit: int = 5000
 
 
+class IngestTicksRequest(BaseModel):
+    symbol: str
+    start: str
+    end: str
+    # One fetch of raw ticks feeds every requested timeframe's aggregation:
+    # pass `timeframes` for a multi-TF sweep, or `timeframe` for a single one.
+    timeframe: str | None = None
+    timeframes: list[str] | None = None
+
+
 @app.post("/api/data/ingest/range")
 async def ingest_range(
     payload: IngestRangeRequest,
@@ -1318,7 +1328,9 @@ async def ingest_range(
     # and link any value correction to this job (fetch_run_id).
     offset = await _sample_utc_offset(symbol)
     try:
-        provider_rows = await mt5.get_ohlcv_range(
+        # Phase 2: one fetch serves the bars AND the copy_rates extras
+        # (spread_points / real_volume / tick_volume) — no second MT5 call.
+        provider_rows, enrich_rows = await mt5.get_ohlcv_range_enriched(
             symbol, timeframe, start_dt, end_dt, limit=payload.limit,
         )
     except Exception as exc:
@@ -1340,6 +1352,10 @@ async def ingest_range(
             provider_rows, source="mt5_range",
             utc_offset_seconds=offset, fetch_run_id=job_id,
         )
+        # Phase 2: stamp the free copy_rates extras on the stored bars
+        # (bars are inserted first; missing bars are skipped, never faked).
+        if enrich_rows:
+            await data_store.apply_rate_enrichment(symbol, timeframe, enrich_rows)
     except Exception as exc:
         await data_store.ingest_job_finish(
             job_id, "failed", rows=0, error=f"{type(exc).__name__}: {exc}"[:500],
@@ -1348,6 +1364,119 @@ async def ingest_range(
     await data_store.ingest_job_finish(job_id, "succeeded", rows=inserted, error=None)
     return {"ok": True, "job_id": job_id, "rows_returned": len(provider_rows),
             "rows_inserted": inserted}
+
+
+@app.post("/api/data/ingest/ticks")
+async def ingest_ticks(
+    payload: IngestTicksRequest,
+    x_nexus_internal_secret: str | None = Header(default=None),
+) -> dict[str, Any]:
+    """Fetch raw ticks for one window, store them, rebuild per-bar ask.
+
+    Phase 2: the explicit tick write path (mirrors ingest/range — GET stays
+    read-only). The window is walked in day-sized chunks so one copy_ticks_range
+    call never balloons; ticks land once via the (symbol, time_msc, flags)
+    idempotence key, then each requested timeframe's bar_tick_aggregates and
+    ohlcv.ask_* are rebuilt from the stored raw ticks (raw ticks are the
+    audit trail — re-running a window changes nothing). A window with no
+    ticks at all (weekend, or the broker serves no tick history for this
+    symbol) is journaled as succeeded/0: that is an answer, not a failure.
+    """
+    _verify_internal_secret(x_nexus_internal_secret)
+    symbol = payload.symbol.upper().replace("/", "")
+    tfs = [
+        t.strip().upper()
+        for t in (payload.timeframes or ([payload.timeframe] if payload.timeframe else []))
+        if t and t.strip()
+    ]
+    if not tfs:
+        raise HTTPException(400, "supply timeframe or timeframes")
+    for tf in tfs:
+        if tf not in SUPPORTED_TIMEFRAMES:
+            raise HTTPException(
+                400,
+                f"Unsupported timeframe '{tf}'. Use one of {SUPPORTED_TIMEFRAMES}",
+            )
+    try:
+        start_dt = datetime.fromisoformat(payload.start.replace("Z", "+00:00"))
+        end_dt = datetime.fromisoformat(payload.end.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise HTTPException(400, "start and end must be ISO 8601 timestamps") from exc
+    if start_dt.tzinfo is None or end_dt.tzinfo is None:
+        raise HTTPException(400, "start and end must carry an explicit timezone offset")
+    start_dt = start_dt.astimezone(timezone.utc)
+    end_dt = end_dt.astimezone(timezone.utc)
+    if start_dt > end_dt:
+        raise HTTPException(400, "start must be less than or equal to end")
+    if not mt5.connected:
+        raise HTTPException(503, "MT5 is not connected")
+
+    job_id = await data_store.ingest_job_start(
+        "ticks_range", symbol, ",".join(tfs), start_dt, end_dt,
+    )
+    # Phase 1: source_time_utc = broker clock - measured shift (per row).
+    offset = await _sample_utc_offset(symbol)
+    # spread_points = (ask - bid) / point — point comes from the metadata
+    # snapshot instead of another MT5 round-trip.
+    point = await data_store.latest_symbol_point(symbol)
+
+    total_returned = 0
+    total_inserted = 0
+    cursor = start_dt
+    try:
+        while cursor < end_dt:
+            chunk_end = min(cursor + timedelta(days=1), end_dt)
+            cols = await mt5.get_ticks_range(symbol, cursor, chunk_end)
+            n = len(cols.get("time_msc") or [])
+            if n:
+                if point:
+                    spread = [(a - b) / point for b, a in zip(cols["bid"], cols["ask"])]
+                else:
+                    spread = [0.0] * n  # ticks.spread convention: 0 = unknown
+                rows = list(zip(
+                    cols["time_msc"], cols["bid"], cols["ask"], cols["last"],
+                    cols["volume"], cols["volume_real"], cols["flags"], spread,
+                ))
+                inserted = await data_store.insert_ticks_batch(
+                    symbol, rows, utc_offset_seconds=offset, fetch_run_id=job_id,
+                )
+                total_returned += n
+                total_inserted += inserted
+            cursor = chunk_end
+    except Exception as exc:
+        await data_store.ingest_job_finish(
+            job_id, "failed", rows=total_inserted,
+            error=f"{type(exc).__name__}: {exc}"[:500],
+        )
+        if not mt5.connected:
+            raise HTTPException(503, "MT5 disconnected during tick ingest") from exc
+        # 5xx so retrying sweep clients back off and re-request the window.
+        raise HTTPException(
+            502, f"provider tick fetch failed: {type(exc).__name__}",
+        ) from exc
+
+    aggregates: dict[str, Any] = {}
+    try:
+        for tf in tfs:
+            aggregates[tf] = await data_store.aggregate_ticks_for_window(
+                symbol, tf, start_dt, end_dt,
+            )
+    except Exception as exc:
+        await data_store.ingest_job_finish(
+            job_id, "failed", rows=total_inserted,
+            error=f"{type(exc).__name__}: {exc}"[:500],
+        )
+        raise HTTPException(
+            502, f"tick aggregation failed: {type(exc).__name__}",
+        ) from exc
+
+    await data_store.ingest_job_finish(job_id, "succeeded", rows=total_inserted, error=None)
+    return {
+        "ok": True, "job_id": job_id,
+        "ticks_returned": total_returned, "ticks_inserted": total_inserted,
+        "empty": total_returned == 0,
+        "aggregates": aggregates,
+    }
 
 
 @app.get("/api/data/ohlcv/{symbol}/{timeframe}/provenance")
