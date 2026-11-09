@@ -1567,10 +1567,13 @@ class DataStore:
     ) -> bool:
         """Open/refresh one measured shift interval (sync; lock held).
 
-        Returns True when a new validity interval was opened (first sample or
-        an actual clock change: DST / broker adjustment); an identical
-        measurement only refreshes sampled_at on the open row — the ledger is
-        filled on change only.
+        Returns True when a new validity interval was opened. Materiality
+        gate: measurements within 30 minutes of the open row are the SAME
+        shift (quote-age jitter — evidence showed 7170s vs 7171s opening two
+        rows), so the open row is refreshed in place (value + sampled_at);
+        only a material change (DST ±1h, broker clock reconfiguration) closes
+        the interval and opens a new one — the ledger is filled on change
+        only.
         """
         assert self._conn is not None
         open_row = self._conn.execute(
@@ -1579,14 +1582,16 @@ class DataStore:
             "ORDER BY valid_from DESC LIMIT 1",
             (server_code,),
         ).fetchone()
-        if open_row is not None and int(open_row[0]) == int(utc_offset_seconds):
-            self._conn.execute(
-                "UPDATE broker_server_time_offsets SET sampled_at = CURRENT_TIMESTAMP "
-                "WHERE server_code = ? AND valid_to IS NULL",
-                (server_code,),
-            )
-            return False
         if open_row is not None:
+            if abs(int(utc_offset_seconds) - int(open_row[0])) < 1800:
+                self._conn.execute(
+                    "UPDATE broker_server_time_offsets "
+                    "SET utc_offset_seconds = ?, sampled_at = CURRENT_TIMESTAMP, "
+                    "    method = ? "
+                    "WHERE server_code = ? AND valid_to IS NULL",
+                    (int(utc_offset_seconds), method, server_code),
+                )
+                return False
             self._conn.execute(
                 "UPDATE broker_server_time_offsets SET valid_to = CURRENT_TIMESTAMP "
                 "WHERE server_code = ? AND valid_to IS NULL",

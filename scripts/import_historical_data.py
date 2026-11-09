@@ -34,6 +34,12 @@ import structlog
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+try:  # cp1256-safe output regardless of the calling console (PowerShell 5.1)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
+except Exception:
+    pass
+
 DATA_URL = os.getenv("NEXUS_DATA_URL", "http://localhost:9001")
 
 log = structlog.get_logger("import_history")

@@ -135,22 +135,26 @@ async def test_offset_ledger_opens_interval_on_change_only(tmp_path):
     await store.init_tables()
     try:
         assert await store.record_server_utc_offset("srv", 7200, method="a") is True
-        # identical measurement → no new interval, only sampled_at refresh
+        # identical measurement → no new interval, only refresh
         assert await store.record_server_utc_offset("srv", 7200, method="a") is False
+        # quote-age jitter (< 30 min materiality gate) → refreshed in place,
+        # still one row, open row carries the freshest estimate
+        # (regression: evidence showed 7170→7171 opening two rows)
+        assert await store.record_server_utc_offset("srv", 7300, method="a") is False
         rows = await store._fetch(
             "SELECT utc_offset_seconds, valid_to FROM broker_server_time_offsets "
             "WHERE server_code='srv'"
         )
-        assert len(rows) == 1 and rows[0][1] is None
+        assert len(rows) == 1 and rows[0][0] == 7300 and rows[0][1] is None
 
-        # clock change (e.g. DST) → old interval closed, new one opened
+        # clock change (e.g. DST, >= 30 min) → old interval closed, new opened
         assert await store.record_server_utc_offset("srv", 10800, method="a") is True
         rows = await store._fetch(
             "SELECT utc_offset_seconds, valid_to IS NULL AS is_open "
             "FROM broker_server_time_offsets WHERE server_code='srv' "
             "ORDER BY valid_from"
         )
-        assert rows == [(7200, False), (10800, True)]
+        assert rows == [(7300, False), (10800, True)]
     finally:
         store.close()
 
