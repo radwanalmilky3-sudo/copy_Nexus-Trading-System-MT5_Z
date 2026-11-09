@@ -40,20 +40,51 @@ log = structlog.get_logger("import_history")
 
 
 def parse_datetime(value):
-    """تحويل خيط زمني إلى datetime بتوقيت UTC."""
+    """تحويل خيط زمني إلى datetime بتوقيت UTC — يرفض أي timestamp بلا منطقة زمنية.
+
+    المرحلة 1 (خطة التطوير 2026-11-09): الافتراضي الصامت «الناive = UTC» كان
+    يوهم كل شمعة مستوردة بفارق توقيت الخادم (+2h على OneRoyal-Demo). أي سلسلة
+    تاريخ يجب أن تحمل إزاحة صريحة (2026-11-09 20:00:00+00:00)؛ الأرقام (unix
+    epoch) UTC بطبيعتها وتُقبل كما هي.
+    """
     value = str(value).strip()
-    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d",
-                "%Y/%m/%d %H:%M:%S", "%d/%m/%Y %H:%M:%S"):
+    aware_formats = (
+        "%Y-%m-%d %H:%M:%S%z", "%Y-%m-%dT%H:%M:%S%z",
+        "%Y-%m-%d %H:%M:%S.%f%z", "%Y-%m-%dT%H:%M:%S.%f%z",
+    )
+    naive_formats = (
+        "%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d",
+        "%Y/%m/%d %H:%M:%S", "%d/%m/%Y %H:%M:%S",
+    )
+    for fmt in aware_formats:
         try:
-            dt = datetime.strptime(value, fmt)
-            return dt.replace(tzinfo=timezone.utc) if dt.tzinfo is None else dt
+            return datetime.strptime(value, fmt).astimezone(timezone.utc)
         except ValueError:
             continue
-    # unix epoch (ms or s)
-    num = float(value)
-    if num > 1e12:
-        return datetime.fromtimestamp(num / 1000, tz=timezone.utc)
-    return datetime.fromtimestamp(num, tz=timezone.utc)
+    for fmt in naive_formats:
+        try:
+            datetime.strptime(value, fmt)
+            break  # parses, but carries no timezone → rejected below
+        except ValueError:
+            continue
+    else:
+        # Not a datetime string at all — maybe a unix epoch (UTC by definition).
+        try:
+            num = float(value)
+        except ValueError:
+            num = None
+        if num is not None:
+            if num > 1e12:
+                return datetime.fromtimestamp(num / 1000, tz=timezone.utc)
+            return datetime.fromtimestamp(num, tz=timezone.utc)
+        raise ValueError(
+            f"timestamp {value!r} is not a recognizable date, epoch, "
+            "or timezone-aware timestamp"
+        )
+    raise ValueError(
+        f"timestamp {value!r} has no timezone — supply an explicit UTC offset "
+        "(e.g. '2026-11-09 20:00:00+00:00'); refusing to assume UTC"
+    )
 
 
 def read_csv(path):
@@ -97,7 +128,9 @@ def parse_bars(data):
             bar = {"timestamp": bar}
         ts = bar.get("timestamp") or bar.get("time")
         out.append({
-            "timestamp": parse_datetime(str(ts)) if isinstance(ts, str) else ts,
+            # str/int/float all flow through parse_datetime: strings must be
+            # timezone-aware (Phase 1), epochs are UTC by definition.
+            "timestamp": parse_datetime(ts) if isinstance(ts, (str, int, float)) else ts,
             "open": float(bar.get("open")),
             "high": float(bar.get("high")),
             "low": float(bar.get("low")),

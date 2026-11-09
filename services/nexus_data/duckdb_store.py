@@ -409,6 +409,24 @@ class DataStore:
         self._conn.execute(
             "ALTER TABLE ohlcv ADD COLUMN IF NOT EXISTS revision INTEGER"
         )
+        # Phase 1 (development plan 2026-11-09): unambiguous bar timing.
+        # The broker clock runs ahead of UTC (E7: tick.time - now_utc =
+        # +7167..7516s on OneRoyal-Demo while this machine agrees with GitHub
+        # within ±31s), so `timestamp` keeps the raw broker clock (additive —
+        # existing readers unchanged) and three companions record how to
+        # convert it: bar_open_server_time (= timestamp, explicit raw server
+        # open time), utc_offset_seconds (measured shift for this row) and
+        # bar_open_utc (= server - offset). NULL until a shift is measured —
+        # never guessed (NULL-default principle).
+        self._conn.execute(
+            "ALTER TABLE ohlcv ADD COLUMN IF NOT EXISTS bar_open_server_time TIMESTAMP WITH TIME ZONE"
+        )
+        self._conn.execute(
+            "ALTER TABLE ohlcv ADD COLUMN IF NOT EXISTS utc_offset_seconds INTEGER"
+        )
+        self._conn.execute(
+            "ALTER TABLE ohlcv ADD COLUMN IF NOT EXISTS bar_open_utc TIMESTAMP WITH TIME ZONE"
+        )
         # Migration for DBs created before tick provenance existed.
         # Pre-migration tick rows keep quality NULL (NULL-default principle).
         self._conn.execute(
@@ -525,6 +543,86 @@ class DataStore:
             CREATE INDEX IF NOT EXISTS idx_ingest_jobs_sym_tf_started
             ON ingest_jobs (symbol, timeframe, started_at DESC)
         """)
+        # Phase 1: measured broker-server vs UTC shift as validity intervals
+        # (valid_from..valid_to). A new interval is opened only when the
+        # measured shift actually changes (DST / broker clock change); an
+        # identical sample only refreshes sampled_at — filled on change only.
+        # method records how the shift was obtained (symbol_info.time,
+        # snapshot_seed).
+        self._conn.execute("""
+            CREATE TABLE IF NOT EXISTS broker_server_time_offsets (
+                server_code        VARCHAR   NOT NULL,
+                utc_offset_seconds INTEGER   NOT NULL,
+                method             VARCHAR   NOT NULL,
+                sampled_at         TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                valid_from         TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                valid_to           TIMESTAMP WITH TIME ZONE
+            )
+        """)
+        # Phase 1: instrument -> broker-symbol mapping ledger (NEXUS data
+        # dictionary table broker.broker_symbols). Validity-interval rows;
+        # the open row (valid_to IS NULL) is the current mapping.
+        self._conn.execute("""
+            CREATE TABLE IF NOT EXISTS broker_symbols (
+                instrument_code VARCHAR NOT NULL,
+                broker_symbol   VARCHAR NOT NULL,
+                server_code     VARCHAR,
+                valid_from      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                valid_to        TIMESTAMP WITH TIME ZONE,
+                is_tradable     BOOLEAN
+            )
+        """)
+        self._conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_broker_symbols_code
+            ON broker_symbols (instrument_code, valid_from DESC)
+        """)
+        # Phase 1 (v1.1): append-only history of in-place OHLCV corrections —
+        # the UPDATE path used to overwrite old values without a trace
+        # (documented at duckdb_store.py _upsert_ohlcv_rows). One row per
+        # value change with old+new values and the resulting revision number;
+        # fetch_run_id names the ingest_jobs row that fetched the correcting
+        # data (NULL = poll/legacy writers).
+        self._conn.execute("""
+            CREATE TABLE IF NOT EXISTS ohlcv_revisions (
+                symbol       VARCHAR   NOT NULL,
+                timeframe    VARCHAR   NOT NULL,
+                timestamp    TIMESTAMP WITH TIME ZONE NOT NULL,
+                revision_no  INTEGER   NOT NULL,
+                old_open     DOUBLE,
+                old_high     DOUBLE,
+                old_low      DOUBLE,
+                old_close    DOUBLE,
+                old_volume   DOUBLE,
+                new_open     DOUBLE,
+                new_high     DOUBLE,
+                new_low      DOUBLE,
+                new_close    DOUBLE,
+                new_volume   DOUBLE,
+                available_at TIMESTAMP WITH TIME ZONE,
+                fetch_run_id BIGINT,
+                reason       VARCHAR   NOT NULL DEFAULT 'value_change',
+                recorded_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        self._conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_ohlcv_revisions_key
+            ON ohlcv_revisions (symbol, timeframe, timestamp, revision_no)
+        """)
+        # Phase 1 seed: materialize the mapping ledger from snapshots already
+        # on disk so every instrument is mapped before the next capture run
+        # (idempotent: only instruments with no open row are filled; server_code
+        # stays NULL until a live capture confirms it).
+        self._conn.execute("""
+            INSERT INTO broker_symbols
+                (instrument_code, broker_symbol, server_code, valid_from, valid_to, is_tradable)
+            SELECT s.symbol, s.broker_symbol, NULL, s.captured_at, NULL, s.is_available
+            FROM symbol_property_snapshots s
+            WHERE s.captured_at = (
+                    SELECT MAX(s2.captured_at) FROM symbol_property_snapshots s2
+                    WHERE s2.symbol = s.symbol)
+              AND NOT EXISTS (
+                    SELECT 1 FROM broker_symbols b WHERE b.instrument_code = s.symbol)
+        """)
         self._conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_ticks_symbol_ts
             ON ticks (symbol, timestamp DESC)
@@ -591,13 +689,16 @@ class DataStore:
         source: str = DEFAULT_OHLCV_SOURCE,
         quality: str = "ok",
         available_at: datetime | None = None,
+        utc_offset_seconds: int | None = None,
+        fetch_run_id: int | None = None,
     ) -> None:
         """Persist one closed bar with revision-aware conflict handling.
 
         On a (symbol, timeframe, timestamp) conflict an identical stored row
         is left untouched (idempotent) and a differing row is updated in place
         with ``revision = COALESCE(revision, 0) + 1`` (never deleted).
-        ``available_at`` defaults to CURRENT_TIMESTAMP when None.
+        ``available_at`` defaults to CURRENT_TIMESTAMP when None. Phase 1:
+        ``utc_offset_seconds`` / ``fetch_run_id`` mirror insert_ohlcv_batch.
         """
         if not is_closed_bar(bar.timestamp, bar.timeframe):
             await log.awarning(
@@ -623,6 +724,7 @@ class DataStore:
         await self._apply_ohlcv_upsert(
             {(bar.symbol, bar.timeframe, bar.timestamp): bar},
             source=source, quality=quality, available_at=available_at,
+            utc_offset_seconds=utc_offset_seconds, fetch_run_id=fetch_run_id,
         )
 
     async def insert_ohlcv_batch(
@@ -632,6 +734,8 @@ class DataStore:
         source: str = DEFAULT_OHLCV_SOURCE,
         quality: str = "ok",
         available_at: datetime | None = None,
+        utc_offset_seconds: int | None = None,
+        fetch_run_id: int | None = None,
     ) -> int:
         """Persist closed bars with revision-aware conflict handling.
 
@@ -639,12 +743,20 @@ class DataStore:
 
         For each (symbol, timeframe, timestamp) key an identical stored row
         is skipped (idempotent) and a differing row is updated in place with
-        ``revision = COALESCE(revision, 0) + 1`` (rows are never deleted).
+        ``revision = COALESCE(revision, 0) + 1`` while its previous values are
+        preserved append-only in ``ohlcv_revisions`` (rows are never deleted).
         After the write each affected (symbol, timeframe) row in
         ``ohlcv_manifests`` is refreshed on the same locked connection
         (row_count, canonical content_hash, available_through = MAX(available_at),
         computed_at = now). ``available_at`` defaults to CURRENT_TIMESTAMP
         per inserted/updated row when None.
+
+        Phase 1: ``utc_offset_seconds`` is the measured broker-UTC shift the
+        caller sampled for these bars; it stamps bar_open_server_time /
+        utc_offset_seconds / bar_open_utc so every row can be converted to
+        unambiguous UTC (None = not measured → NULL until the next sample
+        completes it). ``fetch_run_id`` links value corrections to the
+        ingest_jobs row that fetched them (None = poll writers).
 
         Quality gate (NEXUS_QUALITY_GATE, default ON): when enabled, bars are
         converted to canonical records and validated via ``validate_ohlcv``;
@@ -678,6 +790,8 @@ class DataStore:
             return await self._insert_ohlcv_batch_gated(
                 unique_bars, source=source, quality=quality,
                 available_at=available_at,
+                utc_offset_seconds=utc_offset_seconds,
+                fetch_run_id=fetch_run_id,
             )
 
         # The service owns one DuckDB connection.  Batch writes must use the
@@ -685,6 +799,7 @@ class DataStore:
         # cursor operations on the shared connection.
         await self._apply_ohlcv_upsert(
             unique_bars, source=source, quality=quality, available_at=available_at,
+            utc_offset_seconds=utc_offset_seconds, fetch_run_id=fetch_run_id,
         )
         return len(unique_bars)
 
@@ -695,6 +810,8 @@ class DataStore:
         source: str,
         quality: str,
         available_at: datetime | None = None,
+        utc_offset_seconds: int | None = None,
+        fetch_run_id: int | None = None,
     ) -> int:
         """Quality-gated batch insert (NEXUS_QUALITY_GATE ON).
 
@@ -747,6 +864,7 @@ class DataStore:
 
         await self._apply_ohlcv_upsert(
             kept_bars, source=source, quality=quality, available_at=available_at,
+            utc_offset_seconds=utc_offset_seconds, fetch_run_id=fetch_run_id,
         )
         if quarantined:
             await self._write_quarantine(quarantined)
@@ -814,20 +932,35 @@ class DataStore:
         source: str,
         quality: str,
         available_at: datetime | None,
+        utc_offset_seconds: int | None = None,
+        fetch_run_id: int | None = None,
     ) -> None:
         """Revision-aware ohlcv upsert (sync; caller already holds the lock).
 
         Per (symbol, timeframe, timestamp) key: identical stored OHLC/volume
-        → no-op (idempotent); different → in-place UPDATE of OHLC/volume,
+        → no-op (idempotent); different → append-only row in ``ohlcv_revisions``
+        preserving the old values, then in-place UPDATE of OHLC/volume,
         fetched_at, available_at and ``revision = COALESCE(revision, 0) + 1``
         (rows are never deleted); absent → INSERT. Each affected
         (symbol, timeframe) manifest is refreshed on the same connection.
+
+        Phase 1 timing: bar_open_server_time (= raw broker timestamp),
+        utc_offset_seconds and bar_open_utc are stamped whenever the measured
+        shift is known — including on legacy rows still missing them (values
+        and revision untouched: metadata completion, not a correction). Rows
+        already timed are never re-stamped: their offset was valid at bar
+        time and must survive later DST/clock changes.
         """
         assert self._conn is not None
+        offset = int(utc_offset_seconds) if utc_offset_seconds is not None else None
         affected: set[tuple[str, str]] = set()
         for bar in bars.values():
+            server_time = bar.timestamp  # raw broker clock, unchanged in `timestamp`
+            open_utc = (
+                server_time - timedelta(seconds=offset) if offset is not None else None
+            )
             stored = self._conn.execute(
-                "SELECT open, high, low, close, volume FROM ohlcv "
+                "SELECT open, high, low, close, volume, COALESCE(revision, 0) FROM ohlcv "
                 "WHERE symbol = ? AND timeframe = ? AND timestamp = ?",
                 (bar.symbol, bar.timeframe, bar.timestamp),
             ).fetchall()
@@ -835,27 +968,62 @@ class DataStore:
                 self._conn.execute(
                     "INSERT INTO ohlcv "
                     "(symbol, timeframe, open, high, low, close, volume, timestamp, "
-                    " source, quality, fetched_at, available_at) "
+                    " source, quality, fetched_at, available_at, "
+                    " bar_open_server_time, utc_offset_seconds, bar_open_utc) "
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, "
-                    " COALESCE(?, CURRENT_TIMESTAMP))",
+                    " COALESCE(?, CURRENT_TIMESTAMP), ?, ?, ?)",
                     (
                         bar.symbol, bar.timeframe, bar.open, bar.high, bar.low,
                         bar.close, bar.volume, bar.timestamp, source, quality,
-                        available_at,
+                        available_at, server_time, offset, open_utc,
                     ),
                 )
-            elif tuple(stored[0]) == (bar.open, bar.high, bar.low, bar.close, bar.volume):
+            elif tuple(stored[0][:5]) == (bar.open, bar.high, bar.low, bar.close, bar.volume):
+                if offset is not None:
+                    # Same values: complete timing on a pre-Phase-1 row only.
+                    self._conn.execute(
+                        "UPDATE ohlcv SET bar_open_server_time = ?, "
+                        "    utc_offset_seconds = ?, bar_open_utc = ? "
+                        "WHERE symbol = ? AND timeframe = ? AND timestamp = ? "
+                        "  AND bar_open_utc IS NULL",
+                        (server_time, offset, open_utc,
+                         bar.symbol, bar.timeframe, bar.timestamp),
+                    )
                 continue
             else:
+                old_open, old_high, old_low, old_close, old_volume = stored[0][:5]
+                new_revision = int(stored[0][5]) + 1
+                # Append-only correction history (v1.1): the in-place UPDATE
+                # below would otherwise destroy the previous values.
+                self._conn.execute(
+                    "INSERT INTO ohlcv_revisions "
+                    "(symbol, timeframe, timestamp, revision_no, "
+                    " old_open, old_high, old_low, old_close, old_volume, "
+                    " new_open, new_high, new_low, new_close, new_volume, "
+                    " available_at, fetch_run_id, reason) "
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
+                    " 'value_change')",
+                    (
+                        bar.symbol, bar.timeframe, bar.timestamp, new_revision,
+                        old_open, old_high, old_low, old_close, old_volume,
+                        bar.open, bar.high, bar.low, bar.close, bar.volume,
+                        available_at,
+                        int(fetch_run_id) if fetch_run_id is not None else None,
+                    ),
+                )
                 self._conn.execute(
                     "UPDATE ohlcv "
                     "SET open = ?, high = ?, low = ?, close = ?, volume = ?, "
+                    "    bar_open_server_time = COALESCE(bar_open_server_time, ?), "
+                    "    utc_offset_seconds = COALESCE(utc_offset_seconds, ?), "
+                    "    bar_open_utc = COALESCE(bar_open_utc, ?), "
                     "    fetched_at = CURRENT_TIMESTAMP, "
                     "    available_at = COALESCE(?, CURRENT_TIMESTAMP), "
                     "    revision = COALESCE(revision, 0) + 1 "
                     "WHERE symbol = ? AND timeframe = ? AND timestamp = ?",
                     (
                         bar.open, bar.high, bar.low, bar.close, bar.volume,
+                        server_time, offset, open_utc,
                         available_at, bar.symbol, bar.timeframe, bar.timestamp,
                     ),
                 )
@@ -936,11 +1104,14 @@ class DataStore:
         source: str,
         quality: str,
         available_at: datetime | None,
+        utc_offset_seconds: int | None = None,
+        fetch_run_id: int | None = None,
     ) -> None:
         """Run the revision-aware upsert + manifest refresh under the conn lock."""
         def _exec() -> None:
             self._upsert_ohlcv_rows(
                 bars, source=source, quality=quality, available_at=available_at,
+                utc_offset_seconds=utc_offset_seconds, fetch_run_id=fetch_run_id,
             )
 
         await self._execute_locked(_exec)
@@ -1316,10 +1487,25 @@ class DataStore:
         cols = ", ".join(self._SNAPSHOT_COLUMNS)
         placeholders = ", ".join(["?"] * len(self._SNAPSHOT_COLUMNS))
         values = tuple(row.get(c) for c in self._SNAPSHOT_COLUMNS)
-        await self._run(
-            f"INSERT INTO symbol_property_snapshots ({cols}) VALUES ({placeholders})",
-            values,
-        )
+        # Phase 1: keep the mapping ledger in lockstep with the snapshot —
+        # one locked operation so a capture can never persist metadata
+        # without its instrument -> broker-symbol mapping (and vice versa).
+        instrument = str(row.get("symbol") or "")
+        mapped = str(row.get("broker_symbol") or "")
+        server_code = str(info.get("server_code") or "").strip() or None
+
+        def _exec() -> None:
+            assert self._conn is not None
+            self._conn.execute(
+                f"INSERT INTO symbol_property_snapshots ({cols}) VALUES ({placeholders})",
+                values,
+            )
+            if instrument and mapped:
+                self._upsert_broker_symbol_locked(
+                    instrument, mapped, server_code, bool(row.get("is_available", True)),
+                )
+
+        await self._execute_locked(_exec)
 
     async def get_latest_symbol_snapshots(self) -> list[dict[str, Any]]:
         """Latest snapshot per symbol."""
@@ -1372,6 +1558,189 @@ class DataStore:
             "UPDATE ingest_jobs SET status = ?, rows = ?, error = ?, "
             "finished_at = CURRENT_TIMESTAMP WHERE id = ? AND status = 'running'",
             (status, int(rows), error, int(job_id)),
+        )
+
+    # ── Phase 1: broker timing & identity ledgers ───────────────────────
+
+    def _record_offset_locked(
+        self, server_code: str, utc_offset_seconds: int, method: str,
+    ) -> bool:
+        """Open/refresh one measured shift interval (sync; lock held).
+
+        Returns True when a new validity interval was opened (first sample or
+        an actual clock change: DST / broker adjustment); an identical
+        measurement only refreshes sampled_at on the open row — the ledger is
+        filled on change only.
+        """
+        assert self._conn is not None
+        open_row = self._conn.execute(
+            "SELECT utc_offset_seconds FROM broker_server_time_offsets "
+            "WHERE server_code = ? AND valid_to IS NULL "
+            "ORDER BY valid_from DESC LIMIT 1",
+            (server_code,),
+        ).fetchone()
+        if open_row is not None and int(open_row[0]) == int(utc_offset_seconds):
+            self._conn.execute(
+                "UPDATE broker_server_time_offsets SET sampled_at = CURRENT_TIMESTAMP "
+                "WHERE server_code = ? AND valid_to IS NULL",
+                (server_code,),
+            )
+            return False
+        if open_row is not None:
+            self._conn.execute(
+                "UPDATE broker_server_time_offsets SET valid_to = CURRENT_TIMESTAMP "
+                "WHERE server_code = ? AND valid_to IS NULL",
+                (server_code,),
+            )
+        self._conn.execute(
+            "INSERT INTO broker_server_time_offsets "
+            "(server_code, utc_offset_seconds, method, sampled_at, valid_from, valid_to) "
+            "VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL)",
+            (server_code, int(utc_offset_seconds), method),
+        )
+        return True
+
+    def _complete_legacy_timing(self, utc_offset_seconds: int | None = None) -> int:
+        """Stamp ohlcv rows still missing timing with the open shift (sync).
+
+        Phase 1 legacy completion: rows written before the timing columns
+        existed get bar_open_server_time = timestamp and bar_open_utc =
+        timestamp - shift, so no reader ever sees a NULL bar_open_utc for
+        stored data. The shift used is the currently open one; for rows that
+        predate a DST change that is method-approximate (the interval ledger
+        documents when each shift was valid) — the identity
+        bar_open_utc = bar_open_server_time - utc_offset_seconds always holds.
+        Returns the number of rows stamped.
+        """
+        assert self._conn is not None
+        if utc_offset_seconds is None:
+            row = self._conn.execute(
+                "SELECT utc_offset_seconds FROM broker_server_time_offsets "
+                "WHERE valid_to IS NULL ORDER BY valid_from DESC LIMIT 1"
+            ).fetchone()
+            if row is None:
+                return 0  # no shift measured yet — never guess (NULL-default)
+            utc_offset_seconds = int(row[0])
+        offset = int(utc_offset_seconds)
+        cur = self._conn.execute(
+            "UPDATE ohlcv SET "
+            "  bar_open_server_time = timestamp, "
+            "  utc_offset_seconds = ?, "
+            "  bar_open_utc = timestamp - (? * INTERVAL 1 SECOND) "
+            "WHERE bar_open_utc IS NULL",
+            (offset, offset),
+        )
+        try:
+            got = cur.fetchall()
+            return int(got[0][0]) if got and got[0] else 0
+        except Exception:
+            return 0
+
+    async def record_server_utc_offset(
+        self,
+        server_code: str,
+        utc_offset_seconds: int,
+        *,
+        method: str,
+    ) -> bool:
+        """Record one measured server-UTC shift and complete legacy rows.
+
+        Idempotent for an unchanged shift; a changed shift closes the open
+        interval (valid_to) and opens a new one. Any ohlcv rows still missing
+        timing are completed with this shift in the same locked operation.
+        Returns True when a new interval was opened.
+        """
+        def _exec() -> bool:
+            opened = self._record_offset_locked(
+                server_code, utc_offset_seconds, method,
+            )
+            self._complete_legacy_timing(utc_offset_seconds)
+            return opened
+
+        return await self._execute_locked(_exec)
+
+    async def seed_timing_from_snapshots(self, server_code: str) -> dict[str, Any]:
+        """Phase 1 startup seed for the timing ledgers (idempotent).
+
+        When no shift has been measured yet, derive one from the most recent
+        symbol snapshot: raw quote time (raw->>'time', the broker clock) minus
+        the capture instant (machine UTC) — the same measurement as the live
+        symbol_info.time path. Then complete timing metadata on any ohlcv rows
+        still missing it, so bar_open_utc is populated before readers arrive.
+        Returns {"opened", "stamped", "offset"} for the startup log.
+        """
+        def _exec() -> dict[str, Any]:
+            assert self._conn is not None
+            opened = False
+            has_offset = self._conn.execute(
+                "SELECT 1 FROM broker_server_time_offsets WHERE valid_to IS NULL LIMIT 1"
+            ).fetchone()
+            if has_offset is None:
+                row = self._conn.execute(
+                    "SELECT CAST(raw ->> 'time' AS BIGINT), epoch(captured_at) "
+                    "FROM symbol_property_snapshots "
+                    "WHERE raw ->> 'time' IS NOT NULL "
+                    "ORDER BY captured_at DESC LIMIT 1"
+                ).fetchone()
+                if row and row[0] is not None and row[1] is not None:
+                    measured = int(row[0]) - int(row[1])
+                    # Sanity: a quote epoch or capture time must yield a shift
+                    # a real broker server can plausibly have (within ±26h).
+                    if abs(measured) <= 26 * 3600:
+                        opened = self._record_offset_locked(
+                            server_code, measured, "snapshot_seed",
+                        )
+            stamped = self._complete_legacy_timing()
+            current = self._conn.execute(
+                "SELECT utc_offset_seconds FROM broker_server_time_offsets "
+                "WHERE valid_to IS NULL ORDER BY valid_from DESC LIMIT 1"
+            ).fetchone()
+            return {
+                "opened": opened,
+                "stamped": stamped,
+                "offset": int(current[0]) if current else None,
+            }
+
+        return await self._execute_locked(_exec)
+
+    def _upsert_broker_symbol_locked(
+        self,
+        instrument_code: str,
+        broker_symbol: str,
+        server_code: str | None,
+        is_tradable: bool,
+    ) -> None:
+        """Refresh the mapping interval for one instrument (sync; lock held).
+
+        Identical open mapping → no-op; changed mapping (renamed broker
+        symbol, tradability flip, server now known) → close the open row and
+        open a new one so the ledger keeps history, like the offset ledger.
+        """
+        assert self._conn is not None
+        row = self._conn.execute(
+            "SELECT broker_symbol, server_code, is_tradable FROM broker_symbols "
+            "WHERE instrument_code = ? AND valid_to IS NULL "
+            "ORDER BY valid_from DESC LIMIT 1",
+            (instrument_code,),
+        ).fetchone()
+        if row is not None:
+            same = (
+                str(row[0]) == str(broker_symbol)
+                and (row[1] or None) == (server_code or None)
+                and bool(row[2]) == bool(is_tradable)
+            )
+            if same:
+                return
+            self._conn.execute(
+                "UPDATE broker_symbols SET valid_to = CURRENT_TIMESTAMP "
+                "WHERE instrument_code = ? AND valid_to IS NULL",
+                (instrument_code,),
+            )
+        self._conn.execute(
+            "INSERT INTO broker_symbols "
+            "(instrument_code, broker_symbol, server_code, valid_from, valid_to, is_tradable) "
+            "VALUES (?, ?, ?, CURRENT_TIMESTAMP, NULL, ?)",
+            (instrument_code, broker_symbol, server_code, bool(is_tradable)),
         )
 
     async def record_backfill_run(

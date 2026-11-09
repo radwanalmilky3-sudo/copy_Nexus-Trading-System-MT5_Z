@@ -87,7 +87,8 @@ async def test_persist_closed_ohlcv_keeps_single_completed_bar(monkeypatch):
     captured = []
 
     class Store:
-        async def insert_ohlcv_batch(self, bars):
+        async def insert_ohlcv_batch(self, bars, **_kwargs):
+            # **_kwargs: the Phase 1 contract adds utc_offset_seconds etc.
             captured.extend(bars)
 
     monkeypatch.setattr(main, "data_store", Store())

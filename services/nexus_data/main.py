@@ -26,7 +26,7 @@ from shared.nexus_trades import strategy_from_comment as _strategy_from_comment
 from shared.redis_client import RedisClient
 from shared.security_headers import SecurityHeadersMiddleware
 
-from .duckdb_store import DataStore, OHLCV_RETENTION_DAYS
+from .duckdb_store import DataStore, DEFAULT_OHLCV_SOURCE, OHLCV_RETENTION_DAYS
 from .fundamental_store import FundamentalStore
 from .trial_registry_router import create_router as create_trial_registry_router
 from .broker_settings_router import create_broker_settings_router
@@ -402,14 +402,99 @@ session_calendar_store=SessionEvidenceStore(data_store,Path(_session_path) if _s
 quality_automation = QualityAutomation(data_store, provider=mt5, invalidate=_invalidate_ohlcv_cache,calendar_store=session_calendar_store)
 
 
+# ── Phase 1: broker-server vs UTC shift (development plan) ──────────────────
+# E7 measured OneRoyal-Demo quotes running ahead of UTC (tick.time - now_utc
+# = +7167..7516s) while this machine's clock agrees with GitHub within ±31s —
+# the shift belongs to the broker server, not the machine. Every MT5 timestamp
+# therefore keeps the raw broker clock and carries utc_offset_seconds so
+# bar_open_utc = timestamp - utc_offset_seconds is unambiguous.
+OFFSET_SERVER_CODE = MT5_SERVER or "mt5"
+_OFFSET_TTL_SEC = 300.0          # re-sample at most every 5 minutes
+_OFFSET_JITTER_SEC = 120         # downward quote-age noise tolerated
+_OFFSET_DST_TOLERANCE_SEC = 600  # accept a genuine ±1h clock shift within 10 min
+
+# value = last accepted shift (None before the first successful sample),
+# sampled_at = loop clock of the last sample ATTEMPT (TTL gate).
+_offset_state: dict[str, Any] = {"value": None, "sampled_at": 0.0}
+
+
+async def _accept_utc_offset(measured: int, *, method: str) -> int:
+    """Apply delta-logic to one measured broker-UTC shift and persist it.
+
+    A measurement is `broker_quote_clock - utc_now`, so it always UNDERSHOOTS
+    the true shift by the quote's age: a fresher quote is always the better
+    estimate. Accept a sample when it is at least as fresh as the last one
+    (>= last - jitter — large positive jumps included: they self-heal a
+    stored value that went stale), or when it sits within the DST tolerance
+    of a one-hour shift (server clock change in either direction). Anything
+    else comes from a stale quote and the last accepted shift is kept; the
+    next liquid quote re-converges.
+    """
+    last = _offset_state["value"]
+    if last is not None:
+        delta = int(measured) - int(last)
+        if delta < -_OFFSET_JITTER_SEC and abs(abs(delta) - 3600) > _OFFSET_DST_TOLERANCE_SEC:
+            await log.adebug(
+                "offset.stale_sample_rejected",
+                measured=int(measured), last=int(last), method=method,
+            )
+            return int(last)
+    _offset_state["value"] = int(measured)
+    await data_store.record_server_utc_offset(
+        OFFSET_SERVER_CODE, int(measured), method=method,
+    )
+    return int(measured)
+
+
+async def _sample_utc_offset(symbol: str) -> int | None:
+    """Measured broker-UTC shift for *symbol*, sampled at most every 5 min.
+
+    Falls back to the last accepted shift when MT5 is unreachable so writes
+    keep flowing with a stamped (slightly older) offset; returns None only
+    before any measurement has ever succeeded (rows then stay NULL until the
+    next successful sample completes them — never guessed).
+    """
+    now = asyncio.get_running_loop().time()
+    if _offset_state["value"] is not None and now - _offset_state["sampled_at"] < _OFFSET_TTL_SEC:
+        return int(_offset_state["value"])
+    if mt5.connected:
+        try:
+            info = await mt5.get_symbol_info(symbol)
+            server_t = info.get("time")
+            if server_t:
+                measured = int(server_t) - int(datetime.now(timezone.utc).timestamp())
+                _offset_state["value"] = await _accept_utc_offset(
+                    measured, method="symbol_info.time",
+                )
+                _offset_state["sampled_at"] = now
+                return int(_offset_state["value"])
+        except Exception:
+            await log.adebug("offset.sample_failed", symbol=symbol)
+            _offset_state["sampled_at"] = now  # do not hammer a failing worker
+    return int(_offset_state["value"]) if _offset_state["value"] is not None else None
+
+
 async def _persist_closed_ohlcv(bars: list[OHLCV], source: str | None = None) -> None:
     """Persist bars already filtered to completed candles by the provider."""
     if not bars:
         return
-    if source is None:
-        await data_store.insert_ohlcv_batch(bars)
+    # Phase 1: stamp the measured broker-UTC shift on every write. MT5
+    # timestamps are the broker clock (E7); exchange (CCXT) timestamps are
+    # true UTC by definition; an unknown source stays NULL until the next
+    # sample completes it (NULL-default principle — never guess a shift).
+    effective = source or DEFAULT_OHLCV_SOURCE
+    if effective.startswith("mt5"):
+        offset = await _sample_utc_offset(bars[0].symbol)
+    elif effective == "ccxt_poll":
+        offset = 0
     else:
-        await data_store.insert_ohlcv_batch(bars, source=source)
+        offset = None
+    if source is None:
+        await data_store.insert_ohlcv_batch(bars, utc_offset_seconds=offset)
+    else:
+        await data_store.insert_ohlcv_batch(
+            bars, source=source, utc_offset_seconds=offset,
+        )
 
 
 def _relabel_bars(bars: list[OHLCV], logical: str) -> list[OHLCV]:
@@ -557,7 +642,11 @@ async def _backfill_ohlcv_symbol_tf(symbol: str, tf: str) -> int:
             # this answer arrives as RuntimeError (exit code 6), not ValueError.
             bars = []
         try:
-            inserted = await data_store.insert_ohlcv_batch(bars, source="mt5_backfill")
+            # Phase 1: stamp the measured broker-UTC shift like every write path.
+            inserted = await data_store.insert_ohlcv_batch(
+                bars, source="mt5_backfill",
+                utc_offset_seconds=await _sample_utc_offset(symbol),
+            )
         except Exception:
             await log.aexception(
                 "ohlcv.backfill_persist_failed",
@@ -677,10 +766,17 @@ async def _ohlcv_publisher() -> None:
                         tf=tf,
                         failures=consecutive_failures,
                     )
-                    if consecutive_failures >= 3 and mt5.connected:
-                        await log.awarning("ohlcv.reconnecting_mt5")
+                    # E6 (development plan): fire regardless of the last known
+                    # connection state — after a real drop mt5.connected is
+                    # already False, so the old `and mt5.connected` guard never
+                    # fired and the feed stayed dead until an external restart.
+                    if consecutive_failures >= 3:
+                        await log.awarning(
+                            "ohlcv.reconnecting_mt5", failures=consecutive_failures,
+                        )
                         try:
-                            await mt5.disconnect()
+                            if mt5.connected:
+                                await mt5.disconnect()
                             await asyncio.sleep(2)
                             await mt5.connect(
                                 login=MT5_LOGIN,
@@ -756,6 +852,18 @@ async def lifespan(app: FastAPI):
             await log.aexception("startup.redis_cleanup_failed")
         raise
     await log.ainfo("startup.duckdb_ready")
+    # Phase 1: seed the broker-UTC shift ledger from existing snapshots and
+    # complete timing metadata on legacy rows before any reader observes them.
+    # Idempotent — an already-open interval is kept; failures never block
+    # startup (the live sample path re-attempts within 5 minutes).
+    try:
+        seeded = await data_store.seed_timing_from_snapshots(OFFSET_SERVER_CODE)
+        if seeded.get("offset") is not None:
+            _offset_state["value"] = int(seeded["offset"])
+            _offset_state["sampled_at"] = asyncio.get_running_loop().time()
+        await log.ainfo("startup.timing_seeded", **seeded)
+    except Exception:
+        await log.aexception("startup.timing_seed_failed")
     _streaming_tasks.append(asyncio.create_task(quality_automation.run()))
 
     # 3. Broker feeds in background so /health responds while MT5 connects
@@ -879,6 +987,17 @@ async def symbol_snapshot(symbol: str, x_nexus_internal_secret: str | None = Hea
     except Exception as exc:
         raise HTTPException(503, f"MT5 symbol_info unavailable for {symbol}") from exc
     info["is_available"] = True
+    # Phase 1: SymbolInfo.time is the broker's last-quote clock — measure the
+    # server-UTC shift from it (same measurement as capability probe E7) and
+    # keep the validity-interval ledger; delta-logic drops stale quote times.
+    server_t = info.get("time")
+    if server_t:
+        try:
+            measured = int(server_t) - int(datetime.now(timezone.utc).timestamp())
+            await _accept_utc_offset(measured, method="symbol_info.time")
+        except Exception:
+            await log.adebug("offset.sample_failed", symbol=symbol)
+    info.setdefault("server_code", OFFSET_SERVER_CODE)
     await data_store.insert_symbol_snapshot(info)
     info.pop("raw", None) if isinstance(info.get("raw"), str) else None
     return {"ok": True, "snapshot": {k: v for k, v in info.items() if not isinstance(v, (bytes, bytearray))}}
@@ -1195,6 +1314,9 @@ async def ingest_range(
     job_id = await data_store.ingest_job_start(
         "ohlcv_range", symbol, timeframe, start_dt, end_dt,
     )
+    # Phase 1: stamp this window's rows with the measured broker-UTC shift
+    # and link any value correction to this job (fetch_run_id).
+    offset = await _sample_utc_offset(symbol)
     try:
         provider_rows = await mt5.get_ohlcv_range(
             symbol, timeframe, start_dt, end_dt, limit=payload.limit,
@@ -1214,7 +1336,10 @@ async def ingest_range(
         # 5xx so retrying sweep clients back off and re-request the window.
         raise HTTPException(502, f"provider range fetch failed: {type(exc).__name__}") from exc
     try:
-        inserted = await data_store.insert_ohlcv_batch(provider_rows, source="mt5_range")
+        inserted = await data_store.insert_ohlcv_batch(
+            provider_rows, source="mt5_range",
+            utc_offset_seconds=offset, fetch_run_id=job_id,
+        )
     except Exception as exc:
         await data_store.ingest_job_finish(
             job_id, "failed", rows=0, error=f"{type(exc).__name__}: {exc}"[:500],
