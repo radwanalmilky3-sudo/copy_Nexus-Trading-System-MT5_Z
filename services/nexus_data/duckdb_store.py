@@ -1952,7 +1952,12 @@ class DataStore:
             agg_sql = """
                 WITH raw AS (
                     SELECT time_msc, ask, spread, flags,
-                           CAST(time_msc / (1000 * ?) AS BIGINT) * ? AS bucket_sec
+                           -- `//` is DuckDB's integer (floor) division: `/`
+                           -- yields DOUBLE and CAST(... AS BIGINT) ROUNDS, so
+                           -- ticks in the upper half of a bucket landed in the
+                           -- NEXT bar (evidence 2026-11-10: a 10:02:55 tick
+                           -- bucketed to 10:03 — caught by the restore test).
+                           CAST(time_msc // (1000 * ?) AS BIGINT) * ? AS bucket_sec
                     FROM ticks
                     WHERE symbol = ? AND time_msc IS NOT NULL
                       AND time_msc >= ? AND time_msc < ?
@@ -2131,6 +2136,31 @@ class DataStore:
             return int(counted[0])
 
         return await self._execute_locked(_exec)
+
+    async def mark_ask_unavailable(self, symbol: str) -> int:
+        """Mark ask-less bars of *symbol* ask_source='unavailable' (Phase 2).
+
+        Plan requirement (رموز بلا عمق → ask_source='unavailable'): when a
+        full-depth tick sweep proved the broker serves no tick stream for an
+        instrument, its bars carry an explicit marker instead of a silent
+        NULL — the readiness check then reports a documented source
+        limitation rather than a coverage failure. Only bars WITHOUT an ask
+        are marked (bars holding ask data keep ask_source='ticks'), and the
+        statement is idempotent: re-running marks 0 rows. If a later sweep
+        brings ticks, aggregate_ticks_for_window stamps those bars back to
+        'ticks' as their asks arrive.
+        """
+        def _exec() -> int:
+            assert self._conn is not None
+            marked = self._conn.execute(
+                "UPDATE ohlcv SET ask_source = 'unavailable' "
+                "WHERE symbol = ? AND ask_close IS NULL AND ask_source IS NULL "
+                "RETURNING symbol",
+                (symbol,),
+            ).fetchall()
+            return len(marked)
+
+        return int(await self._execute_locked(_exec))
 
     async def record_backfill_run(
         self,

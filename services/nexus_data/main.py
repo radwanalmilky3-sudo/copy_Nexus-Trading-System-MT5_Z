@@ -1287,6 +1287,10 @@ class IngestTicksRequest(BaseModel):
     timeframes: list[str] | None = None
 
 
+class IngestAskUnavailableRequest(BaseModel):
+    symbol: str
+
+
 @app.post("/api/data/ingest/range")
 async def ingest_range(
     payload: IngestRangeRequest,
@@ -1477,6 +1481,36 @@ async def ingest_ticks(
         "empty": total_returned == 0,
         "aggregates": aggregates,
     }
+
+
+@app.post("/api/data/ingest/ask-unavailable")
+async def ingest_ask_unavailable(
+    payload: IngestAskUnavailableRequest,
+    x_nexus_internal_secret: str | None = Header(default=None),
+) -> dict[str, Any]:
+    """Mark a tick-less symbol's ask-less bars ask_source='unavailable' (Phase 2).
+
+    Called by the backfill sweep after a full-depth tick probe returned zero
+    ticks for the symbol (plan: symbols with no tick depth get an explicit
+    marker instead of a silent NULL). Only bars that hold no ask are marked —
+    a bar that later receives ticks is stamped back to ask_source='ticks' by
+    the aggregation — and the mark is idempotent (a repeat call marks 0).
+    Journaled in ingest_jobs as kind='ask_unavailable'.
+    """
+    _verify_internal_secret(x_nexus_internal_secret)
+    symbol = payload.symbol.upper().replace("/", "")
+    job_id = await data_store.ingest_job_start(
+        "ask_unavailable", symbol, None, None, None,
+    )
+    try:
+        marked = await data_store.mark_ask_unavailable(symbol)
+    except Exception as exc:
+        await data_store.ingest_job_finish(
+            job_id, "failed", rows=0, error=f"{type(exc).__name__}: {exc}"[:500],
+        )
+        raise HTTPException(500, "marking ask_source='unavailable' failed") from exc
+    await data_store.ingest_job_finish(job_id, "succeeded", rows=marked, error=None)
+    return {"ok": True, "job_id": job_id, "symbol": symbol, "marked": marked}
 
 
 @app.get("/api/data/ohlcv/{symbol}/{timeframe}/provenance")

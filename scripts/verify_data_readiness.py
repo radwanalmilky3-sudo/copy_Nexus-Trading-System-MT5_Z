@@ -109,12 +109,25 @@ def main():
         rec("PASS" if n>0 else "FAIL", "offset table not empty", f"{n} rows")
 
     # 6) تغطية Ask لكل رمز
+    # Phase 2 (development plan): رموز بلا عمق -> ask_source='unavailable'.
+    # Bars whose source provably serves no tick stream are an explicit,
+    # documented limitation — coverage is measured over the bars we EXPECT
+    # to carry asks (total minus marked), and an all-marked symbol is a
+    # WARN (visible, but not a pipeline failure).
     if "ask_close" in cols:
-        r = q(con, "SELECT symbol, COUNT(*), COUNT(ask_close) FROM ohlcv GROUP BY symbol")
+        r = q(con, "SELECT symbol, COUNT(*), COUNT(ask_close), "
+                   "COUNT(*) FILTER (WHERE ask_source = 'unavailable') "
+                   "FROM ohlcv GROUP BY symbol")
         if isinstance(r, Exception): rec("FAIL", "ask coverage", str(r))
         else:
-            for sym, total, ask in r:
-                pct = 100*ask/total if total else 0
+            for sym, total, ask, unavail in r:
+                expected = total - unavail
+                if expected <= 0:
+                    rec("WARN", f"ask coverage {sym}",
+                        f"0.0% — all {total} bars ask_source='unavailable' "
+                        "(broker serves no tick stream)")
+                    continue
+                pct = 100*ask/expected
                 st = "PASS" if pct>=95 else ("WARN" if pct>0 else "FAIL")
                 rec(st, f"ask coverage {sym}", f"{pct:.1f}%")
 

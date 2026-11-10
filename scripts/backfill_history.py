@@ -35,6 +35,7 @@ except Exception:
 ROOT = Path(__file__).resolve().parent.parent
 INGEST_URL = "http://127.0.0.1:9001/api/data/ingest/range"
 TICKS_URL = "http://127.0.0.1:9001/api/data/ingest/ticks"
+ASK_UNAVAILABLE_URL = "http://127.0.0.1:9001/api/data/ingest/ask-unavailable"
 PROV_URL = "http://127.0.0.1:9001/api/data/ohlcv/{symbol}/{tf}/provenance"
 
 TF_SEC = {"M1": 60, "M5": 300, "M15": 900, "M30": 1800, "H1": 3600, "H4": 14400, "D1": 86400}
@@ -208,7 +209,50 @@ def tick_window(symbol: str, tfs: list[str], start: datetime, end: datetime,
             print(f"  [ticks {start:%Y-%m-%d}] {type(exc).__name__}: retrying", flush=True)
             time.sleep(5.0)
     print(f"  [ticks {start:%Y-%m-%d}] giving up after {attempts} attempts", flush=True)
-    return {"ticks_returned": 0, "ticks_inserted": 0, "aggregates": {}}
+    # A give-up is NOT an answer: callers must not read it as "0 ticks found"
+    # (the ask_source='unavailable' mark below requires real empty responses).
+    return {"ticks_returned": 0, "ticks_inserted": 0, "aggregates": {},
+            "_failed": True}
+
+
+def mark_ask_unavailable(symbol: str, secret: str) -> dict:
+    """Mark a tick-less symbol's bars ask_source='unavailable' (Phase 2).
+
+    Only called after a full-depth tick sweep returned zero ticks from every
+    window (plan: symbols with no tick depth carry an explicit marker).
+    """
+    payload = json.dumps({"symbol": symbol}).encode("utf-8")
+    req = Request(
+        ASK_UNAVAILABLE_URL,
+        data=payload,
+        method="POST",
+        headers={"Content-Type": "application/json",
+                 "X-Nexus-Internal-Secret": secret},
+    )
+    attempts = 0
+    while attempts < 5:
+        attempts += 1
+        try:
+            with urlopen(req, timeout=FETCH_TIMEOUT_SEC) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")[:200]
+            if exc.code in (404, 405) and "Not Found" in detail:
+                raise RuntimeError(
+                    "POST /api/data/ingest/ask-unavailable not found — restart "
+                    "nexus-data so the Phase 2 ask marker route is active"
+                )
+            print(f"  [ask-unavailable {symbol}] HTTP {exc.code}: retrying",
+                  flush=True)
+            if 500 <= exc.code < 600:
+                time.sleep(8.0)
+                continue
+            raise
+        except (URLError, TimeoutError, OSError, ValueError) as exc:
+            print(f"  [ask-unavailable {symbol}] {type(exc).__name__}: retrying",
+                  flush=True)
+            time.sleep(5.0)
+    raise RuntimeError(f"ask-unavailable mark failed after {attempts} attempts")
 
 
 def fill_ticks(symbol: str, tfs: list[str], days: float, secret: str,
@@ -220,6 +264,13 @@ def fill_ticks(symbol: str, tfs: list[str], days: float, secret: str,
     spawning a worker per empty day for the rest of the range. One window
     fetches the ticks once and rebuilds ask/aggregates for every requested
     timeframe (idempotent — a re-run inserts 0 new ticks).
+
+    When every probed window answers with ZERO ticks (at least 7 consecutive
+    empty day-windows = a full week at the stream head, all responses
+    successful), the broker provably serves no tick stream for the symbol:
+    its ask-less bars are then marked ask_source='unavailable' (plan Phase 2)
+    so the readiness check reports a documented source limitation instead of
+    a coverage failure. Give-ups (HTTP failures) never count as empties.
     """
     end = datetime.now(timezone.utc)
     start_all = end - timedelta(days=days)
@@ -229,18 +280,29 @@ def fill_ticks(symbol: str, tfs: list[str], days: float, secret: str,
     empty = 0
     windows = 0
     got = 0
-    while cursor > start_all and empty < empty_stop:
+    failed = 0
+    min_probe = 7  # a full week of empty, successful answers proves no stream
+    while cursor > start_all and (
+        empty < empty_stop
+        or (got == 0 and failed == 0 and windows < min_probe)
+    ):
         win_start = max(cursor - timedelta(days=1), start_all)
         body = tick_window(symbol, tfs, win_start, cursor, secret)
         n = int(body.get("ticks_returned", 0) or 0)
         ins = int(body.get("ticks_inserted", 0) or 0)
         windows += 1
+        if body.get("_failed"):
+            failed += 1
         got += n
         print(f"  {win_start:%Y-%m-%d}: {n} ticks ({ins} new)", flush=True)
         empty = 0 if n else empty + 1
         cursor = win_start
     stop = "empty-depth stop" if empty >= empty_stop else "range covered"
     print(f"  done ({stop}): {windows} windows, {got} ticks returned", flush=True)
+    if got == 0 and failed == 0 and windows >= min_probe:
+        body = mark_ask_unavailable(symbol, secret)
+        print(f"  ask_source='unavailable': {body.get('marked', 0)} bars marked "
+              f"(job {body.get('job_id')})", flush=True)
 
 
 def main() -> int:

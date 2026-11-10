@@ -11,7 +11,11 @@ Covers the plan's verification points:
 - re-running the same aggregation window changes nothing (raw ticks are the
   audit trail) and windows are scoped to their own bars,
 - apply_rate_enrichment: real_volume 0 means "not provided" → NULL,
-  volume_type='tick' records what the legacy `volume` column holds.
+  volume_type='tick' records what the legacy `volume` column holds,
+- depthless symbols: a full tick sweep that proves the broker serves no
+  ticks marks the ask-less bars ask_source='unavailable' (explicit, never
+  a silent NULL) — idempotent, never touching bars that hold an ask, and
+  flipped back to 'ticks' when a later sweep brings asks.
 """
 from __future__ import annotations
 
@@ -132,17 +136,21 @@ async def test_aggregation_reconciles_and_direction_invariant_holds(operational_
     )
     assert violations[0][0] == 0
 
-    # exact direction split per bar (both/neither flags count only in tick_count)
+    # exact direction split per bar (both/neither flags count only in
+    # tick_count) — pinned by epoch so a bucketing regression (ticks rounding
+    # into the NEXT bar) cannot pass: the :50 tick must land on 10:02.
     rows = await store._fetch(
-        "SELECT tick_count, buy_tick_count, sell_tick_count, "
+        "SELECT CAST(epoch(bar_open_utc) AS BIGINT) AS ts, "
+        "       tick_count, buy_tick_count, sell_tick_count, "
         "       spread_min, spread_max, spread_avg "
         "FROM bar_tick_aggregates WHERE symbol='XAUUSD' AND timeframe='M1' "
         "ORDER BY bar_open_utc"
     )
     assert rows == [
-        (3, 1, 1, 8.0, 12.0, 10.0),   # bar1: buy + sell + both
-        (2, 1, 0, 9.0, 11.0, 10.0),   # bar2: neither + buy
-        (1, 0, 1, 0.0, 0.0, 0.0),     # bar3: sell only
+        # bar_open_utc = raw broker timestamp - measured 7200s offset
+        (int(BAR_TIMES[0].timestamp()) - 7200, 3, 1, 1, 8.0, 12.0, 10.0),
+        (int(BAR_TIMES[1].timestamp()) - 7200, 2, 1, 0, 9.0, 11.0, 10.0),
+        (int(BAR_TIMES[2].timestamp()) - 7200, 1, 0, 1, 0.0, 0.0, 0.0),
     ]
 
 
@@ -273,6 +281,66 @@ async def test_apply_rate_enrichment_stores_real_volume_and_marks_type(operation
         (missing,),
     )
     assert stored_count[0][0] == 0  # no phantom bar was created for `missing`
+
+
+# ── depthless symbols: explicit ask_source='unavailable' ─────────────────────
+
+@pytest.mark.asyncio
+async def test_mark_ask_unavailable_marks_only_askless_bars(operational_store):
+    """Plan (رموز بلا عمق): ask_source='unavailable' instead of a silent NULL.
+
+    Only bars WITHOUT an ask are marked (ask-bearing bars keep 'ticks'),
+    the mark is idempotent, and a later tick sweep that brings asks stamps
+    those bars back to 'ticks' via the aggregation.
+    """
+    store = operational_store
+    await _insert_bars(store)
+    await store.insert_ticks_batch("XAUUSD", TICKS, utc_offset_seconds=7200)
+    await store.aggregate_ticks_for_window("XAUUSD", "M1", WINDOW_START, WINDOW_END)
+    # BTCUSD-style depthless symbol: identical bars, zero ticks ever.
+    # Prices are BTC-plausible — the quality gate quarantines outliers
+    # (1.0-2.0 BTCUSD bars failed validate_ohlcv with issue_count=3).
+    await store.insert_ohlcv_batch(
+        [OHLCV(symbol="BTCUSD", timeframe="M1", open=97000.0, high=97400.0,
+               low=96900.0, close=97300.0, volume=10, timestamp=ts)
+         for ts in BAR_TIMES],
+        utc_offset_seconds=7200,
+    )
+
+    assert await store.mark_ask_unavailable("BTCUSD") == 4
+    assert await store.mark_ask_unavailable("BTCUSD") == 0  # idempotent
+    btc = await store._fetch(
+        "SELECT ask_source FROM ohlcv WHERE symbol='BTCUSD' ORDER BY timestamp")
+    assert btc == [("unavailable",)] * 4
+
+    # XAUUSD: only its two ask-less bars would be marked; ask bars keep 'ticks'
+    assert await store.mark_ask_unavailable("XAUUSD") == 2
+    xau = await store._fetch(
+        "SELECT ask_close, ask_source FROM ohlcv "
+        "WHERE symbol='XAUUSD' ORDER BY timestamp")
+    assert [r[1] for r in xau] == ["ticks", "ticks", "unavailable",
+                                   "unavailable"]
+    assert xau[0][0] is not None and xau[1][0] is not None  # asks untouched
+
+    # structural invariant: ask_source='ticks' exactly when ask_close exists
+    bad = await store._fetch(
+        "SELECT COUNT(*) FROM ohlcv WHERE (ask_source = 'ticks') "
+        "<> (ask_close IS NOT NULL)")
+    assert bad[0][0] == 0
+
+    # a later sweep that brings an ask restores ask_source='ticks' there,
+    # while bars still without ticks keep the explicit marker
+    await store.insert_ticks_batch(
+        "BTCUSD", [(_msc(10, 2, 55), 97100.0, 97105.0, 97102.0, 1.0, 0.0, 1,
+                    5.0)],
+        utc_offset_seconds=7200,
+    )
+    await store.aggregate_ticks_for_window("BTCUSD", "M1", WINDOW_START,
+                                           WINDOW_END)
+    btc2 = await store._fetch(
+        "SELECT ask_source FROM ohlcv WHERE symbol='BTCUSD' ORDER BY timestamp")
+    assert btc2 == [("unavailable",), ("unavailable",), ("ticks",),
+                    ("unavailable",)]
 
 
 # ── bulk chunking regression (2026-11-10 lock-wedge evidence) ────────────────
