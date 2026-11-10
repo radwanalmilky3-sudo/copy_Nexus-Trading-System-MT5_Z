@@ -43,7 +43,10 @@ TF_SEC = {"M1": 60, "M5": 300, "M15": 900, "M30": 1800, "H1": 3600, "H4": 14400,
 # window completes within the server's own MT5 fetch budget (a never-synced
 # chunk is downloaded by the terminal once; later windows are instant).
 TF_WINDOW_DAYS = {"M1": 1, "M5": 5, "M15": 15, "M30": 30, "H1": 90, "H4": 300, "D1": 1200}
-FETCH_TIMEOUT_SEC = 240.0
+# A timed-out POST keeps running server-side (uvicorn never cancels it), so
+# abandoning it early piles zombie writes onto the single DuckDB writer.
+# Wait it out, and back off hard between attempts (see retry loops below).
+FETCH_TIMEOUT_SEC = 600.0
 
 
 def load_env() -> None:  # values are ASCII; encoding never has to round-trip
@@ -111,7 +114,7 @@ def bar_window(symbol: str, tf: str, start: datetime, end: datetime, secret: str
             raise
         except (URLError, TimeoutError, OSError, ValueError) as exc:
             print(f"  [window {start:%Y-%m-%d}] {type(exc).__name__}: retrying", flush=True)
-            time.sleep(5.0)
+            time.sleep(20.0)  # the abandoned request is still running server-side
     print(f"  [window {start:%Y-%m-%d}] giving up after {attempts} attempts", flush=True)
     return 0
 
@@ -207,7 +210,7 @@ def tick_window(symbol: str, tfs: list[str], start: datetime, end: datetime,
             raise
         except (URLError, TimeoutError, OSError, ValueError) as exc:
             print(f"  [ticks {start:%Y-%m-%d}] {type(exc).__name__}: retrying", flush=True)
-            time.sleep(5.0)
+            time.sleep(20.0)  # the abandoned request is still running server-side
     print(f"  [ticks {start:%Y-%m-%d}] giving up after {attempts} attempts", flush=True)
     # A give-up is NOT an answer: callers must not read it as "0 ticks found"
     # (the ask_source='unavailable' mark below requires real empty responses).
@@ -251,7 +254,7 @@ def mark_ask_unavailable(symbol: str, secret: str) -> dict:
         except (URLError, TimeoutError, OSError, ValueError) as exc:
             print(f"  [ask-unavailable {symbol}] {type(exc).__name__}: retrying",
                   flush=True)
-            time.sleep(5.0)
+            time.sleep(20.0)
     raise RuntimeError(f"ask-unavailable mark failed after {attempts} attempts")
 
 
