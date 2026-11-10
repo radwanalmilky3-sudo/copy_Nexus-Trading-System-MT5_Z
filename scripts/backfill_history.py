@@ -326,17 +326,24 @@ def main() -> int:
                              "and rebuild ask/bar_tick_aggregates (Phase 2)")
     parser.add_argument("--tick-empty-stop", type=int, default=5,
                         help="stop a tick sweep after this many consecutive empty day-windows")
+    parser.add_argument("--ticks-only", action="store_true",
+                        help="skip the candle fills: only (re)ingest raw ticks per "
+                             "symbol and rebuild ask/bar_tick_aggregates — the "
+                             "re-aggregation pass after a bucketing fix (tick "
+                             "inserts are idempotent, so this rebuilds aggregates "
+                             "from the stored raw ticks)")
     args = parser.parse_args()
 
     symbols = [s.strip().upper() for s in args.symbols.split(",") if s.strip()]
     tfs = [t.strip().upper() for t in args.timeframes.split(",") if t.strip()]
     for sym in symbols:
-        for tf in tfs:
-            try:
-                fill(sym, tf, args.days, secret, passes=args.passes, sleep_sec=args.sleep)
-            except Exception as exc:  # per-pair failures must not stop the sweep
-                print(f"[{sym}/{tf}] FAILED: {type(exc).__name__}: {exc}", flush=True)
-        if args.with_ticks:
+        if not args.ticks_only:
+            for tf in tfs:
+                try:
+                    fill(sym, tf, args.days, secret, passes=args.passes, sleep_sec=args.sleep)
+                except Exception as exc:  # per-pair failures must not stop the sweep
+                    print(f"[{sym}/{tf}] FAILED: {type(exc).__name__}: {exc}", flush=True)
+        if args.with_ticks or args.ticks_only:
             try:
                 fill_ticks(sym, tfs, args.days, secret, empty_stop=args.tick_empty_stop)
             except Exception as exc:  # per-symbol failures must not stop the sweep
