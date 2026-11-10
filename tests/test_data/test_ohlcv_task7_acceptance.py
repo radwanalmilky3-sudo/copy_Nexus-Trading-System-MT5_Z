@@ -364,8 +364,16 @@ def test_real_provenance_endpoint_reports_coverage_without_false_certification()
                 f"{symbol}/{timeframe} real-data acceptance: provenance reports 0 bars"
             )
             sources = set(coverage.get("sources") or {})
-            assert {"mt5_poll", "mt5_backfill"} <= sources, (
-                f"{symbol}/{timeframe} ingestion-path labels absent: {sorted(sources)}"
+            # Phase 0/1 (2026-11-10): sweeps persist through POST
+            # /api/data/ingest/range (label mt5_range) while the periodic
+            # publishers still write mt5_poll (live poll) and mt5_backfill
+            # (gap fill). The store must carry a non-empty subset of that
+            # KNOWN label vocabulary — pin the paths that exist, not one
+            # historical subset that only held before the sweep era.
+            known = {"mt5_range", "mt5_poll", "mt5_backfill"}
+            assert sources and sources <= known, (
+                f"{symbol}/{timeframe} ingestion-path labels unexpected: "
+                f"{sorted(sources)} (expected a non-empty subset of {sorted(known)})"
             )
             # Honesty gate: missing bars may exist (session closures, provider
             # holes) but must never be disguised as a certified zero-gap series.

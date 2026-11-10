@@ -33,7 +33,7 @@ from .broker_settings_router import create_broker_settings_router
 from .ml_runs import create_ml_runs_router
 from .broker_settings_store import BrokerSettingsStore
 from .redis_cache import TickCache
-from .mt5_connector import MT5Connector
+from .mt5_connector import MT5Connector, SymbolNotFoundError
 from .ibkr_connector import IBKRConnector
 from .ccxt_connector import CCXTConnector
 
@@ -1228,6 +1228,13 @@ async def get_ohlcv(
                     return usable_bars(provider_rows)
             except HTTPException:
                 raise
+            except SymbolNotFoundError:
+                # The broker does not serve this symbol — honest 404 like
+                # the stored-miss answer, not a provider failure (and no
+                # backfill warning: a lookup miss is a client-side fact).
+                raise HTTPException(
+                    404, f"No OHLCV data for {symbol}/{timeframe} in the requested range"
+                )
             except Exception as exc:
                 if _is_empty_range_answer(exc):
                     # Provider answered "no bars in this window" (weekend /
@@ -1256,6 +1263,10 @@ async def get_ohlcv(
             return usable_bars(provider_rows)
         except HTTPException:
             raise
+        except SymbolNotFoundError:
+            # Unknown symbol: N6 canonical 404 ("No OHLCV data") instead of
+            # 503 — the provider is fine, the symbol simply does not exist.
+            raise HTTPException(404, f"No OHLCV data for {symbol}/{timeframe}")
         except Exception as exc:
             await log.aexception("ohlcv_mt5_fallback_failed", symbol=symbol, tf=timeframe)
             raise HTTPException(503, f"OHLCV provider unavailable for {symbol}/{timeframe}") from exc

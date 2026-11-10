@@ -28,6 +28,16 @@ from shared.models import Tick, OHLCV
 log = structlog.get_logger("nexus_data.mt5")
 ISOLATED_MT5 = os.getenv("NEXUS_MT5_ISOLATED", "1").lower() in ("1", "true", "yes")
 
+
+class SymbolNotFoundError(Exception):
+    """The broker does not serve this symbol (symbol_select failed).
+
+    Raised instead of a generic RuntimeError/ValueError so API layers can
+    answer 404 — honest absence of the symbol — instead of 503 (provider
+    outage). Subclasses Exception only: every existing ``except Exception``
+    fallback keeps its current behaviour.
+    """
+
 # ── Single-thread executor — ALL MT5 calls MUST go through this ──────────────
 _MT5_EXECUTOR = concurrent.futures.ThreadPoolExecutor(
     max_workers=1,
@@ -153,7 +163,13 @@ async def _mt5_worker(payload: dict[str, Any], timeout_sec: float = 20.0) -> dic
     if proc.returncode != 0:
         err = stderr.decode("utf-8", errors="replace").strip()
         out = stdout.decode("utf-8", errors="replace").strip()
-        raise RuntimeError(f"MT5 worker failed ({proc.returncode}): {out or err}")
+        message = f"MT5 worker failed ({proc.returncode}): {out or err}"
+        if proc.returncode == 3:
+            # Worker exit 3 is exactly "symbol_select failed" (mt5_worker.py):
+            # the broker does not serve this symbol — a lookup miss, not a
+            # provider outage.
+            raise SymbolNotFoundError(message)
+        raise RuntimeError(message)
 
     try:
         data = json.loads(stdout.decode("utf-8", errors="replace"))
@@ -269,7 +285,7 @@ class MT5Connector:
         def _sel():
             assert mt5 is not None
             if not mt5.symbol_select(broker_symbol, True):
-                raise ValueError(
+                raise SymbolNotFoundError(
                     f"MT5 symbol_select failed for {broker_symbol!r} — add it in Market Watch "
                     f"or set MT5_SYMBOL_ALIASES (e.g. XAUUSD=XAUUSDm)."
                 )

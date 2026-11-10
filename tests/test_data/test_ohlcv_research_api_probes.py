@@ -127,6 +127,45 @@ def _discover_research_account(secret: str):
     pytest.skip("no research run records available through the API")
 
 
+def _research_run_statuses(secret: str) -> list:
+    """Every research-run status visible through the API ([] when none).
+
+    Same discovery walk as _discover_research_account, but never skips:
+    the governance probe must tell "no run ever completed" (evidence write
+    never exercised) apart from "runs completed without a certificate"
+    (evidence write broken). Connection trouble degrades to [] too — the
+    guard can only turn a failure into a skip, never the reverse.
+    """
+    try:
+        status, body = _api("POST", f"{DATA_BASE}/api/data/query", {
+            "operation": "users_list", "params": {},
+        }, secret)
+    except ConnectionError:
+        return []
+    if status != 200:
+        return []
+    statuses: list = []
+    for user in body.get("rows") or []:
+        owner = user["user_id"]
+        status, body = _api("POST", f"{DATA_BASE}/api/data/broker-settings", {
+            "operation": "list_profiles", "owner_id": owner, "payload": {},
+        }, secret)
+        if status != 200:
+            continue
+        for profile in body.get("result") or []:
+            for account in profile.get("accounts") or []:
+                status, runs = _api("POST", f"{DATA_BASE}/api/data/broker-settings", {
+                    "operation": "research_runs", "owner_id": owner,
+                    "payload": {"account_id": account["account_id"]},
+                }, secret)
+                if status == 200 and isinstance(runs.get("result"), list):
+                    statuses.extend(
+                        r.get("status") for r in runs["result"]
+                        if isinstance(r, dict) and r.get("status")
+                    )
+    return statuses
+
+
 def _is_hex64(value) -> bool:
     return isinstance(value, str) and len(value) == 64 and set(value.lower()) <= HEX64
 
@@ -289,9 +328,27 @@ def test_real_governance_collections_readable_via_api():
             )
 
     research_certs = collection("quality_runs", "researchqr:")
-    assert any(str(c.get("quality_run_id", "")).startswith("researchqr:")
-               for c in research_certs.get("items") or []), (
-        "no researchqr: certificate rows via API (research evidence writes missing)"
+    research_items = [
+        c for c in research_certs.get("items") or []
+        if str(c.get("quality_run_id", "")).startswith("researchqr:")
+    ]
+    if not research_items:
+        # researchqr: certificates are written only when a research run
+        # reaches completed/partial (research_market._complete_evidence);
+        # failed/running runs never carry one. No such run yet = the
+        # evidence write has never been exercised (data-state gap ->
+        # skip); completed runs without a certificate = broken write
+        # (assert failure below).
+        statuses = _research_run_statuses(secret)
+        if not any(s in {"completed", "partial"} for s in statuses):
+            pytest.skip(
+                "no completed/partial research run in this store "
+                f"(statuses seen: {sorted(set(statuses)) or 'none'}) — "
+                "researchqr: evidence write never exercised"
+            )
+    assert research_items, (
+        "completed/partial research runs exist but no researchqr: certificate "
+        "rows via API (research evidence writes missing)"
     )
     print(f"governance via API: {len(groups)} certified groups, "
           f"quality_runs total={quality.get('total')}")
