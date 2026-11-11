@@ -31,6 +31,11 @@ const tabs:{id:Section;label:string}[]=[{id:'connection',label:'الاتصال'}
 export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerController;state:BrokerState}){
   const t=s.draft?.transition;
   const profile=s.profiles.find(p=>p.profile_id===s.selectedProfileId);
+  /* Single-account deployment (owner request 2026-11-11): exactly one account
+   * across all profiles → no broker/account pickers; the account is shown as
+   * static text and was auto-selected (and remembered) by the controller. */
+  const allAccounts=s.profiles.flatMap(p=>p.accounts);
+  const singleAccount=allAccounts.length===1?allAccounts[0]:null;
   const connection=s.connectionCheck?.accountId===s.account?.account_id?s.connectionCheck:null;
   const canLeave=()=>!s.dirty||window.confirm('لديك تعديلات غير محفوظة لهذا الحساب. هل تريد تجاهلها والمتابعة؟');
   const patch=(key:keyof TransitionDraft,value:unknown)=>c.patchTransition({[key]:value});
@@ -40,6 +45,14 @@ export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerCont
       <p className="min-w-0 max-w-3xl flex-1 rounded border border-neon-gold/30 bg-neon-gold/5 px-3 py-1.5 text-xs">إعدادات مستخدم الموقع وحساب الوسيط المختار — حفظ دائم كمسودة، لا يربط MT5 ولا يفعّل التداول.</p>
     </div>
     <div className="flex items-end gap-3 overflow-x-auto rounded-lg border border-border-primary bg-bg-secondary/30 p-3">
+      {singleAccount?(
+        <div className="min-w-0 flex-1 space-y-1 text-sm">
+          <span className="text-text-muted">حساب الوسيط الوحيد</span>
+          <p dir="auto" className="truncate rounded border border-border-primary bg-bg-primary px-3 py-2 font-medium">{singleAccount.label} · <bdi>{singleAccount.server}</bdi> · <bdi>{singleAccount.masked_login}</bdi> · {singleAccount.account_kind==='demo'?'تجريبي':'حقيقي'}
+            <span className="mr-2 text-xs font-normal text-text-muted">— يُختار تلقائيًا؛ لا توجد حسابات أخرى.</span>
+          </p>
+        </div>
+      ):<>
       <label className="min-w-48 flex-1 space-y-2 text-sm">الوسيط المختار
         <select className={input} aria-label="الوسيط المختار" value={s.selectedProfileId} disabled={s.busy||s.loading} onChange={e=>{if(canLeave())c.selectProfile(e.target.value);}}>
           <option value="">اختر وسيطًا</option>{s.profiles.map(p=><option key={p.profile_id} value={p.profile_id}>{p.broker_name} · {p.name}</option>)}
@@ -53,8 +66,9 @@ export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerCont
           </optgroup>)}
         </select>
       </label>
+      </>}
       <div className="flex shrink-0 items-center gap-2 whitespace-nowrap">
-        <button type="button" className={`${button} border-neon-cyan bg-neon-cyan/10 font-semibold text-neon-cyan`} disabled={!s.account||s.loading||s.busy} onClick={()=>void c.rememberSelection()}>حفظ الحساب للعمل عليه</button>
+        {!singleAccount&&<button type="button" className={`${button} border-neon-cyan bg-neon-cyan/10 font-semibold text-neon-cyan`} disabled={!s.account||s.loading||s.busy} onClick={()=>void c.rememberSelection()}>حفظ الحساب للعمل عليه</button>}
         <button type="button" className={button} disabled={s.loading||s.busy} onClick={()=>{if(canLeave())void c.load();}}>تحديث القائمة</button>
       </div>
     </div>

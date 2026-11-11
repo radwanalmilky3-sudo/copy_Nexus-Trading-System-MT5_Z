@@ -29,7 +29,14 @@ export function createBrokerController(api:BrokerAPI){
     dispose:()=>{epoch++;listeners.clear();},
     async load(){checkIdentity();const ticket=++epoch;emit({loading:true,error:'',notice:'',account:null,draft:null,latest:null,events:[],dirty:false,conflict:false});
       try{const profiles=await api.listProfiles();if(valid(ticket)){const id=profiles.some(p=>p.profile_id===state.selectedProfileId)?state.selectedProfileId:profiles[0]?.profile_id||'';emit({profiles,selectedProfileId:id,accountForm:{...state.accountForm,profile_id:id}});
-        const remembered=api.rememberedAccount?.();if(remembered&&profiles.some(p=>p.accounts.some(a=>a.account_id===remembered)))await controller.selectAccount(remembered);
+        /* Single-account deployment (owner request 2026-11-11): with exactly
+         * one account in the store, select + remember it automatically so the
+         * connection check runs on load and no broker/account pickers are
+         * needed. Multi-account setups keep the remembered manual pick. */
+        const all=profiles.flatMap(p=>p.accounts);
+        const remembered=api.rememberedAccount?.();
+        const target=remembered&&all.some(a=>a.account_id===remembered)?remembered:all.length===1?all[0].account_id:null;
+        if(target){if(target!==remembered){try{api.rememberAccount?.(target);}catch{ /* storage blocked — selection still applies for this session */ }}await controller.selectAccount(target);}
       }}
       catch(e){if(valid(ticket))emit({error:message(e)});}finally{if(valid(ticket))emit({loading:false,busy:false});}},
     async selectAccount(id:string){checkIdentity();const ticket=++epoch;emit({account:null,draft:null,latest:null,events:[],symbols:[],symbolsLoading:false,dirty:false,conflict:false,error:'',notice:'',loading:!!id,busy:false});
