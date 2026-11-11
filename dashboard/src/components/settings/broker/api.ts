@@ -23,6 +23,9 @@ export const brokerAPI:BrokerAPI={
   rememberAccount:id=>localStorage.setItem(selectionKey(),id),
   identity:()=>getAuthHeaders().Authorization || '',
   listProfiles:()=>request('/profiles'),
+  // Platform-env connection check: الحساب/الخادم come from MT5_LOGIN/MT5_SERVER
+  // (the single account record of this deployment), so no picker is involved.
+  mt5Check:()=>request('/mt5-check'),
   createProfile:v=>request('/profiles','POST',v),
   createAccount:v=>request('/accounts','POST',v),
   getAccount:id=>request('/accounts/'+encodeURIComponent(id)),

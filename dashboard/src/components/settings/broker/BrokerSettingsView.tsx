@@ -30,47 +30,19 @@ const tabs:{id:Section;label:string}[]=[{id:'connection',label:'الاتصال'}
 
 export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerController;state:BrokerState}){
   const t=s.draft?.transition;
-  const profile=s.profiles.find(p=>p.profile_id===s.selectedProfileId);
-  /* Single-account deployment (owner request 2026-11-11): exactly one account
-   * across all profiles → no broker/account pickers; the account is shown as
-   * static text and was auto-selected (and remembered) by the controller. */
-  const allAccounts=s.profiles.flatMap(p=>p.accounts);
-  const singleAccount=allAccounts.length===1?allAccounts[0]:null;
-  const connection=s.connectionCheck?.accountId===s.account?.account_id?s.connectionCheck:null;
+  /* Broker/account pickers are gone for good (owner request 2026-11-11): the
+   * platform env card (MT5_LOGIN/MT5_SERVER) IS the single account record of
+   * this site — the connection table below auto-fills from that probe. */
+  const connection=s.account
+    ? (s.connectionCheck?.accountId===s.account.account_id?s.connectionCheck:null)
+    : (s.envCheck?{ok:s.envCheck.ok,at:s.envCheck.at}:null);
   const canLeave=()=>!s.dirty||window.confirm('لديك تعديلات غير محفوظة لهذا الحساب. هل تريد تجاهلها والمتابعة؟');
   const patch=(key:keyof TransitionDraft,value:unknown)=>c.patchTransition({[key]:value});
   return <section dir="rtl" className="mx-auto w-full max-w-[1400px] space-y-4 p-4 text-text-primary" aria-label="إعدادات الوسيط والحسابات">
     <div className="flex flex-wrap items-center justify-between gap-3">
       <h2 className="text-lg font-bold shrink-0">الوسيط والحسابات — حساب الموقع الحالي</h2>
-      <p className="min-w-0 max-w-3xl flex-1 rounded border border-neon-gold/30 bg-neon-gold/5 px-3 py-1.5 text-xs">إعدادات مستخدم الموقع وحساب الوسيط المختار — حفظ دائم كمسودة، لا يربط MT5 ولا يفعّل التداول.</p>
-    </div>
-    <div className="flex items-end gap-3 overflow-x-auto rounded-lg border border-border-primary bg-bg-secondary/30 p-3">
-      {singleAccount?(
-        <div className="min-w-0 flex-1 space-y-1 text-sm">
-          <span className="text-text-muted">حساب الوسيط الوحيد</span>
-          <p dir="auto" className="truncate rounded border border-border-primary bg-bg-primary px-3 py-2 font-medium">{singleAccount.label} · <bdi>{singleAccount.server}</bdi> · <bdi>{singleAccount.masked_login}</bdi> · {singleAccount.account_kind==='demo'?'تجريبي':'حقيقي'}
-            <span className="mr-2 text-xs font-normal text-text-muted">— يُختار تلقائيًا؛ لا توجد حسابات أخرى.</span>
-          </p>
-        </div>
-      ):<>
-      <label className="min-w-48 flex-1 space-y-2 text-sm">الوسيط المختار
-        <select className={input} aria-label="الوسيط المختار" value={s.selectedProfileId} disabled={s.busy||s.loading} onChange={e=>{if(canLeave())c.selectProfile(e.target.value);}}>
-          <option value="">اختر وسيطًا</option>{s.profiles.map(p=><option key={p.profile_id} value={p.profile_id}>{p.broker_name} · {p.name}</option>)}
-        </select>
-      </label>
-      <label className="min-w-64 flex-[2] space-y-2 text-sm">حساب الوسيط المختار
-        <select className={input} aria-label="حساب الوسيط المختار" value={s.account?.account_id||''} disabled={s.busy||s.loading} onChange={e=>{if(canLeave())void c.selectAccount(e.target.value);}}>
-          <option value="">اختر حسابًا — لا يُختار حساب MT5 العام تلقائيًا</option>
-          {s.profiles.filter(p=>p.profile_id===s.selectedProfileId).map(p=><optgroup key={p.profile_id} label={`${p.name} · ${p.broker_name}`}>
-            {p.accounts.map(a=><option key={a.account_id} value={a.account_id}>{a.label} · {a.server} · {a.masked_login} · {a.account_kind==='demo'?'تجريبي':'حقيقي'}</option>)}
-          </optgroup>)}
-        </select>
-      </label>
-      </>}
-      <div className="flex shrink-0 items-center gap-2 whitespace-nowrap">
-        {!singleAccount&&<button type="button" className={`${button} border-neon-cyan bg-neon-cyan/10 font-semibold text-neon-cyan`} disabled={!s.account||s.loading||s.busy} onClick={()=>void c.rememberSelection()}>حفظ الحساب للعمل عليه</button>}
-        <button type="button" className={button} disabled={s.loading||s.busy} onClick={()=>{if(canLeave())void c.load();}}>تحديث القائمة</button>
-      </div>
+      <p className="min-w-0 max-w-3xl flex-1 rounded border border-neon-gold/30 bg-neon-gold/5 px-3 py-1.5 text-xs">لا توجد قوائم اختيار — الحساب والخادم يُقرأان تلقائيًا من بطاقة اتصال المنصة (MT5_LOGIN / MT5_SERVER) وجدول الحالة أدناه يُفحص تلقائيًا. حفظ دائم كمسودة، لا يغيّر بيانات المنصة ولا يفعّل التداول.</p>
+      <button type="button" className={button} disabled={s.loading||s.busy} onClick={()=>{if(canLeave())void c.load();}}>تحديث وفحص الاتصال</button>
     </div>
     {s.loading&&<p role="status">جارٍ تحميل بيانات حسابك…</p>}
     {s.error&&<p role="alert" className="rounded border border-neon-red/40 p-3 text-sm">{s.error}</p>}
@@ -80,18 +52,11 @@ export function BrokerSettingsView({controller:c,state:s}:{controller:BrokerCont
     {s.section==='connection'&&<div className="space-y-4">
       <SystemHealthStrip />
       <PlatformConnectionCard />
-      {!s.account&&!s.loading&&<div className="space-y-2 rounded border border-neon-gold/40 bg-neon-gold/5 p-4 text-sm">
-        <p className="font-bold">لا يوجد حساب مختار بعد — خطوتان:</p>
-        <ol className="list-decimal space-y-1 pr-5 text-text-secondary">
-          <li>اختر الحساب من شريط الاختيار أعلى الصفحة واضغط «حفظ الحساب للعمل عليه».</li>
-          <li>اضغط «التحقق من اتصال MT5» هنا.</li>
-        </ol>
-      </div>}
-      <div className="overflow-x-auto rounded border border-border-primary"><table className={tableClass} aria-label="حالة اتصال الحساب"><thead><tr><th scope="col">الحساب</th><th scope="col">الخادم</th><th scope="col">حالة الاتصال</th><th scope="col">آخر تحقق UTC</th></tr></thead><tbody><tr><td>{s.account?.label||'اختر حسابًا'}</td><td dir="ltr">{s.account?.server||'—'}</td><td className={connection?.ok?'text-neon-green':'text-neon-gold'}>{s.symbolsLoading?'جارٍ التحقق…':connection?.ok?'نجح اتصال القراءة — الحساب والخادم متطابقان':connection?'تعذر التحقق من الاتصال':s.account?'جاهز للفحص — اضغط الزر أدناه':'لم يُفحص بعد'}</td><td dir="ltr">{connection?.at||'—'}</td></tr></tbody></table></div>
-      <p>يفحص الموقع الحساب والخادم في منصة MT5 المفتوحة ويقرأ قائمة الأصول. النتيجة تعبّر عن وقت الفحص الموضح، والتداول الآلي غير مفعّل.</p>
-      <button type="button" className={button} disabled={!s.account||s.loading||s.symbolsLoading||s.busy} onClick={()=>void c.checkConnection()}>{s.symbolsLoading?'جارٍ الفحص…':'التحقق من اتصال MT5'}</button>
+      <div className="overflow-x-auto rounded border border-border-primary"><table className={tableClass} aria-label="حالة اتصال الحساب"><thead><tr><th scope="col">الحساب</th><th scope="col">الخادم</th><th scope="col">حالة الاتصال</th><th scope="col">آخر تحقق UTC</th></tr></thead><tbody><tr><td dir="ltr">{s.account?.label||s.envCheck?.login||'—'}</td><td dir="ltr">{s.account?.server||s.envCheck?.server||'—'}</td><td className={connection?.ok?'text-neon-green':'text-neon-gold'}>{s.symbolsLoading?'جارٍ التحقق…':connection?.ok?'نجح اتصال القراءة — الحساب والخادم متطابقان':connection?'تعذر التحقق من الاتصال':s.account?'جاهز للفحص — اضغط الزر أدناه':'لم يُفحص بعد'}</td><td dir="ltr">{connection?.at||'—'}</td></tr></tbody></table></div>
+      <p>الحساب والخادم يُقرأان تلقائيًا من بطاقة اتصال المنصة، ويُفحص الموقع منصة MT5 المفتوحة ويقرأ قائمة الأصول. النتيجة تعبّر عن وقت الفحص الموضح، والتداول الآلي غير مفعّل.</p>
+      <button type="button" className={button} disabled={s.loading||s.symbolsLoading||s.busy} onClick={()=>{if(s.account)void c.checkConnection();else void c.checkEnvConnection();}}>{s.symbolsLoading?'جارٍ الفحص…':'التحقق من اتصال MT5'}</button>
     </div>}
-    {['assets','timing','evidence'].includes(s.section)&&!s.account&&!s.loading&&<p>اختر حسابًا أو أنشئ بيانات حسابك أولًا.</p>}
+    {['assets','timing','evidence'].includes(s.section)&&!s.account&&!s.loading&&<p>تبويبات الأصول والجلسات والأدلة تحتاج سجل حساب محفوظًا (مسودات)؛ قسم الاتصال يعمل الآن من بيانات المنصة دون أي سجل.</p>}
 
     {s.section==='assets'&&s.draft&&<fieldset disabled={s.busy||s.loading} className="space-y-3">
       <legend className="font-bold">أصول الحساب</legend>

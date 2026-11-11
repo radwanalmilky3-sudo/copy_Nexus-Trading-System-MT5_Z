@@ -8,6 +8,7 @@ from ..data_client import BrokerRequestRejected, DataServiceClient, DataServiceU
 from ..deps import get_data_service
 from ..middleware.auth import CurrentUser
 from .admin import _require
+from .env import _env_path, _parse_env_text, _read_env_text
 
 router=APIRouter(prefix='/api/brokers',tags=['broker settings'])
 
@@ -151,6 +152,33 @@ async def symbols(account_id:str,actor:CurrentUser,db:DataServiceClient=Depends(
         return {'symbols': await db.mt5_symbols(identity)}
     except DataServiceUnavailable:
         raise HTTPException(503,'MT5 symbol service unavailable') from None
+
+
+@router.get('/mt5-check')
+async def mt5_check(actor:CurrentUser,db:DataServiceClient=Depends(get_data_service)):
+    """System-level read-only MT5 check straight from the platform env card.
+
+    Owner request (2026-11-11): ``MT5_LOGIN``/``MT5_SERVER`` ARE the single
+    account record of this deployment — there is nothing to pick — so the
+    dashboard's connection table (الحساب/الخادم/حالة الاتصال/آخر تحقق UTC)
+    verifies those two values directly, without any per-account record.
+
+    A failed probe returns ``ok: false`` (still 200) so every table column can
+    still fill in; only an unreadable/absent ``.env`` raises an HTTP error.
+    Never places an order or changes any setting.
+    """
+    await _require(db,actor,'source_manager.view')
+    path=_env_path()
+    parsed=_parse_env_text(_read_env_text(path)) if path.exists() else {}
+    login=(parsed.get('MT5_LOGIN') or '').strip()
+    server=(parsed.get('MT5_SERVER') or '').strip()
+    if not login or not server:
+        raise HTTPException(409,'MT5_LOGIN و MT5_SERVER غير مضبوطين في بطاقة اتصال المنصة')
+    try:
+        rows=await db.mt5_symbols({'login':login,'server':server})
+    except DataServiceUnavailable:
+        return {'login':login,'server':server,'ok':False,'symbol_count':0,'symbols':[]}
+    return {'login':login,'server':server,'ok':True,'symbol_count':len(rows),'symbols':rows}
 
 
 @router.put('/accounts/{account_id}/settings')

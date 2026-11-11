@@ -17,10 +17,14 @@ export interface BrokerAccount {
 export interface BrokerProfile {profile_id:string;name:string;broker_name:string;accounts:BrokerAccount[]}
 export interface BrokerEvent {event_id:string;action:string;version:number;created_at:string;payload:unknown}
 export interface BrokerSymbol {category:string;name:string;description:string;path?:string;visible?:boolean}
+/** Read-only connection probe straight from the platform env card
+ * (MT5_LOGIN / MT5_SERVER) — no per-account record required. */
+export interface Mt5Check {login:string;server:string;ok:boolean;symbol_count:number;symbols:BrokerSymbol[]}
 export interface BrokerAPI {
   rememberedAccount?():string|null;
   rememberAccount?(id:string):void;
   identity():string;listProfiles():Promise<BrokerProfile[]>;
+  mt5Check?():Promise<Mt5Check>;
   createProfile(value:{name:string;broker_name:string}):Promise<BrokerProfile>;
   createAccount(value:AccountCreate):Promise<BrokerAccount>;
   getAccount(id:string):Promise<BrokerAccount>;

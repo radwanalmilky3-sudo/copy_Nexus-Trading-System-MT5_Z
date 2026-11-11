@@ -5,9 +5,12 @@ export interface BrokerState {
   profiles:BrokerProfile[];account:BrokerAccount|null;draft:AccountSettings|null;latest:BrokerAccount|null;events:BrokerEvent[];
   loading:boolean;busy:boolean;error:string;notice:string;section:Section;dirty:boolean;conflict:boolean;
   symbols:BrokerSymbol[];symbolsLoading:boolean;connectionCheck:{accountId:string;ok:boolean;at:string}|null;
+  /** Platform-env check (MT5_LOGIN/MT5_SERVER) — the single account of this
+   * deployment; fills الحساب/الخادم/حالة الاتصال/آخر تحقق without any picker. */
+  envCheck:{login:string;server:string;ok:boolean;at:string}|null;
   profileForm:{name:string;broker_name:string};accountForm:AccountCreate;
 }
-const initial=():BrokerState=>({selectedProfileId:'',editor:null,profiles:[],account:null,draft:null,latest:null,events:[],symbols:[],symbolsLoading:false,connectionCheck:null,loading:false,busy:false,error:'',notice:'',section:'connection',dirty:false,conflict:false,
+const initial=():BrokerState=>({selectedProfileId:'',editor:null,profiles:[],account:null,draft:null,latest:null,events:[],symbols:[],symbolsLoading:false,connectionCheck:null,envCheck:null,loading:false,busy:false,error:'',notice:'',section:'connection',dirty:false,conflict:false,
   profileForm:{name:'',broker_name:''},accountForm:{profile_id:'',label:'',server:'',login:'',account_kind:'demo'}});
 function message(error:unknown):string{
   const code=(error as {status?:number})?.status;
@@ -37,6 +40,10 @@ export function createBrokerController(api:BrokerAPI){
         const remembered=api.rememberedAccount?.();
         const target=remembered&&all.some(a=>a.account_id===remembered)?remembered:all.length===1?all[0].account_id:null;
         if(target){if(target!==remembered){try{api.rememberAccount?.(target);}catch{ /* storage blocked — selection still applies for this session */ }}await controller.selectAccount(target);}
+        /* No saved account record (owner request 2026-11-11): the platform
+         * env card IS the account, so verify MT5_LOGIN/MT5_SERVER directly —
+         * the connection table then auto-fills with zero pickers. */
+        else if(api.mt5Check){await controller.checkEnvConnection();}
       }}
       catch(e){if(valid(ticket))emit({error:message(e)});}finally{if(valid(ticket))emit({loading:false,busy:false});}},
     async selectAccount(id:string){checkIdentity();const ticket=++epoch;emit({account:null,draft:null,latest:null,events:[],symbols:[],symbolsLoading:false,dirty:false,conflict:false,error:'',notice:'',loading:!!id,busy:false});
@@ -46,6 +53,18 @@ export function createBrokerController(api:BrokerAPI){
         if(valid(ticket))await controller.checkConnection();}
       catch(e){if(valid(ticket))emit({error:message(e)});}finally{if(valid(ticket))emit({loading:false});}},
     setSection:(section:Section)=>emit({section}),
+    /** Read-only probe of MT5_LOGIN/MT5_SERVER from the platform env card.
+     * Fills the connection table (الحساب/الخادم/حالة الاتصال/آخر تحقق) and the
+     * symbol list without needing any per-account record or picker. */
+    async checkEnvConnection(){if(checkIdentity()||state.symbolsLoading||!api.mt5Check)return;
+      const ticket=epoch;emit({symbolsLoading:true,error:''});
+      try{const r=await api.mt5Check();if(!valid(ticket))return;
+        emit({envCheck:{login:r.login,server:r.server,ok:r.ok,at:new Date().toISOString()},
+          symbols:r.ok?r.symbols:state.symbols,
+          error:r.ok?'':'تعذر التحقق من اتصال MT5. تأكد من فتح المنصة على الحساب والخادم في بطاقة المنصة ثم أعد الفحص.'});}
+      catch(e){if(valid(ticket))emit({envCheck:null,
+        error:(e as {status?:number})?.status===409?'MT5_LOGIN و MT5_SERVER غير مضبوطين في بطاقة اتصال المنصة — أضِفهما ثم أعد الفحص.':'تعذر الوصول إلى فحص اتصال MT5. أعد المحاولة بعد تشغيل الواجهة الخلفية.'});}
+      finally{if(valid(ticket))emit({symbolsLoading:false});}},
     async syncSessions(){if(checkIdentity()||!state.account||state.busy||state.dirty||!api.syncSessions)return;
       const ticket=epoch,id=state.account.account_id;emit({busy:true,error:'',notice:''});
       try{const result=await api.syncSessions(id);if(!valid(ticket))return;accept(result.account);
