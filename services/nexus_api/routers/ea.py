@@ -13,6 +13,7 @@ Security model:
 """
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 import os
@@ -247,19 +248,29 @@ async def poll(
 
 # ── MT5 native economic calendar bridge ─────────────────────────────────────
 
+# Shared client for forwarding to nexus-news. Creating an httpx.AsyncClient
+# per request re-resolves environment proxies on every call (seconds on
+# Windows) and drops keep-alive reuse — measured 1.5–5 s per EA calendar
+# chunk, which tripped the EA's hard ~10 s WebRequest limit (status 1003).
+# Reversal: restore the per-request `async with httpx.AsyncClient(...)`.
+_news_forward_client: httpx.AsyncClient | None = None
+
+
 async def _forward_to_news(path: str, payload: dict[str, Any]) -> tuple[int, dict[str, Any]]:
     """POST an internal payload to nexus-news; returns (status, body)."""
+    global _news_forward_client
     secret = os.getenv("NEXUS_INTERNAL_API_SECRET", "").strip()
     if not secret:
         raise HTTPException(503, "NEXUS_INTERNAL_API_SECRET missing — internal forwarding disabled")
     url = os.getenv("NEXUS_NEWS_URL", "http://127.0.0.1:9005").rstrip("/") + path
+    if _news_forward_client is None or _news_forward_client.is_closed:
+        _news_forward_client = httpx.AsyncClient(timeout=30.0, trust_env=False)
     try:
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            response = await client.post(
-                url,
-                headers={"X-Nexus-Internal-Secret": secret},
-                json=payload,
-            )
+        response = await _news_forward_client.post(
+            url,
+            headers={"X-Nexus-Internal-Secret": secret},
+            json=payload,
+        )
     except httpx.HTTPError as exc:
         raise HTTPException(502, f"nexus-news unreachable: {exc}") from exc
     try:
@@ -287,7 +298,10 @@ async def calendar_batch(
         detail = body.get("detail") if isinstance(body, dict) else None
         raise HTTPException(status_code=502 if status >= 500 else 422,
                             detail=detail or f"nexus-news rejected the batch (HTTP {status})")
-    await _audit(user_id, "ea.calendar_batch", "api_token", token_id, {
+    # Audit asynchronously: the EA's WebRequest has a hard ~10 s read-timeout
+    # and the nexus-data audit write can take seconds under load. The audit is
+    # observability, not a gate — never make the EA wait for it.
+    asyncio.create_task(_audit(user_id, "ea.calendar_batch", "api_token", token_id, {
         "events": len(payload.events), "chunk": payload.chunk_index,
-    })
+    }))
     return {"ok": True, "accepted": body.get("accepted", 0), "has_more": payload.has_more}

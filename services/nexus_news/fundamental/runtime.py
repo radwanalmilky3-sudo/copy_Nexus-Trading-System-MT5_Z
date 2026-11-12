@@ -183,6 +183,14 @@ class FundamentalRuntime:
         self._outcome_collector = AssetOutcomeCollector(self._client, self.data_url, self._persist)
 
         self._calendar: list[CalendarEvent] = []
+        # Persist-dedupe state: event_id -> value signature already written.
+        # The web poll re-runs on_calendar every ~5 min and the MT5 bridge
+        # re-sends the merged set; without dedupe every pass re-POSTs 100+
+        # records (~0.3s each = minutes of blocking HTTP) — observed
+        # 2026-11-12 as ingest latency >60s, nexus-api 502 forward timeouts
+        # and EA WebRequest read-timeout (1003).
+        self._persisted_calendar: dict[str, tuple] = {}
+        self._calendar_macro_cache: dict[str, dict] = {}
         self._news: list[NewsItem] = []
         self._macro_records: list[dict[str, Any]] = []
         self._macro_official_records: list[dict[str, Any]] = []
@@ -590,6 +598,10 @@ class FundamentalRuntime:
         })
         await self._publish_source_health()
 
+    def mt5_events(self) -> list:
+        """MT5-sourced events currently held in memory (web poll preserves them)."""
+        return [e for e in self._calendar if e.source == "calendar_mt5"]
+
     async def on_calendar(self, events: list[CalendarEvent]) -> None:
         async with self._lock:
             self._calendar = sorted(events, key=lambda x: x.timestamp)
@@ -605,13 +617,33 @@ class FundamentalRuntime:
             self._set_source_health("calendar_secondary", ProviderHealth.HEALTHY, "تم تحديث التقويم الاقتصادي الحقيقي بنجاح.", received=len(events), accepted=len(events), success=True)
 
             macro: list[dict[str, Any]] = []
+            persisted = skipped = 0
             for e in self._calendar:
                 ev = calendar_event_record(e)
-                await self._persist("fund_events", ev)
+                sig = (e.impact, e.actual, e.forecast, e.previous, str(e.timestamp))
+                if self._persisted_calendar.get(ev["event_id"]) == sig:
+                    # Unchanged since the last successful pass — reuse the
+                    # cached macro record and skip every HTTP persist.
+                    cached = self._calendar_macro_cache.get(ev["event_id"])
+                    if cached is not None:
+                        macro.append(cached)
+                        skipped += 1
+                        continue
+                failed = False
+                if not await self._persist("fund_events", ev):
+                    failed = True
                 rec = calendar_to_macro(e)
-                if rec:
-                    now_known = _utcnow()
-                    if rec.get("forecast") is not None:
+                if rec is None:
+                    # Nothing macro-shaped to persist; still record the
+                    # fund_events outcome so we don't retry forever.
+                    if not failed:
+                        self._persisted_calendar[ev["event_id"]] = sig
+                        self._calendar_macro_cache[ev["event_id"]] = {}
+                        persisted += 1
+                    macro.append({})
+                    continue
+                now_known = _utcnow()
+                if rec.get("forecast") is not None:
                         await self._persist("event_expectations", {
                             "expectation_id": stable_event_id("exp", ev["event_id"], "calendar_secondary", e.timestamp.isoformat()),
                             "event_id": ev["event_id"],
@@ -623,28 +655,35 @@ class FundamentalRuntime:
                             "freshness_score": 80.0,
                             "quality_score": 65.0,
                         })
-                    for field_name in ("actual", "previous"):
-                        value = rec.get(field_name)
-                        if value is not None:
-                            await self._persist("data_vintages", {
-                                "vintage_id": stable_event_id("vintage", ev["event_id"], field_name, value),
-                                "event_id": ev["event_id"],
-                                "source_id": "calendar_secondary",
-                                "field_name": field_name,
-                                "value_numeric": value,
-                                "source_published_at": e.timestamp,
-                                "known_at": now_known,
-                                "revision_number": 0,
-                            })
-                    # Persist only DB columns; engine provenance fields remain live-only.
-                    db_macro = {k: v for k, v in rec.items() if k in {
-                        "event_id", "indicator_code", "indicator_name_en", "indicator_name_ar", "frequency", "unit", "actual", "forecast", "previous",
-                        "first_release_value", "revised_previous", "latest_value", "consensus_low", "consensus_high", "surprise_absolute", "surprise_percent",
-                        "surprise_zscore", "revision_effect_score", "historical_importance", "gold_relevance", "rate_implication_score", "usd_implication_score",
-                        "yield_implication_score", "gold_implication_score", "release_timestamp", "revision_timestamp",
-                    }}
-                    await self._persist("macro_releases", db_macro)
-                    macro.append(rec)
+                for field_name in ("actual", "previous"):
+                    value = rec.get(field_name)
+                    if value is not None:
+                        await self._persist("data_vintages", {
+                            "vintage_id": stable_event_id("vintage", ev["event_id"], field_name, value),
+                            "event_id": ev["event_id"],
+                            "source_id": "calendar_secondary",
+                            "field_name": field_name,
+                            "value_numeric": value,
+                            "source_published_at": e.timestamp,
+                            "known_at": now_known,
+                            "revision_number": 0,
+                        })
+                # Persist only DB columns; engine provenance fields remain live-only.
+                db_macro = {k: v for k, v in rec.items() if k in {
+                    "event_id", "indicator_code", "indicator_name_en", "indicator_name_ar", "frequency", "unit", "actual", "forecast", "previous",
+                    "first_release_value", "revised_previous", "latest_value", "consensus_low", "consensus_high", "surprise_absolute", "surprise_percent",
+                    "surprise_zscore", "revision_effect_score", "historical_importance", "gold_relevance", "rate_implication_score", "usd_implication_score",
+                    "yield_implication_score", "gold_implication_score", "release_timestamp", "revision_timestamp",
+                }}
+                await self._persist("macro_releases", db_macro)
+                if failed:
+                    continue  # retry this event on the next pass
+                self._persisted_calendar[ev["event_id"]] = sig
+                self._calendar_macro_cache[ev["event_id"]] = rec
+                persisted += 1
+                macro.append(rec)
+            if skipped:
+                log.info("fundamental.calendar_persist_deduped", persisted=persisted, skipped=skipped)
             self._macro_records = macro[-200:]
             if self._blackout.get("active"):
                 await self._persist_blackout(self._blackout)

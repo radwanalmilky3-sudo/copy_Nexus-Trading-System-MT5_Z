@@ -130,6 +130,7 @@ async def lifespan(app: FastAPI):
             tasks.append(asyncio.create_task(_news_poll_loop()))
             tasks.append(asyncio.create_task(_calendar_poll_loop()))
             tasks.append(asyncio.create_task(_heartbeat_loop()))
+            tasks.append(asyncio.create_task(_mt5_calendar_worker()))
 
             # Canonical fundamental source loop. The legacy sentinel is intentionally
             # not started: blackout state is now owned by FundamentalRuntime.
@@ -289,6 +290,50 @@ async def analyze_text(
 
 # ── POST /api/internal/calendar/mt5 — MT5 native calendar bridge ────────────
 
+# The MT5 EA's WebRequest has a hard ~10s read-timeout (returns 1003) that
+# ignores the configured timeout. Persistence of a 40-event chunk can exceed
+# that when nexus-data is slow (persist retries), so the endpoint ACKs
+# immediately and a single worker drains the queue: the EA's chunk chain
+# never blocks on storage, and the sync cursor advances only AFTER the batch
+# is processed (an interrupted chain resumes on the next full-window sync).
+_mt5_cal_queue: "asyncio.Queue[tuple[list, bool]]" = asyncio.Queue(maxsize=64)
+
+
+async def _mt5_calendar_worker() -> None:
+    while True:
+        mt5_events, has_more = await _mt5_cal_queue.get()
+        try:
+            from .fundamental.mt5_calendar import SOURCE_ID, sync_cursor_key
+
+            merged = merge_mt5_primary_ref(mt5_events, _latest_calendar)
+            if _fundamental and mt5_events:
+                await _fundamental.on_calendar(merged)
+            if _fundamental and not merged and not mt5_events:
+                # Nothing new from MT5 and no prior calendar: keep the
+                # degraded blackout state truthful instead of silently
+                # clearing it.
+                await _fundamental.on_calendar_failure(
+                    RuntimeError("MT5 calendar batch empty; no web fallback yet"))
+            if _redis and not has_more:
+                try:
+                    await _redis.set(
+                        sync_cursor_key(),
+                        str(int(datetime.now(timezone.utc).timestamp())))
+                except Exception as exc:  # cursor loss only widens the window
+                    log.warning("mt5_calendar.cursor_write_failed", error=str(exc))
+            log.info("mt5_calendar.processed", source=SOURCE_ID,
+                     accepted=len(mt5_events), merged_total=len(merged),
+                     has_more=has_more)
+        except Exception:
+            log.exception("mt5_calendar.process_error")
+        finally:
+            _mt5_cal_queue.task_done()
+
+
+# Set by the startup hook; avoids importing the merge helper at module load.
+merge_mt5_primary_ref = None
+
+
 @app.post("/api/internal/calendar/mt5")
 async def mt5_calendar_ingest(
     payload: dict,
@@ -305,8 +350,10 @@ async def mt5_calendar_ingest(
     verify_internal_service_secret(x_nexus_internal_secret)
     from .fundamental.mt5_calendar import (
         SOURCE_ID, merge_mt5_primary, parse_mt5_calendar_payload,
-        sync_cursor_key,
     )
+
+    global merge_mt5_primary_ref  # noqa: PLW0603
+    merge_mt5_primary_ref = merge_mt5_primary
 
     try:
         mt5_events = parse_mt5_calendar_payload(payload)
@@ -314,29 +361,20 @@ async def mt5_calendar_ingest(
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     has_more = bool(payload.get("has_more"))
-    merged = merge_mt5_primary(mt5_events, _latest_calendar)
     accepted = len(mt5_events)
+    merged_total = len(merge_mt5_primary(mt5_events, _latest_calendar))
 
-    if _fundamental and merged:
-        await _fundamental.on_calendar(merged)
-    if _fundamental and not merged and not mt5_events:
-        # Nothing new from MT5 and no prior calendar: keep the degraded
-        # blackout state truthful instead of silently clearing it.
-        await _fundamental.on_calendar_failure(
-            RuntimeError("MT5 calendar batch empty; no web fallback yet"))
-
-    # Advance the sync cursor only when the whole batch chain is done, so an
-    # interrupted multi-chunk sync resumes instead of skipping events.
-    if _redis and not has_more:
-        try:
-            await _redis.r.set(sync_cursor_key(), int(datetime.now(timezone.utc).timestamp()))
-        except Exception as exc:  # cursor loss only widens the next window
-            log.warning("mt5_calendar.cursor_write_failed", error=str(exc))
+    # ACK immediately; the worker owns storage latency (see queue comment).
+    try:
+        _mt5_cal_queue.put_nowait((mt5_events, has_more))
+    except asyncio.QueueFull:
+        log.warning("mt5_calendar.queue_full_dropped", accepted=accepted,
+                    has_more=has_more)
 
     log.info("mt5_calendar.ingested", source=SOURCE_ID, accepted=accepted,
-             merged_total=len(merged), has_more=has_more)
+             merged_total=merged_total, has_more=has_more)
     return {"ok": True, "source": SOURCE_ID, "accepted": accepted,
-            "merged_total": len(merged), "has_more": has_more}
+            "merged_total": merged_total, "has_more": has_more}
 
 
 # ── Sentinel endpoints (Fase 4) ───────────────────────────────────────────────
@@ -473,12 +511,24 @@ async def _calendar_poll_loop() -> None:
                 events = await _calendar.fetch_calendar()
                 if not events:
                     raise RuntimeError("calendar providers returned no events; safety state cannot be certified")
-                _latest_calendar = sorted(
+                web_events = sorted(
                     events, key=lambda e: e.timestamp,
+                )
+                # Preserve MT5-native events across the web poll: the web
+                # fetch replaces the whole calendar by default, which used to
+                # drop the MT5 primary source from the published DTO until
+                # the next EA sync re-merged it (cache oscillation).
+                from .fundamental.mt5_calendar import merge_mt5_primary
+                merged = merge_mt5_primary(
+                    _fundamental.mt5_events() if _fundamental else [],
+                    web_events)
+                _latest_calendar = sorted(
+                    merged, key=lambda e: e.timestamp,
                 )
                 if _fundamental:
                     await _fundamental.on_calendar(_latest_calendar)
-                log.info("calendar_poll_ok", count=len(events))
+                log.info("calendar_poll_ok", count=len(events),
+                         merged_total=len(_latest_calendar))
         except asyncio.CancelledError:
             break
         except Exception as exc:

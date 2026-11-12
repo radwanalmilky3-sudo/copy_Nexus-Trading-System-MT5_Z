@@ -52,7 +52,7 @@ def test_lifespan_releases_resources_and_owns_tasks_per_start(failure):
         SocialSentiment=lambda **kwargs: object(), FundamentalRuntime=Resource,
         REDIS_URL="unused", NEWSAPI_KEY="", GNEWS_KEY="", USE_FINBERT=False,
         _bg_tasks=[], _news_poll_loop=worker, _calendar_poll_loop=worker,
-        _heartbeat_loop=worker,
+        _heartbeat_loop=worker, _mt5_calendar_worker=worker,
     )
     exec(compile(ast.Module(body=[lifespan], type_ignores=[]), str(source), "exec"), namespace)
 
@@ -64,7 +64,7 @@ def test_lifespan_releases_resources_and_owns_tasks_per_start(failure):
                 async with namespace["lifespan"](None):
                     tasks = namespace["_bg_tasks"]
                     assert tasks is not previous
-                    assert len(tasks) == 4
+                    assert len(tasks) == 5
                     runs.append(tuple(tasks))
                     previous = tasks
                     await asyncio.sleep(0)
@@ -80,6 +80,6 @@ def test_lifespan_releases_resources_and_owns_tasks_per_start(failure):
             assert namespace["_bg_tasks"] == []
             assert all(resource.closed for resource in resources[start:])
             assert all(task.done() for tasks in runs for task in tasks)
-        assert len(stopped) == (0 if failure == "initialize" else 8)
+        assert len(stopped) == (0 if failure == "initialize" else 10)
 
     asyncio.run(exercise())
