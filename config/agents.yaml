@@ -49,7 +49,7 @@ agents:
     role: >
       Analyzes cross-asset correlations, bond yields, commodities, and indices
       to identify macro regimes and intermarket divergences.
-    model_local: qwen2.5:32b
+    model_local: qwen2.5:0.5b
     enabled: true
     max_tokens: 800
     temperature: 0.3
@@ -88,7 +88,7 @@ agents:
     role: >
       Constructs the strongest possible bullish thesis using all available data.
       Argues for long entries or against short entries with conviction scoring.
-    model_local: qwen2.5:32b
+    model_local: qwen2.5:0.5b
     enabled: true
     max_tokens: 800
     temperature: 0.5
@@ -106,7 +106,7 @@ agents:
     role: >
       Constructs the strongest possible bearish thesis using all available data.
       Argues for short entries or against long entries with conviction scoring.
-    model_local: qwen2.5:32b
+    model_local: qwen2.5:0.5b
     enabled: true
     max_tokens: 800
     temperature: 0.5
