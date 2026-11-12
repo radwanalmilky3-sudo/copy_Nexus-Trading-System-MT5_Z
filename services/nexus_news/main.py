@@ -287,6 +287,58 @@ async def analyze_text(
     )
 
 
+# ── POST /api/internal/calendar/mt5 — MT5 native calendar bridge ────────────
+
+@app.post("/api/internal/calendar/mt5")
+async def mt5_calendar_ingest(
+    payload: dict,
+    x_nexus_internal_secret: str | None = Header(default=None),
+):
+    """Ingest one batch of MT5-native economic calendar events (EA bridge).
+
+    MT5 is the PRIMARY calendar source: parsed events replace matching web
+    events, the merged set drives blackout + persistence + Redis publish via
+    the existing on_calendar() path.  An empty MT5 batch is accepted honestly
+    (it must NOT empty the calendar — absence of MT5 data is not evidence of
+    absence of events).
+    """
+    verify_internal_service_secret(x_nexus_internal_secret)
+    from .fundamental.mt5_calendar import (
+        SOURCE_ID, merge_mt5_primary, parse_mt5_calendar_payload,
+        sync_cursor_key,
+    )
+
+    try:
+        mt5_events = parse_mt5_calendar_payload(payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+    has_more = bool(payload.get("has_more"))
+    merged = merge_mt5_primary(mt5_events, _latest_calendar)
+    accepted = len(mt5_events)
+
+    if _fundamental and merged:
+        await _fundamental.on_calendar(merged)
+    if _fundamental and not merged and not mt5_events:
+        # Nothing new from MT5 and no prior calendar: keep the degraded
+        # blackout state truthful instead of silently clearing it.
+        await _fundamental.on_calendar_failure(
+            RuntimeError("MT5 calendar batch empty; no web fallback yet"))
+
+    # Advance the sync cursor only when the whole batch chain is done, so an
+    # interrupted multi-chunk sync resumes instead of skipping events.
+    if _redis and not has_more:
+        try:
+            await _redis.r.set(sync_cursor_key(), int(datetime.now(timezone.utc).timestamp()))
+        except Exception as exc:  # cursor loss only widens the next window
+            log.warning("mt5_calendar.cursor_write_failed", error=str(exc))
+
+    log.info("mt5_calendar.ingested", source=SOURCE_ID, accepted=accepted,
+             merged_total=len(merged), has_more=has_more)
+    return {"ok": True, "source": SOURCE_ID, "accepted": accepted,
+            "merged_total": len(merged), "has_more": has_more}
+
+
 # ── Sentinel endpoints (Fase 4) ───────────────────────────────────────────────
 
 @app.get(

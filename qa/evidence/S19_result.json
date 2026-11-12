@@ -1,0 +1,261 @@
+{
+ "screen_id": "S19",
+ "route": "/nexus/models",
+ "hash": "",
+ "started_at": "2026-11-12T13:06:10.696Z",
+ "elements": [
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "PAPER",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الثيم الغامق — اضغط للفاتح",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "OOwnersuper_admin",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تفاصيل النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "مقارنة النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "MLXGBoost + LightGBM",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "DLTransformer Encoder",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "RLPPO Agent",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "HMMRegime Detector",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تحديث",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تدريب (Train)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "التداول",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الاستراتيجيات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "السجل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الإعدادات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "متابعة QA",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "tab",
+   "tag": "button",
+   "name": "تفاصيل النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "tab",
+   "tag": "button",
+   "name": "مقارنة النماذج",
+   "id": "",
+   "disabled": false
+  }
+ ],
+ "menus": [],
+ "tests": [
+  {
+   "kind": "tab",
+   "target": "تفاصيل النماذج",
+   "status": "PASS",
+   "detail": "فتح دون أخطاء",
+   "evidence": "tab[0]"
+  },
+  {
+   "kind": "tab",
+   "target": "مقارنة النماذج",
+   "status": "PASS",
+   "detail": "فتح دون أخطاء",
+   "evidence": "tab[1]"
+  },
+  {
+   "kind": "button",
+   "target": "PAPER",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[0]"
+  },
+  {
+   "kind": "button",
+   "target": "Paper Trading",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "OOwnersuper_admin",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[5]"
+  },
+  {
+   "kind": "button",
+   "target": "تفاصيل النماذج",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[6]"
+  },
+  {
+   "kind": "keyboard",
+   "target": "Tab×2",
+   "status": "PASS",
+   "detail": "focus→BUTTON",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Escape",
+   "status": "PASS",
+   "detail": "أُرسل دون أثر جانبي",
+   "evidence": ""
+  }
+ ],
+ "console_errors": [],
+ "page_errors": [],
+ "network_errors": [],
+ "screenshots": {
+  "desktop": "qa/ui_shots/S19_desktop.png",
+  "mobile": "qa/ui_shots/S19_mobile.png"
+ },
+ "notes": [],
+ "final_url": "http://127.0.0.1:3100/nexus/models",
+ "page_meta": {
+  "title": "يمن سمارت — طرفية التداول الذكية",
+  "rtl": "rtl",
+  "tables": 2,
+  "charts": 0
+ },
+ "finished_at": "2026-11-12T13:06:46.984Z",
+ "summary": {
+  "elements": 21,
+  "menus": 0,
+  "tests": 11,
+  "pass": 7,
+  "fail": 0,
+  "blocked": 0,
+  "not_tested": 4,
+  "not_applicable": 0
+ }
+}

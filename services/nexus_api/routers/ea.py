@@ -15,8 +15,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import secrets
 import uuid
+
+import httpx
 from datetime import datetime, timezone
 from typing import Any
 
@@ -35,6 +38,33 @@ UTC = timezone.utc
 TOKEN_PREFIX = "nexus_ea_"
 
 ALLOWED_ACTIONS = {"OPEN", "MODIFY", "CLOSE", "PARTIAL_CLOSE"}
+
+
+class Mt5CalendarEventIn(BaseModel):
+    """One MqlCalendarValue joined with its event/country metadata."""
+
+    model_config = {"extra": "ignore"}
+    id: int | None = None
+    name: str = Field(min_length=1, max_length=256)
+    country: str | None = Field(default=None, max_length=64)
+    currency: str = Field(min_length=2, max_length=16)
+    importance: int = Field(default=0, ge=0, le=3)
+    time: int = Field(ge=0)                     # unix, TRADE SERVER time
+    period: int | None = Field(default=None, ge=0)
+    actual: float | None = None
+    forecast: float | None = None
+    previous: float | None = None
+    revised_previous: float | None = None
+    updated: int | None = Field(default=None, ge=0)
+
+
+class Mt5CalendarBatchIn(BaseModel):
+    model_config = {"extra": "ignore"}
+    events: list[Mt5CalendarEventIn] = Field(max_length=200)
+    server_offset_sec: int = Field(default=0, ge=-14 * 3600, le=14 * 3600)
+    chunk_index: int = Field(default=0, ge=0)
+    has_more: bool = False
+    terminal_time: int | None = Field(default=None, ge=0)
 
 
 class TokenCreateIn(BaseModel):
@@ -213,3 +243,51 @@ async def poll(
             "payload": json.loads(cmd.get("payload_json") or "{}"),
         })
     return {"ok": True, "commands": claimed, "server_time": now.isoformat()}
+
+
+# ── MT5 native economic calendar bridge ─────────────────────────────────────
+
+async def _forward_to_news(path: str, payload: dict[str, Any]) -> tuple[int, dict[str, Any]]:
+    """POST an internal payload to nexus-news; returns (status, body)."""
+    secret = os.getenv("NEXUS_INTERNAL_API_SECRET", "").strip()
+    if not secret:
+        raise HTTPException(503, "NEXUS_INTERNAL_API_SECRET missing — internal forwarding disabled")
+    url = os.getenv("NEXUS_NEWS_URL", "http://127.0.0.1:9005").rstrip("/") + path
+    try:
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            response = await client.post(
+                url,
+                headers={"X-Nexus-Internal-Secret": secret},
+                json=payload,
+            )
+    except httpx.HTTPError as exc:
+        raise HTTPException(502, f"nexus-news unreachable: {exc}") from exc
+    try:
+        return response.status_code, response.json()
+    except ValueError:
+        return response.status_code, {}
+
+
+@router.post("/api/ea/calendar")
+async def calendar_batch(
+    payload: Mt5CalendarBatchIn,
+    identity: tuple[str, str] = Depends(ea_identity),
+    db: DataServiceClient = Depends(get_data_service),
+):
+    """Receive one batch of MT5-native calendar events from the EA bridge.
+
+    The EA pulls CalendarValueHistory inside the terminal (times in TRADE
+    SERVER time) and posts chunks here.  The batch is validated then forwarded
+    to nexus-news (/api/internal/calendar/mt5) which owns the fundamental
+    pipeline: blackout windows, Redis publish, DuckDB persistence.
+    """
+    user_id, token_id = identity
+    status, body = await _forward_to_news("/api/internal/calendar/mt5", payload.model_dump())
+    if status >= 400:
+        detail = body.get("detail") if isinstance(body, dict) else None
+        raise HTTPException(status_code=502 if status >= 500 else 422,
+                            detail=detail or f"nexus-news rejected the batch (HTTP {status})")
+    await _audit(user_id, "ea.calendar_batch", "api_token", token_id, {
+        "events": len(payload.events), "chunk": payload.chunk_index,
+    })
+    return {"ok": True, "accepted": body.get("accepted", 0), "has_more": payload.has_more}

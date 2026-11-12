@@ -1,0 +1,18 @@
+{
+ "screens_total": 28,
+ "work_queued": 1,
+ "work_in_progress": 0,
+ "work_completed": 27,
+ "work_blocked": 0,
+ "tests_executed": 222,
+ "pass": 220,
+ "fail": 2,
+ "blocked": 24,
+ "not_tested": 200,
+ "not_applicable": 101,
+ "issues_critical": 0,
+ "issues_high": 0,
+ "issues_medium": 0,
+ "issues_low": 0,
+ "issues_info": 0
+}

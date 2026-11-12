@@ -188,6 +188,14 @@ OFFICIAL_SOURCES: tuple[SourceDefinition, ...] = (
         polling_interval_sec=300, freshness_limit_sec=900, trust_score=65, storage_allowed=True,
     ),
     SourceDefinition(
+        # MT5 native economic calendar (CalendarValueHistory via the EA bridge).
+        # Times arrive in TRADE SERVER time and are normalized to UTC with the
+        # reported server offset. Highest trust: it is the broker's own feed.
+        "calendar_mt5", "التقويم الاقتصادي من MetaTrader 5", "MT5 Native Economic Calendar", "MetaTrader 5 terminal",
+        "calendar", "mt5_bridge", None, "https://www.mql5.com/en/docs/economic_calendar/calendarvaluehistory",
+        polling_interval_sec=300, freshness_limit_sec=900, trust_score=95, storage_allowed=True,
+    ),
+    SourceDefinition(
         "news_secondary", "مصدر أخبار ثانوي", "Secondary News Source", "External publisher",
         "news", "api", None, None, polling_interval_sec=60, freshness_limit_sec=900,
         trust_score=60, storage_allowed=False,

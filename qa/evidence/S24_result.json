@@ -1,0 +1,323 @@
+{
+ "screen_id": "S24",
+ "route": "/nexus/strategies",
+ "hash": "",
+ "started_at": "2026-11-12T13:34:12.013Z",
+ "elements": [
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "SYNC…",
+   "id": "",
+   "disabled": true
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الثيم الغامق — اضغط للفاتح",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تحديث",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تشغيل دورة البحث",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الكل (0)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "نشط (0)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "مُختبر خلفياً (0)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "قيد البحث (0)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "مرفوض (0)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "عامل الربح ↓",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "نسبة الفوز",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "شارب",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "أقصى تراجع",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الربح",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الصفقات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "التداول",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الاستراتيجيات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "السجل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الإعدادات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "متابعة QA",
+   "id": "",
+   "disabled": false
+  }
+ ],
+ "menus": [],
+ "tests": [
+  {
+   "kind": "button",
+   "target": "SYNC…",
+   "status": "PASS",
+   "detail": "معطّل — تحقق من عدم التنفيذ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[1]"
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[2]"
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[3]"
+  },
+  {
+   "kind": "button",
+   "target": "تشغيل دورة البحث",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الكل (0)",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[5]"
+  },
+  {
+   "kind": "button",
+   "target": "نشط (0)",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[6]"
+  },
+  {
+   "kind": "button",
+   "target": "مُختبر خلفياً (0)",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[7]"
+  },
+  {
+   "kind": "button",
+   "target": "قيد البحث (0)",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[8]"
+  },
+  {
+   "kind": "button",
+   "target": "مرفوض (0)",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[9]"
+  },
+  {
+   "kind": "button",
+   "target": "عامل الربح ↓",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "نسبة الفوز",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "شارب",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "أقصى تراجع",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الربح",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الصفقات",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Tab×2",
+   "status": "PASS",
+   "detail": "focus→BUTTON",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Escape",
+   "status": "PASS",
+   "detail": "أُرسل دون أثر جانبي",
+   "evidence": ""
+  }
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+  "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+  "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+  "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+  "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+ ],
+ "page_errors": [],
+ "network_errors": [],
+ "screenshots": {
+  "desktop": "qa/ui_shots/S24_desktop.png",
+  "mobile": "qa/ui_shots/S24_mobile.png"
+ },
+ "notes": [],
+ "final_url": "http://127.0.0.1:3100/nexus/strategies",
+ "page_meta": {
+  "title": "يمن سمارت — طرفية التداول الذكية",
+  "rtl": "rtl",
+  "tables": 0,
+  "charts": 0
+ },
+ "finished_at": "2026-11-12T13:34:45.376Z",
+ "summary": {
+  "elements": 22,
+  "menus": 0,
+  "tests": 18,
+  "pass": 11,
+  "fail": 0,
+  "blocked": 0,
+  "not_tested": 7,
+  "not_applicable": 0
+ }
+}

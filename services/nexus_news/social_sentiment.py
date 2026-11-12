@@ -83,14 +83,22 @@ async def _get_finbert() -> Any | None:
             return _finbert_pipeline
 
         try:
-            from transformers import pipeline as hf_pipeline
-            _finbert_pipeline = await asyncio.to_thread(
-                hf_pipeline,
-                "sentiment-analysis",
-                model="ProsusAI/finbert",
-                tokenizer="ProsusAI/finbert",
-                device=-1,
-            )
+            # QA (MASTER PROMPT V4.1, LAZY-IMPORT-BLOCK): the transformers
+            # import itself (torch/scipy chain) took ~10 min on first cold
+            # start and blocked the event loop — the uvicorn socket died
+            # while background loops lived. Run the import inside the
+            # worker thread, not on the loop. Reversible: inline the import.
+            def _load() -> Any:
+                from transformers import pipeline as hf_pipeline
+
+                return hf_pipeline(
+                    "sentiment-analysis",
+                    model="ProsusAI/finbert",
+                    tokenizer="ProsusAI/finbert",
+                    device=-1,
+                )
+
+            _finbert_pipeline = await asyncio.to_thread(_load)
             log.info("finbert_loaded")
             return _finbert_pipeline
         except Exception as exc:

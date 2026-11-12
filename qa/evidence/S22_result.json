@@ -1,0 +1,219 @@
+{
+ "screen_id": "S22",
+ "route": "/nexus/research-lab",
+ "hash": "",
+ "started_at": "2026-11-12T13:24:28.017Z",
+ "elements": [
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "PAPER",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الثيم الغامق — اضغط للفاتح",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "OOwnersuper_admin",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "كتم الصوت",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تأكيد",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تأكيد",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تأكيد",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تأكيد",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "التداول",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الاستراتيجيات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "السجل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الإعدادات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "متابعة QA",
+   "id": "",
+   "disabled": false
+  }
+ ],
+ "menus": [],
+ "tests": [
+  {
+   "kind": "button",
+   "target": "PAPER",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[1]"
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[2]"
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[3]"
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[4]"
+  },
+  {
+   "kind": "button",
+   "target": "تأكيد",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[5]"
+  },
+  {
+   "kind": "button",
+   "target": "حفظ الكل",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الوسيط والحسابات",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[7]"
+  },
+  {
+   "kind": "button",
+   "target": "جسر MT5",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[8]"
+  },
+  {
+   "kind": "keyboard",
+   "target": "Tab×2",
+   "status": "PASS",
+   "detail": "focus→BUTTON",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Escape",
+   "status": "PASS",
+   "detail": "أُرسل دون أثر جانبي",
+   "evidence": ""
+  }
+ ],
+ "console_errors": [],
+ "page_errors": [],
+ "network_errors": [],
+ "screenshots": {
+  "desktop": "qa/ui_shots/S22_desktop.png",
+  "mobile": "qa/ui_shots/S22_mobile.png"
+ },
+ "notes": [],
+ "final_url": "http://127.0.0.1:3100/nexus/research-lab",
+ "page_meta": {
+  "title": "يمن سمارت — طرفية التداول الذكية",
+  "rtl": "rtl",
+  "tables": 0,
+  "charts": 0
+ },
+ "finished_at": "2026-11-12T13:24:52.594Z",
+ "summary": {
+  "elements": 15,
+  "menus": 0,
+  "tests": 11,
+  "pass": 9,
+  "fail": 0,
+  "blocked": 0,
+  "not_tested": 2,
+  "not_applicable": 0
+ }
+}

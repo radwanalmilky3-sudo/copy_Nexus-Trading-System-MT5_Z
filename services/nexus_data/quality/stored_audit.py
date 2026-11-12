@@ -161,8 +161,38 @@ async def latest_quality(store: Any, symbol: str, timeframe: str, source: str) -
         quarantine_current = unresolved == report.get('metrics', {}).get('unresolved_quarantine', 0)
         verified_at = datetime.now(timezone.utc)
         selected_calendar=current_context(store,symbol,verified_at)
-        dependencies_current=(report.get('calendar_dependency_hash')==calendar_dependency_hash(selected_calendar)
-                              and report.get('series_dependency_hash')==series_hash(combined_rows(conn,symbol,timeframe) if source in MT5_SOURCES else []))
+        # combined_rows() enforces the bounded-audit limit and raises on groups
+        # larger than 100k combined MT5 rows.  This probe runs per row inside
+        # the datasets LISTING (research_reader._datasets) — an oversized group
+        # must degrade the freshness verdict to not-current, never abort the
+        # whole governance listing with HTTP 400.  The full bounded audit
+        # (run_stored_quality) keeps enforcing the limit.
+        try:
+            series_dependency_hash = (
+                series_hash(combined_rows(conn, symbol, timeframe))
+                if source in MT5_SOURCES else series_hash([])
+            )
+        except ValueError:
+            # Oversized group: the stored dependency hash cannot be re-verified.
+            series_dependency_hash = None
+        # Fail-closed equality: a dependency hash only counts as verified when
+        # BOTH sides are present, non-empty strings.  None/missing on either
+        # side must never satisfy None == None (that would certify a report
+        # whose dependency provenance was never recorded).
+        stored_series_hash = report.get('series_dependency_hash')
+        stored_calendar_hash = report.get('calendar_dependency_hash')
+        computed_calendar_hash = calendar_dependency_hash(selected_calendar)
+        series_dependency_verified = (
+            isinstance(stored_series_hash, str) and bool(stored_series_hash)
+            and isinstance(series_dependency_hash, str) and bool(series_dependency_hash)
+            and stored_series_hash == series_dependency_hash
+        )
+        calendar_dependency_verified = (
+            isinstance(stored_calendar_hash, str) and bool(stored_calendar_hash)
+            and isinstance(computed_calendar_hash, str) and bool(computed_calendar_hash)
+            and stored_calendar_hash == computed_calendar_hash
+        )
+        dependencies_current = calendar_dependency_verified and series_dependency_verified
         expired = verified_at > datetime.fromisoformat(report['expires_at'])
         return dict(quality_run_id=found[0], status=report['status'], checked_at=report['checked_at'],
                     snapshot_verified_at=verified_at.isoformat(),

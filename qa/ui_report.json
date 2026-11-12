@@ -1,0 +1,115 @@
+{
+  "startedAt": "2026-11-11T19:26:35.159Z",
+  "base": "http://127.0.0.1:3100",
+  "pages": [
+    {
+      "viewport": "desktop",
+      "route": "/",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_-desktop.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "route": "/nexus",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_nexus-desktop.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "route": "/analytics",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_analytics-desktop.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "route": "/history",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_history-desktop.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "route": "/settings",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_settings-desktop.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "route": "/",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_-mobile.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "route": "/nexus",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_nexus-mobile.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "route": "/analytics",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_analytics-mobile.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "route": "/history",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_history-mobile.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "route": "/settings",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "networkErrors": [],
+      "http5xx": [],
+      "screenshot": "qa\\ui_shots\\_settings-mobile.png",
+      "horizontalOverflow": false
+    }
+  ],
+  "login": {
+    "consoleErrors": [],
+    "pageErrors": [],
+    "networkErrors": [],
+    "http5xx": [],
+    "screenshot": "qa\\ui_shots\\login-desktop.png",
+    "loggedIn": true
+  },
+  "finishedAt": "2026-11-11T19:27:54.841Z"
+}

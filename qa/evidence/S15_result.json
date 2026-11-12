@@ -1,0 +1,324 @@
+{
+ "screen_id": "S15",
+ "route": "/nexus/ea-bridge",
+ "hash": "",
+ "started_at": "2026-11-12T12:55:17.530Z",
+ "elements": [
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "PAPER",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الثيم الغامق — اضغط للفاتح",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "OOwnersuper_admin",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "كتم الصوت",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "حفظ الكل",
+   "id": "",
+   "disabled": true
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الوسيط والحسابات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "جسر MT5",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "مختبر البيانات والبحث",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "التحكم بالشريط الإخباري والصوت",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الإعدادات العامة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "إدارة مصادر التحليل الأساسي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "مركز المستخدمين والتنبيهات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "المشروع والتدقيق",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "إنشاء توكن",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تحديث",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "التداول",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الاستراتيجيات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "السجل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الإعدادات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "متابعة QA",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "اسم الطرف (مثال: MT5-Laptop)",
+   "id": "",
+   "disabled": false
+  }
+ ],
+ "menus": [],
+ "tests": [
+  {
+   "kind": "button",
+   "target": "PAPER",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[0]"
+  },
+  {
+   "kind": "button",
+   "target": "Paper Trading",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "OOwnersuper_admin",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "(button)",
+   "status": "PASS",
+   "detail": "معطّل — تحقق من عدم التنفيذ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "حفظ الكل",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الوسيط والحسابات",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[7]"
+  },
+  {
+   "kind": "button",
+   "target": "جسر MT5",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[8]"
+  },
+  {
+   "kind": "button",
+   "target": "مختبر البيانات والبحث",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[9]"
+  },
+  {
+   "kind": "button",
+   "target": "التحكم بالشريط الإخباري والصوت",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[10]"
+  },
+  {
+   "kind": "button",
+   "target": "الإعدادات العامة",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[11]"
+  },
+  {
+   "kind": "button",
+   "target": "إدارة مصادر التحليل الأساسي",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[12]"
+  },
+  {
+   "kind": "button",
+   "target": "مركز المستخدمين والتنبيهات",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[13]"
+  },
+  {
+   "kind": "button",
+   "target": "المشروع والتدقيق",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "المستخدمون",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Tab×2",
+   "status": "PASS",
+   "detail": "focus→BUTTON",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Escape",
+   "status": "PASS",
+   "detail": "أُرسل دون أثر جانبي",
+   "evidence": ""
+  }
+ ],
+ "console_errors": [],
+ "page_errors": [],
+ "network_errors": [],
+ "screenshots": {
+  "desktop": "qa/ui_shots/S15_desktop.png",
+  "mobile": "qa/ui_shots/S15_mobile.png"
+ },
+ "notes": [],
+ "final_url": "http://127.0.0.1:3100/nexus/settings?tab=ea_bridge",
+ "page_meta": {
+  "title": "يمن سمارت — طرفية التداول الذكية",
+  "rtl": "rtl",
+  "tables": 1,
+  "charts": 0
+ },
+ "finished_at": "2026-11-12T12:55:47.223Z",
+ "summary": {
+  "elements": 23,
+  "menus": 0,
+  "tests": 18,
+  "pass": 11,
+  "fail": 0,
+  "blocked": 0,
+  "not_tested": 7,
+  "not_applicable": 0
+ }
+}

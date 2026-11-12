@@ -16,6 +16,7 @@ import {
   Cpu,
   Trophy,
   Cable,
+  ClipboardCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { apiClient } from '@/lib/api-client';
@@ -101,6 +102,7 @@ const NAV_ITEMS = [
   { href: '/nexus/models',                 label: 'النماذج',      icon: Cpu },
   { href: '/nexus/history',                label: 'السجل',        icon: History },
   { href: '/nexus/settings',               label: 'الإعدادات',    icon: Settings },
+  { href: '/qa-progress',                  label: 'متابعة QA',   icon: ClipboardCheck },
 ];
 
 function ModeToggle() {
@@ -110,6 +112,17 @@ function ModeToggle() {
   const [open, setOpen] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState('');
+
+  // QA S02 (MASTER PROMPT V4.1): the mode popover ignored Escape — keyboard
+  // users could not dismiss it (outside-click worked, Escape did not).
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   const handleSelectPaper = async () => {
     if (syncing || systemStateStatus !== 'confirmed' || mode === 'PAPER') { setOpen(false); return; }

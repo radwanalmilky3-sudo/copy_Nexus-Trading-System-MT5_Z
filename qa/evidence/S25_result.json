@@ -1,0 +1,107 @@
+{
+ "screen_id": "S25",
+ "route": "/analytics",
+ "hash": "",
+ "started_at": "2026-11-12T13:45:31.244Z",
+ "elements": [
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "نظرة عامة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "حسب Agent",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "حسب Symbol",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تحليل Drawdown",
+   "id": "",
+   "disabled": false
+  }
+ ],
+ "menus": [],
+ "tests": [
+  {
+   "kind": "button",
+   "target": "نظرة عامة",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[0]"
+  },
+  {
+   "kind": "button",
+   "target": "حسب Agent",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[1]"
+  },
+  {
+   "kind": "button",
+   "target": "حسب Symbol",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[2]"
+  },
+  {
+   "kind": "button",
+   "target": "تحليل Drawdown",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[3]"
+  },
+  {
+   "kind": "keyboard",
+   "target": "Tab×2",
+   "status": "PASS",
+   "detail": "focus→BUTTON",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Escape",
+   "status": "PASS",
+   "detail": "أُرسل دون أثر جانبي",
+   "evidence": ""
+  }
+ ],
+ "console_errors": [],
+ "page_errors": [],
+ "network_errors": [],
+ "screenshots": {
+  "desktop": "qa/ui_shots/S25_desktop.png",
+  "mobile": "qa/ui_shots/S25_mobile.png"
+ },
+ "notes": [],
+ "final_url": "http://127.0.0.1:3100/analytics",
+ "page_meta": {
+  "title": "يمن سمارت — طرفية التداول الذكية",
+  "rtl": "rtl",
+  "tables": 0,
+  "charts": 2
+ },
+ "finished_at": "2026-11-12T13:48:47.856Z",
+ "summary": {
+  "elements": 4,
+  "menus": 0,
+  "tests": 6,
+  "pass": 6,
+  "fail": 0,
+  "blocked": 0,
+  "not_tested": 0,
+  "not_applicable": 0
+ }
+}

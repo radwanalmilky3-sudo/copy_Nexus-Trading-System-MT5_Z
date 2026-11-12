@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 import pytest
 from pathlib import PurePosixPath
 from types import SimpleNamespace
@@ -379,6 +381,11 @@ def test_windows_spawn_does_not_request_posix_session(
     assert captured["kwargs"]["creationflags"] == 512
 
 
+@pytest.mark.skipif(
+    os.name != "posix",
+    reason="POSIX-only: os.getpgid/killpg do not exist on Windows; the POSIX "
+           "shutdown path is exercised on POSIX runners",
+)
 def test_posix_shutdown_signals_the_child_process_group(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -418,6 +425,11 @@ def test_posix_shutdown_signals_the_child_process_group(
     assert ("signal", run.signal.SIGTERM) not in actions
 
 
+@pytest.mark.skipif(
+    os.name != "posix",
+    reason="POSIX-only: _kill_pid takes the Windows branch on Windows; the "
+           "process-group kill script is exercised on POSIX runners",
+)
 def test_posix_kill_pid_targets_the_whole_group(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

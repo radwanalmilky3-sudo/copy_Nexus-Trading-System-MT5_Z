@@ -7,17 +7,19 @@ REM      9 services :9000-9008 + dashboard :3100
 REM   2) taskkill ollama.exe         -> only if it is running
 REM   3) redis5 Windows service      -> intentionally left alone
 REM ============================================================
-cd /d "D:\Nexus-Trading-System-MT5"
+cd /d "D:\Nexus-Trading-System-MT5_Z"
 
 echo [nexus] Stopping Nexus ...
 
 REM --- 1) graceful supervisor stop -----------------------------------
-if exist ".venv\Scripts\python.exe" (
-    echo [nexus] run.py --stop: services on :9000-9008 and dashboard :3100
-    ".venv\Scripts\python.exe" run.py --stop >nul 2>&1
-) else (
-    echo [nexus] WARNING: .venv\Scripts\python.exe not found - run.py --stop skipped
+set "PYEXE=.venv\Scripts\python.exe"
+if not exist ".venv\Scripts\python.exe" set "PYEXE=venv-nexus\Scripts\python.exe"
+if not exist "%PYEXE%" (
+    echo [nexus] ERROR: no .venv or venv-nexus python found in %CD%
+    exit /b 1
 )
+echo [nexus] run.py --stop: services on :9000-9008 and dashboard :3100
+"%PYEXE%" run.py --stop >nul 2>&1
 echo [nexus] Note: run.py --stop also stops the foreground supervisor from start_nexus
 
 REM --- 2) short grace period ------------------------------------------

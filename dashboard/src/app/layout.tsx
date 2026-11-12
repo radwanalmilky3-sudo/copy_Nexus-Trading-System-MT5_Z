@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" translate="no" className="dark notranslate" suppressHydrationWarning>
+    <html lang="ar" dir="rtl" translate="no" className="dark notranslate" suppressHydrationWarning>
       <body
         translate="no"
         className={`${plexArabic.variable} ${plexMono.variable} font-sans antialiased`}

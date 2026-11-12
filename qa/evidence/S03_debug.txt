@@ -1,0 +1,41 @@
+meta: {"title": "يمن سمارت — طرفية التداول الذكية", "rtl": "rtl", "tables": 2, "charts": 8}
+notes: ["tab activated: نظرة عامة"]
+PASS | select | اليومهذا الأسبوعهذا الشهركل الفترات | 4 خيارات؛ تبديل→استعادة
+PASS | button | PAPER | نقر آمن دون أخطاء
+NOT_TESTED | button | Paper Trading | إجراء خطر (مالي/تكوين) — جرد فقط دون نقر
+NOT_TESTED | button |  | عنصر يعاد رسمه باستمرار — تعذر النقر الآمن
+NOT_TESTED | button |  | عنصر يعاد رسمه باستمرار — تعذر النقر الآمن
+NOT_TESTED | button | OOwnersuper_admin | عنصر يعاد رسمه باستمرار — تعذر النقر الآمن
+PASS | button |  | نقر آمن دون أخطاء
+NOT_APPLICABLE | button | نظرة عامة | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+NOT_APPLICABLE | button | المراكز | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+NOT_APPLICABLE | button | المخاطرة | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+NOT_APPLICABLE | button | الأخبار | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+NOT_APPLICABLE | button | الوكلاء | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+NOT_APPLICABLE | button | الذكاء | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+NOT_APPLICABLE | button | التحليل الأساسي | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+NOT_APPLICABLE | button | سجل الصفقات | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+NOT_APPLICABLE | button | الاختبار الخلفي | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+NOT_APPLICABLE | button | وحدة التحكم | زر تبويب — تم تفعيل التبويب الهدف مسبقًا
+PASS | button | التخطيط الافتراضي | نقر آمن دون أخطاء
+NOT_TESTED | button | SCALPING | إجراء خطر (مالي/تكوين) — جرد فقط دون نقر
+NOT_TESTED | button | Off | إجراء خطر (مالي/تكوين) — جرد فقط دون نقر
+NOT_TESTED | button | KILL | إجراء خطر (مالي/تكوين) — جرد فقط دون نقر
+PASS | button |  | نقر آمن دون أخطاء
+PASS | button | التفاصيل | نقر آمن دون أخطاء
+PASS | button |  | نقر آمن دون أخطاء
+PASS | button | توسيع | نقر آمن دون أخطاء
+PASS | button | XAUUSD | نقر آمن دون أخطاء
+NOT_TESTED | button | XAUUSD | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button | BTCUSD | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button | EURUSD | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button | M1 | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button | M5 | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button | M15 | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button | H1 | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button | H4 | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button | TV OFF | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button |  | سقف النقر الآمن (8) بلغ
+NOT_TESTED | button | refresh | سقف النقر الآمن (8) بلغ
+PASS | keyboard | Tab×2 | focus→BUTTON
+PASS | keyboard | Escape | أُرسل دون أثر جانبي

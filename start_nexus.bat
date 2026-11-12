@@ -7,7 +7,7 @@ REM  run.py boots the 9 services on :9000-9008 + dashboard :3100,
 REM  health-gates them and auto-restarts crashed ones.
 REM  Stop with: stop_nexus.bat
 REM ============================================================
-cd /d "D:\Nexus-Trading-System-MT5"
+cd /d "D:\Nexus-Trading-System-MT5_Z"
 
 set "NEEDWAIT=0"
 
@@ -66,8 +66,10 @@ netstat -ano -p TCP | findstr "LISTENING" | findstr /r /c:":11434 " >nul
 if errorlevel 1 echo [nexus] WARNING: :11434 still not listening - AI features offline
 
 REM --- pre-flight sanity ------------------------------------------------
-if not exist ".venv\Scripts\python.exe" (
-    echo [nexus] ERROR: .venv\Scripts\python.exe not found in %CD%
+set "PYEXE=.venv\Scripts\python.exe"
+if not exist ".venv\Scripts\python.exe" set "PYEXE=venv-nexus\Scripts\python.exe"
+if not exist "%PYEXE%" (
+    echo [nexus] ERROR: no .venv or venv-nexus python found in %CD%
     exit /b 1
 )
 if not exist "run.py" (
@@ -78,5 +80,5 @@ if not exist "run.py" (
 REM --- full system supervisor (foreground) ------------------------------
 REM     Use --skip-preflight only if you need to boot with AI/MT5 offline.
 echo [nexus] Starting supervisor run.py - services :9000-9008 + dashboard :3100
-".venv\Scripts\python.exe" run.py
+"%PYEXE%" run.py
 endlocal

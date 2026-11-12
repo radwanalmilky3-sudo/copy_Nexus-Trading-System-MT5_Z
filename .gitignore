@@ -52,3 +52,8 @@ dashboard/tsconfig.tsbuildinfo
 
 # سيملينك مخزن node_modules الخارجي (نمط node_modules/ لا يطابق symlinks)
 /dashboard/node_modules
+
+# QA session artifacts (MASTER PROMPT V4.1)
+qa/progress/.auth.json
+data_export_tmp/
+*.ex5

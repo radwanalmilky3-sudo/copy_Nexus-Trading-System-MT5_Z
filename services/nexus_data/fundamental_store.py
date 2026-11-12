@@ -87,6 +87,13 @@ class FundamentalStore:
         "user_ticker_acknowledgements": ("user_id", "ticker_item_id"),
         "api_tokens": ("token_id",),
         "ea_commands": ("command_id",),
+        # MT5 calendar bridge (2026-11-11): macro_releases is a mutable
+        # canonical row keyed by event_id.  Actual values arrive AFTER the
+        # scheduled release and Previous values get official revisions — both
+        # must overwrite the stale row (data_vintages keeps the full point-in-
+        # time history).  Plain INSERT OR IGNORE silently dropped every update.
+        # Reversible: remove this entry to restore the legacy ignore behavior.
+        "macro_releases": ("event_id",),
     }
     UPDATED_AT_TABLES = {
         "economic_indicator_catalog", "fundamental_knowledge_claims", "asset_registry", "news_ticker_items",
@@ -306,7 +313,13 @@ class FundamentalStore:
         except (ConstraintException, ConversionException) as exc:
             # Invalid values and foreign-key races are client errors; operational
             # database failures must still propagate as server errors.
-            raise ValueError("record violates schema constraints or field types") from exc
+            # Keep the underlying constraint detail: the generic message alone
+            # made FK/startup-order failures (e.g. economic_indicator_catalog →
+            # fund_sources) impossible to diagnose from the API 400 body.
+            raise ValueError(
+                f"record violates schema constraints or field types: "
+                f"{type(exc).__name__}: {exc}"
+            ) from exc
 
     async def _columns(self, table: str) -> list[tuple[Any, ...]]:
         return await self._store._fetch(

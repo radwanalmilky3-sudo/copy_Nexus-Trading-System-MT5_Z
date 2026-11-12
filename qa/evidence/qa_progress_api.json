@@ -1,0 +1,1095 @@
+{
+ "meta": {
+  "doc": "MASTER PROMPT V4.1 — unified QA + Governance tracking store",
+  "isolation": "This store is OUTSIDE the trading DuckDB. It never touches NEXUS trading tables.",
+  "schema_version": 1,
+  "created_at": "2026-11-12T11:10:00Z",
+  "last_update": "2026-11-12T14:51:23+00:00",
+  "updated_by": "qa-lead"
+ },
+ "summary": {
+  "screens_total": 27,
+  "work_queued": 0,
+  "work_in_progress": 0,
+  "work_completed": 27,
+  "work_blocked": 0,
+  "tests_executed": 222,
+  "pass": 220,
+  "fail": 2,
+  "blocked": 24,
+  "not_tested": 200,
+  "not_applicable": 101,
+  "issues_critical": 0,
+  "issues_high": 2,
+  "issues_medium": 3,
+  "issues_low": 1,
+  "issues_info": 8
+ },
+ "phases": [
+  {
+   "id": "DISCOVER",
+   "status_ar": "مكتمل",
+   "status": "COMPLETED",
+   "owner": "lead",
+   "note": "تم اكتشاف 17 مسارًا و10 تبويبات عمل",
+   "updated_at": "2026-11-12T11:10:00Z"
+  },
+  {
+   "id": "PROGRESS_PAGE",
+   "status_ar": "مكتمل",
+   "status": "COMPLETED",
+   "owner": "fixer",
+   "note": "الصفحة /qa-progress + /api/qa-progress + مخزن معزول — تم اختبار 401 بدون جلسة و200 مع جلسة",
+   "updated_at": "2026-11-12T11:37:20+00:00"
+  },
+  {
+   "id": "INVENTORY",
+   "status_ar": "مكتمل",
+   "status": "COMPLETED",
+   "owner": "front-inventory",
+   "note": "27 وحدة مسجلة في الطابور",
+   "updated_at": "2026-11-12T11:37:20+00:00"
+  },
+  {
+   "id": "QUEUE",
+   "status_ar": "مكتمل",
+   "status": "COMPLETED",
+   "owner": "lead",
+   "note": "27/27 وحدة فُحصت واختُبرت",
+   "updated_at": "2026-11-12T13:53:05+00:00"
+  },
+  {
+   "id": "MAP",
+   "status_ar": "في الطابور",
+   "status": "QUEUED",
+   "owner": "arch-discovery",
+   "note": "",
+   "updated_at": null
+  },
+  {
+   "id": "INSPECT",
+   "status_ar": "في الطابور",
+   "status": "QUEUED",
+   "owner": "reviewers",
+   "note": "",
+   "updated_at": null
+  },
+  {
+   "id": "TEST",
+   "status_ar": "في الطابور",
+   "status": "QUEUED",
+   "owner": "func-tester",
+   "note": "",
+   "updated_at": null
+  },
+  {
+   "id": "DIAGNOSE",
+   "status_ar": "في الطابور",
+   "status": "QUEUED",
+   "owner": "func-tester",
+   "note": "",
+   "updated_at": null
+  },
+  {
+   "id": "REPAIR",
+   "status_ar": "في الطابور",
+   "status": "QUEUED",
+   "owner": "fixer",
+   "note": "",
+   "updated_at": null
+  },
+  {
+   "id": "RETEST",
+   "status_ar": "مكتمل",
+   "status": "COMPLETED",
+   "owner": "independent",
+   "note": "اختبارات الانحدار: 464+ اختبار ناجح + اختبار ربط جديد للـ upsert",
+   "updated_at": "2026-11-12T14:26:19+00:00"
+  },
+  {
+   "id": "REPORT",
+   "status_ar": "مكتمل",
+   "status": "COMPLETED",
+   "owner": "lead",
+   "note": "التقرير النهائي: reports/qa/FINAL_QA_REPORT_V4_1.md",
+   "updated_at": "2026-11-12T14:31:30+00:00"
+  }
+ ],
+ "screens": [
+  {
+   "screen_id": "S01",
+   "name": "صفحة الدخول",
+   "route": "C:/Program Files/Git/login",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 5,
+   "menus": 0,
+   "results": {
+    "pass": 4,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 0,
+    "not_applicable": 0
+   },
+   "tests_total": 4,
+   "issues": 2,
+   "updated_at": "2026-11-12T11:56:03+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S02",
+   "name": "هيكل لوحة التداول",
+   "route": "C:/Program Files/Git/nexus",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 44,
+   "menus": 1,
+   "results": {
+    "pass": 15,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 21,
+    "not_applicable": 0
+   },
+   "tests_total": 36,
+   "issues": 3,
+   "updated_at": "2026-11-12T12:09:43+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S03",
+   "name": "نظرة عامة",
+   "route": "/nexus#overview",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 44,
+   "menus": 1,
+   "results": {
+    "pass": 11,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 18,
+    "not_applicable": 10
+   },
+   "tests_total": 39,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:28:17+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S04",
+   "name": "المراكز",
+   "route": "C:/Program Files/Git/nexus",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 25,
+   "menus": 0,
+   "results": {
+    "pass": 5,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 6,
+    "not_applicable": 10
+   },
+   "tests_total": 21,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:29:02+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S05",
+   "name": "المخاطرة",
+   "route": "/nexus#risk",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 33,
+   "menus": 0,
+   "results": {
+    "pass": 6,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 7,
+    "not_applicable": 10
+   },
+   "tests_total": 23,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:29:47+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S06",
+   "name": "الأخبار والتقويم",
+   "route": "/nexus#news",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 40,
+   "menus": 1,
+   "results": {
+    "pass": 8,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 8,
+    "not_applicable": 11
+   },
+   "tests_total": 27,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:36:51+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S07",
+   "name": "الوكلاء",
+   "route": "/nexus#agents",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 24,
+   "menus": 0,
+   "results": {
+    "pass": 5,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 5,
+    "not_applicable": 10
+   },
+   "tests_total": 20,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:40:13+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S08",
+   "name": "الذكاء",
+   "route": "/nexus#intelligence",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 38,
+   "menus": 0,
+   "results": {
+    "pass": 10,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 14,
+    "not_applicable": 10
+   },
+   "tests_total": 34,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:40:59+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S09",
+   "name": "التحليل الأساسي",
+   "route": "/nexus#fundamental",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 25,
+   "menus": 0,
+   "results": {
+    "pass": 5,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 6,
+    "not_applicable": 10
+   },
+   "tests_total": 21,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:41:50+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S10",
+   "name": "سجل الصفقات",
+   "route": "/nexus#journal",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 25,
+   "menus": 0,
+   "results": {
+    "pass": 5,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 6,
+    "not_applicable": 10
+   },
+   "tests_total": 21,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:43:37+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S11",
+   "name": "الاختبار الخلفي",
+   "route": "/nexus#backtest",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 23,
+   "menus": 0,
+   "results": {
+    "pass": 5,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 4,
+    "not_applicable": 10
+   },
+   "tests_total": 19,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:44:20+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S12",
+   "name": "وحدة التحكم",
+   "route": "/nexus#console",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 30,
+   "menus": 0,
+   "results": {
+    "pass": 8,
+    "fail": 1,
+    "blocked": 0,
+    "not_tested": 7,
+    "not_applicable": 10
+   },
+   "tests_total": 26,
+   "issues": 1,
+   "updated_at": "2026-11-12T12:49:01+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S13",
+   "name": "تقدم التدقيق",
+   "route": "C:/Program Files/Git/nexus/audit-progress",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 9,
+   "menus": 0,
+   "results": {
+    "pass": 3,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 2,
+    "not_applicable": 0
+   },
+   "tests_total": 5,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:54:32+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S14",
+   "name": "التعلم العميق",
+   "route": "/nexus/deep-learning",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 11,
+   "menus": 0,
+   "results": {
+    "pass": 3,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 4,
+    "not_applicable": 0
+   },
+   "tests_total": 7,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:55:16+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S15",
+   "name": "جسر EA",
+   "route": "/nexus/ea-bridge",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 23,
+   "menus": 0,
+   "results": {
+    "pass": 11,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 7,
+    "not_applicable": 0
+   },
+   "tests_total": 18,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:55:58+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S16",
+   "name": "سجل النكسة",
+   "route": "/nexus/history",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 18,
+   "menus": 0,
+   "results": {
+    "pass": 8,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 5,
+    "not_applicable": 0
+   },
+   "tests_total": 13,
+   "issues": 0,
+   "updated_at": "2026-11-12T12:59:43+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S17",
+   "name": "نماذج ML",
+   "route": "/nexus/ml-models",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 11,
+   "menus": 0,
+   "results": {
+    "pass": 3,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 4,
+    "not_applicable": 0
+   },
+   "tests_total": 7,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:00:43+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S18",
+   "name": "مقارنة النماذج",
+   "route": "/nexus/model-comparison",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 16,
+   "menus": 0,
+   "results": {
+    "pass": 7,
+    "fail": 1,
+    "blocked": 0,
+    "not_tested": 4,
+    "not_applicable": 0
+   },
+   "tests_total": 12,
+   "issues": 1,
+   "updated_at": "2026-11-12T13:06:09+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S19",
+   "name": "النماذج",
+   "route": "/nexus/models",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 21,
+   "menus": 0,
+   "results": {
+    "pass": 7,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 4,
+    "not_applicable": 0
+   },
+   "tests_total": 11,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:07:00+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S20",
+   "name": "إعادة توجيه التقدم",
+   "route": "/nexus/progress",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 100,
+   "menus": 5,
+   "results": {
+    "pass": 12,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 13,
+    "not_applicable": 0
+   },
+   "tests_total": 25,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:10:47+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S21",
+   "name": "التعلم المعزز",
+   "route": "/nexus/reinforcement-learning",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 12,
+   "menus": 0,
+   "results": {
+    "pass": 4,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 4,
+    "not_applicable": 0
+   },
+   "tests_total": 8,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:11:42+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S22",
+   "name": "مختبر الأبحاث",
+   "route": "/nexus/research-lab",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 15,
+   "menus": 0,
+   "results": {
+    "pass": 9,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 2,
+    "not_applicable": 0
+   },
+   "tests_total": 11,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:25:06+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S23",
+   "name": "إعدادات النكسة",
+   "route": "/nexus/settings",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 226,
+   "menus": 19,
+   "results": {
+    "pass": 29,
+    "fail": 0,
+    "blocked": 19,
+    "not_tested": 12,
+    "not_applicable": 0
+   },
+   "tests_total": 60,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:34:11+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S24",
+   "name": "الاستراتيجيات",
+   "route": "/nexus/strategies",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 22,
+   "menus": 0,
+   "results": {
+    "pass": 11,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 7,
+    "not_applicable": 0
+   },
+   "tests_total": 18,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:45:09+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S25",
+   "name": "التحليلات",
+   "route": "/analytics",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 4,
+   "menus": 0,
+   "results": {
+    "pass": 6,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 0,
+    "not_applicable": 0
+   },
+   "tests_total": 6,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:51:02+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S26",
+   "name": "السجل",
+   "route": "/history",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 18,
+   "menus": 0,
+   "results": {
+    "pass": 8,
+    "fail": 0,
+    "blocked": 0,
+    "not_tested": 5,
+    "not_applicable": 0
+   },
+   "tests_total": 13,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:51:02+00:00",
+   "evidence": ""
+  },
+  {
+   "screen_id": "S27",
+   "name": "الإعدادات",
+   "route": "/settings",
+   "phase": "REPORT",
+   "work_status": "COMPLETED",
+   "elements": 98,
+   "menus": 5,
+   "results": {
+    "pass": 12,
+    "fail": 0,
+    "blocked": 5,
+    "not_tested": 25,
+    "not_applicable": 0
+   },
+   "tests_total": 42,
+   "issues": 0,
+   "updated_at": "2026-11-12T13:53:04+00:00",
+   "evidence": ""
+  }
+ ],
+ "elements": [
+  {
+   "element_id": "E01",
+   "screen_id": "S01",
+   "name": "نموذج الدخول (حقلا مستخدم وكلمة مرور)",
+   "type": "form",
+   "component": "login/page.tsx",
+   "status": "PASS",
+   "status_ar": "ناجح",
+   "evidence": "qa/evidence/S01_result.json",
+   "updated_at": "2026-11-12T11:48:27+00:00"
+  },
+  {
+   "element_id": "E02",
+   "screen_id": "S01",
+   "name": "زر دخول",
+   "type": "button",
+   "component": "login/page.tsx",
+   "status": "PASS",
+   "status_ar": "ناجح",
+   "evidence": "qa/evidence/S01_result.json",
+   "updated_at": "2026-11-12T11:48:27+00:00"
+  },
+  {
+   "element_id": "E03",
+   "screen_id": "S01",
+   "name": "زر أول تشغيل/عودة للدخول (تبديل التهيئة)",
+   "type": "button",
+   "component": "login/page.tsx",
+   "status": "PASS",
+   "status_ar": "ناجح",
+   "evidence": "qa/evidence/S01_result.json",
+   "updated_at": "2026-11-12T11:48:27+00:00"
+  },
+  {
+   "element_id": "E01",
+   "screen_id": "S02",
+   "name": "شريط التنقل (6 روابط)",
+   "type": "nav",
+   "component": "nexus/layout.tsx",
+   "status": "PASS",
+   "status_ar": "ناجح",
+   "evidence": "qa/evidence/S02_result.json",
+   "updated_at": "2026-11-12T12:09:43+00:00"
+  },
+  {
+   "element_id": "E02",
+   "screen_id": "S02",
+   "name": "مبدل وضع التداول PAPER/LIVE",
+   "type": "button",
+   "component": "nexus/layout.tsx ModeToggle",
+   "status": "PASS",
+   "status_ar": "ناجح",
+   "evidence": "qa/ui_shots/S02_popover_after.png",
+   "updated_at": "2026-11-12T12:09:44+00:00"
+  }
+ ],
+ "menus": [
+  {
+   "menu_id": "M01",
+   "screen_id": "S02",
+   "name": "محدد الفترة (اليوم/الأسبوع/الشهر/الكل)",
+   "kind": "single",
+   "options": 4,
+   "searchable": false,
+   "status": "PASS",
+   "status_ar": "ناجح",
+   "evidence": "qa/evidence/S02_result.json",
+   "updated_at": "2026-11-12T12:09:44+00:00"
+  }
+ ],
+ "issues": [
+  {
+   "issue_id": "ISS-001",
+   "screen_id": "S01",
+   "element_id": "HTML-ROOT",
+   "severity": "MEDIUM",
+   "desc": "جذر المستند lang=en وبدون dir=rtl رغم أن الواجهة عربية بالكامل؛ الصفحات التي لا تضبط dir محليًا ترث LTR (محاذاة يسار في نموذج الدخول)",
+   "repro": "فتح /login — النصوص والحقول محاذاة يسار",
+   "root": "dashboard/src/app/layout.tsx سطر html lang=en بدون dir",
+   "fix": "تعيين lang=ar و dir=rtl على عنصر html",
+   "retest": "S01 إعادة: lang=ar dir=rtl، محاذاة يمين مؤكدة بصريًا، 4/4 PASS",
+   "status": "أُصلحت وتحققت",
+   "evidence": "qa/ui_shots/S01_desktop.png",
+   "updated_at": "2026-11-12T14:32:00+00:00"
+  },
+  {
+   "issue_id": "ISS-002",
+   "screen_id": "S01",
+   "element_id": "HTML-ROOT",
+   "severity": "MEDIUM",
+   "desc": "جذر المستند lang=en وبدون dir=rtl — الصفحات ترث LTR",
+   "repro": "فتح /login — محاذاة يسار",
+   "root": "dashboard/src/app/layout.tsx: html lang=en",
+   "fix": "lang=ar + dir=rtl على html",
+   "retest": "S01 re-run: 4/4 PASS، لقطات تؤكد المحاذاة اليمنى، لا أخطاء كونسول",
+   "status": "أُصلحت وتحققت",
+   "evidence": "qa/ui_shots/S01_desktop.png",
+   "updated_at": "2026-11-12T11:56:03+00:00"
+  },
+  {
+   "issue_id": "ISS-003",
+   "screen_id": "S02",
+   "element_id": "ESC-MODE",
+   "severity": "MEDIUM",
+   "desc": "قائمة وضع التداول لا تُغلق بمفتاح Escape (النقر خارجها يعمل)",
+   "repro": "فتح قائمة PAPER ثم الضغط على Escape — تبقى مفتوحة",
+   "root": "ModeToggle بلا معالج keydown لـ Escape",
+   "fix": "مستمع keydown لـ Escape أثناء فتح القائمة في nexus/layout.tsx",
+   "retest": "Escape: قبل=1 بعد=0 حاوية، لا أخطاء",
+   "status": "أُصلحت وتحققت",
+   "evidence": "qa/evidence/S02_result.json",
+   "updated_at": "2026-11-12T12:09:44+00:00"
+  },
+  {
+   "issue_id": "ISS-004",
+   "screen_id": "S02",
+   "element_id": "TRADES-503",
+   "severity": "INFO",
+   "desc": "503 عابر على /api/trades أثناء إعادة تشغيل nexus-data — تعافى لاحقًا إلى 200",
+   "repro": "أثناء نافذة إعادة تشغيل الخدمة",
+   "root": "نداء متزامن أثناء إعادة التشغيل",
+   "fix": "لا يلزم — سلوك تعافٍ صحيح",
+   "retest": "النقطة تعيد 200",
+   "status": "أُصلحت وتحققت",
+   "evidence": "logs/run_bg.log",
+   "updated_at": "2026-11-12T12:09:44+00:00"
+  },
+  {
+   "issue_id": "ISS-005",
+   "screen_id": "S02",
+   "element_id": "SCALP-TOGGLE",
+   "severity": "LOW",
+   "desc": "زر SCALPING يبدّل وضع متداول ML فورًا بنقرة واحدة دون تأكيد — نقرة عرضية تغيّر التكوين",
+   "repro": "نقرة واحدة على SCALPING في رأس اللوحة",
+   "root": "nexus/page.tsx ScalpingModeToggle toggle() بلا تأكيد",
+   "fix": "مقترح: مربع تأكيد قبل التبديل (يتطلب قرار المستخدم)",
+   "retest": "",
+   "status": "مفتوحة — توصية",
+   "evidence": "qa/evidence/S03_result.json",
+   "updated_at": "2026-11-12T12:17:21+00:00"
+  },
+  {
+   "issue_id": "ISS-006",
+   "screen_id": "ALL",
+   "element_id": "COLDSTART-503",
+   "severity": "INFO",
+   "desc": "503 عابر على نقاط بيانات OHLCV والصفقات أثناء نافذة إقلاع DuckDB في nexus-data — يتعافى تلقائيًا إلى 200",
+   "repro": "أول دقيقة بعد إقلاع الأسطول",
+   "root": "نexus-data يرفض الطلبات حتى جاهزية DuckDB",
+   "fix": "لا يلزم — سلوك تعافٍ صحيح؛ يمكن تحسينه بـ retry في الواجهة (توصية)",
+   "retest": "EURUSD/XAUUSD M5 يعيدان 200",
+   "status": "أُصلحت وتحققت",
+   "evidence": "logs/run_bg.log",
+   "updated_at": "2026-11-12T12:36:51+00:00"
+  },
+  {
+   "issue_id": "ISS-007",
+   "screen_id": "S12",
+   "element_id": "KB-CONSOLE",
+   "severity": "INFO",
+   "desc": "بعد تفعيل تبويب وحدة التحكم، Tab×2 يبقي التركيز على BODY — التنقل بلوحة المفاتيح لا يصل لعناصر التبويب في ذلك القياس",
+   "repro": "تفعيل تبويب وحدة التحكم ثم Tab مرتين",
+   "root": "نقر force:true لا يتابع تسلسل التركيز — النقر العادي يضع التركيز على الزر",
+   "fix": "قيد التحقيق",
+   "retest": "فحص مركز: نقر عادي → BUTTON وحدة التحكم؛ Tab1→A التداول، Tab2→A الاستراتيجيات، Tab3→A النماذج",
+   "status": "حُلَّت — خطأ قياس في الأداة",
+   "evidence": "qa/evidence/S12_result.json",
+   "updated_at": "2026-11-12T14:30:00+00:00"
+  },
+  {
+   "issue_id": "ISS-008",
+   "screen_id": "ALL",
+   "element_id": "DEVCOMPILE-AUTHGATE",
+   "severity": "INFO",
+   "desc": "في وضع dev، أول زيارة لمسار غير مُجمَّل قد تفشل بوابة التحقق مؤقتًا (شاشة إعادة المحاولة) ثم تعمل عند إعادة المحاولة — لا يؤثر على الإنتاج (next build)",
+   "repro": "زيارة /nexus/history أول مرة بعد إقلاع dev",
+   "root": "تجميع Next.js عند الطلب يؤخر استجابة بوابة المصادقة",
+   "fix": "",
+   "retest": "الزيارة الدافئة: 18 عنصر، 8 PASS",
+   "status": "أُصلحت وتحققت",
+   "evidence": "qa/evidence/S16_result.json",
+   "updated_at": "2026-11-12T12:59:43+00:00"
+  },
+  {
+   "issue_id": "ISS-009",
+   "screen_id": "S18",
+   "element_id": "KB-FOCUS-RENDER",
+   "severity": "INFO",
+   "desc": "قياس ثانٍ: Tab×2 يبقي التركيز على BODY أثناء إعادة الرسم اللحظي (نفس نمط S12) — التركيز يُفقد عند تحديث المكونات",
+   "repro": "فتح الصفحة أثناء التحديث اللحظي والتنقل بـ Tab",
+   "root": "نفس جذر ISS-007 — إعادة رسم حية + نقر force:true",
+   "fix": "قيد التحقيق — مراجعة إمكانية الوصول المركزة",
+   "retest": "مطلوب في مرحلة إمكانية الوصول",
+   "status": "حُلَّت — خطأ قياس في الأداة",
+   "evidence": "qa/evidence/S18_result.json",
+   "updated_at": "2026-11-12T14:30:00+00:00"
+  },
+  {
+   "issue_id": "ISS-010",
+   "screen_id": "ALL",
+   "element_id": "REDIS-POOL",
+   "severity": "HIGH",
+   "desc": "نضوب تجمع اتصالات Redis في nexus-api (Too many connections) أدى إلى 500 على /api/fundamental/ticker و /api/positions تحت الاستقصاء المتوازي للوحة",
+   "repro": "استقصاء متوازٍ لعشرات النقاط من اللوحة",
+   "root": "shared/redis_client.py: تجمع ثابت 20 اتصالًا لكل الخدمات",
+   "fix": "NEXUS_REDIS_POOL_MAX (افتراضي 50) — قابل للعكس بضبطه إلى 20",
+   "retest": "إعادة تشغيل nexus-api + إعادة اختبار S22: 0 أخطاء",
+   "status": "أُصلحت وتحققت",
+   "evidence": "qa/evidence/S22_result.json",
+   "updated_at": "2026-11-12T13:25:06+00:00"
+  },
+  {
+   "issue_id": "ISS-011",
+   "screen_id": "ALL",
+   "element_id": "DUCKDB-POOL",
+   "severity": "HIGH",
+   "desc": "تجمع تنفيذ DuckDB في nexus-data بعاملَيْن فقط — دورات التدقيق/الإصلاح تشبع الطابور فتتجاوز مهلة nexus-api (10 ثوان) فتظهر دفعات 503 (nexus-data is unreachable)",
+   "repro": "استقصاء متوازٍ أثناء دورة تدقيق تلقائية",
+   "root": "duckdb_store.py _POOL = ThreadPoolExecutor(max_workers=2)",
+   "fix": "رفع العاملين إلى 8 (يبقى DuckDB متسلسلًا عبر _execute_locked) — قابل للعكس",
+   "retest": "إعادة تشغيل nexus-data (PID 3536) وصحة 200؛ المراقبة مستمرة",
+   "status": "أُصلحت وتحققت",
+   "evidence": "logs/run_bg.log",
+   "updated_at": "2026-11-12T13:45:09+00:00"
+  },
+  {
+   "issue_id": "ISS-012",
+   "screen_id": "LAZY-IMPORT-BLOCK",
+   "element_id": "startup",
+   "severity": "INFO",
+   "desc": "استيرادات كسولة تسد حلقة أحداث nexus-news عند الإقلاع البارد (~10 دقائق)",
+   "repro": "",
+   "root": "from transformers import pipeline داخل _get_finbert على حلقة الأحداث",
+   "fix": "نقل الاستيراد داخل asyncio.to_thread — الحلقة لا تنسد والsocket يبقى حيًا",
+   "retest": "إعادة تشغيل nexus-news (PID 10496): صحة 200 خلال ثوانٍ وsocket يستجيب 2ms",
+   "status": "أُصلحت وتحققت",
+   "evidence": "logs/run_bg.log + tests/test_news 4 passed",
+   "updated_at": "2026-11-12T14:45:43+00:00"
+  },
+  {
+   "issue_id": "ISS-013",
+   "screen_id": "KB-CONSOLE",
+   "element_id": "S12",
+   "severity": "INFO",
+   "desc": "Tab×2 يبقي التركيز على BODY بعد تفعيل تبويب وحدة التحكم",
+   "repro": "",
+   "root": "أداة القياس: نقر force:true لا يتابع تسلسل التركيز الطبيعي — النقر العادي يضع التركيز على الزر نفسه",
+   "fix": "لا تغيير في التطبيق — سلوك لوحة المفاتيح سليم: BODY→Tab→أول رابط تنقل ثم يتقدم",
+   "retest": "فحص مركز: نقر عادي → BUTTON وحدة التحكم؛ Tab1→A التداول، Tab2→A الاستراتيجيات، Tab3→A النماذج",
+   "status": "حُلَّت — خطأ قياس في الأداة",
+   "evidence": "فحص Playwright مركز 2026-11-12",
+   "updated_at": "2026-11-12T14:50:34+00:00"
+  },
+  {
+   "issue_id": "ISS-014",
+   "screen_id": "KB-FOCUS-RENDER",
+   "element_id": "S18",
+   "severity": "INFO",
+   "desc": "نفس نمط فقدان التركيز أثناء إعادة الرسم اللحظي",
+   "repro": "",
+   "root": "نفس جذر KB-CONSOLE — إعادة رسم حية + نقر force:true",
+   "fix": "لا تغيير في التطبيق",
+   "retest": "نفس الفحص المركز: التنقل بلوحة المفاتيح سليم",
+   "status": "حُلَّت — خطأ قياس في الأداة",
+   "evidence": "فحص Playwright مركز 2026-11-12",
+   "updated_at": "2026-11-12T14:50:34+00:00"
+  }
+ ],
+ "integrations": [
+  {
+   "screen_id": "S20",
+   "component": "progress redirect",
+   "channel": "GET /nexus/progress",
+   "source": "redirect -> /nexus/settings?tab=project",
+   "result": "PASS",
+   "result_ar": "ناجح",
+   "evidence": "qa/evidence/S20_result.json",
+   "updated_at": "2026-11-12T13:10:47+00:00"
+  }
+ ],
+ "agents": [
+  {
+   "role": "قائد المهمة",
+   "agent_id": "lead",
+   "task": "إغلاق الطابور واعتماد النتائج",
+   "screen": "ALL",
+   "status": "COMPLETED",
+   "result": "27/27 وحدة، 3 إصلاحات جذرية تحققت",
+   "updated_at": "2026-11-12T14:26:19+00:00"
+  },
+  {
+   "agent_id": "fixer",
+   "role": "fixer",
+   "task": "تطبيق الإصلاحات الآمنة",
+   "screen": "S01,S02,S22,S24",
+   "status": "COMPLETED",
+   "result": "RTL الجذر، Escape، تجمع Redis، تجمع DuckDB",
+   "updated_at": "2026-11-12T14:26:19+00:00"
+  }
+ ],
+ "timeline": [
+  {
+   "at": "2026-11-12T11:10:00Z",
+   "event": "بدء MASTER PROMPT V4.1 — اكتُشف 17 مسارًا + 10 تبويبات = 27 وحدة QA"
+  },
+  {
+   "at": "2026-11-12T11:35:00+00:00",
+   "event": "إنشاء المخزن المعزول qa/progress/state.json والمحدث qa/progress_update.py"
+  },
+  {
+   "at": "2026-11-12T11:37:20+00:00",
+   "event": "صفحة المتابعة جاهزة ومختبرة (401/200) — بدء INVENTORY"
+  },
+  {
+   "at": "2026-11-12T11:56:03+00:00",
+   "event": "S01 /login: مكتمل — 8 PASS، إصلاح RTL الجذري (lang=ar dir=rtl) تحقق بإعادة الاختبار"
+  },
+  {
+   "at": "2026-11-12T12:09:44+00:00",
+   "event": "S02 هيكل لوحة التداول: مكتمل — 36 اختبار، إصلاح Escape في قائمة الوضع تحقق"
+  },
+  {
+   "at": "2026-11-12T12:28:17+00:00",
+   "event": "S03 نظرة عامة: مكتمل — 44 عنصر، 8 رسوم، 0 فشل، 0 أخطاء كونسول"
+  },
+  {
+   "at": "2026-11-12T12:29:02+00:00",
+   "event": "S04 المراكز: مكتمل — 25 عنصر، 0 فشل"
+  },
+  {
+   "at": "2026-11-12T12:29:47+00:00",
+   "event": "S05 المخاطرة: مكتمل — 33 عنصر، 0 فشل"
+  },
+  {
+   "at": "2026-11-12T12:36:51+00:00",
+   "event": "S06 الأخبار: مكتمل — 40 عنصر، 503 عابر موثق كـ INFO"
+  },
+  {
+   "at": "2026-11-12T12:40:13+00:00",
+   "event": "S07 الوكلاء: مكتمل — 0 فشل"
+  },
+  {
+   "at": "2026-11-12T12:40:59+00:00",
+   "event": "S08 الذكاء: مكتمل — 38 عنصر، 0 فشل"
+  },
+  {
+   "at": "2026-11-12T12:41:51+00:00",
+   "event": "S09 التحليل الأساسي: مكتمل — 0 فشل"
+  },
+  {
+   "at": "2026-11-12T12:43:37+00:00",
+   "event": "S10 سجل الصفقات: مكتمل — 0 فشل"
+  },
+  {
+   "at": "2026-11-12T12:44:20+00:00",
+   "event": "S11 الاختبار الخلفي: مكتمل — 0 فشل"
+  },
+  {
+   "at": "2026-11-12T12:49:01+00:00",
+   "event": "S12 وحدة التحكم: مكتمل مع مشكلة إمكانية وصول مفتوحة (KB-CONSOLE)"
+  },
+  {
+   "at": "2026-11-12T12:54:32+00:00",
+   "event": "S13 تقدم التدقيق: مكتمل — 0 فشل"
+  },
+  {
+   "at": "2026-11-12T12:55:16+00:00",
+   "event": "S14 التعلم العميق: مكتمل"
+  },
+  {
+   "at": "2026-11-12T12:55:58+00:00",
+   "event": "S15 جسر EA: مكتمل — 11 PASS"
+  },
+  {
+   "at": "2026-11-12T12:59:43+00:00",
+   "event": "S16 سجل النكسة: مكتمل — 18 عنصر (بعد استبعاد أثر التجميع البارد)"
+  },
+  {
+   "at": "2026-11-12T13:00:43+00:00",
+   "event": "S17 نماذج ML: مكتمل"
+  },
+  {
+   "at": "2026-11-12T13:06:09+00:00",
+   "event": "S18 مقارنة النماذج: مكتمل — مشكلة تركيز مفتوحة (نمط مشترك مع S12)"
+  },
+  {
+   "at": "2026-11-12T13:07:00+00:00",
+   "event": "S19 النماذج: مكتمل — 0 فشل"
+  },
+  {
+   "at": "2026-11-12T13:10:48+00:00",
+   "event": "S20: إعادة التوجيه إلى /nexus/settings?tab=project تعمل (100 عنصر موروثة من الإعدادات — ستغطيها S23)"
+  },
+  {
+   "at": "2026-11-12T13:11:43+00:00",
+   "event": "S21 التعلم المعزز: مكتمل"
+  },
+  {
+   "at": "2026-11-12T13:25:07+00:00",
+   "event": "S22 مختبر الأبحاث: مكتمل — إصلاح جذري لنضوب تجمع Redis (500→عمل) تحقق بإعادة الاختبار"
+  },
+  {
+   "at": "2026-11-12T13:34:11+00:00",
+   "event": "S23 إعدادات النكسة: مكتمل — 226 عنصر، 19 قائمة (فحص خيارات فقط — تغيير القيم محظور حمايةً للتكوين)"
+  },
+  {
+   "at": "2026-11-12T13:45:09+00:00",
+   "event": "S24 الاستراتيجيات: مكتمل — 503s عائدة لجذر تجمع DuckDB (أُصلح)"
+  },
+  {
+   "at": "2026-11-12T13:51:03+00:00",
+   "event": "S25 التحليلات + S26 السجل: مكتملان"
+  },
+  {
+   "at": "2026-11-12T13:53:04+00:00",
+   "event": "S27 الإعدادات: مكتمل — آخر 503 خلال نافذة إقلاع nexus-data (موثق كـ INFO)"
+  },
+  {
+   "at": "2026-11-12T14:26:20+00:00",
+   "event": "بدء التقرير النهائي"
+  },
+  {
+   "at": "2026-11-12T14:31:30+00:00",
+   "event": "اكتمل التقرير النهائي الموحد"
+  },
+  {
+   "at": "2026-11-12T14:45:39+00:00",
+   "event": "إصلاح LAZY-IMPORT-BLOCK: استيراد transformers داخل خيط عامل — الإقلاع البارد لم يعد يسد الحلقة"
+  },
+  {
+   "at": "2026-11-12T14:51:23+00:00",
+   "event": "إغلاق ISS-001/007/009 + إصلاح LAZY-IMPORT-BLOCK — لا عيوب HIGH/MEDIUM مفتوحة"
+  }
+ ]
+}

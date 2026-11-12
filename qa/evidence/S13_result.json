@@ -1,0 +1,135 @@
+{
+ "screen_id": "S13",
+ "route": "/nexus/audit-progress",
+ "hash": "",
+ "started_at": "2026-11-12T12:53:52.445Z",
+ "elements": [
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "PAPER",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الثيم الغامق — اضغط للفاتح",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "التداول",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الاستراتيجيات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "السجل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الإعدادات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "متابعة QA",
+   "id": "",
+   "disabled": false
+  }
+ ],
+ "menus": [],
+ "tests": [
+  {
+   "kind": "button",
+   "target": "PAPER",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[0]"
+  },
+  {
+   "kind": "button",
+   "target": "Paper Trading",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Tab×2",
+   "status": "PASS",
+   "detail": "focus→BUTTON",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Escape",
+   "status": "PASS",
+   "detail": "أُرسل دون أثر جانبي",
+   "evidence": ""
+  }
+ ],
+ "console_errors": [],
+ "page_errors": [],
+ "network_errors": [],
+ "screenshots": {
+  "desktop": "qa/ui_shots/S13_desktop.png",
+  "mobile": "qa/ui_shots/S13_mobile.png"
+ },
+ "notes": [],
+ "final_url": "http://127.0.0.1:3100/nexus/audit-progress",
+ "page_meta": {
+  "title": "يمن سمارت — طرفية التداول الذكية",
+  "rtl": "rtl",
+  "tables": 0,
+  "charts": 0
+ },
+ "finished_at": "2026-11-12T12:54:18.756Z",
+ "summary": {
+  "elements": 9,
+  "menus": 0,
+  "tests": 5,
+  "pass": 3,
+  "fail": 0,
+  "blocked": 0,
+  "not_tested": 2,
+  "not_applicable": 0
+ }
+}

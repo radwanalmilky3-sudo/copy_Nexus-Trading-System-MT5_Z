@@ -1,0 +1,431 @@
+{
+ "screen_id": "S12",
+ "route": "/nexus",
+ "hash": "وحدة التحكم",
+ "started_at": "2026-11-12T12:44:21.332Z",
+ "elements": [
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "PAPER",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الثيم الغامق — اضغط للفاتح",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "OOwnersuper_admin",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "كتم الصوت",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "نظرة عامة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "المراكز",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "المخاطرة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الأخبار",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الوكلاء",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الذكاء",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "التحليل الأساسي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "سجل الصفقات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الاختبار الخلفي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "وحدة التحكم",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "التخطيط الافتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "SCALPING",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "Off",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "KILL",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الكل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "التحليل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "المناظرة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "القرار",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الإدارة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "التداول",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الاستراتيجيات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "السجل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الإعدادات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "متابعة QA",
+   "id": "",
+   "disabled": false
+  }
+ ],
+ "menus": [],
+ "tests": [
+  {
+   "kind": "button",
+   "target": "PAPER",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[0]"
+  },
+  {
+   "kind": "button",
+   "target": "Paper Trading",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "OOwnersuper_admin",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[5]"
+  },
+  {
+   "kind": "button",
+   "target": "نظرة عامة",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "المراكز",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "المخاطرة",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الأخبار",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الوكلاء",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الذكاء",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "التحليل الأساسي",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "سجل الصفقات",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الاختبار الخلفي",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "وحدة التحكم",
+   "status": "NOT_APPLICABLE",
+   "detail": "زر تبويب — تم تفعيل التبويب الهدف مسبقًا",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "التخطيط الافتراضي",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[16]"
+  },
+  {
+   "kind": "button",
+   "target": "SCALPING",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "Off",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "KILL",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الكل",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[20]"
+  },
+  {
+   "kind": "button",
+   "target": "التحليل",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[21]"
+  },
+  {
+   "kind": "button",
+   "target": "المناظرة",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[22]"
+  },
+  {
+   "kind": "button",
+   "target": "القرار",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[23]"
+  },
+  {
+   "kind": "keyboard",
+   "target": "Tab×2",
+   "status": "FAIL",
+   "detail": "focus→BODY",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Escape",
+   "status": "PASS",
+   "detail": "أُرسل دون أثر جانبي",
+   "evidence": ""
+  }
+ ],
+ "console_errors": [],
+ "page_errors": [],
+ "network_errors": [],
+ "screenshots": {
+  "desktop": "qa/ui_shots/S12_desktop.png",
+  "mobile": "qa/ui_shots/S12_mobile.png"
+ },
+ "notes": [
+  "tab activated: وحدة التحكم"
+ ],
+ "final_url": "http://127.0.0.1:3100/nexus#%D9%88%D8%AD%D8%AF%D8%A9%20%D8%A7%D9%84%D8%AA%D8%AD%D9%83%D9%85",
+ "page_meta": {
+  "title": "يمن سمارت — طرفية التداول الذكية",
+  "rtl": "rtl",
+  "tables": 2,
+  "charts": 8
+ },
+ "finished_at": "2026-11-12T12:44:55.018Z",
+ "summary": {
+  "elements": 30,
+  "menus": 0,
+  "tests": 26,
+  "pass": 8,
+  "fail": 1,
+  "blocked": 0,
+  "not_tested": 7,
+  "not_applicable": 10
+ }
+}

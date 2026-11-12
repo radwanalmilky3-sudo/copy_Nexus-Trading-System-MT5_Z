@@ -82,9 +82,19 @@ class RedisClient:
         self,
         url: str | None = None,
         *,
-        max_connections: int = 20,
+        max_connections: int | None = None,
         decode_responses: bool = True,
     ) -> None:
+        # QA (MASTER PROMPT V4.1): nexus-api hit redis-py "Too many connections"
+        # (pool exhaustion → HTTP 500 on /api/fundamental/ticker, /api/positions)
+        # when the dashboard polls dozens of endpoints in parallel. The pool is
+        # now env-tunable with a safer default. Reversible: set
+        # NEXUS_REDIS_POOL_MAX=20 to restore the legacy size.
+        if max_connections is None:
+            try:
+                max_connections = int(os.getenv("NEXUS_REDIS_POOL_MAX", "50"))
+            except ValueError:
+                max_connections = 50
         # Use 127.0.0.1 (not "localhost") by default: on Windows "localhost"
         # resolves to IPv6 ::1 first, and if Redis only listens on IPv4 each new
         # connection eats a ~2s timeout before falling back. Forcing IPv4 avoids

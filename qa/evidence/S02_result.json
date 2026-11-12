@@ -1,0 +1,612 @@
+{
+ "screen_id": "S02",
+ "route": "/nexus",
+ "hash": "",
+ "started_at": "2026-11-12T11:58:26.795Z",
+ "elements": [
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "PAPER",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الثيم الغامق — اضغط للفاتح",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "OOwnersuper_admin",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "كتم الصوت",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "نظرة عامة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "المراكز",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "المخاطرة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الأخبار",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الوكلاء",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الذكاء",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "التحليل الأساسي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "سجل الصفقات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الاختبار الخلفي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "وحدة التحكم",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "التخطيط الافتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "SCALPING",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "Off",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "KILL",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "التفاصيل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "توسيع",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "XAUUSD",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "M1",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "M5",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "M15",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "H1",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "H4",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "TV OFF",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "refresh",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "Evaluate now",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "Stop",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "clear",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "التداول",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الاستراتيجيات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "السجل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الإعدادات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "متابعة QA",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "",
+   "id": "tv-attr-logo",
+   "disabled": false
+  },
+  {
+   "type": "select",
+   "tag": "select",
+   "name": "اليومهذا الأسبوعهذا الشهركل الفترات",
+   "id": "",
+   "disabled": false,
+   "options": [
+    "اليوم",
+    "هذا الأسبوع",
+    "هذا الشهر",
+    "كل الفترات"
+   ]
+  }
+ ],
+ "menus": [
+  {
+   "name": "اليومهذا الأسبوعهذا الشهركل الفترات",
+   "kind": "native-select",
+   "options": 4,
+   "searchable": false
+  }
+ ],
+ "tests": [
+  {
+   "kind": "select",
+   "target": "اليومهذا الأسبوعهذا الشهركل الفترات",
+   "status": "PASS",
+   "detail": "4 خيارات؛ تبديل→استعادة",
+   "evidence": "selects[0]"
+  },
+  {
+   "kind": "button",
+   "target": "PAPER",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[0]"
+  },
+  {
+   "kind": "button",
+   "target": "Paper Trading",
+   "status": "FAIL",
+   "detail": "TimeoutError: locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:visible').nth(1)\u001b[22",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "FAIL",
+   "detail": "TimeoutError: locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:visible').nth(2)\u001b[22",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "FAIL",
+   "detail": "TimeoutError: locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:visible').nth(3)\u001b[22",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "OOwnersuper_admin",
+   "status": "FAIL",
+   "detail": "TimeoutError: locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:visible').nth(4)\u001b[22",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[5]"
+  },
+  {
+   "kind": "button",
+   "target": "نظرة عامة",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[6]"
+  },
+  {
+   "kind": "button",
+   "target": "المراكز",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[7]"
+  },
+  {
+   "kind": "button",
+   "target": "المخاطرة",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[8]"
+  },
+  {
+   "kind": "button",
+   "target": "الأخبار",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[9]"
+  },
+  {
+   "kind": "button",
+   "target": "الوكلاء",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[10]"
+  },
+  {
+   "kind": "button",
+   "target": "الذكاء",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[11]"
+  },
+  {
+   "kind": "button",
+   "target": "التحليل الأساسي",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "سجل الصفقات",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الاختبار الخلفي",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "وحدة التحكم",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "التخطيط الافتراضي",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "SCALPING",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "Off",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "KILL",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "REGIME",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "SESSION",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "SOURCE",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الجلسة",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الاتجاه",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "Regime",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "ساعات UTC",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "Thresholds",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "7d",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "30d",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Tab×2",
+   "status": "PASS",
+   "detail": "focus→BUTTON",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Escape",
+   "status": "PASS",
+   "detail": "أُرسل دون أثر جانبي",
+   "evidence": ""
+  }
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+ ],
+ "page_errors": [],
+ "network_errors": [],
+ "screenshots": {
+  "desktop": "qa/ui_shots/S02_desktop.png",
+  "mobile": "qa/ui_shots/S02_mobile.png"
+ },
+ "notes": [],
+ "final_url": "http://127.0.0.1:3100/nexus",
+ "page_meta": {
+  "title": "يمن سمارت — طرفية التداول الذكية",
+  "rtl": "rtl",
+  "tables": 2,
+  "charts": 8
+ },
+ "finished_at": "2026-11-12T12:00:31.808Z",
+ "summary": {
+  "elements": 44,
+  "menus": 1,
+  "tests": 36,
+  "pass": 11,
+  "fail": 4,
+  "blocked": 0,
+  "not_tested": 21,
+  "not_applicable": 0
+ }
+}

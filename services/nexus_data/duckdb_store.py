@@ -31,7 +31,13 @@ try:
 except ImportError:
     duckdb = None  # type: ignore[assignment]
 
-_POOL = ThreadPoolExecutor(max_workers=2)
+# QA (MASTER PROMPT V4.1): with max_workers=2 the executor queue saturated
+# during automatic audit/repair cycles — API-serving queries queued behind
+# them and nexus-api's 10s httpx deadline expired, producing 503 bursts
+# ("nexus-data is unreachable").  DuckDB access itself stays serialized by
+# _execute_locked; more workers only keep the queue responsive.  Reversible:
+# restore the literal 2.
+_POOL = ThreadPoolExecutor(max_workers=8)
 
 # Retention: keep ticks for 7 days, OHLCV for 365 days
 TICK_RETENTION_DAYS = 7

@@ -1,0 +1,1081 @@
+{
+ "screen_id": "S27",
+ "route": "/settings",
+ "hash": "",
+ "started_at": "2026-11-12T13:51:04.295Z",
+ "elements": [
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "PAPER",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الثيم الغامق — اضغط للفاتح",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "حفظ الكل",
+   "id": "",
+   "disabled": true
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الوسيط والحسابات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "جسر MT5",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "مختبر البيانات والبحث",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "التحكم بالشريط الإخباري والصوت",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الإعدادات العامة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "إدارة مصادر التحليل الأساسي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "مركز المستخدمين والتنبيهات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "المشروع والتدقيق",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "قوالب الإعداداتاحفظ إعداداتك كملف JSON وحمّل قالبًا محفوظًا ",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "حفظ الإعدادات الحالية كقالب",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تحميل إلى النموذج",
+   "id": "",
+   "disabled": true
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "أفضل الإعدادات (مدمج)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "آخر إعدادات (تراجع)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "فتح ملف من الجهاز…",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تحديث القائمة",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "بيئة النظام (.ENV)قيم ملف .env على القرص — الحفظ ينشئ .env.b",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "تحديث",
+   "id": "",
+   "disabled": true
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "وضع التشغيلPAPER/LIVE لا يُغيّران من هنا — الحالة تُجلب من ا",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "Off",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "ON",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "إعادة تنبيهات صوتية إلى افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "OFF",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "إعادة إشعارات سطح المكتب إلى افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "بوابة الجلسات الفعليةتُفرض على مستوى الخادم بساعة الخادم: تُ",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "OFF",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "إعادة السماح خارج الجلسات (OFF_HOURS) إلى افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "+ SYDNEY",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "+ TOKYO",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "+ LONDON",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "+ NEW_YORK",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "+ OVERLAP",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "نواة التداول (TRADING CORE)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "المخاطرة والحجم (RISK & SIZING)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الإشارات والجودة (SIGNALS & QUALITY)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "النماذج والتدريب (MODELS & TRAINING)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الإشعارات (NOTIFICATIONS)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الارتباط متعدد الأصول (CORRELATION)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "ذاكرة الصفقات (TRADE MEMORY)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الاختبار الخلفي (BACKTESTING)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "وكيل GENAI والبحث (GENAI RESEARCH)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "افتراضي",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "button",
+   "tag": "button",
+   "name": "الاتصال",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "التداول",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الاستراتيجيات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "النماذج",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "السجل",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "الإعدادات",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "link",
+   "tag": "a",
+   "name": "متابعة QA",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "select",
+   "tag": "select",
+   "name": "— اختر قالبًا محفوظًا —1 (54 إعدادًا)أفضل الإعدادات (مدمج) ★",
+   "id": "",
+   "disabled": false,
+   "options": [
+    "— اختر قالبًا محفوظًا —",
+    "1 (54 إعدادًا)",
+    "أفضل الإعدادات (مدمج) ★ (54 إعدادًا)"
+   ]
+  },
+  {
+   "type": "select",
+   "tag": "select",
+   "name": "افتراضي النظامscalpingswing",
+   "id": "",
+   "disabled": false,
+   "options": [
+    "افتراضي النظام",
+    "scalping",
+    "swing"
+   ]
+  },
+  {
+   "type": "select",
+   "tag": "select",
+   "name": "افتراضي النظامM1M5M15H1",
+   "id": "",
+   "disabled": false,
+   "options": [
+    "افتراضي النظام",
+    "M1",
+    "M5",
+    "M15",
+    "H1"
+   ]
+  },
+  {
+   "type": "select",
+   "tag": "select",
+   "name": "افتراضي النظام7d30d",
+   "id": "",
+   "disabled": false,
+   "options": [
+    "افتراضي النظام",
+    "7d",
+    "30d"
+   ]
+  },
+  {
+   "type": "select",
+   "tag": "select",
+   "name": "افتراضي النظامXAUUSDEURUSDBTCUSDUS500",
+   "id": "",
+   "disabled": false,
+   "options": [
+    "افتراضي النظام",
+    "XAUUSD",
+    "EURUSD",
+    "BTCUSD",
+    "US500"
+   ]
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "اسم القالب الجديد (حروف/أرقام/مسافات)",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  },
+  {
+   "type": "input",
+   "tag": "input",
+   "name": "افتراضي النظام",
+   "id": "",
+   "disabled": false
+  }
+ ],
+ "menus": [
+  {
+   "name": "— اختر قالبًا محفوظًا —1 (54 إعدادًا)أفضل الإعدادات (مدمج) ★",
+   "kind": "native-select",
+   "options": 3,
+   "searchable": false
+  },
+  {
+   "name": "افتراضي النظامscalpingswing",
+   "kind": "native-select",
+   "options": 3,
+   "searchable": false
+  },
+  {
+   "name": "افتراضي النظامM1M5M15H1",
+   "kind": "native-select",
+   "options": 5,
+   "searchable": false
+  },
+  {
+   "name": "افتراضي النظام7d30d",
+   "kind": "native-select",
+   "options": 3,
+   "searchable": false
+  },
+  {
+   "name": "افتراضي النظامXAUUSDEURUSDBTCUSDUS500",
+   "kind": "native-select",
+   "options": 5,
+   "searchable": false
+  }
+ ],
+ "tests": [
+  {
+   "kind": "select",
+   "target": "— اختر قالبًا محفوظًا —1 (54 إعدادًا)أفضل الإعدادات (مدمج) ★",
+   "status": "BLOCKED",
+   "detail": "قائمة إعدادات (3 خيار) — تغيير القيمة قد يعدّل تكوين التداول؛ فُحصت الخيارات فقط",
+   "evidence": ""
+  },
+  {
+   "kind": "select",
+   "target": "افتراضي النظامscalpingswing",
+   "status": "BLOCKED",
+   "detail": "قائمة إعدادات (3 خيار) — تغيير القيمة قد يعدّل تكوين التداول؛ فُحصت الخيارات فقط",
+   "evidence": ""
+  },
+  {
+   "kind": "select",
+   "target": "افتراضي النظامM1M5M15H1",
+   "status": "BLOCKED",
+   "detail": "قائمة إعدادات (5 خيار) — تغيير القيمة قد يعدّل تكوين التداول؛ فُحصت الخيارات فقط",
+   "evidence": ""
+  },
+  {
+   "kind": "select",
+   "target": "افتراضي النظام7d30d",
+   "status": "BLOCKED",
+   "detail": "قائمة إعدادات (3 خيار) — تغيير القيمة قد يعدّل تكوين التداول؛ فُحصت الخيارات فقط",
+   "evidence": ""
+  },
+  {
+   "kind": "select",
+   "target": "افتراضي النظامXAUUSDEURUSDBTCUSDUS500",
+   "status": "BLOCKED",
+   "detail": "قائمة إعدادات (5 خيار) — تغيير القيمة قد يعدّل تكوين التداول؛ فُحصت الخيارات فقط",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "PAPER",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[0]"
+  },
+  {
+   "kind": "button",
+   "target": "Paper Trading",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "(button)",
+   "status": "PASS",
+   "detail": "معطّل — تحقق من عدم التنفيذ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "حفظ الكل",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "الوسيط والحسابات",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[5]"
+  },
+  {
+   "kind": "button",
+   "target": "جسر MT5",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[6]"
+  },
+  {
+   "kind": "button",
+   "target": "مختبر البيانات والبحث",
+   "status": "NOT_TESTED",
+   "detail": "عنصر يعاد رسمه باستمرار — تعذر النقر الآمن",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "التحكم بالشريط الإخباري والصوت",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[8]"
+  },
+  {
+   "kind": "button",
+   "target": "الإعدادات العامة",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[9]"
+  },
+  {
+   "kind": "button",
+   "target": "إدارة مصادر التحليل الأساسي",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[10]"
+  },
+  {
+   "kind": "button",
+   "target": "الإعدادات العامة",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[11]"
+  },
+  {
+   "kind": "button",
+   "target": "إدارة مصادر التحليل الأساسي",
+   "status": "PASS",
+   "detail": "نقر آمن دون أخطاء",
+   "evidence": "button[12]"
+  },
+  {
+   "kind": "button",
+   "target": "مركز المستخدمين والتنبيهات",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "المشروع والتدقيق",
+   "status": "PASS",
+   "detail": "معطّل — تحقق من عدم التنفيذ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "تحديث",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "إضافة مصدر",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "إيقاف",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "اختبار",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "تعديل",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "إيقاف",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "اختبار",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "تعديل",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "إيقاف",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "اختبار",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "تعديل",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "إيقاف",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "اختبار",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "تعديل",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "إيقاف",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "اختبار",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "تعديل",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "إيقاف",
+   "status": "NOT_TESTED",
+   "detail": "إجراء خطر (مالي/تكوين) — جرد فقط دون نقر",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "اختبار",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "button",
+   "target": "تعديل",
+   "status": "NOT_TESTED",
+   "detail": "سقف النقر الآمن (8) بلغ",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Tab×2",
+   "status": "PASS",
+   "detail": "focus→BUTTON",
+   "evidence": ""
+  },
+  {
+   "kind": "keyboard",
+   "target": "Escape",
+   "status": "PASS",
+   "detail": "أُرسل دون أثر جانبي",
+   "evidence": ""
+  }
+ ],
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+  "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+  "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+ ],
+ "page_errors": [],
+ "network_errors": [],
+ "screenshots": {
+  "desktop": "qa/ui_shots/S27_desktop.png",
+  "mobile": "qa/ui_shots/S27_mobile.png"
+ },
+ "notes": [],
+ "final_url": "http://127.0.0.1:3100/nexus/settings",
+ "page_meta": {
+  "title": "يمن سمارت — طرفية التداول الذكية",
+  "rtl": "rtl",
+  "tables": 0,
+  "charts": 0
+ },
+ "finished_at": "2026-11-12T13:52:15.694Z",
+ "summary": {
+  "elements": 98,
+  "menus": 5,
+  "tests": 42,
+  "pass": 12,
+  "fail": 0,
+  "blocked": 5,
+  "not_tested": 25,
+  "not_applicable": 0
+ }
+}
