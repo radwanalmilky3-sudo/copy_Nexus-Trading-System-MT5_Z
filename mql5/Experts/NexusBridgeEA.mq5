@@ -677,8 +677,11 @@ bool DoCalendarSync()
    if(CalendarValueHistory(values, from, to, NULL, NULL) <= 0)
      {
       int err = GetLastError();
-      if(err != 0)
-         PrintFormat("NexusBridgeEA: CalendarValueHistory failed err=%d", err);
+      // Silent failures (err=0) are the hardest to diagnose — always report
+      // the count and error when verbose.
+      PrintFormat("NexusBridgeEA: CalendarValueHistory returned <=0 (err=%d) "
+                  "window=%s..%s — check View->Economic Calendar has data",
+                  err, TimeToString(from, TIME_DATE), TimeToString(to, TIME_DATE));
       return false;                    // next timer tick retries the full window
      }
    const int total = ArraySize(values);
