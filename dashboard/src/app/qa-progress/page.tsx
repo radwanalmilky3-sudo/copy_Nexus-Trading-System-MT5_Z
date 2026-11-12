@@ -118,12 +118,12 @@ export default function QaProgressPage() {
       {err && <p role="alert" className="text-xs text-neon-red mb-3">{err}</p>}
 
       {/* ملخص حي */}
-      <section className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mb-5">
+      <section className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 mb-5">
         {[
           ['الوحدات', s.screens_total ?? 0, 'muted'], ['مكتملة', s.work_completed ?? 0, 'ok'],
           ['جارية', s.work_in_progress ?? 0, 'warn'], ['محظورة', s.work_blocked ?? 0, 'bad'],
           ['PASS', s.pass ?? 0, 'ok'], ['FAIL', s.fail ?? 0, 'bad'],
-          ['مختبرة', s.tests_executed ?? 0, 'muted'],
+          ['مختبرة', s.tests_executed ?? 0, 'muted'], ['لا ينطبق', s.not_applicable ?? 0, 'muted'],
         ].map(([label, val, tone]) => (
           <div key={String(label)} className="rounded-lg border border-border-primary bg-bg-secondary/60 p-3">
             <div className="text-[10px] text-text-muted mb-1">{label}</div>
@@ -180,7 +180,7 @@ export default function QaProgressPage() {
         <table className="w-full text-[11px] border-collapse">
           <thead>
             <tr className="text-text-muted border-b border-border-primary">
-              {['المعرف', 'الشاشة', 'المسار', 'المرحلة', 'حالة العمل', 'عناصر', 'قوائم', 'اختبارات', 'PASS', 'FAIL', 'محظور', 'غير مختبر', 'عيوب'].map((h) => <th key={h} className="px-2 py-1.5 text-right whitespace-nowrap">{h}</th>)}
+              {['المعرف', 'الشاشة', 'المسار', 'المرحلة', 'حالة العمل', 'عناصر', 'قوائم', 'اختبارات', 'PASS', 'FAIL', 'محظور', 'غير مختبر', 'لا ينطبق', 'عيوب'].map((h) => <th key={h} className="px-2 py-1.5 text-right whitespace-nowrap">{h}</th>)}
             </tr>
           </thead>
           <tbody>
@@ -198,10 +198,11 @@ export default function QaProgressPage() {
                 <td className="px-2 py-1.5 text-neon-red font-bold">{x.results.fail}</td>
                 <td className="px-2 py-1.5">{x.results.blocked}</td>
                 <td className="px-2 py-1.5">{x.results.not_tested}</td>
+                <td className="px-2 py-1.5 text-text-muted">{x.results.not_applicable}</td>
                 <td className="px-2 py-1.5">{x.issues}</td>
               </tr>
             ))}
-            {screens.length === 0 && <tr><td colSpan={13} className="px-2 py-4 text-center text-text-muted">لا توجد وحدات مطابقة للفلاتر بعد.</td></tr>}
+            {screens.length === 0 && <tr><td colSpan={14} className="px-2 py-4 text-center text-text-muted">لا توجد وحدات مطابقة للفلاتر بعد.</td></tr>}
           </tbody>
         </table>
       </section>
