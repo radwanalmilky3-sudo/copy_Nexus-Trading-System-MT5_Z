@@ -5,7 +5,8 @@ import { useDashboardStore } from '@/stores/dashboardStore';
 import { GlowText } from '@/components/shared/GlowText';
 import NeonCard from '@/components/shared/NeonCard';
 import { ArrowUpCircle, ArrowDownCircle, Activity } from 'lucide-react';
-import { manualOrderPayload } from '@/lib/trade-controls-presentation';
+import { manualOrderPayload, manualOrderOutcome } from '@/lib/trade-controls-presentation';
+import { apiClient } from '@/lib/api-client';
 import { useState, useCallback } from 'react';
 
 interface ManualTradePanelProps {
@@ -24,22 +25,45 @@ export function ManualTradePanel({
   const [sl, setSl] = useState('50');
   const [tp, setTp] = useState('100');
 
-  /* صدق الواجهة: لا يوجد مسار بوابة للأوامر اليدوية — /api/executor/order
-   * نقطة داخلية محمية بسرّ الخدمات ولا يمكن للمتصفح استدعاءها. الأزرار
-   * معطّلة صراحة حتى يوفر البوابة مسارًا مُصرّحًا به؛ لا نُمثّل تنفيذًا. */
-  const executionWired = false;
+  const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState<{ ok: boolean; message: string } | null>(null);
+
+  /* المسار الآن موصول: POST /api/positions/manual-order في البوابة يمرّ عبر
+   * نفس سلسلة الأمان الحتمية للوكلاء (تقييم المخاطر المركزية + موافقة موقّعة
+   * + حارس المنفّذ). الحارس لا يُضعَف للنقر اليدوي؛ كل رفض يُعرض بسبه الحقيقي. */
+  const submit = useCallback(async (side: 'BUY' | 'SELL', price: number) => {
+    if (busy) return;
+    const payload = manualOrderPayload({ symbol, lots, sl, tp, price });
+    if (!payload) {
+      setNotice({ ok: false, message: 'راجع المدخلات: اللوت موجب وSL/TP أرقام صريحة (SL ليس فارغًا).' });
+      return;
+    }
+    setBusy(true);
+    setNotice(null);
+    try {
+      const response = await apiClient.placeManualOrder({
+        symbol: payload.symbol,
+        side,
+        lots: payload.lots,
+        entry: payload.price,
+        sl: payload.sl,
+        tp: payload.tp,
+      });
+      setNotice(manualOrderOutcome(response));
+    } catch {
+      setNotice({ ok: false, message: 'تعذر الوصول إلى البوابة؛ لم يُنفَّذ أي أمر.' });
+    } finally {
+      setBusy(false);
+    }
+  }, [busy, symbol, lots, sl, tp]);
 
   const handleBuy = useCallback(() => {
-    if (!executionWired) return;
-    const payload = manualOrderPayload({ symbol, lots, sl, tp, price: currentAsk });
-    if (payload) console.log('Manual BUY:', payload);
-  }, [executionWired, symbol, lots, sl, tp, currentAsk]);
+    void submit('BUY', currentAsk);
+  }, [submit, currentAsk]);
 
   const handleSell = useCallback(() => {
-    if (!executionWired) return;
-    const payload = manualOrderPayload({ symbol, lots, sl, tp, price: currentBid });
-    if (payload) console.log('Manual SELL:', payload);
-  }, [executionWired, symbol, lots, sl, tp, currentBid]);
+    void submit('SELL', currentBid);
+  }, [submit, currentBid]);
 
   return (
     <NeonCard title="تداول يدوي" accentColor="cyan" isLive>
@@ -120,40 +144,50 @@ export function ManualTradePanel({
         </div>
       </div>
 
-      {/* Action buttons — disabled until the gateway exposes an authorized
-          manual-order route; the executor endpoint is internal-only. */}
+      {/* Action buttons — wired through the gateway manual-order route;
+          every order passes central-risk approval + the executor guard. */}
+      {notice && (
+        <p role="status" className={cn('text-[10px] text-center px-2 py-1 rounded border',
+          notice.ok ? 'text-neon-green bg-neon-green/10 border-neon-green/30' : 'text-neon-red bg-neon-red/10 border-neon-red/30')}>
+          {notice.message}
+        </p>
+      )}
       <div className="grid grid-cols-2 gap-3">
         <button
           onClick={handleBuy}
-          disabled
-          title="تنفيذ الأوامر اليدوية غير موصول بمحرك التنفيذ بعد"
+          disabled={busy}
+          title="شراء بسعر الطلب الحالي — يمرّ عبر تقييم المخاطر وحارس التنفيذ"
+          aria-busy={busy}
           className={cn(
             'flex items-center justify-center gap-2 rounded-lg py-2.5',
             'bg-neon-green/10 border border-neon-green/40 text-neon-green',
             'font-bold text-sm uppercase tracking-wider',
-            'opacity-40 cursor-not-allowed'
+            'hover:bg-neon-green/20 hover:shadow-neon-green active:scale-[0.98]',
+            'transition-all duration-200 disabled:cursor-wait disabled:opacity-60'
           )}
         >
           <ArrowUpCircle className="h-4 w-4" />
-          Buy
+          {busy ? '…' : 'Buy'}
         </button>
         <button
           onClick={handleSell}
-          disabled
-          title="تنفيذ الأوامر اليدوية غير موصول بمحرك التنفيذ بعد"
+          disabled={busy}
+          title="بيع بسعر العرض الحالي — يمرّ عبر تقييم المخاطر وحارس التنفيذ"
+          aria-busy={busy}
           className={cn(
             'flex items-center justify-center gap-2 rounded-lg py-2.5',
             'bg-neon-red/10 border border-neon-red/40 text-neon-red',
             'font-bold text-sm uppercase tracking-wider',
-            'opacity-40 cursor-not-allowed'
+            'hover:bg-neon-red/20 hover:shadow-neon-red active:scale-[0.98]',
+            'transition-all duration-200 disabled:cursor-wait disabled:opacity-60'
           )}
         >
           <ArrowDownCircle className="h-4 w-4" />
-          Sell
+          {busy ? '…' : 'Sell'}
         </button>
       </div>
       <p className="text-[10px] leading-relaxed text-text-muted text-center">
-        تنفيذ الأوامر اليدوية غير موصول بمحرك التنفيذ بعد — الأزرار معطّلة حتى توفير مسار مُصرّح به في البوابة.
+        كل أمر يمرّ عبر تقييم المخاطر المركزية وموافقة موقّعة وحارس التنفيذ — وقد يُرفض بأمان (مفتاح الإيقاف، التداول الآلي، نافذة الأخبار، حدود الحجم).
       </p>
     </NeonCard>
   );

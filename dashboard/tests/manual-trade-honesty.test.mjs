@@ -39,21 +39,22 @@ const { ManualTradePanel } = load(
 
 const markup = renderToStaticMarkup(React.createElement(ManualTradePanel));
 
-test('manual trade panel never presents a working order button while execution is unwired', () => {
-  // Both action buttons must be disabled — a console.log-only Buy/Sell was a
-  // fabricated trading surface (found during the agentC audit).
+test('manual trade panel is wired and states the safety chain honestly', () => {
+  // The panel posts to /api/positions/manual-order; buttons are enabled at
+  // rest (disabled only while a request is in flight) and the visible note
+  // describes the real approval chain instead of pretending instant fills.
   const buttons = markup.match(/<button[^>]*>/g) ?? [];
-  const orderButtons = buttons.filter((b) => b.includes('غير موصول'));
-  assert.equal(orderButtons.length, 2, 'both Buy and Sell carry the unwired title');
+  const orderButtons = buttons.filter((b) => b.includes('تقييم المخاطر'));
+  assert.equal(orderButtons.length, 2, 'both Buy and Sell advertise the approval chain in their title');
   for (const b of orderButtons) {
-    assert.equal(/disabled(=|\s|>)/.test(b), true, 'order button must render disabled');
+    assert.equal(/disabled(=|\s|>)/.test(b), false, 'order button must be enabled at rest');
   }
 });
 
-test('the panel states plainly that manual execution is not connected', () => {
-  assert.match(markup, /غير موصول بمحرك التنفيذ/,
-    'an honest reason must be visible, not a silent dead button');
-  assert.match(markup, /معطّلة/);
+test('the panel states the full approval chain and the possibility of safe rejection', () => {
+  assert.match(markup, /موافقة موقّعة/, 'signed approval must be named, not hidden');
+  assert.match(markup, /حارس التنفيذ/, 'the executor guard must be named');
+  assert.match(markup, /قد يُرفض بأمان/, 'honest expectation of safe rejection');
 });
 
 test('the panel still shows real price inputs and risk fields', () => {

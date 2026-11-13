@@ -4,6 +4,7 @@ import {
   autoTradeEnabled,
   autoTradeServerCheck,
   killSwitchOutcome,
+  manualOrderOutcome,
   manualOrderPayload,
   modeSwitchOutcome,
   tradesPausedBanner,
@@ -83,6 +84,45 @@ test('mode latch booleans are strict true, absent means off', () => {
   const truthy = modeSwitchOutcome({ data: { mode: 'paper', auto_trade: 'yes', kill_switch: 1 } }, 'paper');
   assert.equal(truthy.ok && truthy.autoTrade, false, 'non-boolean truthy values are not confirmations');
   assert.equal(truthy.ok && truthy.killSwitch, false);
+});
+
+// ── Manual order outcome: the server's word is rendered verbatim ──
+
+test('manual order outcome passes executor confirmations through', () => {
+  assert.deepEqual(
+    manualOrderOutcome({ success: true, data: { status: 'FILLED' } }),
+    { ok: true, message: 'حالة المنفّذ: FILLED' },
+  );
+  assert.equal(manualOrderOutcome({ success: true, data: { status: 'PENDING' } }).ok, true);
+  assert.equal(manualOrderOutcome({ success: true, data: { status: 'PARTIAL' } }).ok, true);
+});
+
+test('manual order outcome surfaces guard and risk rejections with their real reason', () => {
+  const blocked = manualOrderOutcome({
+    success: true,
+    data: { status: 'GUARD_BLOCKED_AUTO_TRADE_OFF', error: 'تم منع الصفقة لأن التداول الآلي غير مفعل بشكل صريح.' },
+  });
+  assert.equal(blocked.ok, false);
+  assert.match(blocked.message, /التداول الآلي غير مفعل/, 'the guard reason reaches the user verbatim');
+
+  const rejected = manualOrderOutcome({
+    success: true,
+    data: { status: 'RISK_REJECTED', message_ar: 'رفضت إدارة المخاطر الصفقة؛ راجع الأسباب أعلاه.' },
+  });
+  assert.equal(rejected.ok, false);
+  assert.match(rejected.message, /إدارة المخاطر/);
+
+  const dedup = manualOrderOutcome({ success: true, data: { status: 'DEDUP_SKIPPED', error: 'Duplicate order' } });
+  assert.equal(dedup.ok, false, 'a skipped duplicate is NOT a success');
+});
+
+test('manual order outcome never invents success from an empty or unknown response', () => {
+  assert.equal(manualOrderOutcome(null).ok, false);
+  assert.equal(manualOrderOutcome({}).ok, false);
+  assert.equal(manualOrderOutcome({ success: false }).ok, false);
+  const unknown = manualOrderOutcome({ success: true, data: { status: 'SOMETHING_NEW' } });
+  assert.equal(unknown.ok, false, 'an unrecognized status is never reported as a fill');
+  assert.match(unknown.message, /SOMETHING_NEW/);
 });
 
 // ── Manual order payload: numeric validity before anything is sent ──

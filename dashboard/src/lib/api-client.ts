@@ -393,6 +393,32 @@ class ApiClient {
     return wrap(body);
   }
 
+  /** Manual dashboard order. Routed through the same deterministic safety
+   * chain as agent orders (central-risk evaluation + signed approval + the
+   * executor guard); the server answers with the executor status verbatim —
+   * the UI renders that status, it never invents a success. */
+  async placeManualOrder(order: {
+    symbol: string;
+    side: 'BUY' | 'SELL';
+    lots: number;
+    entry: number;
+    sl: number;
+    tp: number;
+  }): Promise<ApiResponse<{ status?: string; error?: string; decision?: string; message_ar?: string }>> {
+    const res = await this.fetchPath('/api/positions/manual-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    });
+    const body = await this.parseOk<{
+      status?: string;
+      error?: string;
+      decision?: string;
+      message_ar?: string;
+    }>(res);
+    return wrap(body);
+  }
+
   async modifyPosition(
     positionId: string | number,
     levels: { sl?: number; tp1?: number },

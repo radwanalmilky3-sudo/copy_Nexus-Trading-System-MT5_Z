@@ -18,8 +18,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from shared.constants import SERVICE_PORTS, Verdict
-from shared.models import Position
+from shared.constants import SERVICE_PORTS, RiskDecision, Verdict
+from shared.models import Position, TradeProposal
 from shared.redis_client import RedisClient
 
 from ..data_client import DataServiceClient, DataServiceRejected, DataServiceUnavailable
@@ -351,3 +351,170 @@ async def modify_position(
     if outcome == "PENDING":
         return JSONResponse(status_code=status.HTTP_202_ACCEPTED, content=payload)
     return payload
+
+
+# ── Manual dashboard order ───────────────────────────────────────────────────
+# The only user-facing path to NEW exposure. It reuses the exact deterministic
+# safety chain of agent orders — central-risk evaluation + signed approval,
+# then the executor guard — and is never granted a shortcut: a manual click
+# gets blocked by the same kill-switch / auto-trade / news-blackout / approval
+# rules, and every rejection surfaces verbatim to the UI.
+
+
+class ManualOrderRequest(BaseModel):
+    symbol: str
+    side: str  # BUY | SELL
+    lots: float
+    entry: float  # absolute reference price (ask for BUY, bid for SELL)
+    sl: float  # absolute stop-loss price
+    tp: float  # absolute take-profit price
+
+
+class ManualOrderRejected(BaseModel):
+    status: str
+    decision: str
+    violations: list[dict[str, Any]] = []
+    message_ar: str
+
+
+RISK_BASE = os.getenv(
+    "NEXUS_RISK_URL",
+    f"http://127.0.0.1:{SERVICE_PORTS['nexus-risk']}",
+).rstrip("/")
+
+
+@router.post(
+    "/manual-order",
+    dependencies=[rate_limit_scope("edit_close")],
+    response_model=None,
+)
+async def manual_order(
+    body: ManualOrderRequest,
+    actor: CurrentUser,
+    db: DataServiceClient = Depends(get_data_service),
+) -> dict[str, Any] | JSONResponse:
+    await _require(db, actor, "trading.execute")
+
+    symbol = body.symbol.strip().upper()
+    side = body.side.strip().upper()
+    if not symbol:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "symbol is required")
+    if side not in ("BUY", "SELL"):
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "side must be BUY or SELL")
+    for name, value in (("lots", body.lots), ("entry", body.entry), ("sl", body.sl), ("tp", body.tp)):
+        if value != value or value in (float("inf"), float("-inf")):
+            raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, f"{name} must be a finite number")
+    if body.lots < 0.01:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "lots must be at least 0.01")
+    if body.entry <= 0:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, "entry price must be positive")
+    # Direction sanity — mirrors the TradeProposal validator plus TP symmetry.
+    # A stop on the wrong side of entry is a fat-finger, not a strategy.
+    if side == "BUY" and not (body.sl < body.entry < body.tp):
+        raise HTTPException(
+            status.HTTP_422_UNPROCESSABLE_ENTITY,
+            "BUY requires SL below entry and TP above entry",
+        )
+    if side == "SELL" and not (body.tp < body.entry < body.sl):
+        raise HTTPException(
+            status.HTTP_422_UNPROCESSABLE_ENTITY,
+            "SELL requires SL above entry and TP below entry",
+        )
+
+    internal_secret = os.getenv("NEXUS_INTERNAL_API_SECRET", "").strip()
+    if not internal_secret:
+        raise HTTPException(503, "NEXUS_INTERNAL_API_SECRET is not configured")
+
+    proposal = TradeProposal(
+        symbol=symbol,
+        direction=Verdict.BUY if side == "BUY" else Verdict.SELL,
+        entry=body.entry,
+        sl=body.sl,
+        tp1=body.tp,
+        conviction=1.0,
+        reasoning=f"manual dashboard order by user {actor}",
+    )
+
+    async with new_client(timeout=15.0) as client:
+        # 1) Central risk evaluates and — on APPROVE — signs the exact terms.
+        try:
+            eval_resp = await client.post(
+                f"{RISK_BASE}/api/risk/evaluate",
+                json={
+                    "proposal": proposal.model_dump(mode="json"),
+                    "order_type": "MARKET",
+                    "order_price": 0.0,
+                    "size_multiplier": 1.0,
+                },
+                headers={"X-Nexus-Internal-Secret": internal_secret},
+            )
+            eval_resp.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            raise HTTPException(exc.response.status_code, exc.response.text)
+        except httpx.RequestError as exc:
+            raise HTTPException(
+                status.HTTP_502_BAD_GATEWAY,
+                f"Risk service unreachable: {exc}",
+            )
+        evaluation = eval_resp.json()
+
+        if str(evaluation.get("decision")) != str(RiskDecision.APPROVE):
+            return JSONResponse(
+                status_code=status.HTTP_200_OK,
+                content=ManualOrderRejected(
+                    status="RISK_REJECTED",
+                    decision=str(evaluation.get("decision", "REJECT")),
+                    violations=list(evaluation.get("violations", [])),
+                    message_ar="رفضت إدارة المخاطر الصفقة؛ راجع الأسباب أعلاه.",
+                ).model_dump(),
+            )
+
+        approval_payload = evaluation.get("approval_payload") or {}
+        approved_size = float(evaluation.get("approved_size", 0) or 0)
+        if not approval_payload or approved_size < 0.01:
+            return JSONResponse(
+                status_code=status.HTTP_200_OK,
+                content=ManualOrderRejected(
+                    status="RISK_REJECTED",
+                    decision="APPROVE_WITHOUT_EXECUTABLE_SIZE",
+                    violations=evaluation.get("violations", []),
+                    message_ar="لم تُصدر الموافقة حجمًا قابلًا للتنفيذ (أقل من 0.01 لوت).",
+                ).model_dump(),
+            )
+
+        # 2) Executor executes against the signed terms — every field must
+        # match the approval payload byte-for-byte or the guard fails closed.
+        order_req = {
+            "symbol": symbol,
+            "side": side,
+            "order_type": "MARKET",
+            "size": approved_size,
+            "price": body.entry,
+            "sl": body.sl,
+            "tp": body.tp,
+            "slippage": 10,
+            "comment": "nexus:manual",
+            "strategy": "manual",
+            "conviction": 1.0,
+            "proposal_id": approval_payload.get("proposal_id", ""),
+            "risk_approval_expires_at": approval_payload.get("expires_at", 0),
+            "risk_approval_signature": evaluation.get("approval_signature", ""),
+            "risk_approval_payload": approval_payload,
+            "risk_approved_entry": body.entry,
+            "signal_timestamp": approval_payload.get("signal_timestamp", 0),
+        }
+        try:
+            order_resp = await client.post(
+                f"{EXECUTOR_URL}/api/executor/order",
+                json=order_req,
+                headers={"X-Nexus-Internal-Secret": internal_secret},
+            )
+            order_resp.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            raise HTTPException(exc.response.status_code, exc.response.text)
+        except httpx.RequestError as exc:
+            raise HTTPException(
+                status.HTTP_502_BAD_GATEWAY,
+                f"Executor unreachable: {exc}",
+            )
+        return order_resp.json()

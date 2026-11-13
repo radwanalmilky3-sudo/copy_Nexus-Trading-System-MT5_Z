@@ -139,6 +139,62 @@ export function manualOrderPayload(input: ManualOrderInput): ManualOrderPayload 
   return { symbol: input.symbol, lots, sl, tp, price: input.price };
 }
 
+export interface ManualOrderResponseLike {
+  success?: boolean;
+  data?: {
+    status?: unknown;
+    error?: unknown;
+    decision?: unknown;
+    message_ar?: unknown;
+  };
+}
+
+export interface ManualOrderOutcome {
+  ok: boolean;
+  message: string;
+}
+
+/**
+ * Map the gateway/executor manual-order response to an honest UI state.
+ * The server's status/error text is rendered verbatim — the panel never
+ * invents a success the executor did not report, and guard rejections
+ * (kill switch, auto-trade off, news blackout, risk approval) surface
+ * with their real reason.
+ */
+export function manualOrderOutcome(response: ManualOrderResponseLike): ManualOrderOutcome {
+  const status =
+    response?.success === true && typeof response?.data?.status === 'string'
+      ? response.data.status
+      : '';
+  const error = typeof response?.data?.error === 'string' ? response.data.error : '';
+  if (!status) {
+    return {
+      ok: false,
+      message: error || 'تعذر إرسال الأمر؛ لم يصل تأكيد من المنفّذ.',
+    };
+  }
+  if (status === 'RISK_REJECTED') {
+    const messageAr =
+      typeof response?.data?.message_ar === 'string' && response.data.message_ar
+        ? response.data.message_ar
+        : 'رفضت إدارة المخاطر الصفقة؛ راجع الأسباب في سجل الاستراتيجيات.';
+    return { ok: false, message: messageAr };
+  }
+  if (status.startsWith('GUARD_BLOCKED')) {
+    return {
+      ok: false,
+      message: error || 'منع حارس التنفيذ الصفقة؛ راجع حالة الأمان (المفتاح/التداول الآلي/نافذة الأخبار).',
+    };
+  }
+  if (status === 'FILLED' || status === 'PARTIAL' || status === 'PENDING') {
+    return { ok: true, message: `حالة المنفّذ: ${status}` };
+  }
+  return {
+    ok: false,
+    message: error || `حالة غير مؤكدة من المنفّذ: ${status}`,
+  };
+}
+
 export interface TradeSettingsMeta {
   daily_trade_count?: number;
   trades_paused?: boolean;
