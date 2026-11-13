@@ -4,8 +4,8 @@
   "isolation": "This store is OUTSIDE the trading DuckDB. It never touches NEXUS trading tables.",
   "schema_version": 1,
   "created_at": "2026-11-12T11:10:00Z",
-  "last_update": "2026-11-12T14:51:23+00:00",
-  "updated_by": "qa-lead"
+  "last_update": "2026-11-13T11:23:48+00:00",
+  "updated_by": "qa-lead (retest pass 2026-11-13)"
  },
  "summary": {
   "screens_total": 27,
@@ -13,9 +13,9 @@
   "work_in_progress": 0,
   "work_completed": 27,
   "work_blocked": 0,
-  "tests_executed": 222,
-  "pass": 220,
-  "fail": 2,
+  "tests_executed": 246,
+  "pass": 222,
+  "fail": 0,
   "blocked": 24,
   "not_tested": 200,
   "not_applicable": 101,
@@ -345,16 +345,16 @@
    "elements": 30,
    "menus": 0,
    "results": {
-    "pass": 8,
-    "fail": 1,
+    "pass": 9,
+    "fail": 0,
     "blocked": 0,
     "not_tested": 7,
     "not_applicable": 10
    },
    "tests_total": 26,
    "issues": 1,
-   "updated_at": "2026-11-12T12:49:01+00:00",
-   "evidence": ""
+   "updated_at": "2026-11-13T11:23:48+00:00",
+   "evidence": " | retest 2026-11-13: qa/retest_tab_focus.mjs + dashboard/qa/retest_s12.mjs — Tab advances nav links"
   },
   {
    "screen_id": "S13",
@@ -465,16 +465,16 @@
    "elements": 16,
    "menus": 0,
    "results": {
-    "pass": 7,
-    "fail": 1,
+    "pass": 8,
+    "fail": 0,
     "blocked": 0,
     "not_tested": 4,
     "not_applicable": 0
    },
    "tests_total": 12,
    "issues": 1,
-   "updated_at": "2026-11-12T13:06:09+00:00",
-   "evidence": ""
+   "updated_at": "2026-11-13T11:23:48+00:00",
+   "evidence": " | retest 2026-11-13: qa/retest_tab_focus.mjs + dashboard/qa/retest_s12.mjs — Tab advances nav links"
   },
   {
    "screen_id": "S19",
@@ -822,10 +822,10 @@
    "repro": "تفعيل تبويب وحدة التحكم ثم Tab مرتين",
    "root": "نقر force:true لا يتابع تسلسل التركيز — النقر العادي يضع التركيز على الزر",
    "fix": "قيد التحقيق",
-   "retest": "فحص مركز: نقر عادي → BUTTON وحدة التحكم؛ Tab1→A التداول، Tab2→A الاستراتيجيات، Tab3→A النماذج",
-   "status": "حُلَّت — خطأ قياس في الأداة",
-   "evidence": "qa/evidence/S12_result.json",
-   "updated_at": "2026-11-12T14:30:00+00:00"
+   "retest": "2026-11-13 إعادة قياس فعلية بنقر عادي (بلا force:true): S18 Tab→a:التداول→a:الاستراتيجيات→a:النماذج (PASS)، S12 Tab→a:الاستراتيجيات→a:النماذج→a:السجل (PASS)",
+   "status": "حُلَّت — خطأ قياس",
+   "evidence": "dashboard/qa/retest_tab_focus.mjs, dashboard/qa/retest_s12.mjs",
+   "updated_at": "2026-11-13T11:23:48+00:00"
   },
   {
    "issue_id": "ISS-008",
@@ -850,10 +850,10 @@
    "repro": "فتح الصفحة أثناء التحديث اللحظي والتنقل بـ Tab",
    "root": "نفس جذر ISS-007 — إعادة رسم حية + نقر force:true",
    "fix": "قيد التحقيق — مراجعة إمكانية الوصول المركزة",
-   "retest": "مطلوب في مرحلة إمكانية الوصول",
-   "status": "حُلَّت — خطأ قياس في الأداة",
-   "evidence": "qa/evidence/S18_result.json",
-   "updated_at": "2026-11-12T14:30:00+00:00"
+   "retest": "2026-11-13 إعادة قياس فعلية بنقر عادي (بلا force:true): S18 Tab→a:التداول→a:الاستراتيجيات→a:النماذج (PASS)، S12 Tab→a:الاستراتيجيات→a:النماذج→a:السجل (PASS)",
+   "status": "حُلَّت — خطأ قياس",
+   "evidence": "dashboard/qa/retest_tab_focus.mjs, dashboard/qa/retest_s12.mjs",
+   "updated_at": "2026-11-13T11:23:48+00:00"
   },
   {
    "issue_id": "ISS-010",
