@@ -983,8 +983,43 @@ async def _autonomous_cycle(
     }
     features = await _get_latest_features(symbol, operational_tf=tf_sel.operational_tf, allow_fallback=False)
     if features is None:
-        logger.info("Autonomous ML SKIP %s — no features for selected timeframe %s", symbol, tf_sel.operational_tf)
-        return
+        # Availability-aware substitution: the selector may pick a TF the
+        # data pipeline does not publish (e.g. M5 scalping rules over an
+        # M15-only feature feed). Skipping the cycle starves the entire
+        # signal → agents → risk → execution chain, so run on the freshest
+        # TF that actually has features and record the substitution.
+        available_tf = await _freshest_feature_tf(symbol, preferred=tf_sel.base_tf)
+        if available_tf is None:
+            logger.info("Autonomous ML SKIP %s — no features on any timeframe", symbol)
+            return
+        confirm_tfs_for_avail = get_confirmation_tfs_for(available_tf, cfg.mode)
+        tf_sel = DynamicTFSelection(
+            operational_tf=available_tf,
+            confirmation_tfs=confirm_tfs_for_avail,
+            base_tf=tf_sel.base_tf,
+            reason=(
+                f"availability fallback: selector chose {tf_sel.operational_tf} "
+                f"but only {available_tf} has features ({tf_sel.reason})"
+            ),
+            vol_regime=tf_sel.vol_regime,
+            session=tf_sel.session,
+            auto_selected=False,
+        )
+        _autonomous_stats["dynamic_tf"] = {
+            "operational_tf": tf_sel.operational_tf,
+            "confirmation_tfs": tf_sel.confirmation_tfs,
+            "reason": tf_sel.reason,
+            "vol_regime": tf_sel.vol_regime,
+            "auto_selected": tf_sel.auto_selected,
+        }
+        logger.info(
+            "Autonomous ML TF substitution %s: %s → %s (only TF with features)",
+            symbol, tf_sel.base_tf or "?", available_tf,
+        )
+        features = await _get_latest_features(symbol, operational_tf=available_tf, allow_fallback=False)
+        if features is None:
+            logger.info("Autonomous ML SKIP %s — features vanished for %s", symbol, available_tf)
+            return
     confirm_tfs = tf_sel.confirmation_tfs
 
     # 2. Spread pre-filter
@@ -1836,6 +1871,31 @@ async def _get_account_balance() -> float:
     except Exception:
         pass
     return 10000.0
+
+
+async def _freshest_feature_tf(symbol: str, preferred: str | None = None) -> str | None:
+    """Return the newest-timeframe TF that actually has cached features.
+
+    The dynamic selector can pick a TF the data pipeline does not publish
+    (e.g. M5 scalping rules over an M15-only feature feed). Instead of
+    starving the whole signal → agents → risk → execution chain, callers
+    use this to substitute a TF that has real data.
+    """
+    try:
+        r = await _get_redis()
+        order = ([preferred] if preferred else []) + ["M1", "M5", "M15", "H1"]
+        seen: set[str] = set()
+        for tf in order:
+            tf_u = str(tf).strip().upper()
+            if tf_u in seen:
+                continue
+            seen.add(tf_u)
+            raw = await r.get(f"nexus:features:{symbol}:{tf_u}")
+            if raw is not None:
+                return tf_u
+    except Exception:
+        logger.debug("Failed to probe feature TFs for %s", symbol, exc_info=True)
+    return None
 
 
 async def _get_latest_features(

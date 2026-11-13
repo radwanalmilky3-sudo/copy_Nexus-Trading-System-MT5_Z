@@ -32,6 +32,7 @@ import { SystemHealth } from '@/components/windows/SystemHealth';
 import { AutoTradeToggle } from '@/components/trade-controls/AutoTradeToggle';
 import { KillSwitch } from '@/components/trade-controls/KillSwitch';
 import { TradeSettingsPanel } from '@/components/trade-controls/TradeSettingsPanel';
+import { ManualTradePanel } from '@/components/trade-controls/ManualTradePanel';
 import SystemConsole from '@/components/windows/SystemConsole';
 import RegimeLive from '@/components/windows/RegimeLive';
 import TradeJournal from '@/components/windows/TradeJournal';
@@ -171,6 +172,9 @@ export default function DashboardPage() {
               <div className="flex flex-col gap-2 min-h-0 overflow-hidden">
                 <WindowBoundary label="TradeSettingsPanel">
                   <TradeSettingsPanel />
+                </WindowBoundary>
+                <WindowBoundary label="ManualTradePanel">
+                  <ManualTradePanel />
                 </WindowBoundary>
                 <WindowBoundary label="SessionClock">
                   <SessionClock compact />
