@@ -1,0 +1,95 @@
+# تقرير الوكيل C — مطابقة اختبارات الواجهة مع الكود الفعلي (agentC_ui_tests)
+
+**المشروع:** Nexus Trading System — `D:\Nexus-Trading-System-MT5_Z`
+**النطاق:** `dashboard/src/` و `dashboard/tests/` — قراءة فقط، دون تعديل أي ملف مصدري
+**التاريخ:** 2026-11 (جلسة الفحص الحالية)
+**المنهجية:** تشغيل فعلي لحزمة اختبارات الواجهة (`node --test "tests/*.test.mjs"` على Node v22.23.2) + مطابقة ساكنة بين كل ملفات `src` ومسارات الـ API في `services/nexus_api/routers/` و `websockets/` + تتبع الـ git log لتحديد جهة الانكسار.
+
+---
+
+## 1) الملخص التنفيذي
+
+| البند | القيمة |
+|---|---|
+| ملفات اختبار الواجهة | 28 (`dashboard/tests/*.test.mjs`) |
+| حالات الاختبار المنفذة فعليًا | 216 |
+| PASS | 215 |
+| FAIL | 1 (انكسار حقيقي سببه تغيير UI أُنجز دون إعادة تشغيل الحزمة) |
+| ملفات src الكلية | 169 (`ts`/`tsx`) |
+| ملفات src المغطاة باختبار (محمّلة مباشرة أو غير مباشرة) | 24 (~14%) |
+| ملفات src بلا أي تغطية | 145 (~86%) |
+| عدم تطابق UI↔API مؤكد | 1 (`/ws/performance` غير موجود في البوابة) |
+| كود ميت يعرض بيانات مصطنعة (Mock) | 5 hooks غير مستهلكة |
+| تعديلات على ملفات المشروع | 0 (هذا التقرير هو الملف الوحيد المكتوب) |
+
+**قاعدة الاعتماد:** كل بند أدناه مدعوم بمخرج تشغيل فعلي أو سطر كود محدد. لا تقديرات بلا دليل.
+
+---
+
+## 2) الاختبارات المكسورة (FAIL)
+
+| # | الاختبار | الموقع | الأعراض | الجذر | الدليل | الشدة |
+|---|---|---|---|---|---|---|
+| T-01 | «poll-driven identity change wipes state and a stale load cannot restore the old draft» | `dashboard/tests/broker-draft-persistence.test.mjs:49` | المتوقع: بعد تغيير الهوية (u1→u2) ومسح الحالة، يجب ألا تُعيد استجابة التحميل اختيار أي حساب (`account=null`). الفعلي: يُعاد اختيار الحساب `b` تلقائيًا وتُملأ المسودة من الاستجابة | `load()` في `dashboard/src/components/settings/broker/controller.ts` يختار تلقائيًا الحساب الوحيد بعد جلب الملفات («owner request 2026-11-11»). بعد مسح الحالة بسبب تغيير الهوية، يمرّ `valid(ticket)` لأن التحميل بدأ **بعد** المسح — فلا حماية من استجابة قديمة/مخبأة تعود ببيانات هوية سابقة | `git log`: `controller.ts` آخر تعديل `55c4dc7` («UI: auto-select the single broker account») **بعد** آخر تعديل للاختبار `34e760d`؛ ورسالة `ade256a` تؤكد أن الحزمة كانت 216/216 قبله | **HIGH** |
+
+**تحليل T-01 (لماذا هي HIGH وليست مجرد اختبار متقاد):**
+- الاختبار يثبّت شرط أمان حقيقيًا: استجابة وصلت عبر `listProfiles` قد تكون من ذاكرة/جلسة سابقة، وإعادة اختيار حساب منها تلقائيًا قد تعرض بيانات حساب لمستخدم آخر بعد تبديل الجلسة.
+- كود الاختيار التلقائي لا يتحقق من أن الاستجابة أُنتجت تحت الهوية الحالية — `valid(ticket)` يفحص تغيّر الهوية بعد إصدار الطلب فقط، لا صحة مصدر البيانات نفسه.
+- الإصلاح المقترح (لا يُنفَّذ هنا — قراءة فقط): إما (أ) منع الاختيار التلقائي في أول `load()` بعد مسح ناتج عن تغيير هوية حتى تأكيد صريح، أو (ب) وسم استجابات الـ API بالهوية التي أُنتجت تحتها والتحقق قبل `accept()`. القرار للمالك.
+
+---
+
+## 3) التغطية الناقصة
+
+| # | المنطقة | الملفات غير المغطاة | لماذا تهم | الشدة |
+|---|---|---|---|---|
+| C-01 | **ضوابط التداول الخطرة** | `components/trade-controls/` كاملة: `KillSwitch.tsx`, `AutoTradeToggle.tsx`, `ManualTradePanel.tsx`, `ModeSelector.tsx`, `TradeSettingsPanel.tsx` | أخطر عناصر الواجهة على الإطلاق (إيقاف طوارئ، تفعيل التداول الآلي، إدخال صفقات يدوية) — ولا يوجد اختبار واحد يثبت سلوكها أو منع النقر المزدوج أو حالات القفل | **HIGH** |
+| C-02 | **طبقة الاتصال الحيّة** | `lib/ws-client.ts`, `lib/gateway-ws.ts`, `hooks/useWebSocket.ts` | إعادة الاتصال، تراكم الرسائل، وإلغاء الاشتراكات غير مختبرة؛ عطلها يعني بيانات متجانية تُعرض كأنها حية | **HIGH** |
+| C-03 | **مخازن الحالة** | `stores/dashboardStore.ts`, `stores/trading.ts`, `stores/notifications.ts` | منطق الحالة المشتركة بين النوافذ بلا أي اختبار | MEDIUM |
+| C-04 | **الهوكات غير المختبرة** | `hooks/`: `useAgents`, `useConfig`, `useNotifications`, `usePositions`, `useRisk`, `useStrategies`, `useTrades` (المغطاة الوحيدة: `useSystemHealth`) | `useRisk` و `useStrategies` مستهلكة فعليًا في `RiskMonitor.tsx` وصفحة الاستراتيجيات | MEDIUM |
+| C-05 | **نوافذ لوحة التداول** | ~25 مكوّنًا في `components/windows/` (منها `RiskMonitor`, `LiveDecisionPanel`, `SystemConsole`, `TradeJournal`) | بعضها يستدعي نقاط API مباشرة بمنطق لم يُختبر | MEDIUM |
+| C-06 | **مكتبات مساعدة** | `lib/`: `fundamental-contract.ts`, `system-state.ts`, `ui-settings.ts`, `position-status.ts` مغطاة جزئيًا… و`utils.ts`, `chart-config.ts`, `trade-csv.ts` مغطى جزئيًا عبر `history-csv` | تغطية جزئية بلا عقود كاملة | LOW |
+| C-07 | **api-client.ts** | 911 سطرًا؛ مختبر عبر `request-timeout` وعقود honesty فقط | خريطة الأخطاء (401/403/409) وتحويل الاستجابات غير مختبرة شاملةً | MEDIUM |
+
+**ملاحظة:** الاختبارات الـ 215 الناجحة تغطي جيدًا: عرض البيانات (`data-presentation`, `correlation-presentation`, `local-ai-presentation`, `news-presentation`), تجميع الشموع, تعديل المراكز, حالة الصحة, مختبر الأبحاث, وإعدادات الوسيط. النقص مركّز في **الأفعال الخطرة** لا في **العرض**.
+
+---
+
+## 4) عدم تطابق الواجهة مع الـ API
+
+| # | الواجهة | المتوقع | الفعلي في البوابة (`services/nexus_api`) | الأثر | الشدة |
+|---|---|---|---|---|---|
+| M-01 | `hooks/usePerformance.ts:49` يفتح `gatewayWsUrl('/performance')` | قناة `/ws/performance` | **غير موجودة** — قنوات الـ WS الفعلية: `/ws/agents`, `/ws/broadcast`, `/ws/news`, `/ws/orders`, `/ws/positions`, `/ws/risk`, `/ws/stream`, `/ws/ticks` | لا أثر حالي لأن الاتصال معطّل (`enabled:false`) — لكنه فخ جاهز لأول من يفعّل الهوك | MEDIUM |
+| M-02 | `usePerformance.ts` يبدأ بـ `MOCK_PERFORMANCE` ثابت (winRate 68.5%, منحنى ربح مصطنع…) | بيانات حية فقط | — | كود ميت (0 مستهلكين) لكنه **بيانات تداول مصطنعة** تناقض عقود الصدق (`qa-honesty-contracts`)؛ لو وُصِل لكانت تُعرض كأرقام حقيقية | **HIGH كخطر رسوخ، LOW كأثر حالي** |
+| M-03 | `hooks/useAgents.ts` (MOCK_AGENTS), `useConfig.ts` (MOCK_CONFIG), `usePositions.ts` (MOCK_POSITIONS), `useTrades.ts` | بيانات حية | — | كلها بلا مستهلكين (كود ميت) — تُحذف أو تُربط بـ REST فحسب | LOW |
+| M-04 | بقية نداءات REST في `api-client.ts` والوكلاء | مطابقة المسارات والأفعال | **مطابقة تم التحقق منها بندًا بندًا**: `/api/positions` + `/{id}/close` + `/{id}/modify` ✓، `/api/performance` + `/daily` + `/equity-curve` ✓، `/api/fundamental/*` (gold/overview, macro, lineage, outcomes, ticker, sources/health) ✓، `/api/news` + `/calendar` ✓، `/api/brokers` ✓، `/api/system/env` + `/mt5-password` ✓، `/api/ml/traders/*` (status, mode, mode/switch, autonomous/*) ✓، `/api/intelligence/institutional/{sym}` + `/brief/trigger` ✓، `/api/agents` (status, decision, evaluate) ✓، `/api/risk/*` ✓، `/api/strategies/*` ✓، `/api/user/notification-preferences` ✓، `/api/v2/market/*` ✓، WS النشطة (positions/agents/risk/ticks) ✓ | لا يوجد انفصال فعلي في المسارات المستهلكة | INFO |
+
+---
+
+## 5) ما لم يُفحص (حدود التقرير)
+
+| البند | السبب |
+|---|---|
+| تشغيل `tsc` / `next build` | يكتب ملفات بناء (`tsconfig.tsbuildinfo` وغيرها) — ممنوع في وضع القراءة فقط. مخرجات سابقة موجودة: `tsc_out*.txt` |
+| اختبارات pytest في `tests/` الجذرية | خارج النطاق المطلوب (نطاق المهمة: `dashboard/src` + `dashboard/tests`) |
+| فحص حي على :3100 | لم يُطلب تشغيل الخدمات؛ كل النتائج من تحليل ساكن + تشغيل حزمة node الاختبارية فقط |
+
+---
+
+## 6) التوصيات مرتبة بالأولوية
+
+1. **حسم T-01** بقرار مالك: إما استعادة شرط الاختبار (منع الاختيار التلقائي بعد مسح الهوية) أو توثيق سلوك الاختيار التلقائي وتحديث الاختبار بشرط وسم الهوية — لا تُترك الحزمة حمراء.
+2. **اختبارات لضوابط التداول** (`trade-controls/`) قبل أي تغيير قادم فيها — هي مساحة أخطر منطق غير مختبر في الواجهة.
+3. **حذف أو ربط hooks الـ Mock الخمسة** (`useAgents`, `useConfig`, `usePerformance`, `usePositions`, `useTrades`) — كود ميت يحمل بيانات تداول مصطنعة.
+4. **إزالة `/ws/performance` من الواجهة أو إنشاؤه في البوابة** عند إحياء hook الأداء.
+5. رفع تغطية `ws-client`/`useWebSocket` (إعادة الاتصال والاشتراك) — الفشل الصامت هناك يعرض بيانات متجانية كحية.
+
+---
+
+## 7) الإصلاحات المنفذة بعد التقرير (بإذن المالك «ابدأ بما ترى مناسب»)
+
+| # | البند | الإجراء | إعادة التحقق | الدليل |
+|---|---|---|---|---|
+| F-01 | T-01 (الاختبار المكسور) | `controller.ts`: علم `wiped` يُرفع عند مسح الهوية؛ أول `load()` بعد المسح يتخطى الاختيار التلقائي للحساب (يبقى قرارًا صريحًا)، مع بقاء فحص بيئة المنصة المقروء فقط. الاختيار التلقائي عند إقلاع الصفحة محفوظ كما طلب المالك | `node --test` **216/216 PASS** | جرس الاختبار أعلاه |
+| F-02 | M-01 + M-02 + M-03 | حذف الـ 5 hooks الميتة الحاملة لبيانات Mock: `useAgents`, `useConfig`, `usePerformance`, `usePositions`, `useTrades` (صفر مستهلكين مؤكد بالبحث قبل الحذف) — يزيل معها نداء `/ws/performance` غير الموجود | `node --test` **216/216 PASS** + `tsc --noEmit` نظيف (exit 0) | جرتان أعلاه |
+| F-03 | البنود المتبقية | C-01 (اختبارات trade-controls) و C-02 (طبقة WS) و C-03 (المخازن) — **لم تُنفذ بعد**، بانتظار توجيه المالك | — | — |

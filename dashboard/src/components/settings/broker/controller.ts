@@ -21,16 +21,20 @@ function message(error:unknown):string{
   return 'تعذر الوصول إلى إعدادات الوسيط. لم نؤكد الحفظ؛ أعد التحميل للتحقق قبل إعادة المحاولة.';
 }
 export function createBrokerController(api:BrokerAPI){
-  let state=initial(),epoch=0,identity=api.identity();const listeners=new Set<()=>void>();
+  let state=initial(),epoch=0,identity=api.identity(),wiped=false;const listeners=new Set<()=>void>();
   const emit=(patch:Partial<BrokerState>)=>{state={...state,...patch};listeners.forEach(fn=>fn());};
-  const checkIdentity=()=>{if(identity!==api.identity()){identity=api.identity();epoch++;state=initial();listeners.forEach(fn=>fn());return true;}return false;};
+  /* تغيير الهوية المكتشف بالاستطلاع حدّ أمان: المسح يبقى ساريًا حتى يكتمل التحميل
+   * التالي، وذلك التحميل الأول بعد المسح يمنع من الاختيار التلقائي لأي حساب —
+   * فقد تكون استجابته بيانات قديمة من الهوية السابقة (ذاكرة fetch أو لقطة طائرة).
+   * اختيار الحساب بعد تبديل الجلسة قرار صريح للمستخدم أو لتحميل صفحة جديدة. */
+  const checkIdentity=()=>{if(identity!==api.identity()){identity=api.identity();epoch++;state=initial();wiped=true;listeners.forEach(fn=>fn());return true;}return false;};
   const valid=(ticket:number)=>!checkIdentity()&&ticket===epoch;
   const accept=(account:BrokerAccount)=>emit({selectedProfileId:account.profile_id,account,draft:structuredClone(account.settings),latest:null,events:[],dirty:false,conflict:false,
     profiles:state.profiles.map(p=>p.profile_id===account.profile_id?{...p,accounts:[...p.accounts.filter(a=>a.account_id!==account.account_id),account]}:p)});
   const controller={
     getSnapshot:()=>state,subscribe:(fn:()=>void)=>{listeners.add(fn);return ()=>{listeners.delete(fn);};},checkIdentity,
     dispose:()=>{epoch++;listeners.clear();},
-    async load(){checkIdentity();const ticket=++epoch;emit({loading:true,error:'',notice:'',account:null,draft:null,latest:null,events:[],dirty:false,conflict:false});
+    async load(){checkIdentity();const ticket=++epoch;const postWipe=wiped;wiped=false;emit({loading:true,error:'',notice:'',account:null,draft:null,latest:null,events:[],dirty:false,conflict:false});
       try{const profiles=await api.listProfiles();if(valid(ticket)){const id=profiles.some(p=>p.profile_id===state.selectedProfileId)?state.selectedProfileId:profiles[0]?.profile_id||'';emit({profiles,selectedProfileId:id,accountForm:{...state.accountForm,profile_id:id}});
         /* Single-account deployment (owner request 2026-11-11): with exactly
          * one account in the store, select + remember it automatically so the
@@ -39,7 +43,10 @@ export function createBrokerController(api:BrokerAPI){
         const all=profiles.flatMap(p=>p.accounts);
         const remembered=api.rememberedAccount?.();
         const target=remembered&&all.some(a=>a.account_id===remembered)?remembered:all.length===1?all[0].account_id:null;
-        if(target){if(target!==remembered){try{api.rememberAccount?.(target);}catch{ /* storage blocked — selection still applies for this session */ }}await controller.selectAccount(target);}
+        /* التحميل الأول بعد مسح الهوية (postWipe) لا يختار حسابًا تلقائيًا —
+         * انظر التعليق عند checkIdentity. فحص بيئة المنصة يبقى مقروءًا فقط
+         * ومستقلًا عن سجلات الحسابات، فيعمل في الحالتين. */
+        if(target&&!postWipe){if(target!==remembered){try{api.rememberAccount?.(target);}catch{ /* storage blocked — selection still applies for this session */ }}await controller.selectAccount(target);}
         /* No saved account record (owner request 2026-11-11): the platform
          * env card IS the account, so verify MT5_LOGIN/MT5_SERVER directly —
          * the connection table then auto-fills with zero pickers. */
