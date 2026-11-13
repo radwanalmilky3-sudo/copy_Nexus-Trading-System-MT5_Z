@@ -5,6 +5,7 @@ import { Activity, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { apiClient } from '@/lib/api-client';
 import { resyncSystemState } from '@/lib/system-state';
+import { modeSwitchOutcome } from '@/lib/trade-controls-presentation';
 import { useDashboardStore } from '@/stores/dashboardStore';
 
 /** Legacy exported selector; all mode changes are confirmed by the gateway. */
@@ -21,13 +22,14 @@ export function ModeSelector() {
     setError('');
     try {
       const response = await apiClient.systemSwitchMode('paper');
-      if (response.data.mode.toLowerCase() !== 'paper') {
+      const outcome = modeSwitchOutcome(response, 'paper');
+      if (!outcome.ok) {
         throw new Error('الخادم لم يؤكد وضع PAPER');
       }
       const store = useDashboardStore.getState();
-      store.setMode('PAPER');
-      store.setAutoTrade(response.data.auto_trade === true);
-      store.setKillSwitch(response.data.kill_switch === true);
+      store.setMode(outcome.mode);
+      store.setAutoTrade(outcome.autoTrade);
+      store.setKillSwitch(outcome.killSwitch);
       store.setSystemStateStatus('confirmed');
       setOpen(false);
     } catch (err) {

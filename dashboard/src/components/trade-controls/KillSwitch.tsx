@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useDashboardStore } from '@/stores/dashboardStore';
 import { GlowText } from '@/components/shared/GlowText';
 import { apiClient } from '@/lib/api-client';
+import { killSwitchOutcome } from '@/lib/trade-controls-presentation';
 import { ShieldAlert, X, AlertTriangle } from 'lucide-react';
 import { useState, useCallback, useRef } from 'react';
 
@@ -44,14 +45,14 @@ export function KillSwitch({ compact = false }: KillSwitchProps) {
     try {
       if (mode === 'kill') {
         const response = await apiClient.systemKillSwitch(pin, 'manual kill-switch from dashboard');
-        if (!response.success || response.data.status !== 'kill_switch_activated') {
+        if (!killSwitchOutcome(response, 'kill').ok) {
           setRequestError('The server did not confirm the emergency stop.');
           return;
         }
         activateKillSwitch();
       } else {
         const response = await apiClient.systemKillSwitchRelease(pin, 'manual release from dashboard');
-        if (!response.success || response.data.status !== 'kill_switch_released') {
+        if (!killSwitchOutcome(response, 'release').ok) {
           setRequestError('The server did not confirm the release.');
           return;
         }

@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useDashboardStore } from '@/stores/dashboardStore';
 import { GlowText } from '@/components/shared/GlowText';
 import { apiClient } from '@/lib/api-client';
+import { autoTradeEnabled as autoTradeTouchable, autoTradeServerCheck } from '@/lib/trade-controls-presentation';
 import { Bot, BotOff } from 'lucide-react';
 import { useState, useCallback, useRef, useEffect } from 'react';
 
@@ -32,9 +33,7 @@ export function AutoTradeToggle({ compact = false }: AutoTradeToggleProps) {
     setError('');
     try {
       const response = await apiClient.systemToggleAutoTrade(enabled, pinValue);
-      if (response.data.auto_trade !== enabled) {
-        throw new Error('الخادم لم يؤكد الحالة المطلوبة للتداول الآلي');
-      }
+      autoTradeServerCheck(response, enabled);
       useDashboardStore.getState().setAutoTrade(response.data.auto_trade);
       setConfirmOpen(false);
       setPin('');
@@ -46,7 +45,7 @@ export function AutoTradeToggle({ compact = false }: AutoTradeToggleProps) {
   }, []);
 
   const handleToggle = useCallback(() => {
-    if (isKilled || busy || systemStateStatus !== 'confirmed') return;
+    if (!autoTradeTouchable({ isKilled, busy, systemStateStatus })) return;
 
     if (autoTradeEnabled) {
       void requestToggle(false);

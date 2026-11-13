@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
+import { tradesPausedBanner } from '@/lib/trade-controls-presentation';
 import { Sliders, RotateCcw, Save, Check, AlertTriangle } from 'lucide-react';
 
 // Same-origin: /api/* is proxied to the nexus-api gateway by next.config.js
@@ -144,7 +145,7 @@ export function TradeSettingsPanel() {
           </div>
         )}
 
-        {(meta.trades_paused || (meta.daily_trade_count !== undefined && settings && meta.daily_trade_count >= settings.max_daily_trades)) && (
+        {tradesPausedBanner(meta, settings) && (
           <div className="flex items-center justify-between gap-2 text-[10px] text-neon-gold bg-neon-gold/10 border border-neon-gold/30 rounded px-2 py-1.5">
             <span>
               {meta.trades_paused

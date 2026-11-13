@@ -5,6 +5,7 @@ import { useDashboardStore } from '@/stores/dashboardStore';
 import { GlowText } from '@/components/shared/GlowText';
 import NeonCard from '@/components/shared/NeonCard';
 import { ArrowUpCircle, ArrowDownCircle, Activity } from 'lucide-react';
+import { manualOrderPayload } from '@/lib/trade-controls-presentation';
 import { useState, useCallback } from 'react';
 
 interface ManualTradePanelProps {
@@ -24,11 +25,16 @@ export function ManualTradePanel({
   const [tp, setTp] = useState('100');
 
   const handleBuy = useCallback(() => {
-    console.log('Manual BUY:', { symbol, lots, sl, tp, price: currentAsk });
+    // NOTE: intent-only — the executor order API is not wired to this panel
+    // yet; the payload is built and validated here so wiring it later cannot
+    // send an invalid order shape.
+    const payload = manualOrderPayload({ symbol, lots, sl, tp, price: currentAsk });
+    if (payload) console.log('Manual BUY:', payload);
   }, [symbol, lots, sl, tp, currentAsk]);
 
   const handleSell = useCallback(() => {
-    console.log('Manual SELL:', { symbol, lots, sl, tp, price: currentBid });
+    const payload = manualOrderPayload({ symbol, lots, sl, tp, price: currentBid });
+    if (payload) console.log('Manual SELL:', payload);
   }, [symbol, lots, sl, tp, currentBid]);
 
   return (
