@@ -93,7 +93,15 @@ SYSTEM_MUTATIONS = [
 @pytest.fixture
 def stub_agent_read_dependencies(monkeypatch):
     monkeypatch.setenv("NEXUS_INTERNAL_API_SECRET", "test-internal-service-secret")
-    monkeypatch.setattr(agents, "_fetch_agents_service_meta", AsyncMock(return_value=(False, 0, 0)))
+    # Returns (service_online, active_cycles, total_cycles_completed,
+    #          llm_model, llm_online, llm_url) — the last three feed the
+    # dashboard's real model/provider display, so the stub must match the
+    # live arity.
+    monkeypatch.setattr(
+        agents,
+        "_fetch_agents_service_meta",
+        AsyncMock(return_value=(False, 0, 0, "", False, "")),
+    )
     monkeypatch.setattr(agents, "new_client", lambda **kwargs: _FakeClientContext())
     monkeypatch.setattr(ml, "_proxy", AsyncMock(return_value={"ok": True}))
     monkeypatch.setattr(strategies, "_proxy", AsyncMock(return_value={"id": "strategy-1"}))
@@ -317,3 +325,33 @@ async def test_system_mode_reports_structured_anti_tilt_kill_switch(api_client, 
 
     assert response.status_code == 200
     assert response.json()["kill_switch"] is True
+
+
+@pytest.mark.asyncio
+async def test_agents_status_forwards_real_llm_model_from_agents_service(api_client, monkeypatch):
+    """The dashboard must render the model the agents service actually reports.
+
+    Regression guard: the flowchart previously showed hardcoded model names, so
+    /api/agents/status has to carry the live ``llm_model`` verbatim (and never
+    invent one when the agents service reports nothing).
+    """
+    monkeypatch.setenv("NEXUS_JWT_SECRET", "test-jwt-secret-long-enough-for-hs256")
+    monkeypatch.setattr(agents, "_require", AsyncMock(return_value=None))
+
+    async def _fake_meta():
+        return (True, 0, 7, "glm-4.5-flash", True, "https://api.z.ai/api/paas/v4")
+
+    monkeypatch.setattr(agents, "_fetch_agents_service_meta", _fake_meta)
+    token = create_token("operator")
+
+    response = await api_client.get(
+        "/api/agents/status",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["llm_model"] == "glm-4.5-flash"
+    assert body["llm_online"] is True
+    assert body["llm_url"] == "https://api.z.ai/api/paas/v4"
+    assert body["meta"]["total_cycles_completed"] == 7

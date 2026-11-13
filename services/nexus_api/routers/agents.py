@@ -70,6 +70,13 @@ class AgentsMeta(BaseModel):
 class AgentsStatusPayload(BaseModel):
     agents: list[AgentStatus]
     meta: AgentsMeta
+    # Real LLM identity reported by nexus-agents (Ollama tag / Z.ai model).
+    # Empty when the agents service is unreachable — never a guessed default.
+    llm_model: str = ""
+    llm_online: bool = False
+    # Endpoint the agents service actually talks to — the dashboard derives
+    # local-vs-cloud from it instead of hardcoding a provider name.
+    llm_url: str = ""
 
 
 class EvaluateRequest(BaseModel):
@@ -90,27 +97,36 @@ def _parse_health_age(ts: str | None, now: datetime) -> bool:
         return False
 
 
-async def _fetch_agents_service_meta() -> tuple[bool, int, int]:
-    """Quick ping to nexus-agents for cycle counters."""
+async def _fetch_agents_service_meta() -> tuple[bool, int, int, str, bool, str]:
+    """Ping nexus-agents for cycle counters and the real LLM identity.
+
+    Returns ``(service_online, active_cycles, total_cycles_completed,
+    llm_model, llm_online, llm_url)``. ``llm_model`` is whatever the agents service
+    reports for the configured provider — the dashboard must render this
+    value, not a hardcoded model name.
+    """
     try:
         async with new_client(timeout=2.5) as client:
             health = await client.get(f"{AGENTS_BASE}/health")
             if health.status_code != 200:
-                return False, 0, 0
+                return False, 0, 0, "", False, ""
             status_resp = await client.get(
                 f"{AGENTS_BASE}/api/agents/status",
                 headers=_internal_headers(),
             )
             if status_resp.status_code != 200:
-                return True, 0, 0
+                return True, 0, 0, "", False, ""
             body = status_resp.json()
             return (
                 True,
                 int(body.get("active_cycles", 0)),
                 int(body.get("total_cycles_completed", 0)),
+                str(body.get("llm_model") or ""),
+                bool(body.get("llm_online", False)),
+                str(body.get("llm_url") or ""),
             )
     except Exception:
-        return False, 0, 0
+        return False, 0, 0, "", False, ""
 
 
 # ── Endpoints ────────────────────────────────────────────────────────────────
@@ -160,7 +176,14 @@ async def agents_status(
             "last_active": last_active,
         })
 
-    service_online, active_cycles, total_cycles = await _fetch_agents_service_meta()
+    (
+        service_online,
+        active_cycles,
+        total_cycles,
+        llm_model,
+        llm_online,
+        llm_url,
+    ) = await _fetch_agents_service_meta()
 
     # Service alive but Redis keys missing/stale → show READY (idle), not offline
     if service_online:
@@ -193,6 +216,9 @@ async def agents_status(
             "total_agents": len(results),
             "pipeline_state": pipeline_state,
         },
+        "llm_model": llm_model,
+        "llm_online": llm_online,
+        "llm_url": llm_url,
     }
 
 

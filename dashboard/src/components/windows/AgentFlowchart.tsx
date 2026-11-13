@@ -13,6 +13,9 @@ interface FlowAgent {
   shortName: string;
   color: string;
   status: AgentStatus;
+  /** Model this agent is configured to use (config/agents.yaml, informational). */
+  configuredModel: string;
+  /** Model actually reported by the API for the running provider. */
   model: string;
   lastActivity?: string;
   layer: number;
@@ -20,19 +23,19 @@ interface FlowAgent {
 }
 
 const AGENTS: FlowAgent[] = [
-  { id: 'A11', name: 'Session Governor',    shortName: 'SESSION',    color: '#ffaa00', status: 'idle',  model: 'mistral:7b',     layer: 0, col: 0 },
-  { id: 'A0',  name: 'Regime Analyst',      shortName: 'REGIME',     color: '#e040fb', status: 'idle',  model: 'llama3.3:70b', layer: 1, col: 0 },
-  { id: 'A1',  name: 'Market Analyst',      shortName: 'MARKET',     color: '#00f5ff', status: 'idle',  model: 'llama3.3:70b', layer: 2, col: 0 },
-  { id: 'A2',  name: 'News Sentinel',       shortName: 'NEWS',       color: '#ffd700', status: 'idle',  model: 'mistral:7b',     layer: 2, col: 1 },
-  { id: 'A3',  name: 'Intermarket',         shortName: 'INTER',      color: '#ff6b35', status: 'idle',  model: 'mistral:7b',     layer: 2, col: 2 },
-  { id: 'A4',  name: 'Order Flow',          shortName: 'FLOW',       color: '#ff1493', status: 'idle',  model: 'mistral:7b',     layer: 2, col: 3 },
-  { id: 'A5',  name: 'Bull Researcher',     shortName: 'BULL',       color: '#39ff14', status: 'idle',  model: 'mistral:7b',     layer: 3, col: 0 },
-  { id: 'A6',  name: 'Bear Researcher',     shortName: 'BEAR',       color: '#ff1744', status: 'idle',  model: 'mistral:7b',     layer: 3, col: 1 },
-  { id: 'A7',  name: 'Arbitrator',          shortName: 'JUDGE',      color: '#bf40ff', status: 'idle',  model: 'llama3.3:70b', layer: 4, col: 0 },
-  { id: 'A8',  name: 'Risk Manager',        shortName: 'RISK',       color: '#ff4444', status: 'idle',  model: 'llama3.3:70b', layer: 5, col: 0 },
-  { id: 'A9',  name: 'Trade Executor',      shortName: 'EXEC',       color: '#00ff88', status: 'idle',  model: 'mistral:7b',     layer: 6, col: 0 },
-  { id: 'A10', name: 'Position Manager',    shortName: 'POS MGR',    color: '#4488ff', status: 'idle',  model: 'mistral:7b',     layer: 6, col: 1 },
-  { id: 'A12', name: 'Portfolio Strategist', shortName: 'PORTFOLIO',  color: '#aa44ff', status: 'idle',  model: 'llama3.3:70b', layer: 7, col: 0 },
+  { id: 'A11', name: 'Session Governor',    shortName: 'SESSION',    color: '#ffaa00', status: 'idle',  configuredModel: 'mistral:7b',   model: '', layer: 0, col: 0 },
+  { id: 'A0',  name: 'Regime Analyst',      shortName: 'REGIME',     color: '#e040fb', status: 'idle',  configuredModel: 'llama3.3:70b', model: '', layer: 1, col: 0 },
+  { id: 'A1',  name: 'Market Analyst',      shortName: 'MARKET',     color: '#00f5ff', status: 'idle',  configuredModel: 'llama3.3:70b', model: '', layer: 2, col: 0 },
+  { id: 'A2',  name: 'News Sentinel',       shortName: 'NEWS',       color: '#ffd700', status: 'idle',  configuredModel: 'mistral:7b',   model: '', layer: 2, col: 1 },
+  { id: 'A3',  name: 'Intermarket',         shortName: 'INTER',      color: '#ff6b35', status: 'idle',  configuredModel: 'mistral:7b',   model: '', layer: 2, col: 2 },
+  { id: 'A4',  name: 'Order Flow',          shortName: 'FLOW',       color: '#ff1493', status: 'idle',  configuredModel: 'mistral:7b',   model: '', layer: 2, col: 3 },
+  { id: 'A5',  name: 'Bull Researcher',     shortName: 'BULL',       color: '#39ff14', status: 'idle',  configuredModel: 'mistral:7b',   model: '', layer: 3, col: 0 },
+  { id: 'A6',  name: 'Bear Researcher',     shortName: 'BEAR',       color: '#ff1744', status: 'idle',  configuredModel: 'mistral:7b',   model: '', layer: 3, col: 1 },
+  { id: 'A7',  name: 'Arbitrator',          shortName: 'JUDGE',      color: '#bf40ff', status: 'idle',  configuredModel: 'llama3.3:70b', model: '', layer: 4, col: 0 },
+  { id: 'A8',  name: 'Risk Manager',        shortName: 'RISK',       color: '#ff4444', status: 'idle',  configuredModel: 'llama3.3:70b', model: '', layer: 5, col: 0 },
+  { id: 'A9',  name: 'Trade Executor',      shortName: 'EXEC',       color: '#00ff88', status: 'idle',  configuredModel: 'mistral:7b',   model: '', layer: 6, col: 0 },
+  { id: 'A10', name: 'Position Manager',    shortName: 'POS MGR',    color: '#4488ff', status: 'idle',  configuredModel: 'mistral:7b',   model: '', layer: 6, col: 1 },
+  { id: 'A12', name: 'Portfolio Strategist', shortName: 'PORTFOLIO',  color: '#aa44ff', status: 'idle',  configuredModel: 'llama3.3:70b', model: '', layer: 7, col: 0 },
 ];
 
 interface FlowConnection {
@@ -114,6 +117,11 @@ export default function AgentFlowchart() {
   );
   const [hoveredAgent, setHoveredAgent] = useState<string | null>(null);
   const [meta, setMeta] = useState<PipelineMeta | null>(null);
+  // Real model reported by the API (empty until the first successful poll).
+  const [llmModel, setLlmModel] = useState<string>('');
+  const [llmOnline, setLlmOnline] = useState<boolean>(false);
+  // Real endpoint reported by the API — local (Ollama) vs cloud (Z.ai).
+  const [llmUrl, setLlmUrl] = useState<string>('');
 
   useEffect(() => {
     const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
@@ -128,7 +136,10 @@ export default function AgentFlowchart() {
         if (cancelled) return;
         if (!res.ok) {
           setMeta(null);
-          setAgents((prev) => prev.map((agent) => ({ ...agent, status: 'offline' as AgentStatus })));
+          setLlmModel('');
+          setLlmOnline(false);
+          setLlmUrl('');
+          setAgents((prev) => prev.map((agent) => ({ ...agent, status: 'offline' as AgentStatus, model: '' })));
           return;
         }
         const payload = await res.json();
@@ -136,11 +147,28 @@ export default function AgentFlowchart() {
         if (!snapshot.available || cancelled) {
           if (!cancelled) {
             setMeta(null);
-            setAgents((prev) => prev.map((agent) => ({ ...agent, status: 'offline' as AgentStatus })));
+            setLlmModel('');
+            setLlmOnline(false);
+          setLlmUrl('');
+            setAgents((prev) => prev.map((agent) => ({ ...agent, status: 'offline' as AgentStatus, model: '' })));
           }
           return;
         }
         const rows = snapshot.rows;
+
+        // Real LLM identity, straight from the API. Never substitute a
+        // configured/default name here: if the API does not report a model
+        // the nodes must show nothing rather than a plausible-looking lie.
+        const reportedModel = typeof (payload as { llm_model?: unknown }).llm_model === 'string'
+          ? ((payload as { llm_model: string }).llm_model || '')
+          : '';
+        const reportedOnline = Boolean((payload as { llm_online?: unknown }).llm_online);
+        const reportedUrl = typeof (payload as { llm_url?: unknown }).llm_url === 'string'
+          ? ((payload as { llm_url: string }).llm_url || '')
+          : '';
+        setLlmModel(reportedModel);
+        setLlmOnline(reportedOnline);
+        setLlmUrl(reportedUrl);
 
         if (!Array.isArray(payload) && payload?.meta) {
           setMeta(payload.meta as PipelineMeta);
@@ -165,12 +193,16 @@ export default function AgentFlowchart() {
             ...a,
             status: statusMap[a.id]?.status ?? 'offline',
             lastActivity: statusMap[a.id]?.lastActive,
+            model: reportedModel,
           }))
         );
       } catch {
         if (!cancelled) {
           setMeta(null);
-          setAgents((prev) => prev.map((a) => ({ ...a, status: 'offline' as AgentStatus })));
+          setLlmModel('');
+          setLlmOnline(false);
+          setLlmUrl('');
+          setAgents((prev) => prev.map((a) => ({ ...a, status: 'offline' as AgentStatus, model: '' })));
         }
       }
     }
@@ -209,6 +241,15 @@ export default function AgentFlowchart() {
   const hasProcessing = meta?.pipeline_state === 'evaluating' || agents.some((a) => a.status === 'processing');
   const pipelineInfo = meta ? PIPELINE_LABELS[meta.pipeline_state] : null;
 
+  // The running provider serves one model to the whole council (NEXUS_LLM_MODEL
+  // overrides the per-agent names in config/agents.yaml), so a configured name
+  // that differs from the reported one is informational, not an error.
+  const configuredModels = useMemo(
+    () => Array.from(new Set(agents.map((a) => a.configuredModel))).sort(),
+    [agents],
+  );
+  const modelMismatch = llmModel !== '' && configuredModels.some((m) => m !== llmModel);
+
   return (
     <NeonCard
       title="مسار الوكلاء"
@@ -237,6 +278,12 @@ export default function AgentFlowchart() {
           <span className="text-[10px] font-mono" style={{ color: activeCount > 0 ? '#00ff88' : '#5a5a78' }}>
             {activeCount}/{agents.length} listos
           </span>
+          <span
+            className="text-[9px] font-mono"
+            style={{ color: llmModel ? (llmOnline ? '#00f5ff' : '#ff1744') : '#5a5a78' }}
+          >
+            {llmModel || 'النموذج: —'}
+          </span>
           {meta && (
             <span className="text-[9px] font-mono text-text-muted hidden sm:inline">
               ciclos={meta.total_cycles_completed}
@@ -264,6 +311,18 @@ export default function AgentFlowchart() {
           <span className="text-text-muted">
             Completados: <span className="text-text-secondary">{meta.total_cycles_completed}</span>
           </span>
+          <span className="text-text-muted">
+            Modelo: <span className={llmModel ? 'text-neon-cyan' : 'text-neon-red'}>{llmModel || 'no reportado'}</span>
+          </span>
+          {modelMismatch && (
+            <span
+              className="px-1.5 py-0.5 rounded border"
+              style={{ color: '#ffd700', borderColor: 'rgba(255,215,0,0.4)', backgroundColor: 'rgba(255,215,0,0.10)' }}
+              title={`config/agents.yaml pide ${configuredModels.join(', ')} — el API ejecuta ${llmModel}`}
+            >
+              ⚠ config pide {configuredModels.join(' / ')}, ejecutando {llmModel}
+            </span>
+          )}
         </div>
       )}
       <div className="flex-1 overflow-x-auto overflow-y-auto p-2 min-h-0">
@@ -389,9 +448,9 @@ export default function AgentFlowchart() {
                   {agent.shortName}
                 </text>
 
-                {/* Model tag */}
-                <text x={NODE_W / 2} y={48} textAnchor="middle" className="text-[7px] font-mono" fill="rgba(152,152,176,0.5)">
-                  {agent.model}
+                {/* Model tag — real value from the API, never hardcoded */}
+                <text x={NODE_W / 2} y={48} textAnchor="middle" className="text-[7px] font-mono" fill={agent.model ? 'rgba(0,245,255,0.65)' : 'rgba(152,152,176,0.35)'}>
+                  {agent.model || '—'}
                 </text>
 
                 {/* Status badge */}
@@ -412,10 +471,15 @@ export default function AgentFlowchart() {
                 {/* Hover tooltip */}
                 {isHovered && (
                   <g>
-                    <rect x={-10} y={NODE_H + 4} width={NODE_W + 20} height={44} rx={6} fill="rgba(10,10,15,0.95)" stroke={agent.color} strokeWidth={0.5} strokeOpacity={0.4} />
+                    <rect x={-10} y={NODE_H + 4} width={NODE_W + 20} height={56} rx={6} fill="rgba(10,10,15,0.95)" stroke={agent.color} strokeWidth={0.5} strokeOpacity={0.4} />
                     <text x={NODE_W / 2} y={NODE_H + 17} textAnchor="middle" className="text-[9px] font-mono" fill={agent.color}>{agent.name}</text>
-                    <text x={NODE_W / 2} y={NODE_H + 29} textAnchor="middle" className="text-[8px] font-mono" fill="rgba(152,152,176,0.6)">عبر الذكاء المحلي</text>
-                    <text x={NODE_W / 2} y={NODE_H + 40} textAnchor="middle" className="text-[7px] font-mono" fill={cfg.dot}>
+                    <text x={NODE_W / 2} y={NODE_H + 29} textAnchor="middle" className="text-[8px] font-mono" fill="rgba(0,245,255,0.7)">
+                      {agent.model ? `النموذج: ${agent.model}` : 'النموذج: غير مُبلَّغ'}
+                    </text>
+                    <text x={NODE_W / 2} y={NODE_H + 40} textAnchor="middle" className="text-[7px] font-mono" fill="rgba(152,152,176,0.6)">
+                      config: {agent.configuredModel}
+                    </text>
+                    <text x={NODE_W / 2} y={NODE_H + 51} textAnchor="middle" className="text-[7px] font-mono" fill={cfg.dot}>
                       {agent.lastActivity ? `last: ${new Date(agent.lastActivity).toLocaleTimeString()}` : 'no activity'}
                     </text>
                   </g>
@@ -458,7 +522,15 @@ export default function AgentFlowchart() {
             <span className="text-[9px] font-mono uppercase" style={{ color: STATUS_CONFIG[st].text }}>{st === 'idle' ? 'ready' : st}</span>
           </div>
         ))}
-        <span className="ml-auto text-[9px] font-mono text-neon-purple">الذكاء المحلي · Ollama</span>
+        <span className="ml-auto text-[9px] font-mono text-neon-purple">
+          {/* The provider label follows the endpoint the API reports —
+              never a hardcoded Ollama/Z.ai name. */}
+          {llmUrl.includes('z.ai')
+            ? `الذكاء السحابي · Z.ai${llmModel ? ` · ${llmModel}` : ''}`
+            : llmUrl
+              ? `الذكاء المحلي · Ollama${llmModel ? ` · ${llmModel}` : ''}`
+              : `الذكاء${llmModel ? ` · ${llmModel}` : ' · المصدر غير مُبلَّغ'}`}
+        </span>
       </div>
     </NeonCard>
   );

@@ -61,14 +61,32 @@ def provider_model(provider: str | None = None) -> str:
     )
 
 
+def _default_request_timeout() -> int:
+    """Per-request LLM deadline in seconds.
+
+    A local 0.5B model on a small box needs 24-45 s per completion, so the
+    historical hard-coded 30 s default expired mid-generation and every agent
+    call surfaced as a 30 s failure (observed as POST /v1/chat/completions
+    returning 500 after exactly 30.00 s in the Ollama access log).  The budget
+    is therefore configurable and defaults well above measured latency.
+    """
+    try:
+        return max(5, int(os.getenv("NEXUS_LOCAL_LLM_TIMEOUT_SEC", "120")))
+    except ValueError:
+        return 120
+
+
 def make_llm(
     *,
     temperature: float = 0.3,
     max_tokens: int = 800,
     model: str | None = None,
-    request_timeout: int = 30,
+    request_timeout: int | None = None,
 ):
     from langchain_openai import ChatOpenAI
+
+    if request_timeout is None:
+        request_timeout = _default_request_timeout()
 
     provider = resolve_provider()
     global_override = os.getenv("NEXUS_LLM_MODEL", "").strip()
