@@ -24,18 +24,22 @@ export function ManualTradePanel({
   const [sl, setSl] = useState('50');
   const [tp, setTp] = useState('100');
 
+  /* صدق الواجهة: لا يوجد مسار بوابة للأوامر اليدوية — /api/executor/order
+   * نقطة داخلية محمية بسرّ الخدمات ولا يمكن للمتصفح استدعاءها. الأزرار
+   * معطّلة صراحة حتى يوفر البوابة مسارًا مُصرّحًا به؛ لا نُمثّل تنفيذًا. */
+  const executionWired = false;
+
   const handleBuy = useCallback(() => {
-    // NOTE: intent-only — the executor order API is not wired to this panel
-    // yet; the payload is built and validated here so wiring it later cannot
-    // send an invalid order shape.
+    if (!executionWired) return;
     const payload = manualOrderPayload({ symbol, lots, sl, tp, price: currentAsk });
     if (payload) console.log('Manual BUY:', payload);
-  }, [symbol, lots, sl, tp, currentAsk]);
+  }, [executionWired, symbol, lots, sl, tp, currentAsk]);
 
   const handleSell = useCallback(() => {
+    if (!executionWired) return;
     const payload = manualOrderPayload({ symbol, lots, sl, tp, price: currentBid });
     if (payload) console.log('Manual SELL:', payload);
-  }, [symbol, lots, sl, tp, currentBid]);
+  }, [executionWired, symbol, lots, sl, tp, currentBid]);
 
   return (
     <NeonCard title="تداول يدوي" accentColor="cyan" isLive>
@@ -116,16 +120,18 @@ export function ManualTradePanel({
         </div>
       </div>
 
-      {/* Action buttons */}
+      {/* Action buttons — disabled until the gateway exposes an authorized
+          manual-order route; the executor endpoint is internal-only. */}
       <div className="grid grid-cols-2 gap-3">
         <button
           onClick={handleBuy}
+          disabled
+          title="تنفيذ الأوامر اليدوية غير موصول بمحرك التنفيذ بعد"
           className={cn(
             'flex items-center justify-center gap-2 rounded-lg py-2.5',
             'bg-neon-green/10 border border-neon-green/40 text-neon-green',
             'font-bold text-sm uppercase tracking-wider',
-            'hover:bg-neon-green/20 hover:shadow-neon-green active:scale-[0.98]',
-            'transition-all duration-200'
+            'opacity-40 cursor-not-allowed'
           )}
         >
           <ArrowUpCircle className="h-4 w-4" />
@@ -133,18 +139,22 @@ export function ManualTradePanel({
         </button>
         <button
           onClick={handleSell}
+          disabled
+          title="تنفيذ الأوامر اليدوية غير موصول بمحرك التنفيذ بعد"
           className={cn(
             'flex items-center justify-center gap-2 rounded-lg py-2.5',
             'bg-neon-red/10 border border-neon-red/40 text-neon-red',
             'font-bold text-sm uppercase tracking-wider',
-            'hover:bg-neon-red/20 hover:shadow-neon-red active:scale-[0.98]',
-            'transition-all duration-200'
+            'opacity-40 cursor-not-allowed'
           )}
         >
           <ArrowDownCircle className="h-4 w-4" />
           Sell
         </button>
       </div>
+      <p className="text-[10px] leading-relaxed text-text-muted text-center">
+        تنفيذ الأوامر اليدوية غير موصول بمحرك التنفيذ بعد — الأزرار معطّلة حتى توفير مسار مُصرّح به في البوابة.
+      </p>
     </NeonCard>
   );
 }
