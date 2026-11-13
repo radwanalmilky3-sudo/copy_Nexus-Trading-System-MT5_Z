@@ -37,15 +37,25 @@ class DataServiceClient:
     async def query(self, operation: str, params: dict[str, Any] | None = None) -> list[dict[str, Any]]:
         if not self.secret:
             raise DataServiceUnavailable("internal data service credential is not configured")
-        try:
-            async with new_client(timeout=10.0, transport=self._transport) as client:
-                response = await client.post(
-                    f"{self.base_url}/api/data/query",
-                    headers={"X-Nexus-Internal-Secret": self.secret},
-                    json={"operation": operation, "params": params or {}},
-                )
-        except httpx.HTTPError as exc:
-            raise DataServiceUnavailable("nexus-data is unreachable") from exc
+        # nexus-data's event loop can briefly stall past the client timeout when
+        # the 60s quality audit cycle holds the DuckDB executor; a single retry
+        # on a fresh connection converts those transient blips into successes
+        # instead of user-facing 503s (measured 2026-11-12: login flapped
+        # [200,200,503,200,200] during post-repair warm-up).
+        last_exc: httpx.HTTPError | None = None
+        for attempt in (1, 2):
+            try:
+                async with new_client(timeout=10.0, transport=self._transport) as client:
+                    response = await client.post(
+                        f"{self.base_url}/api/data/query",
+                        headers={"X-Nexus-Internal-Secret": self.secret},
+                        json={"operation": operation, "params": params or {}},
+                    )
+                break
+            except httpx.HTTPError as exc:
+                last_exc = exc
+                if attempt == 2:
+                    raise DataServiceUnavailable("nexus-data is unreachable") from exc
 
         if response.status_code >= 500 or response.status_code in {408, 429}:
             raise DataServiceUnavailable(f"nexus-data returned {response.status_code}")
